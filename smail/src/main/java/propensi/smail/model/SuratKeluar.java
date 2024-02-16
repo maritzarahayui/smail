@@ -9,15 +9,13 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "surat_keluar")
 
 public class SuratKeluar {
     
     @Id
-    @GeneratedValue
-    private String no_surat;
+    private String noSurat;
 
     @NotNull
     @Column(name = "jenis_surat", nullable = false)
@@ -25,7 +23,7 @@ public class SuratKeluar {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private int status;
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
@@ -33,13 +31,13 @@ public class SuratKeluar {
 
     // @NotNull
     // @Column(name = "file", nullable = false)
-    // private Integer file;
+    // private int file;
 
-    @NotNull
+    @NotNull  // one to one
     @Column(name = "request_surat", nullable = false)
     private RequestSurat requestSurat;
 
-    @NotNull
+    @NotNull  // one to one
     @Column(name = "surat_masuk", nullable = false)
     private SuratMasuk suratMasuk;
 

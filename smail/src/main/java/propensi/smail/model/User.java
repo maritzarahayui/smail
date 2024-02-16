@@ -9,14 +9,12 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "user_model")
 
 public class User {
     
     @Id
-    @GeneratedValue
     private UUID id;
 
     @NotNull
@@ -40,12 +38,8 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @NotNull
+    @NotNull  // one to many (user biasa)
     @Column(name = "request_surat", nullable = false)
     private RequestSurat requestSurat; 
-
-    @NotNull
-    @Column(name = "surat_masuk", nullable = false)
-    private SuratMasuk suratMasuk; 
     
 }

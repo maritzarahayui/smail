@@ -1,7 +1,9 @@
 package propensi.smail.model;
 
 import lombok.*;
-import java.util.*;
+
+import java.util.Date;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -9,15 +11,13 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "faq")
-
 public class FAQ {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @NotNull
     @Column(name = "pertanyaan", nullable = false)
@@ -29,7 +29,7 @@ public class FAQ {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private int status;
 
     @NotNull
     @Column(name = "tanggal_post", nullable = false)

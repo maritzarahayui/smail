@@ -9,15 +9,14 @@ import jakarta.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "request_surat")
 
 public class RequestSurat {
     
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column(name = "jenis_surat", nullable = false)
@@ -25,7 +24,7 @@ public class RequestSurat {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private Integer status;
+    private int status;
 
     @NotNull
     @Column(name = "tanggal_pengajuan", nullable = false)
@@ -43,11 +42,11 @@ public class RequestSurat {
     @Column(name = "form_value", nullable = false)
     private Map<String,String> formValue;
 
-    @NotNull
+    @NotNull // many to one
     @Column(name = "user", nullable = false)
     private User user;
 
-    @NotNull
+    @NotNull // one to one
     @Column(name = "surat", nullable = false)
     private SuratKeluar surat;
 
