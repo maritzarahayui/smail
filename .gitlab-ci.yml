@@ -97,7 +97,7 @@ Publish:
  tags:
    - dind 
  only:
-   - master
+   - main
 
 Deploy:
  stage: deploy
@@ -111,4 +111,4 @@ Deploy:
      docker image rm -f $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG || true &&
      docker run --name $CONTAINER_NAME -d -p 80:8080 $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG"
  only:
-   - master
+   - main
