@@ -67,6 +67,7 @@ Test:
    - "postgres:latest"
  before_script:
    - echo `pwd`
+   - cd smail
    - export GRADLE_USER_HOME=`pwd`/.gradle
    - export SPRING_PROFILES_ACTIVE=test
  script:
