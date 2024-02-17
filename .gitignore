@@ -37,5 +37,7 @@ out/
 .vscode/
 
 .vercel
-gcp.pub
 gcp
+gcp.pub
+!**/settings.gradle
+!**/build.gradle
