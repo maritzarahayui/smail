@@ -33,12 +33,12 @@ public class SuratKeluar {
     // @Column(name = "file", nullable = false)
     // private int file;
 
-    @NotNull  // one to one
-    @Column(name = "request_surat", nullable = false)
-    private RequestSurat requestSurat;
+    // @NotNull  // one to one
+    // @Column(name = "request_surat", nullable = false)
+    // private RequestSurat requestSurat;
 
-    @NotNull  // one to one
-    @Column(name = "surat_masuk", nullable = false)
-    private SuratMasuk suratMasuk;
+    // @NotNull  // one to one
+    // @Column(name = "surat_masuk", nullable = false)
+    // private SuratMasuk suratMasuk;
 
 }

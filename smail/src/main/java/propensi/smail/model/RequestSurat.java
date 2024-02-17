@@ -38,16 +38,16 @@ public class RequestSurat {
     @Column(name = "alasan_penolakan", nullable = false)
     private String alasanPenolakan;
 
-    @NotNull
-    @Column(name = "form_value", nullable = false)
-    private Map<String,String> formValue;
+    // @NotNull
+    // @Column(name = "form_value", nullable = false)
+    // private Map<String,String> formValue;
 
-    @NotNull // many to one
-    @Column(name = "user", nullable = false)
-    private User user;
+    // @NotNull // many to one
+    // @Column(name = "user", nullable = false)
+    // private User user;
 
-    @NotNull // one to one
-    @Column(name = "surat", nullable = false)
-    private SuratKeluar surat;
+    // @NotNull // one to one
+    // @Column(name = "surat", nullable = false)
+    // private SuratKeluar surat;
 
 }

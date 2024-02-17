@@ -38,8 +38,8 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @NotNull  // one to many (user biasa)
-    @Column(name = "request_surat", nullable = false)
-    private RequestSurat requestSurat; 
+    // @NotNull  // one to many (user biasa)
+    // @Column(name = "request_surat", nullable = false)
+    // private RequestSurat requestSurat; 
     
 }
