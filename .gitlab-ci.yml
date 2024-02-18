@@ -57,7 +57,7 @@ Build:
  artifacts:
    when: always
    paths:
-     - build/libs/*.jar
+     - smail/build/libs/*.jar
    expire_in: 1 week
 
 Test:
@@ -80,7 +80,7 @@ Test:
  artifacts:
    when: always
    reports:
-     junit: build/test-results/test/**/TEST-*.xml
+     junit: smail/build/test-results/test/**/TEST-*.xml
  coverage: '/Total.*?([0-9]{1,3})%/'
 
 Publish:
