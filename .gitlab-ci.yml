@@ -105,6 +105,7 @@ Deploy:
  stage: deploy
  image: alpine:latest
  before_script:
+   - export COMPOSE_HTTP_TIMEOUT=600
    - chmod 400 $SSH_KEY
    - apk update && apk add openssh-client
  script:
