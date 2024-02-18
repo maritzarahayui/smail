@@ -37,6 +37,5 @@ out/
 .vscode/
 
 ### Other ###
-.vercel
 gcp
 gcp.pub

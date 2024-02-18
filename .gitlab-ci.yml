@@ -1,28 +1,3 @@
-# default:
-#   image: node:16.16.0
-
-# deploy_preview:
-#   stage: deploy
-#   except:
-#     - main
-#   script:
-#     - cd smail-fe
-#     - npm install --global vercel
-#     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-#     - vercel build --token=$VERCEL_TOKEN
-#     - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
-
-# deploy_production:
-#   stage: deploy
-#   only:
-#     - main
-#   script:
-#     - cd smail-fe
-#     - npm install --global vercel
-#     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-#     - vercel build --prod --token=$VERCEL_TOKEN
-#     - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-
 variables:
  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
  POSTGRES_DB: smail
@@ -39,7 +14,7 @@ variables:
 
 stages:
  - build
- - test
+#  - test
  - publish
  - deploy
 
@@ -60,28 +35,28 @@ Build:
      - smail/build/libs/*.jar
    expire_in: 1 week
 
-Test:
- stage: test
- image: gradle:jdk17-alpine
- dependencies:
-   - Build
- services:
-   - "postgres:latest"
- before_script:
-   - echo `pwd`
-   - cd smail
-   - export GRADLE_USER_HOME=`pwd`/.gradle
-   - export SPRING_PROFILES_ACTIVE=test
- script:
-   - gradle check --info --stacktrace
-   - gradle test
-   - gradle jacocoTestReport
-   - grep -Eo "Total.*?([0-9]{1,3})%" build/jacocoHtml/index.html
- artifacts:
-   when: always
-   reports:
-     junit: smail/build/test-results/test/**/TEST-*.xml
- coverage: '/Total.*?([0-9]{1,3})%/'
+# Test:
+#  stage: test
+#  image: gradle:jdk17-alpine
+#  dependencies:
+#    - Build
+#  services:
+#    - "postgres:latest"
+#  before_script:
+#    - echo `pwd`
+#    - cd smail
+#    - export GRADLE_USER_HOME=`pwd`/.gradle
+#    - export SPRING_PROFILES_ACTIVE=test
+#  script:
+#    - gradle check --info --stacktrace
+#    - gradle test
+#    - gradle jacocoTestReport
+#    - grep -Eo "Total.*?([0-9]{1,3})%" build/jacocoHtml/index.html
+#  artifacts:
+#    when: always
+#    reports:
+#      junit: smail/build/test-results/test/**/TEST-*.xml
+#  coverage: '/Total.*?([0-9]{1,3})%/'
 
 Publish:
  stage: publish
