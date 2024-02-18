@@ -1,117 +1,117 @@
-default:
-  image: node:16.16.0
+# default:
+#   image: node:16.16.0
 
-deploy_preview:
-  stage: deploy
-  except:
-    - main
-  script:
-    - cd smail-fe
-    - npm install --global vercel
-    - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
-    - vercel build --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
+# deploy_preview:
+#   stage: deploy
+#   except:
+#     - main
+#   script:
+#     - cd smail-fe
+#     - npm install --global vercel
+#     - vercel pull --yes --environment=preview --token=$VERCEL_TOKEN
+#     - vercel build --token=$VERCEL_TOKEN
+#     - vercel deploy --prebuilt  --token=$VERCEL_TOKEN
 
-deploy_production:
-  stage: deploy
-  only:
-    - main
-  script:
-    - cd smail-fe
-    - npm install --global vercel
-    - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-    - vercel build --prod --token=$VERCEL_TOKEN
-    - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+# deploy_production:
+#   stage: deploy
+#   only:
+#     - main
+#   script:
+#     - cd smail-fe
+#     - npm install --global vercel
+#     - vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+#     - vercel build --prod --token=$VERCEL_TOKEN
+#     - vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
 
-# variables:
-#  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-#  POSTGRES_DB: smail
-#  POSTGRES_HOST: postgres
-#  POSTGRES_PORT: 5432
-#  POSTGRES_USER: postgres
-#  POSTGRES_PASSWORD: secret99
-#  REGISTRY_USER: $REGISTRY_USER
-#  IMAGE_NAME: $IMAGE_NAME
-#  IMAGE_TAG: latest
-#  CONTAINER_NAME: $CONTAINER_NAME
-#  GCP_USERNAME: $GCP_USERNAME
-#  GCP_STATIC_IP: $GCP_STATIC_IP
+variables:
+ GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+ POSTGRES_DB: smail
+ POSTGRES_HOST: postgres
+ POSTGRES_PORT: 5432
+ POSTGRES_USER: postgres
+ POSTGRES_PASSWORD: secret99
+ REGISTRY_USER: $REGISTRY_USER
+ IMAGE_NAME: $IMAGE_NAME
+ IMAGE_TAG: latest
+ CONTAINER_NAME: $CONTAINER_NAME
+ GCP_USERNAME: $GCP_USERNAME
+ GCP_STATIC_IP: $GCP_STATIC_IP
 
-# stages:
-#  - build
-#  - test
-#  - publish
-#  - deploy
+stages:
+ - build
+ - test
+ - publish
+ - deploy
 
-# Build:
-#  stage: build
-#  image: gradle:jdk17-alpine
-#  before_script:
-#    - echo `pwd`
-#    - cd smail
-#    - export GRADLE_USER_HOME=`pwd`/.gradle
-#  script:
-#    - gradle wrapper
-#    - ./gradlew assemble
-#    - ls
-#  artifacts:
-#    when: always
-#    paths:
-#      - smail/build/libs/*.jar
-#    expire_in: 1 week
+Build:
+ stage: build
+ image: gradle:jdk17-alpine
+ before_script:
+   - echo `pwd`
+   - cd smail
+   - export GRADLE_USER_HOME=`pwd`/.gradle
+ script:
+   - gradle wrapper
+   - ./gradlew assemble
+   - ls
+ artifacts:
+   when: always
+   paths:
+     - smail/build/libs/*.jar
+   expire_in: 1 week
 
-# Test:
-#  stage: test
-#  image: gradle:jdk17-alpine
-#  dependencies:
-#    - Build
-#  services:
-#    - "postgres:latest"
-#  before_script:
-#    - echo `pwd`
-#    - cd smail
-#    - export GRADLE_USER_HOME=`pwd`/.gradle
-#    - export SPRING_PROFILES_ACTIVE=test
-#  script:
-#    - gradle check --info --stacktrace
-#    - gradle test
-#    - gradle jacocoTestReport
-#    - grep -Eo "Total.*?([0-9]{1,3})%" build/jacocoHtml/index.html
-#  artifacts:
-#    when: always
-#    reports:
-#      junit: smail/build/test-results/test/**/TEST-*.xml
-#  coverage: '/Total.*?([0-9]{1,3})%/'
+Test:
+ stage: test
+ image: gradle:jdk17-alpine
+ dependencies:
+   - Build
+ services:
+   - "postgres:latest"
+ before_script:
+   - echo `pwd`
+   - cd smail
+   - export GRADLE_USER_HOME=`pwd`/.gradle
+   - export SPRING_PROFILES_ACTIVE=test
+ script:
+   - gradle check --info --stacktrace
+   - gradle test
+   - gradle jacocoTestReport
+   - grep -Eo "Total.*?([0-9]{1,3})%" build/jacocoHtml/index.html
+ artifacts:
+   when: always
+   reports:
+     junit: smail/build/test-results/test/**/TEST-*.xml
+ coverage: '/Total.*?([0-9]{1,3})%/'
 
-# Publish:
-#  stage: publish
-#  image: docker:latest
-#  services:
-#    - docker:dind
-#  dependencies:
-#    - Build
-#  before_script:
-#    - echo $DOCKER_PASSWORD| docker login -u $REGISTRY_USER --password-stdin docker.io
-#  script:
-#    - ls
-#    - docker build --build-arg PRODUCTION=$PRODUCTION --build-arg JDBC_DATABASE_URL=$JDBC_DATABASE_URL -t $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG .
-#    - docker push $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG
-#  tags:
-#    - dind 
-#  only:
-#    - main
+Publish:
+ stage: publish
+ image: docker:latest
+ services:
+   - docker:dind
+ dependencies:
+   - Build
+ before_script:
+   - echo $DOCKER_PASSWORD| docker login -u $REGISTRY_USER --password-stdin docker.io
+ script:
+   - ls
+   - docker build --build-arg PRODUCTION=$PRODUCTION --build-arg JDBC_DATABASE_URL=$JDBC_DATABASE_URL -t $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG .
+   - docker push $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG
+ tags:
+   - dind 
+ only:
+   - main
 
-# Deploy:
-#  stage: deploy
-#  image: alpine:latest
-#  before_script:
-#    - export COMPOSE_HTTP_TIMEOUT=600
-#    - chmod 400 $SSH_KEY
-#    - apk update && apk add openssh-client
-#  script:
-#    - ssh -o StrictHostKeyChecking=no -i $SSH_KEY $GCP_USERNAME@$GCP_STATIC_IP "
-#      docker container rm -f $CONTAINER_NAME || true &&
-#      docker image rm -f $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG || true &&
-#      docker run --name $CONTAINER_NAME -d -p 80:8080 $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG"
-#  only:
-#    - main
+Deploy:
+ stage: deploy
+ image: alpine:latest
+ before_script:
+   - export COMPOSE_HTTP_TIMEOUT=600
+   - chmod 400 $SSH_KEY
+   - apk update && apk add openssh-client
+ script:
+   - ssh -o StrictHostKeyChecking=no -i $SSH_KEY $GCP_USERNAME@$GCP_STATIC_IP "
+     docker container rm -f $CONTAINER_NAME || true &&
+     docker image rm -f $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG || true &&
+     docker run --name $CONTAINER_NAME -d -p 80:8080 $REGISTRY_USER/$IMAGE_NAME:$IMAGE_TAG"
+ only:
+   - main
