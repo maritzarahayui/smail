@@ -10,9 +10,9 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "request_surat")
+@Table(name = "request_template")
 
-public class RequestSurat {
+public class RequestTemplate {
     
     @Id
     private String id;
@@ -20,14 +20,6 @@ public class RequestSurat {
     @NotNull
     @Column(name = "kategori", nullable = false)
     private String kategori;
-
-    @NotNull
-    @Column(name = "jenis_surat", nullable = false)
-    private String jenisSurat;
-
-    @NotNull
-    @Column(name = "bentuk_surat", nullable = false)
-    private String bentukSurat;
 
     @NotNull
     @Column(name = "bahasa", nullable = false)
@@ -41,6 +33,10 @@ public class RequestSurat {
     @Column(name = "status", nullable = false)
     private int status;
 
+    // @NotNull
+    // @Column(name = "pengaju", nullable = false)
+    // private User pengaju;  // pending dl ya msh mikir 
+
     @NotNull
     @Column(name = "tanggal_pengajuan", nullable = false)
     private Date tanggalPengajuan;
@@ -51,24 +47,9 @@ public class RequestSurat {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    @Column(name = "alasan_pembatalan")
-    private String alasanPembatalan;
-
     
     /* RELATIONSHIPS */
-    // @ManyToOne
-    // @JoinColumn(name = "pengaju")
-    // private User pengaju;  // pending dl ya msh mikir 
-
-    @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "requestTemplate", cascade = CascadeType.ALL)
     private List<FieldData> listFieldData;
-
-    @ManyToOne
-    @JoinColumn(name = "template")
-    private TemplateSurat template;
-
-    @OneToOne
-    @JoinColumn(name = "surat")
-    private SuratKeluar surat;
-
+    
 }

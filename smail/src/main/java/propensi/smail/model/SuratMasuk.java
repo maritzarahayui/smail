@@ -15,26 +15,40 @@ import jakarta.validation.constraints.NotNull;
 public class SuratMasuk {
     
     @Id
-    private String noSurat;
+    @Column(name = "nomor_arsip", nullable = false)
+    private String nomorArsip;
 
     @NotNull
-    @Column(name = "jenis_surat", nullable = false)
-    private String jenisSurat;
+    @Column(name = "kategori", nullable = false)
+    private String kategori;
+
+    @NotNull
+    @Column(name = "perihal", nullable = false)
+    private String perihal;
+
+    @NotNull
+    @Column(name = "tanggal_dibuat", nullable = false)
+    private Date tanggalDibuat;
 
     @NotNull
     @Column(name = "status", nullable = false)
     private int status;
 
     @NotNull
-    @Column(name = "tanggal_dibuat", nullable = false)
-    private Date tanggalDibuat;
+    @Column(name = "pengirim", nullable = false)
+    private String pengirim; // email or nama pengirim
 
-    // @NotNull
-    // @Column(name = "file", nullable = false)
-    // private int file;
+    @Column(name = "tembusan")
+    private String tembusan; // email
 
-    // @NotNull  // one to one
-    // @Column(name = "surat_keluar", nullable = false)
-    // private SuratKeluar suratKeluar;
+    @Lob
+    @Column(name = "file", nullable = false)
+    private byte[] file;
+
+
+    /* RELATIONSHIPS */
+    @OneToOne
+    @JoinColumn(name = "surat_follow_up")
+    private SuratKeluar suratFollowUp;
 
 }

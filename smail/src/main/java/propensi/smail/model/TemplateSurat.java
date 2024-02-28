@@ -10,30 +10,36 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "surat_keluar")
+@Table(name = "template_surat")
 
-public class SuratKeluar {
-    
+public class TemplateSurat {
+  
     @Id
-    @Column(name = "nomor_arsip", nullable = false)
-    private String nomorArsip;
+    private String id;
 
     @NotNull
     @Column(name = "kategori", nullable = false)
     private String kategori;
 
-    @Column(name = "jenis_surat")
-    private String jenisSurat;
-
-    // @Column(name = "penerima")
-    // private User penerima;  // pending dl ya msh mikir 
-
-    @Column(name = "penerima_eksternal")
-    private String penerimaEksternal; // email
+    @NotNull
+    @Column(name = "nama_template", nullable = false)
+    private String namaTemplate;
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
     private Date tanggalDibuat;
+
+    @NotNull
+    @Column(name = "is_active", nullable = false)
+    private boolean isActive;
+
+    @NotNull
+    @Column(name = "list_pengguna", nullable = false)
+    private ArrayList<String> listPengguna;
+
+    @NotNull
+    @Column(name = "list_field", nullable = false)
+    private ArrayList<String> listField;
 
     @Lob
     @Column(name = "file", nullable = false)
@@ -41,8 +47,6 @@ public class SuratKeluar {
 
 
     /* RELATIONSHIPS */
-    // @ManyToOne
-    // @JoinColumn(name = "penandatangan")
-    // private Pengguna penandatangan;
+  
 
 }

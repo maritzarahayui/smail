@@ -1,9 +1,7 @@
 package propensi.smail.model;
 
 import lombok.*;
-
 import java.util.Date;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -13,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 @AllArgsConstructor
 @Entity
 @Table(name = "faq")
+
 public class FAQ {
     
     @Id
