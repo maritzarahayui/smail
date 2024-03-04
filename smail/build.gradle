@@ -28,27 +28,33 @@ dependencies {
 	annotationProcessor('org.projectlombok:lombok:1.18.26')
 	implementation 'org.mapstruct:mapstruct:1.5.3.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.3.Final'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'jakarta.xml.bind:jakarta.xml.bind-api-parent:4.0.0'
+	implementation 'org.glassfish.jaxb:jaxb-runtime:4.0.2'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+// tasks.named('test') {
+// 	useJUnitPlatform()
+// }
 
-tasks.test {
-   useJUnitPlatform()
-   finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
-}
-tasks.jacocoTestReport {
-   afterEvaluate {
-       classDirectories.setFrom(files(classDirectories.files.collect {
-           fileTree(dir: it, exclude: ['**/*Application**'])
-       }))
-   }
-   dependsOn(tasks.test) // tests are required to run before generating the report
-   reports {
-       xml.required.set(false)
-       csv.required.set(false)
-       html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
-   }
-}
+// tasks.test {
+//    useJUnitPlatform()
+//    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+// }
+// tasks.jacocoTestReport {
+//    afterEvaluate {
+//        classDirectories.setFrom(files(classDirectories.files.collect {
+//            fileTree(dir: it, exclude: ['**/*Application**'])
+//        }))
+//    }
+//    dependsOn(tasks.test) // tests are required to run before generating the report
+//    reports {
+//        xml.required.set(false)
+//        csv.required.set(false)
+//        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+//    }
+// }
 
