@@ -2,10 +2,8 @@ package propensi.smail.controller;
 
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
-
 import java.io.IOException;
 import java.util.Optional;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import propensi.smail.model.user.Pengguna;
@@ -24,7 +22,6 @@ public class BaseController {
     public String home(Model model, Authentication auth) {
 
         if (auth != null) {
-            // CustomOAuth2User oauthUser = (CustomOAuth2User) auth.getPrincipal();
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
             Optional<Pengguna> user = penggunaDb.findByEmail(email);
@@ -49,7 +46,6 @@ public class BaseController {
     public String login(Authentication auth) {
 
         if (auth != null) {
-            // CustomOAuth2User oauthUser = (CustomOAuth2User) auth.getPrincipal();
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
 
             String email = oauthUser.getEmail();

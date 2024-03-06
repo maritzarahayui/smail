@@ -58,12 +58,6 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
-    // @Override
-    // public boolean validatePengguna(String email) {
-    //     Optional<Pengguna> pengguna = penggunaDb.findByEmail(email);
-    //     return !pengguna.equals(null);
-    // }
-
     @Override
     public boolean validatePengguna(String email) {
         Optional<Pengguna> existUser = penggunaDb.findByEmail(email);

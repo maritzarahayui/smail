@@ -1,12 +1,15 @@
 package propensi.smail.security;
 
-
+import java.util.*;
 import java.io.IOException;
 import java.security.Permission;
-import java.util.*;
 import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -14,22 +17,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
-// import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.beans.factory.annotation.Autowired;
+// import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+
 import propensi.smail.model.user.*;
 import propensi.smail.repository.PenggunaDb;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import propensi.smail.service.AuthService;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
 public class WebSecurityConfig {
 
@@ -39,47 +43,44 @@ public class WebSecurityConfig {
     @Autowired
     AuthService authService;
 
+    @Autowired
+    ClientRegistrationRepository clientRegistrationRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-         System.out.println("Configuring http filterChain");
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/secured").hasAnyAuthority("ADMIN","STAF","DOSEN","MAHASISWA","PENGURUS")
-                        .requestMatchers("/staf").hasAnyAuthority("STAF")
-                        .requestMatchers("/admin").hasAnyAuthority("ADMIN")
-                        .anyRequest().authenticated()
-                )
-                .oauth2Login()
-                        .userInfoEndpoint()
-                        .userAuthoritiesMapper(authoritiesMapper())
-                        .and()
-                        .successHandler(new AuthenticationSuccessHandler() {
-                                @Override
-                                public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-                                        Authentication auth) throws IOException, ServletException {
+                    .requestMatchers("/").permitAll()
+                    .requestMatchers("/secured").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
+                    .requestMatchers("/staf").hasAnyAuthority("STAF")
+                    .requestMatchers("/admin").hasAnyAuthority("ADMIN")
+                    .anyRequest().authenticated())
+                
+                .oauth2Login(oauth2 -> oauth2
+                    .userInfoEndpoint(userInfo -> userInfo.userAuthoritiesMapper(authoritiesMapper()))
+                    .successHandler(new AuthenticationSuccessHandler() {
+                        @Override
+                        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
                                 System.out.println("SEBELUMMM CASTING");
-                                // DefaultOidcUser oauthUser = (DefaultOidcUser) auth.getPrincipal();
-                                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+
+                                OidcUser oidcUser = (OidcUser) authentication.getPrincipal();
+                                String email = oidcUser.getEmail();
                                 System.out.println("SESUDAH CASTING");
-
-                                String email = oauthUser.getEmail();
-
-                                        if (authService.validatePengguna(email)) {
-                                                response.sendRedirect("/");
-                                        } else {
-                                                response.sendRedirect("/invalid-auth");
-                                        }
-
+    
+                                if (authService.validatePengguna(email)) {
+                                        response.sendRedirect("/");
+                                } else {
+                                        response.sendRedirect("/invalid-auth");
                                 }
-                        });
-//                .and()
-//                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/").permitAll();
-
+                        }
+                    })
+                    .authorizationEndpoint()
+                    .authorizationRequestResolver(new CustomAuthorizationRequestResolver(clientRegistrationRepository))
+                )
+                .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/").permitAll();
         return http.build();
     }
-
 
     @Bean
     public GrantedAuthoritiesMapper authoritiesMapper() {
@@ -126,8 +127,4 @@ public class WebSecurityConfig {
 //         return new SpringSecurityDialect();
 //     }
 
-
 }
-
-
-            
