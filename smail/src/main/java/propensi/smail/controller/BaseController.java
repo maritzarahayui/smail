@@ -1,18 +1,67 @@
 package propensi.smail.controller;
 
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
+import java.util.Optional;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import propensi.smail.model.user.Pengguna;
+import propensi.smail.repository.PenggunaDb;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+
 
 @Controller
 public class BaseController {
     
+    @Autowired
+    PenggunaDb penggunaDb;
+
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(Model model, Authentication auth) {
+
+        if (auth != null) {
+            // CustomOAuth2User oauthUser = (CustomOAuth2User) auth.getPrincipal();
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("nama", pengguna.getNama());
+                model.addAttribute("email", email);
+                model.addAttribute("email_pengguna", pengguna.getEmail());
+                model.addAttribute("id", pengguna.getId());
+
+            } else {
+                return "auth-failed";
+            }
+
+        }
+
         return "home";
+    }
+
+    @GetMapping("/login")
+    public String login(Authentication auth) {
+
+        if (auth != null) {
+            // CustomOAuth2User oauthUser = (CustomOAuth2User) auth.getPrincipal();
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                return "home";
+            } else {
+                return "auth-failed";
+            }
+
+        } return "login";
     }
 
     @GetMapping("/secured")
@@ -20,23 +69,23 @@ public class BaseController {
         return "logged-in";
     }
 
-    // @GetMapping("/login")
-    // public String login(Authentication authentication) throws IOException {
-    //     if (authentication instanceof OAuth2AuthenticationToken) {
-    //         OAuth2AuthenticationToken oauthToken = (OAuth2AuthenticationToken) authentication;
-    //         String email = oauthToken.getPrincipal().getAttribute("email");
-    //         // Menggunakan role default jika tidak ada informasi role dari token OAuth2
-    //         String role = "default";
-    //         if (csvDataReader.isValidUser(email, role)) {
-    //             // Login berhasil
-    //             return "redirect:/home";
-    //         } else {
-    //             // Akun tidak valid, tampilkan pesan kesalahan
-    //             return "redirect:/error?message=Invalid account, please use a registered account.";
-    //         }
-    //     } else {
-    //         // Tidak didukung untuk autentikasi selain OAuth2
-    //         return "redirect:/error?message=Unsupported authentication method.";
-    //     }
-    // }
+    @GetMapping("/invalid-auth")
+    public String failed() {
+        return "auth-failed";
+    }
+
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
+    @GetMapping("/staf")
+    public String staf() {
+        return "staf";
+    }
+
+
+
+
+    
 }

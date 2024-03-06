@@ -1,7 +1,10 @@
 package propensi.smail.service;
 
 import java.io.*;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import propensi.smail.model.user.*;
 import propensi.smail.repository.PenggunaDb;
@@ -45,6 +48,7 @@ public class AuthServiceImpl implements AuthService {
                 } else if (role.equalsIgnoreCase("Mahasiswa")) {
                     pengguna = new Mahasiswa();
                 }
+                System.out.println("HAAALOOOOOOO");
 
                 pengguna.setId(id);
                 pengguna.setEmail(email);
@@ -54,10 +58,16 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    // @Override
+    // public boolean validatePengguna(String email) {
+    //     Optional<Pengguna> pengguna = penggunaDb.findByEmail(email);
+    //     return !pengguna.equals(null);
+    // }
+
     @Override
     public boolean validatePengguna(String email) {
-        Pengguna pengguna = penggunaDb.findByEmail(email);
-        return !pengguna.equals(null);
+        Optional<Pengguna> existUser = penggunaDb.findByEmail(email);
+        return existUser.isPresent();
     }
 
 }

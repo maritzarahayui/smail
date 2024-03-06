@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "pengguna")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-public class Pengguna implements UserDetails {
+public class Pengguna {
     
     @Id
     private String id;      // NPM - NIP 
@@ -33,53 +33,5 @@ public class Pengguna implements UserDetails {
     @NotNull
     @Column(name = "nama", nullable = false)
     private String nama;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        if (this instanceof Admin) {
-            authorities.add(new SimpleGrantedAuthority("ADMIN"));
-        } else if (this instanceof Pengurus) {
-            authorities.add(new SimpleGrantedAuthority("PENGURUS"));
-        } else if (this instanceof Dosen) {
-            authorities.add(new SimpleGrantedAuthority("DOSEN"));
-        } else if (this instanceof Staf) {
-            authorities.add(new SimpleGrantedAuthority("STAF"));
-        } else if (this instanceof Mahasiswa) {
-            authorities.add(new SimpleGrantedAuthority("MAHASISWA"));
-        }
-
-        return authorities;
-    }
-    
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
-    }
-
-    @Override
-    public String getPassword() {
-        return "";
-    }
     
 }
