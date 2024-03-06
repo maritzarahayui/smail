@@ -1,10 +1,10 @@
-package propensi.smail.controller;
+package propensi.smail.restcontroller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/surat-masuk")
-public class SuratMasukController {
+@RequestMapping("/api/template")
+public class TemplateController {
     
 }

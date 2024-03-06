@@ -14,8 +14,12 @@ import jakarta.validation.constraints.NotNull;
 
 public class RequestTemplate {
     
+//    @Id
+//    private String id;
+
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column(name = "kategori", nullable = false)

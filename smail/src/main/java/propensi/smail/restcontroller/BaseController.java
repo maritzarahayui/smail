@@ -1,4 +1,4 @@
-package propensi.smail.controller;
+package propensi.smail.restcontroller;
 
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
