@@ -15,7 +15,8 @@ import jakarta.validation.constraints.NotNull;
 public class RequestSurat {
     
     @Id
-    private String id;
+    // private String id;
+    private UUID id = UUID.randomUUID();
 
     @NotNull
     @Column(name = "kategori", nullable = false)
@@ -60,15 +61,19 @@ public class RequestSurat {
     // @JoinColumn(name = "pengaju")
     // private User pengaju;  // pending dl ya msh mikir 
 
-    @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
-    private List<FieldData> listFieldData;
+    // @ManyToOne
+    // @JoinColumn(name = "pengaju")
+    // private Pengguna pengaju;
+    
+    // @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
+    // private List<FieldData> listFieldData;
 
-    @ManyToOne
-    @JoinColumn(name = "template")
-    private TemplateSurat template;
+    // @ManyToOne
+    // @JoinColumn(name = "template")
+    // private TemplateSurat template;
 
-    @OneToOne
-    @JoinColumn(name = "surat")
-    private SuratKeluar surat;
+    // @OneToOne
+    // @JoinColumn(name = "surat")
+    // private SuratKeluar surat;
 
 }
