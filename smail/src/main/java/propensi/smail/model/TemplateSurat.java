@@ -31,7 +31,7 @@ public class TemplateSurat {
 
     @NotNull
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
 
     @NotNull
     @Column(name = "list_pengguna", nullable = false)
@@ -41,9 +41,9 @@ public class TemplateSurat {
     @Column(name = "list_field", nullable = false)
     private ArrayList<String> listField;
 
-    @Lob
-    @Column(name = "file", nullable = false)
-    private byte[] file;
+//    @Lob
+//    @Column(name = "file", nullable = false)
+//    private byte[] file;
 
 
     /* RELATIONSHIPS */
