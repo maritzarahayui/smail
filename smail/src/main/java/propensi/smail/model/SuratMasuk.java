@@ -2,6 +2,9 @@ package propensi.smail.model;
 
 import lombok.*;
 import java.util.*;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,6 +18,8 @@ import jakarta.validation.constraints.NotNull;
 public class SuratMasuk {
     
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
 
@@ -44,6 +49,11 @@ public class SuratMasuk {
     @Lob
     @Column(name = "file", nullable = false)
     private byte[] file;
+
+    // filename
+    @NotNull
+    @Column(name = "file_name")
+    private String fileName;
 
 
     /* RELATIONSHIPS */
