@@ -51,9 +51,10 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/").permitAll()
-                    .requestMatchers("/secured").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
-                    .requestMatchers("/staf").hasAnyAuthority("STAF")
-                    .requestMatchers("/admin").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                    .requestMatchers("/profile").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
+                    // .requestMatchers("/staf").hasAnyAuthority("STAF")
+                    // .requestMatchers("/admin").hasAnyAuthority("ADMIN")
                     .anyRequest().authenticated())
                 
                 .oauth2Login(oauth2 -> oauth2

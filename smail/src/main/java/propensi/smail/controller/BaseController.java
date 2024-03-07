@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.service.PenggunaService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 
@@ -17,6 +19,9 @@ public class BaseController {
     
     @Autowired
     PenggunaDb penggunaDb;
+
+    @Autowired
+    PenggunaService penggunaService;
 
     @GetMapping("/")
     public String home(Model model, Authentication auth) {
@@ -42,6 +47,29 @@ public class BaseController {
         return "home";
     }
 
+    @GetMapping("/profile")
+    public String profile(Model model, Authentication auth) {
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("nama", pengguna.getNama());
+                model.addAttribute("id", pengguna.getId());
+                model.addAttribute("email", pengguna.getEmail());
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+            } else {
+                return "auth-failed";
+            }
+
+        }
+
+        return "profile";
+    }
+
     @GetMapping("/login")
     public String login(Authentication auth) {
 
@@ -60,25 +88,25 @@ public class BaseController {
         } return "login";
     }
 
-    @GetMapping("/secured")
-    public String secured() {
-        return "logged-in";
-    }
+    // @GetMapping("/secured")
+    // public String secured() {
+    //     return "logged-in";
+    // }
 
     @GetMapping("/invalid-auth")
     public String failed() {
         return "auth-failed";
     }
 
-    @GetMapping("/admin")
-    public String admin() {
-        return "admin";
-    }
+    // @GetMapping("/admin")
+    // public String admin() {
+    //     return "admin";
+    // }
 
-    @GetMapping("/staf")
-    public String staf() {
-        return "staf";
-    }
+    // @GetMapping("/staf")
+    // public String staf() {
+    //     return "staf";
+    // }
 
 
 
