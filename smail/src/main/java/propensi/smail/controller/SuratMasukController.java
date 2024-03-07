@@ -60,6 +60,7 @@ public class SuratMasukController {
         return ResponseEntity.status(HttpStatus.OK).body(fileNames);
     }
 
+    // download file
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
         SuratMasuk file = suratMasukService.getFile(id);
@@ -67,6 +68,13 @@ public class SuratMasukController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
                 .body(file.getFile());
+    }
+
+    // get detail of surat masuk
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<SuratMasuk> getDetailSuratMasuk(@PathVariable String id) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id);
+        return ResponseEntity.ok().body(suratMasuk);
     }
     
 
