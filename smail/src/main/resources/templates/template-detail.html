@@ -18,14 +18,23 @@
             <p><b>Status: </b>
                 <span th:text="${template.isActive} ? 'Active' : 'Inactive'"></span>
             </p>
-            <p><b>List Pengguna: </b><span th:text="${template.listPengguna}"></span></p>
-            <p><b>List Field: </b><span th:text="${template.listField}"></span></p>
+            <p><b>List Pengguna: </b></p>
+            <div th:each="user : ${template.listPengguna}">
+                <input type="text" class="form-control" th:value="${user}" readonly>
+            </div>
+            <br>
+            <p><b>List Field: </b></p>
+            <!-- Iterate over listField and display input fields -->
+            <div th:each="field : ${template.listField}">
+                <input type="text" class="form-control" th:value="${field}" readonly>
+            </div>
             <p><b>File: </b></p>
             <!-- Embed PDF using Base64 content -->
             <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
         </div>
     </div>
-    <a href="/template/active-templates" class="btn btn-primary">Back to Templates</a>
+    <a href="/template/active-templates" class="btn btn-secondary">Back to Templates</a>
+    <a th:href="@{'/template/update/' + ${template.id}}" class="btn btn-primary">Update Template</a>
     <a th:href="@{'/template/soft-delete/' + ${template.id}}" class="btn btn-danger">Delete Template</a>
 </div>
 </body>

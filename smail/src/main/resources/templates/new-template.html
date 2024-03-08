@@ -12,7 +12,14 @@
     <form action="/template/new-template" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="kategori">Kategori:</label>
-            <input type="text" class="form-control" id="kategori" name="kategori" required>
+            <select class="form-control" id="kategori" name="kategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                <option value="Legal">Legal</option>
+                <option value="SDM">SDM</option>
+                <option value="Keuangan">Keuangan</option>
+                <option value="Sarana">Sarana</option>
+                <option value="Kemahasiswaan">Kemahasiswaan</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="namaTemplate">Nama Template:</label>
@@ -21,15 +28,15 @@
         <div class="form-group">
             <label for="listPengguna">List Pengguna:</label><br>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna1" name="listPengguna" value="Pengguna 1">
+                <input class="form-check-input" type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa">
                 <label class="form-check-label" for="pengguna1">Mahasiswa</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna2" name="listPengguna" value="Pengguna 2">
+                <input class="form-check-input" type="checkbox" id="pengguna2" name="listPengguna" value="Dosen">
                 <label class="form-check-label" for="pengguna2">Dosen</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna3" name="listPengguna" value="Pengguna 3">
+                <input class="form-check-input" type="checkbox" id="pengguna3" name="listPengguna" value="Staff">
                 <label class="form-check-label" for="pengguna2">Staff</label>
             </div>
         </div>
@@ -40,28 +47,56 @@
 
         <div class="form-group">
             <label for="file">Upload File:</label>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file">
+                    <label class="custom-file-label" for="file" text="Choose file">Choose file</label>
+                </div>
+            </div>
         </div>
         <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
-        <button type="submit" class="btn btn-primary">Tambah Template</button>
+        <button type="submit" class="btn btn-primary" onclick="submitForm()">Tambah Template</button>
     </form>
 </div>
 
 <script>
-    let rowCounter = 1;
+let listFieldValues = []; // Array to store input values
 
-    function addRow() {
-    rowCounter++;
+function addRow() {
     let newInput = document.createElement('input');
     newInput.type = 'text';
     newInput.className = 'form-control listField';
-    newInput.id = 'listField' + rowCounter;
-    newInput.name = 'listField' + rowCounter; // Unique name for each input
-    newInput.required = true;
+    newInput.name = 'listField'; // Set the name as listField
 
     let container = document.getElementById('listFieldContainer');
     container.appendChild(document.createElement('br'));
     container.appendChild(newInput);
+
+    // Add event listener to the new input field to capture its value
+    newInput.addEventListener('input', function() {
+        listFieldValues.push(newInput.value); // Push the value to the array
+    });
+}
+
+// Function to submit the form
+function submitForm() {
+    // Add the listFieldValues array to the form data before submitting
+    let formData = new FormData();
+    for (let i = 0; i < listFieldValues.length; i++) {
+        formData.append('listField', listFieldValues[i]);
+    }
+
+    // Submit the form
+    fetch('/template/new-template', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        // Handle response as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
 </script>

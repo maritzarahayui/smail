@@ -19,28 +19,37 @@
             <input type="text" class="form-control" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required>
         </div>
         <div class="form-group">
-            <label for="listPengguna">List Pengguna:</label><br>
+            <label>List Pengguna:</label><br>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna1" name="listPengguna" value="Pengguna 1">
+                <input class="form-check-input" type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa" th:checked="${template.listPengguna.contains('Mahasiswa')}">
                 <label class="form-check-label" for="pengguna1">Mahasiswa</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna2" name="listPengguna" value="Pengguna 2">
+                <input class="form-check-input" type="checkbox" id="pengguna2" name="listPengguna" value="Dosen" th:checked="${template.listPengguna.contains('Dosen')}">
                 <label class="form-check-label" for="pengguna2">Dosen</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="pengguna3" name="listPengguna" value="Pengguna 3">
-                <label class="form-check-label" for="pengguna2">Staff</label>
+                <input class="form-check-input" type="checkbox" id="pengguna3" name="listPengguna" value="Staff" th:checked="${template.listPengguna.contains('Staff')}">
+                <label class="form-check-label" for="pengguna3">Staff</label>
             </div>
         </div>
         <div class="form-group" id="listFieldContainer">
             <label for="listField">List Field:</label><br>
-            <input type="text" class="form-control" id="listField1" name="listField" th:value="${template.listField}" required>
+            <!-- Loop through each element in the listField -->
+            <th:block th:each="field : ${template.listField}">
+                <input type="text" class="form-control" th:value="${field}" name="listField" required>
+                <br>
+            </th:block>
         </div>
 
         <div class="form-group">
             <label for="file">Upload File:</label>
-            <input type="file" class="form-control-file" id="file" name="file">
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" name="file">
+                    <label class="custom-file-label" for="file" th:text="${template.fileName} ? ${template.fileName} : 'Choose file'">Choose file</label>
+                </div>
+            </div>
         </div>
         <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
         <button type="submit" class="btn btn-primary">Update Template</button>
@@ -51,19 +60,18 @@
     let rowCounter = 1;
 
     function addRow() {
-    rowCounter++;
-    let newInput = document.createElement('input');
-    newInput.type = 'text';
-    newInput.className = 'form-control listField';
-    newInput.id = 'listField' + rowCounter;
-    newInput.name = 'listField' + rowCounter; // Unique name for each input
-    newInput.required = true;
+        rowCounter++;
+        let newInput = document.createElement('input');
+        newInput.type = 'text';
+        newInput.className = 'form-control listField';
+        newInput.id = 'listField' + rowCounter;
+        newInput.name = 'listField'; // Ensure the name is the same for all inputs
+        newInput.required = true;
 
-    let container = document.getElementById('listFieldContainer');
-    container.appendChild(document.createElement('br'));
-    container.appendChild(newInput);
-}
-
+        let container = document.getElementById('listFieldContainer');
+        container.appendChild(document.createElement('br'));
+        container.appendChild(newInput);
+    }
 </script>
 
 </body>

@@ -48,8 +48,5 @@ public class TemplateSurat {
     @Column(name = "file_name")
     private String fileName;
 
-
     /* RELATIONSHIPS */
-
-
 }

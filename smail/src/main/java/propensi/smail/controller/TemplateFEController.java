@@ -18,10 +18,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/template")
@@ -60,22 +57,21 @@ public class TemplateFEController {
                                  @RequestParam("kategori") String kategori,
                                  @RequestParam("namaTemplate") String namaTemplate,
                                  @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                 @RequestParam("listField") ArrayList<String> listField,
+                                 @RequestParam("listField") String[] listField,
                                  Model model) {
             String message = "";
-            String viewName = "active-templates"; // Define the name of your success view
 
             try {
-                templateSuratService.store(file, kategori, namaTemplate, listField, listPengguna);
+                ArrayList<String> newListField = new ArrayList<>(Arrays.asList(listField));
+                templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField);
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 model.addAttribute("message", message);
+                return "redirect:/template/active-templates";
             } catch (Exception e) {
                 message = "Could not upload the file: " + file.getOriginalFilename() + "!";
                 model.addAttribute("errorMessage", message);
-                viewName = "template_error"; // Define the name of your error view
+                return "redirect:/template/active-templates";
             }
-
-            return viewName;
         }
 
         @GetMapping("/detail/{id}")
@@ -128,20 +124,18 @@ public class TemplateFEController {
                                      @RequestParam("listField") ArrayList<String> listField,
                                      Model model) {
             String message = "";
-            String viewName = "active-templates"; // Define the name of your success view
 
             try {
                 // Update the template with the provided data
                 templateSuratService.updateTemplate(id, file, kategori, namaTemplate, listPengguna, listField);
                 message = "Template updated successfully";
                 model.addAttribute("message", message);
+                return "redirect:/template/detail/{id}";
             } catch (Exception e) {
                 message = "Failed to update the template: " + e.getMessage();
                 model.addAttribute("errorMessage", message);
-                viewName = "template_error"; // Define the name of your error view
+                return "redirect:/template/detail/{id}";
             }
-
-            return viewName;
         }
 
 
