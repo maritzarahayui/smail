@@ -6,13 +6,6 @@
   font-family: Rubik;
 }
 
-/* body {
-  margin-right: 10;
-  margin-left: 10;
-
-  margin: 0;
-} */
-
 nav {
   position: sticky;
   top: 10px;
@@ -62,16 +55,11 @@ nav .navbar .links li a{
   font-weight: 500;
 }
 
-/* .links li:hover .htmlcss-arrow,
-.links li:hover .js-arrow{
-  transform: rotate(180deg);
-} */
-
 .links li:hover .htmlCss-arrow,
 .links li:hover .js-arrow,
 .htmlCss-sub-menu.show,
 .dropdownContent.show {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 nav .navbar .links li .arrow{
@@ -86,35 +74,45 @@ nav .navbar .links li .arrow{
 
 nav .navbar .links li .sub-menu{
   position: absolute;
-  top: 100%;
+  top: 70%;
   background-color: #b1cdb8;
   color: #253237;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  padding: 10px;
+  padding: 2px;
   display: none;
-  z-index: 2;
-  left: auto;
+  z-index: 999;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 nav .navbar .links li:hover .htmlCss-sub-menu,
 nav .navbar .links li:hover .js-sub-menu{
-  display: block;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
 }
 
 nav .navbar .links li .sub-menu li {
-    border-bottom: none;
-    margin-top: 8px;
-    margin-bottom: 8px;
+  border-bottom: none;
+  padding: 2px;
+  margin: 0;
+}
+
+.linehrz {
+  margin: 2px 0;
+  width: 80%;
+  border: none;
+  border-top: 1px solid rgba(16, 15, 15, 0.2);
 }
 
 nav .navbar .links li .sub-menu a {
-    color: #253237;
-    font-size: 15px;
-    font-weight: 500;
-    display: block;
-    text-decoration: none;
+  color: #253237;
+  font-size: 15px;
+  font-weight: 500;
+  display: block;
+  text-decoration: none;
 }
 
 .navbar .nav-links .sidebar-logo{
@@ -182,17 +180,17 @@ nav .navbar .links li .sub-menu a {
     background-color: #b1cdb8;
     color: #253237;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
-    z-index: 1;
+    z-index: 999;
     padding: 20px;
     border-radius: 12px;
     right: 0;
     left: auto;
-    transform: translateY(-5%);
+    width: 152px;
 }
 
 .buttonWrapper:hover .dropdownContent {
     display: block;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 
 .dropdownContent a {
@@ -202,8 +200,9 @@ nav .navbar .links li .sub-menu a {
 
 .iconTextContainer {
     display: flex;
+    flex-direction: row;
     align-items: center;
-    margin-bottom: 8px;
+    justify-content: center;
 }
 
 .profile,
