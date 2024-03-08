@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ import propensi.smail.service.SuratMasukService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 @RequestMapping("/api/surat-masuk")
 public class SuratMasukController {
 
@@ -77,6 +78,23 @@ public class SuratMasukController {
         return ResponseEntity.ok().body(suratMasuk);
     }
     
+    // route to form-upload-surat
+    @GetMapping("/form")
+    public String formUploadSurat(Model model) {
+        return "form-surat-masuk";
+    }
+
+    // route to semua-surat-masuk
+    @GetMapping("/daftar-arsip")
+    public String semuaSuratMasuk(Model model) {
+        return "semua-surat-masuk";
+    }
+
+    // route to detail-surat-masuk
+    @GetMapping("/detail-surat-masuk")
+    public String detailSuratMasuk(Model model) {
+        return "detail-surat-masuk";
+    }
 
     
     

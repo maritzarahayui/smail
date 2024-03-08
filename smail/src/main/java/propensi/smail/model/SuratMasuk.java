@@ -48,13 +48,14 @@ public class SuratMasuk {
 
     @Lob
     @Column(name = "file", nullable = false)
-    private byte[] file;
+    private byte[] file; 
 
-    // filename
     @NotNull
     @Column(name = "file_name")
-    private String fileName;
+    private String fileName; // filename
 
+    @Column(name = "link")
+    private String link; // link drive
 
     /* RELATIONSHIPS */
     @OneToOne
