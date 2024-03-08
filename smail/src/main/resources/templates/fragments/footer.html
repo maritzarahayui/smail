@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
+    <link rel="stylesheet" th:href="@{/css/footer.css}"/>
+</head>
+
+<body>
+    <div th:fragment="footer" class="wrapper">
+        <div class="footer">
+            <header class="frameRoot">
+            <div class="devTeamFrame">
+                <div class="developedByRtx">Developed by rt(x) Team</div>
+                <div class="propensiD02">Propensi D02</div>
+            </div>
+
+            <div class="collaboratorFrames">
+                <div class="inCollaborationWith">
+                In collaboration with
+                </div>
+
+                <div class="fasilkomRectangle">
+                <img
+                    class="tazkiaIcon"
+                    loading="lazy"
+                    alt=""
+                    th:src="@{/images/tazkia.svg}"
+                />
+
+                <img
+                    class="fasilkomIcon"
+                    loading="lazy"
+                    alt=""
+                    th:src="@{/images/fasilkom.svg}"
+                />
+                </div>
+            </div>
+            </header>
+            
+            <footer class="footerCopyright">
+            <b class="copyright2024Tazkia">
+                © Copyright 2024 Tazkia Institute. All Rights Reserved.
+            </b>
+            </footer>
+        </div> 
+    </div> 
+</body>
+</html>
