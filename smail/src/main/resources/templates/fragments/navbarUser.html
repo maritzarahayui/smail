@@ -9,12 +9,13 @@
   <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     
   <link rel="stylesheet" th:href="@{/css/navbarUser.css}"/>
+  <script th:src="@{/js/script.js}"></script>
 </head>
 
 <body>
-    <nav th:fragment="navbarUser">
+    <nav th:fragment="navbarUser" id="navbar">
         <div class="navbar">
-            <i class='bx bx-menu'></i>
+            <i id="menuIcon" class='bx bx-menu'></i>
             <div class="logo">
                 <!-- <a href="home.html">CodingLab</a> -->
                 <img
@@ -79,5 +80,6 @@
     </nav>
 
   <script th:src="@{/js/script.js}"></script>
+  
 </body>
 </html>
