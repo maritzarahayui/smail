@@ -1,16 +1,88 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+  </head>
 
-<head>
-	<title>
-		SMAIL
-	</title>
-</head>
+  <body>
+    <div class="homepage">
+      <section class="frame-a">
+        <header class="navbar">
+          <div class="wrapper-group-7-parent">
+            <div class="wrapper-group-7">
+				<img class="wrapper-group-7-child" loading="lazy" alt="" src="/images/logo-smail-lg.svg"/>
+            </div>
+            <div class="slogan-text">
+              <b class="smail">SMAIL</b>
+            </div>
+          </div>
+          <div class="navbar-child"></div>
+        </header>
+        <div class="button-frame-a">
+          <div class="google-sign-i-n">
+            <div class="sub-f-r-a-m-e-b">
+              <div class="wrapper-group-71">
+				<img class="wrapper-group-7-item" loading="lazy" alt="" src="/images/logo-smail-lg.svg"/>
+              </div>
+              <div class="text-frame-a">
+                <div class="welcome-label">
+                  <div class="selamat-datang-di">Selamat datang di</div>
+                  <div class="button-text-a">
+                    <b class="smail1">SMAIL</b>
+                    <div class="institut-tazkia">Institut Tazkia</div>
+                  </div>
+                </div>
 
-<body>
-	Hello World!
-	
-</body>
+				<!-- <a id="button-google" class="btn" th:href= "@{/oauth2/authorization/google}" role="button" style="text-transform:none" >
+					<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+					Masuk dengan Google
+				</a> -->
 
+                <a class="button" th:href= "@{/oauth2/authorization/google}">
+                  <img class="uimgoogle-icon" alt="" src="/images/google.svg"/>
+                  <div class="button1">Masuk dengan Google</div>
+				</a>
+              </div>
+            </div>
+            <div class="group-b">
+				<img class="group-of-frames" loading="lazy" alt="" src="/images/group-surat.svg"/>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="first-vector-frame">
+        <img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
+
+        <footer class="sekilas-info-frame">
+          <div class="about-s-m-a-i-l-system">
+            <b class="sekilas-mengenai-smail-container">
+              <span class="sekilas-mengenai-smail-container1">
+                <span class="sekilas">Sekilas</span>
+                <span> Mengenai SMAIL</span>
+              </span>
+            </b>
+          </div>
+          <div class="smail-adalah-sistem-container">
+            <span class="smail-adalah-sistem-container1">
+              <b>SMAIL</b>
+              <span class="adalah-sistem-persuratan">
+                adalah sistem persuratan dan disposisi yang digunakan untuk
+                melakukan aktivitas persuratan di Institut Tazkia agar menjadi
+                lebih cepat dan efisien. Melalui SMAIL, pengguna bisa lebih
+                cepat dalam mengetahui progres surat.</span
+              >
+            </span>
+          </div>
+        </footer>
+      </section>
+    </div>
+  </body>
 </html>
-

@@ -44,7 +44,7 @@ public class BaseController {
 
         }
 
-        return "home";
+        return "login";
     }
 
     @GetMapping("/profile")
