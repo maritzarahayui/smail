@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Template</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Tambah Template</h2>
+    <form action="/template/new-template" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="kategori">Kategori:</label>
+            <input type="text" class="form-control" id="kategori" name="kategori" required>
+        </div>
+        <div class="form-group">
+            <label for="namaTemplate">Nama Template:</label>
+            <input type="text" class="form-control" id="namaTemplate" name="namaTemplate" required>
+        </div>
+        <div class="form-group">
+            <label for="listPengguna">List Pengguna:</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="pengguna1" name="listPengguna" value="Pengguna 1">
+                <label class="form-check-label" for="pengguna1">Mahasiswa</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="pengguna2" name="listPengguna" value="Pengguna 2">
+                <label class="form-check-label" for="pengguna2">Dosen</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="pengguna3" name="listPengguna" value="Pengguna 3">
+                <label class="form-check-label" for="pengguna2">Staff</label>
+            </div>
+        </div>
+        <div class="form-group" id="listFieldContainer">
+            <label for="listField">List Field:</label><br>
+            <input type="text" class="form-control" id="listField1" name="listField" required>
+        </div>
+
+        <div class="form-group">
+            <label for="file">Upload File:</label>
+            <input type="file" class="form-control-file" id="file" name="file">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="addRow()">Add Row</button>
+        <button type="submit" class="btn btn-primary">Tambah Template</button>
+    </form>
+</div>
+
+<script>
+    let rowCounter = 1;
+
+    function addRow() {
+    rowCounter++;
+    let newInput = document.createElement('input');
+    newInput.type = 'text';
+    newInput.className = 'form-control listField';
+    newInput.id = 'listField' + rowCounter;
+    newInput.name = 'listField' + rowCounter; // Unique name for each input
+    newInput.required = true;
+
+    let container = document.getElementById('listFieldContainer');
+    container.appendChild(document.createElement('br'));
+    container.appendChild(newInput);
+}
+
+</script>
+
+
+</body>
+</html>

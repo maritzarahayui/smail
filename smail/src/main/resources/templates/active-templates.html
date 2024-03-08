@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Templates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Paste the second block of CSS code here */
+        .search-container {
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type=text] {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-container button {
+            border-radius: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="search-container mb-4">
+        <form action="/template/search" method="get">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search by Nama Template..." name="namaTemplate">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <a th:href="@{/template/new-template}"  class="btn btn-primary mb-4">Tambah Template</a>
+    <h2>Active Templates</h2>
+    <div th:each="template : ${activeTemplates}" class="card mb-4">
+        <div class="card-body">
+            <h3 th:text="${template.namaTemplate}"></h3>
+            <p><b>ID: </b><span th:text="${template.id}"></span></p>
+            <p><b>Kategori: </b><span th:text="${template.kategori}"></span></p>
+            <p><b>Tanggal Dibuat: </b><span th:text="${template.tanggalDibuat}"></span></p>
+            <p><b>List Pengguna: </b><span th:text="${template.listPengguna}"></span></p>
+            <p><b>List Field: </b><span th:text="${template.listField}"></span></p>
+            <a th:href="@{'/template/detail/' + ${template.id}}" class="btn btn-success">Detail</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
