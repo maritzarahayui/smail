@@ -72,7 +72,7 @@
             loading="lazy"
             alt=""
             src="/images/surat-kiri.png"
-            />
+          />
 
           <div class="footer-developed-by">
             <h1 class="input-surat-masuk-container">
@@ -87,12 +87,7 @@
                   <div class="id-surat">ID Surat</div>
                 </div>
                 <div class="keuangan">
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="KU001"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields1">
@@ -101,12 +96,7 @@
                 </div>
                 <div class="keuangan-wrapper">
                   <!-- <div class="keuangan1">Keuangan</div> -->
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="Keuangan"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields2">
@@ -115,12 +105,7 @@
                 </div>
                 <div class="itsiii2023-wrapper">
                   <!-- <div class="itsiii2023">08.006/ITS/III/2023</div> -->
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="08.006/ITS/III/2023"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields3">
@@ -131,12 +116,7 @@
                   <!-- <div class="rektor-universitas-andalas">
                     Rektor Universitas Andalas
                   </div> -->
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="Rektor Universitas Andalas"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields4">
@@ -145,12 +125,7 @@
                 </div>
                 <div class="soft-copy-wrapper">
                   <!-- <div class="soft-copy">Soft Copy</div> -->
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="Soft Copy"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields5">
@@ -161,12 +136,7 @@
                   <!-- <div class="undangan-makan-malam">
                     Undangan makan malam dies natalis
                   </div> -->
-                  <input
-                    type="text"
-                    id="id-surat-input"
-                    value="Soft Copy"
-                    class="input-form"
-                  />
+                  <input type="text" id="id-surat-input" class="input-form" />
                 </div>
               </div>
               <div class="i-d-info-fields6">
@@ -175,18 +145,13 @@
                 </div>
                 <div class="agustus-2022-wrapper">
                   <!-- <div class="agustus-2022">8 Agustus 2022</div> -->
-                  <input
-                    type="date"
-                    id="id-surat-input"
-                    value="8 Agustus 2022"
-                    class="input-form"
-                  />
+                  <input type="date" id="id-surat-input" class="input-form" />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="soft-copy1">
+        <!-- <div class="soft-copy1">
           <div class="undanganmakanmalamdiesnatalis">
             <h1 class="label">Unggah Surat</h1>
             <div class="file-input" onclick="chooseFile()">
@@ -225,7 +190,57 @@
                   <h3 class="upload-file-kamu-container">
                     <span>Upload</span>
                     <span class="file-kamu-di"> file kamu di sini</span>
-                    <!-- Add file input element -->
+                    Add file input element
+                    <input
+                      type="file"
+                      id="file-upload-input"
+                      name="file_upload"
+                      style="display: none"
+                    />
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+        <div class="soft-copy1">
+          <div class="undanganmakanmalamdiesnatalis">
+            <h1 class="label">Unggah Surat</h1>
+            <div class="file-input" onclick="chooseFile()">
+              <div class="secondary-message">secondary message</div>
+              <div class="frame-input">
+                <div class="upload-illustration">
+                  <div class="upload-illustration1">
+                    <div class="chevrondown-icon">
+                      <div class="group-fields">
+                        <div class="wrapper-group">
+                          <img
+                            class="group-icon"
+                            alt=""
+                            src="\images\upload-tengah.png"
+                          />
+                        </div>
+                        <img
+                          class="group-fields-child"
+                          alt=""
+                          src="\images\upload-main.png"
+                        />
+                        <img
+                          class="group-fields-item"
+                          loading="lazy"
+                          alt=""
+                          src="\images\upload-kanan.png"
+                        />
+                      </div>
+                    </div>
+                    <!-- Ini adalah tempat untuk menampilkan ikon file yang diunggah -->
+                    <div class="uploaded-file-container"></div>
+                  </div>
+                  <h3 class="upload-file-kamu-container">
+                    <span>Upload</span>
+                    <span class="file-kamu-di"> file kamu di sini</span>
+                    <!-- Input file yang sebenarnya, tetapi tersembunyi -->
                     <input
                       type="file"
                       id="file-upload-input"
@@ -272,7 +287,7 @@
               </div>
             </div>
           </form>
-          </div>
+        </div>
       </section>
       <section class="savebutton">
         <div class="button2">

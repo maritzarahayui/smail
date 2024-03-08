@@ -1,6 +1,7 @@
 package propensi.smail.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Stream;
 import java.io.IOException;
 
@@ -47,6 +48,13 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Override
     public Stream<SuratMasuk> getAllFiles() {
         return suratMasukDb.findAll().stream();
+    }
+
+
+    @Override
+    public List<SuratMasuk> getAllSuratMasuk() {
+        return suratMasukDb.findAll();
+
     }
     
 }

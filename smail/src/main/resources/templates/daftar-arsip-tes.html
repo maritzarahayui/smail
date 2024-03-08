@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semua Surat Masuk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f2f2f2;
+        }
+
+        .detail-button {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            margin: 4px 2px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .detail-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Daftar Surat Masuk</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nomor Arsip</th>
+                <th>Kategori</th>
+                <th>Perihal</th>
+                <th>Tanggal Dibuat</th>
+                <th>Status</th>
+                <th>Pengirim</th>
+                <th>Tembusan</th>
+                <th>File Name</th>
+                <th>Detail</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Iterasi melalui daftar surat masuk -->
+            <tr th:each="suratMasuk : ${suratMasukList}">
+                <td th:text="${suratMasuk.nomorArsip}"></td>
+                <td th:text="${suratMasuk.kategori}"></td>
+                <td th:text="${suratMasuk.perihal}"></td>
+                <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                <td th:text="${suratMasuk.status}"></td>
+                <td th:text="${suratMasuk.pengirim}"></td>
+                <td th:text="${suratMasuk.tembusan}"></td>
+                <td th:text="${suratMasuk.fileName}"></td>
+                <td><a class="detail-button" th:href="@{'/api/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">Detail</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- Tambahkan JavaScript Anda di sini -->
+</body>
+</html>

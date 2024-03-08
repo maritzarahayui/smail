@@ -7,7 +7,9 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -77,17 +79,26 @@ public class SuratMasukController {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         return ResponseEntity.ok().body(suratMasuk);
     }
+
+    //get all surat masuk
+    @GetMapping("/all")
+    public String getAllSuratMasuk(Model model) {
+        List<SuratMasuk> suratMasukList = suratMasukService.getAllSuratMasuk();
+        //masukan ke thymeleaf
+        model.addAttribute("suratMasukList", suratMasukList);
+        return "daftar-arsip-tes";
+    }
     
     // route to form-upload-surat
     @GetMapping("/form")
     public String formUploadSurat(Model model) {
-        return "form-surat-masuk";
+        return "form-arsip-tes";
     }
 
     // route to semua-surat-masuk
     @GetMapping("/daftar-arsip")
     public String semuaSuratMasuk(Model model) {
-        return "semua-surat-masuk";
+        return "daftar-arsip-tes";
     }
 
     // route to detail-surat-masuk

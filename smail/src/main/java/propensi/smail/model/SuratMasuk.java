@@ -54,8 +54,6 @@ public class SuratMasuk {
     @Column(name = "file_name")
     private String fileName; // filename
 
-    @Column(name = "link")
-    private String link; // link drive
 
     /* RELATIONSHIPS */
     @OneToOne
