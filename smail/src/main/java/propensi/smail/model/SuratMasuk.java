@@ -18,8 +18,6 @@ import jakarta.validation.constraints.NotNull;
 public class SuratMasuk {
     
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
 

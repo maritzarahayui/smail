@@ -16,4 +16,5 @@ public interface SuratMasukService {
     SuratMasuk getFile(String id);
     Stream<SuratMasuk> getAllFiles();
     List<SuratMasuk> getAllSuratMasuk();
+    String generateId(String kategori);
 }

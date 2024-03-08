@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,19 +40,22 @@ public class SuratMasukController {
     private SuratMasukService suratMasukService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("tanggalDibuat") String tanggalDibuat, @RequestParam("status") int status, @RequestParam("pengirim") String pengirim, @RequestParam("tembusan") String tembusan) throws ParseException {
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("tanggalDibuat") String tanggalDibuat, @RequestParam("status") int status, @RequestParam("pengirim") String pengirim, @RequestParam("tembusan") String tembusan) throws ParseException {
         String message = "";
         //convert type of tanggalDibuat from String to Date
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date tanggalDibuatDate = formatter.parse(tanggalDibuat);
 
         try {
-            suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
+            // dapatkan surat masuknya
+
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(message);
+            // redirect to detail surat masuk
+            return "redirect:/api/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+            return "redirect:/api/surat-masuk/form";
         }
     }
 
@@ -65,23 +69,23 @@ public class SuratMasukController {
         return ResponseEntity.status(HttpStatus.OK).body(fileNames);
     }
 
-    // download file
-    @GetMapping("/files/{id}")
-    public ResponseEntity<byte[]> getFile(@PathVariable String id) {
+    @GetMapping("/download/{id}")
+    public ResponseEntity<byte[]> downloadFile(@PathVariable String id) {
         SuratMasuk file = suratMasukService.getFile(id);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFileName() + "\"")
-                .body(file.getFile());
+        if (file != null) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_PDF);
+            headers.setContentDispositionFormData("attachment", file.getFileName());
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(file.getFile());
+        } else {
+            // Handle the case where file is not found
+            return ResponseEntity.notFound().build();
+        }
     }
-
-    // get detail of surat masuk
-    // @GetMapping("/detail/{id}")
-    // public ResponseEntity<SuratMasuk> getDetailSuratMasuk(@PathVariable String id) {
-    //     SuratMasuk suratMasuk = suratMasukService.getFile(id);
-    //     return ResponseEntity.ok().body(suratMasuk);
-    // }
-
 
     //get all surat masuk
     @GetMapping("/all")
@@ -102,7 +106,7 @@ public class SuratMasukController {
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
-        model.addAttribute("template", file); // Menambahkan objek template ke model
+        model.addAttribute("suratMasuk", file); // Menambahkan objek template ke model
         return "detail-arsip-tes"; // Mengembalikan tampilan pratinjau PDF menggunakan Thymeleaf
     }
 
@@ -111,6 +115,11 @@ public class SuratMasukController {
     @GetMapping("/form")
     public String formUploadSurat(Model model) {
         return "form-arsip-tes";
+    }
+
+    @GetMapping("/form-arsip")
+    public String form(Model model) {
+        return "form-surat-masuk";
     }
 
     // route to semua-surat-masuk
@@ -124,7 +133,5 @@ public class SuratMasukController {
     public String detailSuratMasuk(Model model) {
         return "detail-surat-masuk";
     }
-
-    
     
 }

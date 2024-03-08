@@ -2,6 +2,7 @@ package propensi.smail.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import java.io.IOException;
 
@@ -24,6 +25,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             SuratMasuk suratMasuk = new SuratMasuk();
+                suratMasuk.setNomorArsip(generateId(kategori));
                 suratMasuk.setFile(file.getBytes());
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
@@ -55,6 +57,28 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     public List<SuratMasuk> getAllSuratMasuk() {
         return suratMasukDb.findAll();
 
+    }
+
+    @Override
+    public String generateId(String kategori) {
+        Map<String, String> kategoriMap = Map.of(
+                "LEGAL", "LGL",
+                "SDM", "SDM",
+                "KEUANGAN", "KEU",
+                "SARANA", "SAR",
+                "KEMAHASISWAAN", "KMH"
+        );
+
+        String abbreviation = kategoriMap.get(kategori.toUpperCase());
+
+        if (abbreviation != null) {
+            long count = suratMasukDb.countByKategori(kategori);
+
+            String idSuffix = String.format("%05d", count + 1);
+            return "IN" + "-" + abbreviation + "-" + idSuffix;
+        } else {
+            throw new IllegalArgumentException("Invalid kategori: " + kategori);
+        }
     }
     
 }
