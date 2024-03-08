@@ -3,7 +3,9 @@ package propensi.smail.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.Base64;
 import java.util.Date;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -74,11 +76,12 @@ public class SuratMasukController {
     }
 
     // get detail of surat masuk
-    @GetMapping("/detail/{id}")
-    public ResponseEntity<SuratMasuk> getDetailSuratMasuk(@PathVariable String id) {
-        SuratMasuk suratMasuk = suratMasukService.getFile(id);
-        return ResponseEntity.ok().body(suratMasuk);
-    }
+    // @GetMapping("/detail/{id}")
+    // public ResponseEntity<SuratMasuk> getDetailSuratMasuk(@PathVariable String id) {
+    //     SuratMasuk suratMasuk = suratMasukService.getFile(id);
+    //     return ResponseEntity.ok().body(suratMasuk);
+    // }
+
 
     //get all surat masuk
     @GetMapping("/all")
@@ -88,6 +91,21 @@ public class SuratMasukController {
         model.addAttribute("suratMasukList", suratMasukList);
         return "daftar-arsip-tes";
     }
+
+    // Metode untuk menampilkan preview PDF
+    @GetMapping("/detail/{id}")
+    public String previewPDF(@PathVariable("id") String id, Model model) throws IOException {
+        SuratMasuk file = suratMasukService.getFile(id);
+        byte[] pdf = file.getFile();
+
+        // Mengonversi konten PDF ke Base64
+        String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+        model.addAttribute("base64PDF", base64PDF);
+        model.addAttribute("template", file); // Menambahkan objek template ke model
+        return "detail-arsip-tes"; // Mengembalikan tampilan pratinjau PDF menggunakan Thymeleaf
+    }
+
     
     // route to form-upload-surat
     @GetMapping("/form")

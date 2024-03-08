@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Preview</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h2>Detail Surat Masuk</h2>
+    <div class="card mb-4">
+        <div class="card-body">
+            <h3 th:text="${template.perihal}"></h3>
+            <p><b>Nomor Arsip: </b><span th:text="${template.nomorArsip}"></span></p>
+            <p><b>Kategori: </b><span th:text="${template.kategori}"></span></p>
+            <p><b>Tanggal Dibuat: </b><span th:text="${#dates.format(template.tanggalDibuat, 'dd-MM-yyyy')}"></span></p>
+            <p><b>Status: </b><span th:text="${template.status}"></span></p>
+            <p><b>Pengirim: </b><span th:text="${template.pengirim}"></span></p>
+            <p><b>Tembusan: </b><span th:text="${template.tembusan}"></span></p>
+            <p><b>File Name: </b><span th:text="${template.fileName}"></span></p>
+            <!-- Embed PDF using Base64 content -->
+            <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
+        </div>
+    </div>
+    <a href="/api/surat-masuk/daftar-arsip" class="btn btn-secondary">Back to Daftar Surat Masuk</a>
+</div>
+</body>
+</html>
