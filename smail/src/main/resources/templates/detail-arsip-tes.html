@@ -60,7 +60,7 @@
                 <p><b>Nomor Arsip: </b><span th:text="${suratMasuk.nomorArsip}"></span></p>
                 <p><b>Kategori: </b><span th:text="${suratMasuk.kategori}"></span></p>
                 <p><b>Tanggal Dibuat: </b><span th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></span></p>
-                <p><b>Status: </b><span th:text="${suratMasuk.status}"></span></p>
+                <p><b>Status: </b><span th:text="${statusText}"></span></p>
                 <p><b>Pengirim: </b><span th:text="${suratMasuk.pengirim}"></span></p>
                 <p><b>Tembusan: </b><span th:text="${suratMasuk.tembusan}"></span></p>
                 <p><b>File Name: </b><span th:text="${suratMasuk.fileName}"></span></p>

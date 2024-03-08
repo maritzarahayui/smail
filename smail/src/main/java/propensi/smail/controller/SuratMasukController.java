@@ -99,17 +99,31 @@ public class SuratMasukController {
     // Metode untuk menampilkan preview PDF
     @GetMapping("/detail/{id}")
     public String previewPDF(@PathVariable("id") String id, Model model) throws IOException {
-        SuratMasuk file = suratMasukService.getFile(id);
-        byte[] pdf = file.getFile();
+        SuratMasuk suratMasuk = suratMasukService.getFile(id);
+        byte[] pdf = suratMasuk.getFile();
 
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
-        model.addAttribute("suratMasuk", file); // Menambahkan objek template ke model
-        return "detail-arsip-tes"; // Mengembalikan tampilan pratinjau PDF menggunakan Thymeleaf
+        model.addAttribute("suratMasuk", suratMasuk);
+        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
+        return "detail-arsip-tes"; 
     }
 
+    // Fungsi untuk mengonversi status menjadi teks
+    public String getStatusText(int status) {
+        switch (status) {
+            case 1:
+                return "Diarsipkan";
+            case 2:
+                return "Disposisi";
+            case 3:
+                return "Follow Up";
+            default:
+                return "Status Tidak Diketahui";
+        }
+    }
     
     // route to form-upload-surat
     @GetMapping("/form")
