@@ -102,6 +102,7 @@ deploy-railway:
   only:
     - main
   script:
+    - cd smail
     - apt-get update && apt-get install -y curl
     - curl -fsSL https://railway.app/install.sh | sh
     - railway up --service=$RAILWAY_SERVICE_NAME -d
