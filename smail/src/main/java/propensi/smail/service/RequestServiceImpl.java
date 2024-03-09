@@ -164,7 +164,6 @@ public class RequestServiceImpl implements RequestService {
             requestTemplate.setKategori(requestTemplate.getKategori());
             requestTemplate.setBahasa(requestTemplate.getBahasa());
             requestTemplate.setKeperluan(requestTemplate.getKeperluan());
-            requestTemplate.setTanggalPengajuan(new Date());
 
             requestTemplateDb.save(requestTemplate);
 

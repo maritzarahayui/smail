@@ -15,8 +15,6 @@
         /*<![CDATA[*/
         document.addEventListener('DOMContentLoaded', function () {
             var kategoriDropdown = document.getElementById('kategori');
-            console.log("ada gak kategoriDropdown " + kategoriDropdown);
-
             var jenisSuratWrapper = document.getElementById('jenisSuratWrapper');
             var jenisSuratDropdown = document.getElementById('jenisSurat');
     
@@ -95,11 +93,17 @@
                     <div class="frame-parent">
                         <div class="radio-parent">
                             <input type="radio" id="softCopy" name="bentukSurat" value="Soft Copy" />
-                            <label for="softCopy">Soft Copy</label>
+                            <div class="label-group">
+                                <div class="body-14pt">Soft Copy</div>
+                                <div class="body-14pt">Surat dapat diunduh di website ini.</div>
+                            </div>
                         </div>
                         <div class="radio-parent">
                             <input type="radio" id="hardCopy" name="bentukSurat" value="Hard Copy" />
-                            <label for="hardCopy">Hard Copy</label>
+                            <div class="label-group">
+                                <div class="body-14pt">Hard Copy</div>
+                                <div class="body-14pt">Surat dapat diambil di kantor administrasi.</div>
+                            </div>
                         </div>
                     </div>
                     <div class="error-message-wrapper">

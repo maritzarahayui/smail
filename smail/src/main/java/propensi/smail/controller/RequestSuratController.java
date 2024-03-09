@@ -62,40 +62,60 @@ public class RequestSuratController {
     }
 
     @PostMapping("request-surat")
-    public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat, 
-                                    @Valid @ModelAttribute RequestTemplate requestTemplate,
-                                    BindingResult suratBindingResult,
-                                    BindingResult templateBindingResult, Model model) {
-        if (suratBindingResult.hasErrors() || templateBindingResult.hasErrors()) {
+    public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat,
+                                    BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             // Ambil semua pesan kesalahan
-            List<ObjectError> suratErrors = suratBindingResult.getAllErrors();
-            List<ObjectError> templateErrors = templateBindingResult.getAllErrors();
-    
-            // Gabungkan semua pesan kesalahan menjadi satu
-            List<ObjectError> allErrors = new ArrayList<>();
-            allErrors.addAll(suratErrors);
-            allErrors.addAll(templateErrors);
-    
-            // Masukkan pesan kesalahan ke dalam model
-            model.addAttribute("errorMessages", allErrors);
-    
-            // Kembalikan pengguna ke halaman form dengan pesan kesalahan
-            return "request-surat"; // Nama template HTML yang menampilkan form request surat
+            return bindingResult.getAllErrors().toString();
         }
         try {
             requestSurat.setTanggalPengajuan(new Date());
-
-            requestService.createRequestTemplate(requestTemplate);
             requestService.createRequestSurat(requestSurat);
             System.out.println("BERHASIL");
             return "redirect:/request-surat"; // Redirect ke halaman history jika berhasil
         } catch (Exception e) {
             // Tangkap dan tangani kesalahan jika terjadi
             e.printStackTrace();
-            model.addAttribute("errorMessage", "Gagal membuat permintaan surat: " + e.getMessage());
-            return "ERROR";
+            return "Gagal membuat permintaan surat: " + e.getMessage(); 
         }
     }
+    
+    // @PostMapping("request-surat")
+    // public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat, 
+    //                                 @Valid @ModelAttribute RequestTemplate requestTemplate,
+    //                                 BindingResult suratBindingResult,
+    //                                 BindingResult templateBindingResult, Model model) {
+    //     if (suratBindingResult.hasErrors() || templateBindingResult.hasErrors()) {
+    //         // Ambil semua pesan kesalahan
+    //         List<ObjectError> suratErrors = suratBindingResult.getAllErrors();
+    //         List<ObjectError> templateErrors = templateBindingResult.getAllErrors();
+    
+    //         // Gabungkan semua pesan kesalahan menjadi satu
+    //         List<ObjectError> allErrors = new ArrayList<>();
+    //         allErrors.addAll(suratErrors);
+    //         allErrors.addAll(templateErrors);
+    
+    //         // Masukkan pesan kesalahan ke dalam model
+    //         model.addAttribute("errorMessages", allErrors);
+    
+    //         // Kembalikan pengguna ke halaman form dengan pesan kesalahan
+    //         return "request-surat"; // Nama template HTML yang menampilkan form request surat
+    //     }
+    //     try {
+    //         requestSurat.setTanggalPengajuan(new Date());
+    //         requestTemplate.setTanggalPengajuan(new Date());
+            
+    //         requestService.createRequestTemplate(requestTemplate);
+    //         requestService.createRequestSurat(requestSurat);
+    //         System.out.println("BERHASIL");
+    //         return "redirect:/request-surat"; // Redirect ke halaman history jika berhasil
+    //     } catch (Exception e) {
+    //         // Tangkap dan tangani kesalahan jika terjadi
+    //         e.printStackTrace();
+    //         model.addAttribute("errorMessage", "Gagal membuat permintaan surat: " + e.getMessage());
+    //         return "ERROR";
+    //     }
+    // }
 
     public Pengguna createDummyPengguna(Role role) {
         Pengguna dummyPengguna = new Pengguna();
