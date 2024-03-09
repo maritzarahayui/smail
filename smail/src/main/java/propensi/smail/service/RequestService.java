@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
-import propensi.smail.model.Pengguna;
+import propensi.smail.model.user.*;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 
@@ -22,7 +22,7 @@ public interface RequestService {
     Map<Integer, String> listBahasa();
     List<String> getJenisSuratForKategori(String kategori);
 
-    // String generateRequestId(Pengguna dummyPengguna);
+    String generateRequestId(Pengguna pengaju);
     // Pengguna createDummyPengguna(String role);
 
     // METHOD REQUEST TEMPLATE

@@ -63,6 +63,7 @@
 
 
 <body>
+	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="ajukan-surat">
         <b class="pengajuan-permohonan-surat-container">
@@ -150,6 +151,7 @@
         </form>
     </div>    
     
-    
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
 </body>
 </html>

@@ -1,0 +1,1067 @@
+.wrapper-group-8-child {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    transform: scale(1.31);
+  }
+  .wrapper-group-8 {
+    height: 39px;
+    width: 30.6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .beranda,
+  .wrapper-group-8 {
+    position: relative;
+  }
+  .sub-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs);
+  }
+  .request-surat {
+    position: relative;
+    white-space: nowrap;
+  }
+  .sub-frame1 {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+      var(--padding-3xs);
+  }
+  .arsip-surat {
+    position: relative;
+    white-space: nowrap;
+  }
+  .iconoutlinechevron-down {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-height: 20px;
+  }
+  .i-d-input {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+      var(--padding-3xs);
+    gap: 0 10px;
+  }
+  .template-surat {
+    position: relative;
+    white-space: nowrap;
+  }
+  .sub-frame2 {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs) var(--padding-10xs) var(--padding-3xs)
+      var(--padding-3xs);
+  }
+  .faq {
+    position: relative;
+  }
+  .frames-group,
+  .sub-frame3 {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .sub-frame3 {
+    align-items: flex-start;
+    padding: var(--padding-3xs);
+  }
+  .frames-group {
+    width: 719px;
+    align-items: center;
+    gap: 0 26px;
+    max-width: 100%;
+  }
+  .navbar-child {
+    height: 64px;
+    width: 1322px;
+    position: relative;
+    background: linear-gradient(
+      180deg,
+      rgba(238, 238, 238, 0.05),
+      rgba(245, 245, 245, 0.05)
+    );
+    backdrop-filter: blur(40px);
+    display: none;
+    max-width: 100%;
+    z-index: 2;
+  }
+  .admin {
+    position: relative;
+    font-weight: 600;
+  }
+  .iconoutlinechevron-down1 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .button {
+    height: 40px;
+    border-radius: var(--br-xs);
+    background-color: var(--green-green-1);
+    padding: var(--padding-5xs) 24px;
+    box-sizing: border-box;
+    gap: 0 8px;
+  }
+  .beranda-frame,
+  .button,
+  .navbar,
+  .request-frame {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .beranda-frame,
+  .navbar {
+    justify-content: flex-start;
+    color: var(--white-white-1);
+  }
+  .navbar {
+    align-self: stretch;
+    height: 65px;
+    border-radius: var(--br-xs);
+    background-color: var(--green-green-4);
+    justify-content: space-between;
+    padding: 6px 112px;
+    box-sizing: border-box;
+    top: 0;
+    z-index: 99;
+    position: sticky;
+    gap: -831.61px;
+    max-width: 100%;
+    text-align: center;
+    font-size: var(--body-b2-size);
+    color: var(--green-green-5);
+    font-family: var(--heading-h4);
+  }
+  .input-surat-child {
+    width: 355.4px;
+    height: 330.5px;
+    position: absolute;
+    margin: 0 !important;
+    top: -20px;
+    right: -69.4px;
+    object-fit: contain;
+    z-index: 1;
+  }
+  .file-input{
+    cursor: pointer;
+  }
+  .file-input-field-child {
+    height: 117.2px;
+    width: 369px;
+    position: absolute;
+    margin: 0 !important;
+    top: -52px;
+    left: -227px;
+  }
+  .input {
+    background: linear-gradient(
+      180deg,
+      #bce8a4,
+      #abdfa7 28.5%,
+      #80c9ae 66.5%,
+      #5cb7b3
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .input-surat-masuk-container {
+    margin: 0;
+    height: 57px;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+  }
+  .id-surat {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-surat {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .input-form {
+    position: relative;
+    font-weight: 600;
+    border: none;
+  }
+  .i-d-info-fields,
+  .keuangan {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .keuangan {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .jenis-surat {
+    position: relative;
+    font-weight: 600;
+  }
+  .jenis-surat-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .keuangan1 {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-info-fields1,
+  .keuangan-wrapper {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .keuangan-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields1 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .nomor-surat {
+    position: relative;
+    font-weight: 600;
+  }
+  .nomor-surat-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .itsiii2023 {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-info-fields2,
+  .itsiii2023-wrapper {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .itsiii2023-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields2 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .pengirim {
+    position: relative;
+    font-weight: 600;
+  }
+  .pengirim-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .rektor-universitas-andalas {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-info-fields3,
+  .rektor-universitas-andalas-wrapper {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .rektor-universitas-andalas-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields3 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .bentuk-surat {
+    position: relative;
+    font-weight: 600;
+  }
+  .bentuk-surat-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .soft-copy {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-info-fields4,
+  .soft-copy-wrapper {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .soft-copy-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields4 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .keperluan {
+    position: relative;
+    font-weight: 600;
+  }
+  .keperluan-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .undangan-makan-malam {
+    position: relative;
+    font-weight: 600;
+  }
+  .i-d-info-fields5,
+  .undangan-makan-malam-dies-nata-wrapper {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .undangan-makan-malam-dies-nata-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields5 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .tanggal-surat-masuk {
+    position: relative;
+    font-weight: 600;
+  }
+  .tanggal-surat-masuk-wrapper {
+    align-self: stretch;
+    flex: 1;
+    background-color: var(--green-green-3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .agustus-2022 {
+    position: relative;
+    font-weight: 600;
+  }
+  .agustus-2022-wrapper,
+  .i-d-info-fields6 {
+    flex: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .agustus-2022-wrapper {
+    align-self: stretch;
+    border: 1px solid var(--green-green-4);
+    overflow: hidden;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    max-width: 100%;
+    color: var(--green-green-5);
+  }
+  .i-d-info-fields6 {
+    width: 1198px;
+    border: 2px solid var(--green-green-4);
+    align-items: flex-start;
+  }
+  .copyright-frame {
+    width: 1194px;
+    height: 356px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1px 0;
+    text-align: left;
+    font-size: var(--body-b2-size);
+    color: var(--primary-white-1);
+  }
+  .copyright-frame,
+  .file-input-field,
+  .footer-developed-by {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+  .footer-developed-by {
+    flex-direction: column;
+    align-items: center;
+    gap: 85px 0;
+    z-index: 2;
+  }
+  .file-input-field {
+    flex-direction: row;
+    align-items: flex-start;
+    position: relative;
+  }
+  .label {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    flex-shrink: 0;
+  }
+  .secondary-message {
+    width: 616.8px;
+    height: 38px;
+    position: relative;
+    font-size: var(--font-size-6xl-2);
+    line-height: 150%;
+    font-weight: 500;
+    font-family: var(--font-inter);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+  }
+  .group-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    left: 0;
+    top: 17px;
+    transform: scale(2.001);
+  }
+  .wrapper-group {
+    position: absolute;
+    top: -0.4px;
+    left: 51.6px;
+    width: 69px;
+    height: 80.4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .group-fields-child {
+    position: absolute;
+    top: 65.6px;
+    left: -0.5px;
+    width: 220.1px;
+    height: 116px;
+    z-index: 1;
+  }
+  .group-fields-item {
+    position: absolute;
+    top: 17.6px;
+    left: 102.6px;
+    width: 169.1px;
+    height: 165.8px;
+    object-fit: contain;
+    z-index: 2;
+  }
+  .group-fields {
+    align-self: stretch;
+    height: 184px;
+    position: relative;
+  }
+  .chevrondown-icon {
+    width: 268px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .upload-illustration-child {
+    height: 337.2px;
+    width: 334.4px;
+    position: absolute;
+    margin: 0 !important;
+    bottom: -52.4px;
+    left: -121.5px;
+    object-fit: contain;
+    z-index: 3;
+  }
+  .upload-illustration1 {
+    width: 315px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 32px 0 36px;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .file-kamu-di {
+    color: var(--green-green-5);
+  }
+  .upload-file-kamu-container {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: inherit;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  .upload-illustration {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px 0;
+  }
+  .keperluan1 {
+    height: 6.3px;
+    flex: 1;
+    position: relative;
+    border-radius: 3.15px;
+    background-color: var(--green-green-5);
+    min-width: 174px;
+  }
+  .atau {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 400;
+    font-family: inherit;
+  }
+  .keperluan2 {
+    height: 6.3px;
+    flex: 1;
+    position: relative;
+    border-radius: 3.15px;
+    background-color: var(--green-green-5);
+    min-width: 174px;
+  }
+  .bentuk-surat1 {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2px 0 0;
+    gap: 0 15px;
+    color: var(--color-gray-100);
+  }
+  .frame-input {
+    width: 617px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 30px 0;
+    max-width: 100%;
+    color: var(--green-green-2);
+  }
+  .cantumkan-link-google {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: inherit;
+    font-weight: 400;
+    font-family: inherit;
+    font-size: 25px; 
+  }
+  .input-field,
+  .input-field-child {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .input-field-child {
+    width: 212px;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    height: 38px;
+    align-items: flex-start;
+    padding: 0 0.04874649047815183px 0.0999999999994543px;
+    font-family: var(--font-inter);
+    font-weight: 500;
+    font-size: var(--font-size-6xl-2);
+    color: var(--color-gray-100);
+  }
+  .input-field {
+    flex: 1;
+    border-radius: 18.88px;
+    border: 3.1px solid var(--green-green-2);
+    overflow: hidden;
+    align-items: center;
+    padding: 18.8817195892334px 50.351253509521484px;
+    min-width: 212px;
+    max-width: 100%;
+  }
+  .save-icon {
+    height: 37.8px;
+    width: 37.8px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .body-14pt {
+    align-self: stretch;
+    width: 82px;
+    position: relative;
+    line-height: 37.76px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+  }
+  .button1,
+  .file-uploadbutton {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0 12.59px;
+  }
+  .button1 {
+    border-radius: 18.88px;
+    background-color: var(--green-green-1);
+    align-items: center;
+    padding: 18.8817195892334px 50px;
+  }
+  .file-uploadbutton {
+    align-self: stretch;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 0 1px 0 0;
+    box-sizing: border-box;
+    max-width: 100%;
+    text-align: left;
+    font-size: var(--font-size-6xl-2);
+    color: var(--primary-white-1);
+    font-family: var(--font-inter);
+  }
+  .file-input,
+  .google-drivelink,
+  .undanganmakanmalamdiesnatalis {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+  .google-drivelink {
+    width: 618px;
+    align-items: flex-end;
+    gap: 43px 0;
+    color: var(--green-green-5);
+  }
+  .file-input,
+  .undanganmakanmalamdiesnatalis {
+    align-items: center;
+  }
+  .file-input {
+    width: 884.29px;
+    border-radius: 37.76px;
+    border: 6.3px dashed var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 0 var(--padding-xl) 85px 21px;
+    gap: 40px 0;
+    flex-shrink: 0;
+    font-size: var(--heading-h4-size);
+    color: var(--color-gray-100);
+  }
+  .undanganmakanmalamdiesnatalis {
+    flex: 1;
+    gap: 60px 0;
+  }
+  .i-d-label,
+  .soft-copy1 {
+    display: flex;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    max-width: 100%;
+  }
+  .soft-copy1 {
+    width: 1014px;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0 4px 0 0;
+    font-size: var(--heading-h3-size);
+  }
+  .i-d-label {
+    flex-direction: column;
+    align-items: center;
+    padding: 0 var(--padding-xl) var(--padding-15xl);
+    gap: 77px 0;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: var(--heading-h2-size);
+    color: var(--green-green-5);
+    font-family: var(--heading-h4);
+  }
+  .simpan {
+    position: relative;
+    font-weight: 600;
+  }
+  .button2,
+  .savebutton {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    max-width: 100%;
+    cursor: pointer;
+    text-align: center; /* Mengatur tombol Simpan menjadi berada di tengah */
+  }
+  .button2 {
+    flex: 1;
+    border-radius: var(--br-xs);
+    background-color: var(--green-green-1);
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-mini) var(--padding-mini) 16px;
+    margin: 0 auto; 
+    display: inline-block; /* Mengatur agar tombol memiliki lebar yang sesuai dengan kontennya */
+  }
+  .savebutton {
+    width: 1234px;
+    /* align-items: flex-start;
+    justify-content: flex-start; */
+    padding: 0 var(--padding-xl) 33px;
+    text-align: center;
+    font-size: var(--body-b2-size);
+    color: var(--white-white-1);
+    font-family: var(--heading-h4);
+    display: flex; /* Mengubah tata letak menjadi flexbox */
+    justify-content: center; /* Memusatkan secara horizontal */
+    align-items: center; /* Memusatkan secara vertikal */
+  }
+  .developed-by-rtx,
+  .propensi-d02 {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 400;
+    font-family: inherit;
+  }
+  .r-t-x-teamfooter {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px 0;
+  }
+  .in-collaboration-with {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  .image-1-icon,
+  .image-18-icon {
+    position: relative;
+    object-fit: cover;
+  }
+  .image-1-icon {
+    height: 117px;
+    flex: 1;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .image-18-icon {
+    height: 99px;
+    width: 95.3px;
+  }
+  .image-1-parent,
+  .incollaborationwith {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .image-1-parent {
+    width: 214px;
+    flex-direction: row;
+    align-items: center;
+    gap: 0 18px;
+  }
+  .incollaborationwith {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px 0;
+  }
+  .r-t-x-teamfooter-parent {
+    align-self: stretch;
+    background-color: var(--green-green-4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--padding-21xl) 137px;
+    gap: var(--gap-xl);
+  }
+  .copyright-2024-tazkia {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .footer-info {
+    align-self: stretch;
+    background-color: var(--green-green-5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-xl);
+    text-align: center;
+    font-size: var(--heading-h4-size);
+    color: var(--white-white-1);
+    font-family: var(--heading-h4);
+  }
+  .footer,
+  .input-surat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .footer {
+    align-self: stretch;
+    align-items: flex-start;
+    text-align: center;
+    font-size: var(--heading-h4-size);
+    color: var(--green-green-5);
+    font-family: var(--heading-h4);
+  }
+  .input-surat {
+    width: 100%;
+    position: relative;
+    background-color: var(--white-white-1);
+    overflow: hidden;
+    align-items: center;
+    gap: 89px 0;
+    letter-spacing: normal;
+  }
+  @media screen and (max-width: 1200px) {
+    .navbar {
+      padding-left: var(--padding-37xl);
+      padding-right: var(--padding-37xl);
+      box-sizing: border-box;
+    }
+    .footer-developed-by {
+      gap: 42px 0;
+    }
+    .r-t-x-teamfooter-parent {
+      padding-left: var(--padding-49xl);
+      padding-right: var(--padding-49xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 1050px) {
+    .input-surat-masuk-container {
+      font-size: 38px;
+    }
+    .label {
+      font-size: 26px;
+    }
+    .undanganmakanmalamdiesnatalis {
+      gap: 30px 0;
+    }
+    .r-t-x-teamfooter-parent {
+      flex-wrap: wrap;
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .navbar {
+      padding-left: var(--padding-9xl);
+      padding-right: var(--padding-9xl);
+      box-sizing: border-box;
+    }
+    .footer-developed-by,
+    .google-drivelink {
+      gap: 21px 0;
+    }
+    .file-input {
+      gap: 20px 0;
+      padding-bottom: 55px;
+      box-sizing: border-box;
+    }
+    .i-d-label {
+      gap: 38px 0;
+    }
+    .r-t-x-teamfooter-parent {
+      padding-left: var(--padding-15xl);
+      padding-right: var(--padding-15xl);
+      box-sizing: border-box;
+    }
+    .input-surat {
+      gap: 44px 0;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .input-surat-masuk-container {
+      font-size: 29px;
+    }
+    .label {
+      font-size: var(--font-size-lgi);
+    }
+    .secondary-message {
+      font-size: var(--font-size-xl);
+      line-height: 30px;
+    }
+    .atau,
+    .cantumkan-link-google,
+    .upload-file-kamu-container {
+      font-size: var(--body-b2-size);
+    }
+    .input-field {
+      padding-left: var(--padding-xl);
+      padding-right: var(--padding-xl);
+      box-sizing: border-box;
+    }
+    .body-14pt {
+      font-size: var(--font-size-xl);
+      line-height: 30px;
+    }
+    .i-d-label {
+      gap: 19px 0;
+    }
+    .copyright-2024-tazkia,
+    .developed-by-rtx,
+    .in-collaboration-with,
+    .propensi-d02 {
+      font-size: var(--font-size-lgi);
+    }
+    .input-surat {
+      gap: 22px 0;
+    }
+  }
+  

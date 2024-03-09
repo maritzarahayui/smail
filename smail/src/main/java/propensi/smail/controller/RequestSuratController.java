@@ -2,11 +2,12 @@ package propensi.smail.controller;
 
 import org.springframework.web.bind.annotation.*;
 
-import propensi.smail.model.Pengguna;
+import propensi.smail.model.user.*;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.TemplateSurat;
+import propensi.smail.repository.PenggunaDb;
 import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.Role;
+import propensi.smail.service.PenggunaService;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.TemplateService;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import jakarta.validation.Valid;
@@ -27,6 +29,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.validation.ObjectError;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 @Controller
 // @RestController
@@ -39,8 +43,14 @@ public class RequestSuratController {
     @Autowired
     private TemplateService templateService;
 
+    @Autowired
+    PenggunaDb penggunaDb;
+
+    @Autowired
+    PenggunaService penggunaService;
+
     @GetMapping("request-surat")
-    public String formRequestSurat(Model model){
+    public String formRequestSurat(Model model, Authentication auth){
 
         Map<Integer, String> listBentukSurat = requestService.listBentukSurat();
         model.addAttribute("listBentukSurat", listBentukSurat);
@@ -58,17 +68,41 @@ public class RequestSuratController {
        
         model.addAttribute("requestSurat", new RequestSurat());
 
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
         return "request-surat";
     }
 
     @PostMapping("request-surat")
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat,
-                                    BindingResult bindingResult) {
+                                    BindingResult bindingResult, Authentication auth) {
         if (bindingResult.hasErrors()) {
             // Ambil semua pesan kesalahan
             return bindingResult.getAllErrors().toString();
         }
+
         try {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) { 
+                Pengguna pengguna = user.get(); 
+                requestSurat.setPengaju(pengguna);
+            }
+            
             requestSurat.setTanggalPengajuan(new Date());
             requestService.createRequestSurat(requestSurat);
             System.out.println("BERHASIL");
@@ -117,32 +151,32 @@ public class RequestSuratController {
     //     }
     // }
 
-    public Pengguna createDummyPengguna(Role role) {
-        Pengguna dummyPengguna = new Pengguna();
-        switch (role) {
-            case DOSEN:
-                dummyPengguna.setId("1989897777");
-                dummyPengguna.setEmail("dosen@example.com");
-                dummyPengguna.setNama("Dummy Dosen");
-                dummyPengguna.setRole(Role.DOSEN);
-                break;
-            case STAF:
-                dummyPengguna.setId("9800234722");
-                dummyPengguna.setEmail("staf@example.com");
-                dummyPengguna.setNama("Dummy Staf");
-                dummyPengguna.setRole(Role.STAF);
-                break;
-            case MAHASISWA:
-                dummyPengguna.setId("2106751436");
-                dummyPengguna.setEmail("mahasiswa@example.com");
-                dummyPengguna.setNama("Dummy Mahasiswa");
-                dummyPengguna.setRole(Role.MAHASISWA);
-                break;
-            default:
-                break;
-        }
-        return dummyPengguna;
-    }
+    // public Pengguna createDummyPengguna(Role role) {
+    //     Pengguna dummyPengguna = new Pengguna();
+    //     switch (role) {
+    //         case DOSEN:
+    //             dummyPengguna.setId("1989897777");
+    //             dummyPengguna.setEmail("dosen@example.com");
+    //             dummyPengguna.setNama("Dummy Dosen");
+    //             dummyPengguna.setRole(Role.DOSEN);
+    //             break;
+    //         case STAF:
+    //             dummyPengguna.setId("9800234722");
+    //             dummyPengguna.setEmail("staf@example.com");
+    //             dummyPengguna.setNama("Dummy Staf");
+    //             dummyPengguna.setRole(Role.STAF);
+    //             break;
+    //         case MAHASISWA:
+    //             dummyPengguna.setId("2106751436");
+    //             dummyPengguna.setEmail("mahasiswa@example.com");
+    //             dummyPengguna.setNama("Dummy Mahasiswa");
+    //             dummyPengguna.setRole(Role.MAHASISWA);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //     return dummyPengguna;
+    // }
 
     @GetMapping("all")
     public ResponseEntity<List<RequestSurat>> showAllRequest() {

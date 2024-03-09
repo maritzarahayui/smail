@@ -12,14 +12,14 @@
 
 .pengajuan-permohonan-surat-container {
   position: absolute;
-  top: 154px;
+  top: 90px;
   left: calc(50% - 359px);
   font-size: 48px;
 }
 
 .ajukan-surat-child {
   position: absolute;
-  top: 102px;
+  top: 50px;
   left: -104px;
   width: 368.98px;
   height: 117.2px;
@@ -27,7 +27,7 @@
 
 .ajukan-surat-item {
   position: absolute;
-  top: -20px;
+  top: -70px;
   left: 1154px;
   width: 355.36px;
   height: 330.53px;
@@ -226,7 +226,7 @@
 
 .text-input-parent {
   position: absolute;
-  top: 296px;
+  top: 265px;
   left: 209px;
   flex-direction: column;
   gap: 30px 0;
@@ -266,7 +266,7 @@
   width: 100%;
   position: relative;
   background-color: #fffffe;
-  height: 1599px;
+  height: 1150px;
   overflow: auto;
   text-align: center;
   font-size: 16px;

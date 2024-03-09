@@ -6,10 +6,9 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import propensi.smail.model.Pengguna;
+import propensi.smail.model.user.*;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.Role;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.RequestTemplateDb;
 
@@ -29,6 +28,7 @@ public class RequestServiceImpl implements RequestService {
             requestSurat.setKategori(requestSurat.getKategori());
             requestSurat.setJenisSurat(requestSurat.getJenisSurat());
             requestSurat.setStatus(0); // 0 --> REQUESTED
+            requestSurat.setId(generateRequestId(requestSurat.getPengaju()));
 
             System.out.println("RequestTemplate saved successfully");
             return requestSuratDb.save(requestSurat);
@@ -69,8 +69,27 @@ public class RequestServiceImpl implements RequestService {
         return allRequests.size();
     }
 
+    @Override
+    public String generateRequestId(Pengguna pengaju) {
+        Long totalRequestsBy = (long) 0;
+        String prefix = "";
+
+        if (pengaju instanceof Dosen) {
+            totalRequestsBy = requestSuratDb.countRequestByDosen();
+            prefix = "DOS";
+        } else if (pengaju instanceof Staf) {
+            totalRequestsBy = requestSuratDb.countRequestByStaf();
+            prefix = "STF";
+        } else if (pengaju instanceof Mahasiswa) {
+            totalRequestsBy = requestSuratDb.countRequestByMahasiswa();
+            prefix = "MHS";
+        }
+
+        return prefix + String.format("%03d", totalRequestsBy + 1);
+    }
+
     // @Override
-    // public String generateRequestId(Pengguna dummyPengguna) {
+    // public String generateRequestId(Pengguna pengaju) {
     //     long totalRequestsLong = requestSuratDb.countByPengajuRole(dummyPengguna.getRole());
     //     int totalRequests = Math.toIntExact(totalRequestsLong);
     //     String prefix = "";
