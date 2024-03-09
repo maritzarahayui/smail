@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
@@ -27,9 +28,12 @@ public class TemplateFEController {
         @Autowired
         private TemplateService templateSuratService;
 
-        @GetMapping("/tes")
-        public String ishowTambahTemplateForm(Model model) {
-            return "add-template";
+        @GetMapping("/new-requests")
+        public String showTemplateRequests(Model model) {
+            List<RequestTemplate> requestTemplates = templateSuratService.getAllReqTemplate();
+            model.addAttribute("requestTemplates", requestTemplates);
+
+            return "daftar-request-template";
         }
 
         @GetMapping("/active-templates")
