@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("/api/surat-masuk")
+@RequestMapping("/surat-masuk")
 public class SuratMasukController {
 
     @Autowired
@@ -49,20 +49,19 @@ public class SuratMasukController {
         try {
             SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
             // dapatkan surat masuknya
-
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             // redirect to detail surat masuk
-            return "redirect:/api/surat-masuk/detail/" + suratMasuk.getNomorArsip();
+            return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return "redirect:/api/surat-masuk/form";
+            return "redirect:/surat-masuk/form";
         }
     }
 
     @GetMapping("/files")
     public ResponseEntity<List<String>> getListFiles() {
         List<String> fileNames = suratMasukService.getAllFiles().map(fileName -> {
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/surat-masuk/files/").path(fileName.getNomorArsip()).toUriString();
+            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/surat-masuk/files/").path(fileName.getNomorArsip()).toUriString();
             return fileDownloadUri;
         }).collect(Collectors.toList());
 
