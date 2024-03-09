@@ -6,5 +6,4 @@ import propensi.smail.model.TemplateSurat;
 
 @Repository
 public interface TemplateSuratDb extends JpaRepository<TemplateSurat, String> {
-    
 }
