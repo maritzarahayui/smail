@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+  <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
+  <link rel="stylesheet" th:href="@{/css/navbarLoggedIn.css}"/>
+  <script th:src="@{/js/script.js}"></script>
+</head>
+
+<body>
+    <nav th:fragment="navbarLoggedIn" id="navbar">
+        
+        <div class="navbar">
+            <i id="menuIcon" class='bx bx-menu'></i>
+            <div class="logo">
+                <img class="logo" th:src="@{/images/Logo SMAIL.svg}"/>
+            </div>
+
+            <div class="nav-links">
+                <div class="sidebar-logo">
+                    <img class="logo" th:src="@{/images/Logo SMAIL.svg}"/>
+                    <i class='bx bx-x' ></i>
+                </div>
+
+                <ul class="links">
+                    <li><a th:href="@{#}">Beranda</a></li>
+
+                    <li th:if="${role == 'Admin' or role == 'Pengurus'}">
+                        <a th:href="@{#}">Request Surat</a>
+                    </li>
+                    <li th:if="${role == 'Dosen' or role == 'Staf'}">
+                        <a th:href="@{#}">Ajukan Surat</a>
+                    </li>
+
+                    <li th:if="${role == 'Dosen' or role == 'Mahasiswa' or role == 'Staf'}"><a th:href="@{#}">Riwayat Surat</a></li>
+
+                    <li th:if="${role == 'Admin' or role == 'Pengurus'}">
+                        <a href="#">Arsip Surat</a>
+                        <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
+                        <ul id="htmlCssSubMenu" class="htmlCss-sub-menu sub-menu">
+                            <li><a href="#">Surat Masuk</a></li>
+                            <hr class="linehrz" />
+                            <li><a href="#">Semua Arsip</a></li>
+                        </ul>
+                    </li>
+
+                    <li th:if="${role == 'Admin'}"><a th:href="@{#}">Template Surat</a></li>
+
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="navbarLoggedInInner">
+                <div class="buttonWrapper">
+                    <div class="button">
+                        <div class="admin" th:text="${namaDepan}"></div>
+                        <img class="iconoutlinechevronDown" alt="" th:src="@{/images/chevron-down.svg}" />
+                        <div id="dropdownContent" class="dropdownContent">
+                            <div class="iconTextContainer">
+                                <img class="profile" alt="" th:src="@{/images/profile.svg}" />
+                                <a th:href="@{/profile}">Profile</a>
+                            </div>
+
+                            <hr class="horizontalLine" />
+
+                            <div class="iconTextContainer">
+                                <img class="logout" alt="" th:src="@{/images/logout.svg}"/>
+                                <a th:href="@{/logout}">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+  <script th:src="@{/js/script.js}"></script>
+  
+</body>
+</html>
