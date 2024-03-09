@@ -15,6 +15,8 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
+    <title>SMAIL</title>
+    
     <style>
       .container {
         max-width: 800px;
@@ -62,29 +64,7 @@
     </style>
   </head>
   <body>
-    <div class="file-input-field">
-      <img
-        class="file-input-field-child"
-        loading="lazy"
-        alt=""
-        src="/images/surat-kiri.png"
-      />
-
-      <div class="footer-developed-by">
-        <h1 class="input-surat-masuk-container">
-          <span>
-            <span class="input">Input</span>
-            <span> Surat Masuk</span>
-          </span>
-        </h1>
-        <img
-          class="file-input-field-child"
-          loading="lazy"
-          alt=""
-          src="/images/surat-kiri.png"
-        />
-      </div>
-    </div>
+    <nav th:replace="~{fragments/navbarUser :: navbarUser}"></nav>
     <div class="container">
       <!-- <h1>Form Input Surat Masuk</h1> -->
       <form
@@ -128,5 +108,6 @@
         <input type="submit" value="Submit" />
       </form>
     </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
   </body>
 </html>
