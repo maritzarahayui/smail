@@ -58,6 +58,9 @@ public class RequestSuratController {
        
         model.addAttribute("requestSurat", new RequestSurat());
 
+        List<TemplateSurat> listTemplateSurat = templateService.getAllActiveTemplates();
+        model.addAttribute("listTemplateSurat", listTemplateSurat);
+
         return "request-surat";
     }
 

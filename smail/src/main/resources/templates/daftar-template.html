@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Active Templates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+</head>
+<body>
+<div class="daftar-template-surat">
+    <img class="ajukan-surat-item" alt="" src="/images/kiri.svg" />
+    <img class="daftar-template-surat-child" alt="" src="/images/kanan.svg"/>
+    <section class="template-frame">
+        <header class="navbar">
+            <div class="beranda-frame">
+                <div class="wrapper-group-8">
+                    <img class="wrapper-group-8-child" loading="lazy" alt="" src="/images/Logo SMAIL.svg"/>
+                </div>
+                <div class="request-frame">
+                    <b class="beranda">Beranda</b>
+                </div>
+                <div class="request-frame1">
+                    <b class="request-surat">Request Surat</b>
+                </div>
+                <div class="arsip-frame">
+                    <b class="arsip-surat">Arsip Surat</b>
+                    <img class="iconoutlinechevron-down" alt="" src="/images/chevron-down-dark.svg"/>
+                </div>
+                <div class="request-frame2">
+                    <b class="template-surat">Template Surat</b>
+                </div>
+                <div class="request-frame3">
+                    <b class="faq">FAQ</b>
+                </div>
+            </div>
+            <div class="navbar-child"></div>
+            <div class="button-frame">
+                <div class="admin-text">
+                    <div class="button">
+                        <div class="admin">Admin</div>
+                        <img class="iconoutlinechevron-down1" alt="" src="/images/chevron-down.svg"/>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="keuangan-template-frame">
+            <div class="keuangan-template">
+                <div class="gaji-detail-frame">
+                    <div class="r-t-x-footer">
+                        <div class="template-list">
+                            <h1 class="daftar-template-surat-container">
+                                <span>
+                                    <span class="daftar">Daftar</span>
+                                    <span> Template Surat</span>
+                                </span>
+                            </h1>
+                            <div class="search-bar">
+                                <form th:action="@{/template/search}" method="get">
+                                    <div class="button1">
+                                        <img class="search-icon" alt="" src="/images/search.svg" />
+                                        <input class="ketik-kata-kunci" placeholder="Cari template berdasarkan nama..." type="text" name="namaTemplate" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="request-surat1">
+                <div class="keuangan-frame">
+                    <button class="button2" th:onclick="'window.location.href = \'/template/new-template\''">
+                        <img class="fluentadd-16-filled-icon" alt="" src="/images/plus.svg" />
+                        <div class="tambah-template">Tambah Template</div>
+                    </button>
+
+                    <button class="button3">
+                        <div class="lihat-permintaan-template">
+                            Lihat Permintaan Template
+                        </div>
+                    </button>
+                </div>
+                <h2>Active Templates</h2>
+                <div th:each="template : ${activeTemplates}" class="template-surat1">
+                    <div class="f-a-q">
+                        <h3 class="keuangan" th:text="${template.namaTemplate}"></h3>
+                        <br>
+                        <p style="font-size: 20px;">ID: </b><span th:text="${template.id}"></span></p>
+                        <p style="font-size: 20px;">Kategori: </b><span th:text="${template.kategori}"></span></p>
+                        <a th:href="@{'/template/detail/' + ${template.id}}">
+                            <button class="button-group">
+                                <div class="button4">
+                                    <img class="lets-iconsview-alt" alt="" src="/images/eye.svg" />
+                                    <div class="button5">Detail</div>
+                                </div>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="footer">
+        <footer class="copyright-frame">
+            <div class="footer-info">
+                <h3 class="developed-by-rtx">Developed by rt(x) Team</h3>
+                <h3 class="propensi-d02">Propensi D02</h3>
+            </div>
+            <div class="collaboration-frame">
+                <h3 class="in-collaboration-with">In collaboration with</h3>
+                <div class="logo-images">
+                    <img class="image-1-icon" loading="lazy" alt="" src="/images/tazkia.svg"/>
+                    <img class="image-18-icon" loading="lazy" alt="" src="/images/fasilkom.svg"/>
+                </div>
+            </div>
+        </footer>
+        <div class="footer-container">
+            <h3 class="copyright-2024-tazkia">
+                © Copyright 2024 Tazkia Institute. All Rights Reserved.
+            </h3>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -13,7 +13,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "template_surat")
 
 public class TemplateSurat {
-  
+
     @Id
     private String id;
 
@@ -31,7 +31,7 @@ public class TemplateSurat {
 
     @NotNull
     @Column(name = "is_active", nullable = false)
-    private boolean isActive;
+    private boolean isActive = true;
 
     @NotNull
     @Column(name = "list_pengguna", nullable = false)
@@ -42,11 +42,11 @@ public class TemplateSurat {
     private ArrayList<String> listField;
 
     @Lob
-    @Column(name = "file", nullable = false)
+    @Column(name = "file")
     private byte[] file;
 
+    @Column(name = "file_name")
+    private String fileName;
 
     /* RELATIONSHIPS */
-  
-
 }

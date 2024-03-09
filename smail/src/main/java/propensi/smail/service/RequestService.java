@@ -7,6 +7,7 @@ import java.util.HashMap;
 import propensi.smail.model.Pengguna;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
+import propensi.smail.model.TemplateSurat;
 
 public interface RequestService {
     RequestSurat createRequestSurat(RequestSurat requestSurat);
@@ -20,7 +21,7 @@ public interface RequestService {
     // Map<String, String> generateJenisSuratByKategori();
     Map<Integer, String> listBentukSurat();
     Map<Integer, String> listBahasa();
-    List<String> getJenisSuratForKategori(String kategori);
+    // List<String> getJenisSuratForKategori(String kategori);
 
     // String generateRequestId(Pengguna dummyPengguna);
     // Pengguna createDummyPengguna(String role);
@@ -29,4 +30,8 @@ public interface RequestService {
     void createRequestTemplate(RequestTemplate requestTemplate);
     List<RequestTemplate> retrieveAllRequest();
     Map<Integer, String> listKategori();
+
+    // PREVIEW TEMPLATE
+    List<String> getAllJenisByKategori(String Kategori);
 }
+
