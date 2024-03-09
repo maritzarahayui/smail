@@ -2,34 +2,46 @@ package propensi.smail.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import propensi.smail.model.Pengguna;
 import propensi.smail.model.RequestSurat;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.Role;
 import propensi.smail.repository.RequestSuratDb;
+import propensi.smail.repository.RequestTemplateDb;
 
 @Service
 public class RequestServiceImpl implements RequestService {
     @Autowired
     private RequestSuratDb requestSuratDb;
 
+    @Autowired
+    private RequestTemplateDb requestTemplateDb;
+
     @Override
     public RequestSurat createRequestSurat(RequestSurat requestSurat) {
-        // requestSurat.setPengaju(pengguna); // sementara gini buat pake dummy, kalo udh nyambung ama pengguna real gimana? 
-        return requestSuratDb.save(requestSurat);
+        try {
+            requestSurat.setBentukSurat(requestSurat.getBentukSurat());
+            requestSurat.setBahasa(requestSurat.getBahasa());
+            requestSurat.setKategori(requestSurat.getKategori());
+            requestSurat.setJenisSurat(requestSurat.getJenisSurat());
+            requestSurat.setStatus(0); // 0 --> REQUESTED
+
+            System.out.println("RequestTemplate saved successfully");
+            return requestSuratDb.save(requestSurat);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error saving RequestTemplate");
+            return null;
+        }
+        
     }
 
     @Override
-    public List<RequestSurat> getAllRequests() {
+    public List<RequestSurat> getAllRequestsSurat() {
         return requestSuratDb.findAll();
     }
 
@@ -45,8 +57,15 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public RequestSurat batalkanRequestSurat(String requestSuratId) {
+        RequestSurat requestSurat = getRequestSuratById(requestSuratId);
+        requestSurat.setStatus(1); // Misalnya, 1 mewakili status "Dibatalkan"
+        return requestSuratDb.save(requestSurat);
+    }
+
+    @Override
     public int countAllRequests() {
-        List<RequestSurat> allRequests = getAllRequests();
+        List<RequestSurat> allRequests = getAllRequestsSurat();
         return allRequests.size();
     }
 
@@ -73,57 +92,76 @@ public class RequestServiceImpl implements RequestService {
     //     return prefix + String.format("%03d", totalRequests + 1);
     // }
 
-    // Daftar kategori surat
-    private static final List<String> KATEGORI_SURAT = Arrays.asList("SDM", "Keuangan", "Sarana Prasarana");
+    @Override
+    public Map<String, List<String>> generateJenisSuratByKategori() {
+        Map<String, List<String>> jenisSuratByKategori = new HashMap<>();
 
-    // Daftar jenis surat berdasarkan kategori
-    private static final Map<String, List<String>> JENIS_SURAT = new HashMap<>();
+        // Menambahkan daftar jenis surat untuk kategori Keputusan
+        List<String> jenisSuratLegal = new ArrayList<>();
+        jenisSuratLegal.add("Surat Keterangan Studi");
+        jenisSuratLegal.add("Surat Tugas Mengajar");
+        jenisSuratLegal.add("Surat Tugas Administratif");
+        jenisSuratByKategori.put("LEGAL", jenisSuratLegal);
 
-    static {
-        // Kategori SDM
-        JENIS_SURAT.put("SDM", Arrays.asList(
-            "Surat Kepegawaian",
-            "Surat Kenaikan Pangkat / Jabatan",
-            "Surat Cuti Pegawai",
-            "Surat Pelatihan / Workshop",
-            "Surat Karyawan Luar",
-            "Surat Izin / Perijinan"
-        ));
+        // Menambahkan daftar jenis surat untuk kategori Edaran
+        List<String> jenisSuratSDM = new ArrayList<>();
+        jenisSuratSDM.add("Surat Pengajuan Cuti");
+        jenisSuratSDM.add("Surat Rekomendasi Pemagangan");
+        jenisSuratSDM.add("Surat Permohonan Pembebasan dari Tugas Mengajar");
+        jenisSuratByKategori.put("SDM", jenisSuratSDM);
 
-        // Kategori Keuangan
-        JENIS_SURAT.put("Keuangan", Arrays.asList(
-            "Surat Tagihan / Faktur",
-            "Surat Penerimaan Pembayaran Gaji",
-            "Surat Kontrak / Perjanjian Keuangan",
-            "Surat Pengajuan Dana"
-        ));
+        // Menambahkan daftar jenis surat untuk kategori Keterangan
+        List<String> jenisSuratKeuangan = new ArrayList<>();
+        jenisSuratKeuangan.add("Surat Pengajuan Dana Penelitian");
+        jenisSuratKeuangan.add("Surat Pengajuan Dana Beasiswa");
+        jenisSuratByKategori.put("KEUANGAN", jenisSuratKeuangan);
 
-        // Kategori Sarana Prasarana
-        JENIS_SURAT.put("Sarana Prasarana", Arrays.asList(
-            "Surat Peminjaman / Penyewaan",
-            "Surat Permohonan Peminjaman Fasilitas"
-        ));
+        // Menambahkan daftar jenis surat untuk kategori Kuasa
+        List<String> jenisSuratSarana = new ArrayList<>();
+        jenisSuratSarana.add("Surat Permohonan Peminjaman Ruang Kelas");
+        jenisSuratSarana.add("Surat Izin Penggunaan Fasilitas Olahraga");
+        jenisSuratSarana.add("Surat Permohonan Perbaikan Sarana dan Prasarana");
+        jenisSuratByKategori.put("SARANA", jenisSuratSarana);
+
+        // Menambahkan daftar jenis surat untuk kategori Pengantar
+        List<String> jenisSuratKemahasiswaan = new ArrayList<>();
+        jenisSuratKemahasiswaan.add("Surat Pengantar Penyelenggaraan Acara Kemahasiswaan");
+        jenisSuratKemahasiswaan.add("Surat Permohonan Bantuan Dana untuk Organisasi Mahasiswa");
+        jenisSuratByKategori.put("KEMAHASISWAAN", jenisSuratKemahasiswaan);
+
+        // Menambahkan daftar jenis surat untuk kategori Lainnya
+        List<String> jenisSuratLainnya = new ArrayList<>();
+        jenisSuratLainnya.add("Surat Pernyataan Penugasan Pengembangan Kurikulum");
+        jenisSuratLainnya.add("Surat Pemberitahuan Pengunduran Diri Dosen");
+        jenisSuratLainnya.add("Surat Pernyataan Keikutsertaan dalam Organisasi Kemahasiswaan");
+        jenisSuratByKategori.put("Lainnya", jenisSuratLainnya);
+
+        return jenisSuratByKategori;
+    }
+
+    public List<String> getJenisSuratForKategori(String kategori) {
+        Map<String, List<String>> jenisSuratByKategori = generateJenisSuratByKategori();
+        return jenisSuratByKategori.get(kategori);
     }
 
     @Override
-    public List<String> getAllKategoriSurat() {
-        return KATEGORI_SURAT;
+    public Map<Integer, String> listBahasa(){
+        Map<Integer, String> bahasa = new HashMap<>();
+
+        bahasa.put(1, "Indonesia (IND)");
+        bahasa.put(2, "Inggris (EN)");
+
+        return bahasa;
     }
 
     @Override
-    public List<String> getJenisSuratByKategori(String kategori) {
-        return JENIS_SURAT.getOrDefault(kategori, Collections.emptyList());
-    }
+    public Map<Integer, String> listBentukSurat(){
+        Map<Integer, String> bentuk = new HashMap<>();
 
-    @Override
-    public List<String> getAllBentukSurat() {
-        return Arrays.asList("Soft Copy", "Hard Copy");
-    }
+        bentuk.put(1, "Soft Copy");
+        bentuk.put(2, "Hard Copy");
 
-    // Daftar opsi untuk bahasa surat
-    @Override
-    public List<String> getAllBahasaSurat() {
-        return Arrays.asList("Bahasa Indonesia", "Bahasa Inggris");
+        return bentuk;
     }
     
 }

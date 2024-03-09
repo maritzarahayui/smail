@@ -10,16 +10,24 @@ import propensi.smail.service.RequestService;
 import propensi.smail.service.TemplateService;
 
 import java.util.List;
+import java.util.Date;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 
 
-@RestController
-@RequestMapping("/api/request-surat")
+@Controller
+// @RestController
+// @RequestMapping("/api/request-surat")
 public class RequestSuratController {
     
     @Autowired
@@ -28,44 +36,39 @@ public class RequestSuratController {
     @Autowired
     private TemplateService templateService;
 
-    @PostMapping("/create-request")
-    public ResponseEntity<RequestSurat> createRequest(@RequestBody RequestSurat requestSurat) {
-        // try {
-            // Pengguna pengaju = requestSurat.getPengaju();
+    @GetMapping("request-surat")
+    public String formRequestSurat(Model model){
 
-            // // Periksa apakah pengaju telah diinisialisasi
-            // if (pengaju == null) {
-            //     throw new IllegalArgumentException("Pengaju must be provided");
-            // }
+        Map<Integer, String> listBentukSurat = requestService.listBentukSurat();
+        model.addAttribute("listBentukSurat", listBentukSurat);
 
-            // // Periksa apakah pengaju memiliki role yang valid
-            // Role role = pengaju.getRole();
-            // if (role == null) {
-            //     throw new IllegalArgumentException("Role must be provided for pengaju");
-            // }
-            // // Buat dummy pengguna jika pengaju tidak memiliki ID (misalnya saat pengguna baru)
-            // if (pengaju.getId() == null) {
-            //     pengaju = createDummyPengguna(role);
-            //     requestSurat.setPengaju(pengaju); // Inisialisasi pengaju dengan dummy pengguna
-            // }
+        Map<Integer, String> listBahasa = requestService.listBahasa();
+        model.addAttribute("listBahasa", listBahasa);
+       
+        Map<String, List<String>> jenisSuratByKategori = requestService.generateJenisSuratByKategori();
+        model.addAttribute("jenisSuratByKategori", jenisSuratByKategori);
+       
+        model.addAttribute("requestSurat", new RequestSurat());
 
-            // Mendapatkan daftar template surat dari layanan TemplateService
-            // List<TemplateSurat> templates = templateService.showAllTemplates();
-            String bentukSurat = requestSurat.getBentukSurat();
-            String bahasa = requestSurat.getBahasa();
-            // String requestId = requestService.generateRequestId(pengaju);
-            // requestSurat.setId(requestId);
-            requestSurat.setBentukSurat(bentukSurat);
-            requestSurat.setBahasa(bahasa);
+        return "request-surat";
+    }
 
-            RequestSurat createdRequestSurat = requestService.createRequestSurat(requestSurat);
-            return new ResponseEntity<>(createdRequestSurat, HttpStatus.CREATED);
-        // } catch (IllegalArgumentException e) {
-        //     // Tangani jika nilai string role tidak valid untuk enum Role
-        //     return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        // } catch (Exception e) {
-        //     return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        // }
+    @PostMapping("request-surat")
+    public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat, 
+                             BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return bindingResult.getAllErrors().toString(); // Ini hanya contoh, Anda bisa menyesuaikan format pesan error
+        }
+        try {
+            requestSurat.setTanggalPengajuan(new Date());
+            requestService.createRequestSurat(requestSurat);
+            System.out.println("BERHASIL");
+            return "redirect:/request-surat"; // Redirect ke halaman history jika berhasil
+        } catch (Exception e) {
+            // Tangkap dan tangani kesalahan jika terjadi
+            e.printStackTrace();
+            return "Gagal membuat permintaan surat: " + e.getMessage(); 
+        }
     }
 
     public Pengguna createDummyPengguna(Role role) {
@@ -95,9 +98,9 @@ public class RequestSuratController {
         return dummyPengguna;
     }
 
-    @GetMapping("/all")
+    @GetMapping("all")
     public ResponseEntity<List<RequestSurat>> showAllRequest() {
-        List<RequestSurat> allRequests = requestService.getAllRequests();
+        List<RequestSurat> allRequests = requestService.getAllRequestsSurat();
         return new ResponseEntity<>(allRequests, HttpStatus.OK);
     }
 
@@ -116,6 +119,16 @@ public class RequestSuratController {
         try {
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
             return new ResponseEntity<>(requestSurat, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestSurat with id: " + requestSuratId + " not found", e);
+        }
+    }
+
+    @PutMapping("/{requestSuratId}/cancel")
+    public ResponseEntity<RequestSurat> cancelRequest(@PathVariable("requestSuratId") String requestSuratId) {
+        try {
+            RequestSurat canceledRequestSurat = requestService.batalkanRequestSurat(requestSuratId);
+            return new ResponseEntity<>(canceledRequestSurat, HttpStatus.OK);
         } catch (NoSuchElementException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestSurat with id: " + requestSuratId + " not found", e);
         }

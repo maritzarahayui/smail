@@ -16,7 +16,9 @@ public class RequestSurat {
     
     @Id
     // private String id;
-    private UUID id = UUID.randomUUID();
+    // private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column(name = "kategori", nullable = false)
@@ -40,9 +42,8 @@ public class RequestSurat {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private int status;
+    private int status; // 1 = dibatalkan, 0 = requested;
 
-    @NotNull
     @Column(name = "tanggal_pengajuan", nullable = false)
     private Date tanggalPengajuan;
 
