@@ -64,12 +64,12 @@ public class RequestSurat {
     @JoinColumn(name = "pengaju")
     private Pengguna pengaju; 
     
-    // @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
-    // private List<FieldData> listFieldData;
+    @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
+    private List<FieldData> listFieldData;
 
-    // @ManyToOne
-    // @JoinColumn(name = "template")
-    // private TemplateSurat template;
+    @ManyToOne
+    @JoinColumn(name = "template")
+    private TemplateSurat template;
 
     // @OneToOne
     // @JoinColumn(name = "surat")

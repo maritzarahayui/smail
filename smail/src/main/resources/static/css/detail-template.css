@@ -166,9 +166,9 @@
   max-width: 100%;
 }
 .label-d-child {
-  margin-left: -104px;
-  height: 117.2px;
-  width: 369px;
+  margin-left: -100px;
+  height: 110px;
+  width: 350px;
   position: relative;
   max-width: 100%;
 }
@@ -186,7 +186,7 @@
 .detail-template {
   margin: 0;
   align-self: stretch;
-  height: 57px;
+  height: 50px;
   position: relative;
   font-size: inherit;
   font-weight: 700;
@@ -212,17 +212,17 @@
   width: 926px;
   flex-direction: row;
   align-items: flex-end;
-  padding: 0 var(--padding-xl) 39.80000000000018px 0;
+  padding: 0 var(--padding-xl) 39.8px 0;
   gap: 0 268px;
   font-size: var(--heading-h2-size);
 }
 .tambah-template-child {
   width: 355.4px;
-  height: 330.5px;
+  height: 250px;
   position: absolute;
   margin: 0 !important;
-  top: -20px;
-  right: -69.4px;
+  top: -50px;
+  right: -70px;
   object-fit: contain;
   z-index: 1;
 }

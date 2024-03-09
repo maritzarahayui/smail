@@ -11,15 +11,49 @@
     <link rel="stylesheet" href="/css/request-surat.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"/>
 
+    <style>
+        /* CSS untuk mengatur preview-template */
+        #preview-template {
+            display: none; /* Defaultnya disembunyikan */
+            margin-top: 20px; /* Jarak antara form dan preview */
+            padding: 20px; /* Padding agar tampilan lebih baik */
+            border: 1px solid #ccc; /* Border untuk memisahkan preview dengan form */
+            border-radius: 5px; /* Agar preview memiliki sudut yang melengkung */
+            background-color: #f9f9f9; /* Warna latar belakang */
+        }
+
+        #preview-template embed {
+            width: 100%; /* Mengatur agar ukuran PDF sesuai dengan lebar form */
+            height: 500px; /* Tinggi tetap 500px */
+        }
+
+        #preview-title {
+            font-size: 18px; /* Ukuran font judul */
+            font-weight: bold; /* Tulisan judul menjadi tebal */
+            margin-bottom: 10px; /* Jarak antara judul dengan konten preview */
+        }
+        .error-message {
+            color: red; /* Warna teks merah */
+            font-style: italic; /* Gaya teks menjadi miring */
+            margin-top: 10px; /* Jarak antara pesan error dengan konten sebelumnya */
+        }
+    </style>
+
     <script th:inline="javascript">
         /*<![CDATA[*/
         document.addEventListener('DOMContentLoaded', function () {
             var kategoriDropdown = document.getElementById('kategori');
             var jenisSuratWrapper = document.getElementById('jenisSuratWrapper');
             var jenisSuratDropdown = document.getElementById('jenisSurat');
+            var previewTemplateWrapper = document.getElementById('preview-template');
+            var listFieldWrapper = document.getElementById('listFieldWrapper');
+            var reqTemplateWrapper = document.getElementById('reqTemplateWrapper');
     
             // Sembunyikan judul dan dropdown jenis surat saat halaman dimuat
             jenisSuratWrapper.style.display = 'none';
+            previewTemplateWrapper.style.display = 'none';
+            listFieldWrapper.style.display = 'none';
+            reqTemplateWrapper.style.display = 'none';
     
             // Tambahkan event listener untuk dropdown kategori surat
             kategoriDropdown.addEventListener('change', function () {
@@ -42,10 +76,9 @@
     
                 // Tambahkan opsi jenis surat sesuai dengan kategori yang dipilih
                 var selectedKategori = kategoriDropdown.value;
-                const jenisSuratByKategori = /*[[${jenisSuratByKategori}]]*/ {};
+                var jenisSuratByKategori = /*[[${jenisSuratByKategori}]]*/ {};
                 var jenisSuratList = jenisSuratByKategori[selectedKategori] ?? [];
-                var jenisTes = /*[[${jenisSuratByKategori.get("Permohonan")}]]*/ "";
-                
+    
                 if (jenisSuratList) {
                     jenisSuratList.forEach(function (jenisSurat) {
                         var option = document.createElement('option');
@@ -53,12 +86,108 @@
                         option.value = jenisSurat;
                         jenisSuratDropdown.appendChild(option);
                     });
+
+                    // Membuat dan menambahkan opsi 'Lainnya'
+                    var lainnyaOption = document.createElement('option');
+                    lainnyaOption.text = 'Lainnya';
+                    lainnyaOption.value = 'Lainnya';
+                    jenisSuratDropdown.appendChild(lainnyaOption);
+                }
+            });
+    
+            var base64PDF = /*[[${base64PDF}]]*/ '';
+            jenisSuratDropdown.addEventListener('change', function() {
+                if (jenisSuratDropdown.value == 'Lainnya') {
+                    reqTemplateWrapper.style.display = 'block';
+                    previewTemplateWrapper.style.display = 'none';
+                    listFieldWrapper.style.display = 'none';
+
+                } else if (jenisSuratDropdown.value !== '') {
+                    previewTemplateWrapper.style.display = 'block';
+                    listFieldWrapper.style.display = 'block';
+                    reqTemplateWrapper.style.display = 'none';
+
+                    // Mendapatkan jenis surat yang dipilih
+                    var selectedJenisSurat = jenisSuratDropdown.value;
+    
+                    // Mendapatkan kategori surat yang dipilih
+                    var selectedKategori = kategoriDropdown.value;
+    
+                    // Mendapatkan template surat yang sesuai dengan jenis surat yang dipilih
+                    var listTemplateSurat = /*[[${listTemplateSurat}]]*/ [];
+                    var selectedTemplate = listTemplateSurat.find(function(template) {
+                        return template.namaTemplate === selectedJenisSurat && template.kategori === selectedKategori;
+                    });
+
+                    console.log("===== selectedTemplate:", selectedTemplate)
+
+    
+                    // Jika template ditemukan, tampilkan preview PDF
+                    if (selectedTemplate) {
+                        var base64PDF = selectedTemplate.file;
+                        var listFieldData = selectedTemplate.listField;
+
+                        previewTemplateWrapper.innerHTML = `
+                        <div id="preview-title">Preview Template</div>
+                            <embed src='data:application/pdf;base64,${base64PDF}' type="application/pdf" width="100%" height="500px">
+                        `;
+
+                        listFieldWrapper.innerHTML = '';
+
+                        if (selectedTemplate && selectedTemplate.listField) {
+                            selectedTemplate.listField.forEach(function(field, index) {
+                                // Create input element for each field
+                                var inputDiv = document.createElement('div');
+                                inputDiv.className = 'text-input';
+                                
+                                var labelDiv = document.createElement('div');
+                                labelDiv.className = 'label';
+                                labelDiv.textContent = field; 
+                                
+                                var hiddenElement = document.createElement('input');
+                                hiddenElement.type = 'hidden';
+                                hiddenElement.className = 'form-control';
+                                hiddenElement.name = `listFieldData[${index}].key`; // Menggunakan index
+                                hiddenElement.field = field;
+                                hiddenElement.value = field;
+
+                                var textDiv = document.createElement('div');
+                                textDiv.className = 'text-input7';
+
+                                var inputElement = document.createElement('input');
+                                inputElement.type = 'text';
+                                inputElement.className = 'form-control';
+                                inputElement.name = `listFieldData[${index}].value`; // Menggunakan index
+                                inputElement.required = true;
+                                
+                                var breakElement = document.createElement('br');
+
+                                textDiv.appendChild(inputElement); 
+                                inputDiv.appendChild(labelDiv);
+                                inputDiv.appendChild(hiddenElement);
+                                inputDiv.appendChild(textDiv);
+                                listFieldWrapper.appendChild(inputDiv);
+                                listFieldWrapper.appendChild(breakElement);
+                            });
+
+                            // After adding all fields, show the listFieldWrapper
+                            listFieldWrapper.style.display = 'block';
+
+                        }
+
+                    } else {
+                        // Jika tidak ada template yang sesuai, tampilkan pesan error
+                        previewTemplateWrapper.innerHTML = '<div class="error-message">Template tidak ditemukan untuk jenis surat yang dipilih.</div>';
+                    }
+                } else {
+                    // Sembunyikan preview jika tidak ada jenis surat yang dipilih
+                    previewTemplateWrapper.style.display = 'none';
+                    listFieldWrapper.style.display = 'none';
                 }
             });
         });
         /*]]>*/
-    </script>
-    
+    </script>    
 </head>
 
 
@@ -71,11 +200,10 @@
             <span> Permohonan Surat</span>
         </b>
 
-
         <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
         <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
 
-        <form th:action="@{/request-surat}" th:object="${requestSurat}" method="POST">
+        <form th:action="@{/request}" th:object="${requestDTO}" method="POST">
             
             <div class="text-input-parent">
                 <div class="text-input">
@@ -83,11 +211,10 @@
                     <div class="text-input7">
                         <select name="bahasa" class="form-select" th:field="*{bahasa}">
                             <option value="">Pilih Bahasa Surat</option>
-                            <option th:each="entry : ${listBahasa}" th:value="${entry.key}" th:text="${entry.value}"></option>
+                            <option th:each="entry : ${listBahasa}" th:value="${entry.value}" th:text="${entry.value}"></option>
                         </select>
                     </div>
                 </div>
-
 
                 <div class="label-parent">
                     <div class="label">Bentuk Surat</div>
@@ -144,22 +271,24 @@
                     </div>
                 </div>
 
+                <div id="preview-template">
+                    PREVIEW TEMPLATE
+                </div>
 
-                <div class="container">
+                <div id="listFieldWrapper"></div>
+
+                <div class="container" id="reqTemplateWrapper">
                     <div class="label">Data yang diperlukan</div>
                     <div id="list-field-data" class="form-group">
                         <div class="input-row d-flex mt-3 mb-2">
-                            <input type="text" class="form-control" placeholder="Nama Perusahaan" name="key-data" required>
-                            <input type="text" class="form-control" placeholder="Jalan Sudirman ..." name="value-data" required>
+                            <input type="text" class="form-control" placeholder="Nama Perusahaan" name="listFieldData[0].key" required>
+                            <input type="text" class="form-control" placeholder="Jalan Sudirman ..." name="listFieldData[0].value" required>
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <button type="button" class="btn btn-primary" onclick="addRow()" style="background-color:#0f7454;">Add Field</button>
+                        <button type="button" class="btn btn-primary" onclick="addRow()" style="background-color:#0f7454;">Tambah Field</button>
                     </div>
-                </div>
-                
-                
-                
+                </div>                
 
                 <div class="text-center action-buttons">
                     <button type="submit" class="button">Ajukan Surat</button>
@@ -171,36 +300,39 @@
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <script>
+
 function addRow() {
-    let container = document.getElementById('list-field-data');
+    const container = document.getElementById('list-field-data');
+    const numberOfRows = container.getElementsByClassName('input-row').length;
 
-    // Create a new row for input fields
-    let newRow = document.createElement('div');
-    newRow.className = 'input-row d-flex mb-2';
+    // Membuat div baru untuk row input
+    const newRow = document.createElement('div');
+    newRow.className = 'input-row d-flex mt-3 mb-2';
 
-    // Create the "First Name" input
-    let newInputKey = document.createElement('input');
-    newInputKey.type = 'text';
-    newInputKey.className = 'form-control';
-    newInputKey.placeholder = 'First Name';
-    newInputKey.name = 'key-data';
-    newInputKey.required = true;
+    // Membuat input untuk key dengan notasi index
+    const newKeyInput = document.createElement('input');
+    newKeyInput.type = 'text';
+    newKeyInput.className = 'form-control';
+    newKeyInput.placeholder = 'Nama Perusahaan';
+    newKeyInput.name = `listFieldData[${numberOfRows}].key`; // Menggunakan index
+    newKeyInput.required = true;
 
-    // Create the "Last Name" input
-    let newInputValue = document.createElement('input');
-    newInputValue.type = 'text';
-    newInputValue.className = 'form-control';
-    newInputValue.placeholder = 'Last Name';
-    newInputValue.name = 'value-data';
-    newInputValue.required = true;
+    // Membuat input untuk value dengan notasi index
+    const newValueInput = document.createElement('input');
+    newValueInput.type = 'text';
+    newValueInput.className = 'form-control';
+    newValueInput.placeholder = 'Jalan Sudirman ...';
+    newValueInput.name = `listFieldData[${numberOfRows}].value`; // Menggunakan index
+    newValueInput.required = true;
 
-    // Append the new inputs to the new row
-    newRow.appendChild(newInputKey);
-    newRow.appendChild(newInputValue);
+    // Menambahkan input ke dalam newRow
+    newRow.appendChild(newKeyInput);
+    newRow.appendChild(newValueInput);
 
-    // Append the new row to the container
+    // Menambahkan newRow ke dalam container
     container.appendChild(newRow);
 }
+
 
 </script>
 

@@ -34,7 +34,7 @@
                         <a th:href="@{#}">Request Surat</a>
                     </li>
                     <li th:if="${role == 'Dosen' or role == 'Staf'}">
-                        <a th:href="@{/request-surat}">Ajukan Surat</a>
+                        <a th:href="@{/request}">Ajukan Surat</a>
                     </li>
 
                     <li th:if="${role == 'Dosen' or role == 'Mahasiswa' or role == 'Staf'}"><a th:href="@{#}">Riwayat Surat</a></li>

@@ -8,10 +8,11 @@ import java.util.List;
 
 @Repository
 public interface TemplateSuratDb extends JpaRepository<TemplateSurat, String> {
-
     List<TemplateSurat> findByIsActiveTrue();
 
     long countByKategori(String kategori);
 
     List<TemplateSurat> findByNamaTemplateContainingIgnoreCaseAndIsActiveIsTrue(String namaTemplate);
+
+    List<String> findNamaTemplateByKategori(String kategori);
 }
