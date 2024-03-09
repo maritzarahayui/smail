@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import propensi.smail.model.Pengguna;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.TemplateSurat;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.Role;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.TemplateService;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Date;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.ArrayList;
 
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
+import org.springframework.validation.ObjectError;
 
 
 @Controller
@@ -47,6 +50,11 @@ public class RequestSuratController {
        
         Map<String, List<String>> jenisSuratByKategori = requestService.generateJenisSuratByKategori();
         model.addAttribute("jenisSuratByKategori", jenisSuratByKategori);
+
+        Map<Integer, String> listKategori = requestService.listKategori();
+        model.addAttribute("listKategori", listKategori);
+
+        model.addAttribute("requestTemplate", new RequestTemplate());
        
         model.addAttribute("requestSurat", new RequestSurat());
 
@@ -55,19 +63,37 @@ public class RequestSuratController {
 
     @PostMapping("request-surat")
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat, 
-                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return bindingResult.getAllErrors().toString(); // Ini hanya contoh, Anda bisa menyesuaikan format pesan error
+                                    @Valid @ModelAttribute RequestTemplate requestTemplate,
+                                    BindingResult suratBindingResult,
+                                    BindingResult templateBindingResult, Model model) {
+        if (suratBindingResult.hasErrors() || templateBindingResult.hasErrors()) {
+            // Ambil semua pesan kesalahan
+            List<ObjectError> suratErrors = suratBindingResult.getAllErrors();
+            List<ObjectError> templateErrors = templateBindingResult.getAllErrors();
+    
+            // Gabungkan semua pesan kesalahan menjadi satu
+            List<ObjectError> allErrors = new ArrayList<>();
+            allErrors.addAll(suratErrors);
+            allErrors.addAll(templateErrors);
+    
+            // Masukkan pesan kesalahan ke dalam model
+            model.addAttribute("errorMessages", allErrors);
+    
+            // Kembalikan pengguna ke halaman form dengan pesan kesalahan
+            return "request-surat"; // Nama template HTML yang menampilkan form request surat
         }
         try {
             requestSurat.setTanggalPengajuan(new Date());
+
+            requestService.createRequestTemplate(requestTemplate);
             requestService.createRequestSurat(requestSurat);
             System.out.println("BERHASIL");
             return "redirect:/request-surat"; // Redirect ke halaman history jika berhasil
         } catch (Exception e) {
             // Tangkap dan tangani kesalahan jika terjadi
             e.printStackTrace();
-            return "Gagal membuat permintaan surat: " + e.getMessage(); 
+            model.addAttribute("errorMessage", "Gagal membuat permintaan surat: " + e.getMessage());
+            return "ERROR";
         }
     }
 

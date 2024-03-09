@@ -26,7 +26,7 @@ public interface RequestService {
     // Pengguna createDummyPengguna(String role);
 
     // METHOD REQUEST TEMPLATE
-    // void createRequestTemplate(RequestTemplate requestTemplate);
-    // List<RequestTemplate> retrieveAllRequest();
-    // Map<Integer, String> listKategori();
+    void createRequestTemplate(RequestTemplate requestTemplate);
+    List<RequestTemplate> retrieveAllRequest();
+    Map<Integer, String> listKategori();
 }

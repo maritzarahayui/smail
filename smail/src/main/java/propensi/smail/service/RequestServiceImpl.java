@@ -129,13 +129,6 @@ public class RequestServiceImpl implements RequestService {
         jenisSuratKemahasiswaan.add("Surat Permohonan Bantuan Dana untuk Organisasi Mahasiswa");
         jenisSuratByKategori.put("KEMAHASISWAAN", jenisSuratKemahasiswaan);
 
-        // Menambahkan daftar jenis surat untuk kategori Lainnya
-        List<String> jenisSuratLainnya = new ArrayList<>();
-        jenisSuratLainnya.add("Surat Pernyataan Penugasan Pengembangan Kurikulum");
-        jenisSuratLainnya.add("Surat Pemberitahuan Pengunduran Diri Dosen");
-        jenisSuratLainnya.add("Surat Pernyataan Keikutsertaan dalam Organisasi Kemahasiswaan");
-        jenisSuratByKategori.put("Lainnya", jenisSuratLainnya);
-
         return jenisSuratByKategori;
     }
 
@@ -163,6 +156,41 @@ public class RequestServiceImpl implements RequestService {
 
         return bentuk;
     }
-    
+
+    // ------------------REQUEST TEMPLATE----------------
+    @Override
+    public void createRequestTemplate(RequestTemplate requestTemplate){
+        try {
+            requestTemplate.setKategori(requestTemplate.getKategori());
+            requestTemplate.setBahasa(requestTemplate.getBahasa());
+            requestTemplate.setKeperluan(requestTemplate.getKeperluan());
+            requestTemplate.setTanggalPengajuan(new Date());
+
+            requestTemplateDb.save(requestTemplate);
+
+            System.out.println("RequestTemplate saved successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error saving RequestTemplate");
+        }
+    }
+
+    @Override
+    public List<RequestTemplate> retrieveAllRequest(){
+        return requestTemplateDb.findAll();
+    }
+
+    @Override
+    public Map<Integer, String> listKategori(){
+        Map<Integer, String> kategori = new HashMap<>();
+
+        kategori.put(1, "LEGAL");
+        kategori.put(2, "SDM");
+        kategori.put(3, "KEUANGAN");
+        kategori.put(4, "SARANA");
+        kategori.put(5, "KEMAHASISWAAN");
+        return kategori;
+    }
+
 }
 
