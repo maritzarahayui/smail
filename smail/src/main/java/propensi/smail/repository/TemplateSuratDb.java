@@ -13,5 +13,5 @@ public interface TemplateSuratDb extends JpaRepository<TemplateSurat, String> {
 
     long countByKategori(String kategori);
 
-    List<TemplateSurat> findByNamaTemplateContainingIgnoreCase(String namaTemplate);
+    List<TemplateSurat> findByNamaTemplateContainingIgnoreCaseAndIsActiveIsTrue(String namaTemplate);
 }

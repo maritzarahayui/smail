@@ -27,11 +27,16 @@ public class TemplateFEController {
         @Autowired
         private TemplateService templateSuratService;
 
+        @GetMapping("/tes")
+        public String ishowTambahTemplateForm(Model model) {
+            return "add-template";
+        }
+
         @GetMapping("/active-templates")
         public String showActiveTemplates(Model model) {
             List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
             model.addAttribute("activeTemplates", activeTemplates);
-            return "active-templates";
+            return "daftar-template";
         }
 
         @GetMapping("/search")
@@ -43,13 +48,13 @@ public class TemplateFEController {
                 List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
                 model.addAttribute("activeTemplates", activeTemplates);
             }
-            return "active-templates";
+            return "daftar-template";
         }
 
         @GetMapping("/new-template")
         public String showTambahTemplateForm(Model model) {
             model.addAttribute("templateSurat", new TemplateSurat());
-            return "new-template";
+            return "add-template";
         }
 
         @PostMapping("/new-template")
@@ -84,7 +89,7 @@ public class TemplateFEController {
 
             model.addAttribute("base64PDF", base64PDF);
             model.addAttribute("template", file); // Add the template object to the model
-            return "template-detail"; // Return the PDF preview Thymeleaf template
+            return "detail-template"; // Return the PDF preview Thymeleaf template
         }
 
         @GetMapping("/soft-delete/{id}")
@@ -106,12 +111,14 @@ public class TemplateFEController {
         public String showUpdateTemplateForm(@PathVariable("id") String id, Model model) {
             // Retrieve the template by ID
             TemplateSurat template = templateSuratService.findById(id);
+
             if (template == null) {
                 throw new IllegalArgumentException("Template not found with ID: " + id);
             }
 
             // Populate the model with the template data
             model.addAttribute("template", template);
+//            model.addAttribute("base64PDF", base64PDF);
             return "update-template-form"; // Return the update template view
         }
 

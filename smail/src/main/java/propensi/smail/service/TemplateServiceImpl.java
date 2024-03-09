@@ -87,7 +87,7 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Transactional
     public List<TemplateSurat> searchTemplatesByNamaTemplate(String namaTemplate) {
-        return templateSuratDb.findByNamaTemplateContainingIgnoreCase(namaTemplate);
+        return templateSuratDb.findByNamaTemplateContainingIgnoreCaseAndIsActiveIsTrue(namaTemplate);
     }
 
 
