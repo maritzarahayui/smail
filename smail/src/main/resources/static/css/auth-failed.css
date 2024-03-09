@@ -1,0 +1,168 @@
+.auth-failed-child {
+    margin-left: -405px;
+    width: 369px;
+    height: 117.2px;
+    position: relative;
+    max-width: 100%;
+  }
+  .frame-child {
+    height: 330.5px;
+    width: 355.4px;
+    position: absolute;
+    margin: 0 !important;
+    top: -295px;
+    right: -355.2px;
+    object-fit: contain;
+  }
+  .zondiconslock-closed {
+    height: 130px;
+    width: 130px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .child-l-o-c-k-e-d-i-c-o-n {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 20px 0 21px;
+  }
+  .maaf-akun-anda {
+    margin: 0;
+    flex: 1;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .button-login {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 35px;
+  }
+  .silahkan-coba-login {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: 28px;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .message-please-login {
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 0 15px;
+    gap: 19px 0;
+  }
+  .button1 {
+    flex: 1;
+    position: relative;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Rubik;
+    color: #fffffe;
+    text-align: center;
+    text-decoration: none;
+  }
+  .button,
+  .button-login-again {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    text-decoration: none;
+  }
+  .button {
+    cursor: pointer;
+    border: 0;
+    padding: 10px 24px;
+    background-color: #52828d;
+    width: 95px;
+    border-radius: 12px;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  .button:hover {
+    background-color: #6b9ca6;
+    text-decoration: none;
+  }
+  .button-login-again {
+    align-self: stretch;
+    justify-content: center;
+    padding: 0 20px;
+    text-decoration: none;
+  }
+  .frame-parent,
+  .group-f-r-a-m-e,
+  .auth-failed {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .group-f-r-a-m-e {
+    flex: 1;
+    flex-direction: column;
+    gap: 41px 0;
+    max-width: 100%;
+  }
+  .frame-parent,
+  .auth-failed {
+    position: relative;
+  }
+  .frame-parent {
+    align-self: stretch;
+    flex-direction: row;
+    max-width: 100%;
+  }
+  .auth-failed {
+    width: 100%;
+    background-color: #fffffe;
+    overflow: hidden;
+    flex-direction: column;
+    padding: 66px 295px 284px 292px;
+    box-sizing: border-box;
+    gap: 55.8px 0;
+    letter-spacing: normal;
+    text-align: center;
+    font-size: 30px;
+    color: #100f0f;
+    font-family: Rubik;
+  }
+  @media screen and (max-width: 750px) {
+    .maaf-akun-anda {
+      font-size: 38px;
+    }
+    .silahkan-coba-login {
+      font-size: 26px;
+    }
+    .auth-failed {
+      gap: 28px 0;
+      padding-left: 146px;
+      padding-right: 147px;
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .maaf-akun-anda {
+      font-size: 29px;
+    }
+    .silahkan-coba-login {
+      font-size: 19px;
+    }
+    .group-f-r-a-m-e {
+      gap: 20px 0;
+    }
+    .auth-failed {
+      padding-left: 20px;
+      padding-right: 20px;
+      box-sizing: border-box;
+    }
+  }

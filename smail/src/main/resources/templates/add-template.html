@@ -7,11 +7,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/add-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
     />
-
+      
     <style>
          .custom-checkbox input[type="checkbox"] {
             display: none;
@@ -46,54 +48,13 @@
 
     </style>
 </head>
+
 <body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
 <div class="tambah-template2">
     <section class="home-frame">
-        <div class="navbar2">
-            <div class="template-settings">
-                <div class="wrapper-group-82">
-                    <img
-                            class="wrapper-group-8-inner"
-                            loading="lazy"
-                            alt=""
-                            src="/images/Logo SMAIL.svg"
-                    />
-                </div>
-                <div class="f-a-q-section">
-                    <b class="beranda2">Beranda</b>
-                </div>
-                <div class="f-a-q-section1">
-                    <b class="request-surat3">Request Surat</b>
-                </div>
-                <div class="header-area">
-                    <b class="arsip-surat2">Arsip Surat</b>
-                    <img
-                            class="iconoutlinechevron-down4"
-                            alt=""
-                            src="/images/chevron-down-dark.svg"
-                    />
-                </div>
-                <div class="f-a-q-section2">
-                    <b class="template-surat5">Template Surat</b>
-                </div>
-                <div class="f-a-q-section3">
-                    <b class="faq2">FAQ</b>
-                </div>
-            </div>
-            <header class="navbar-inner"></header>
-            <div class="admin-button">
-                <div class="main-frame">
-                    <div class="button13">
-                        <div class="admin2">Admin</div>
-                        <img
-                                class="iconoutlinechevron-down5"
-                                alt=""
-                                src="/images/chevron-down.svg"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="sub-group-container">
             <img
                     class="sub-group-container-child"
@@ -110,9 +71,11 @@
               </span>
                 </h1>
             </div>
+            <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
+
         </div>
+
     </section>
-    <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
 
     <section class="attach-button">
         <div class="label-input-frame">
@@ -136,7 +99,7 @@
                     </div>
                     <br>
                     <div class="text-input-frame">
-                        <label for="listPengguna" class="label9">List Pengguna:</label><br>
+                        <label for="listPengguna" class="label9">List Pengguna:</label>
                         <div class="custom-checkbox">
                             <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa">
                             <label for="pengguna1">
@@ -161,12 +124,12 @@
                     </div>
                     <br>
                     <div class="text-input-frame" id="listFieldContainer">
-                        <label for="listField" class="label9">List Field:</label><br>
+                        <label for="listField" class="label9">List Field:</label>
                         <input type="text" class="text-input14" id="listField1" name="listField" required>
                     </div>
                     <br>
-                    <button type="button" class="button15" onclick="addRow()">Add Row</button>
-                    <br>
+                    <button type="button" class="button15" onclick="addRow()" style="color:#fffffe">Add Row</button>
+                    <br><br><br>
                     <div class="form-group">
                         <div class="upload-illustration-frame">
                             <div class="file-input">
@@ -229,38 +192,9 @@
 
         </div>
     </section>
-    <section class="footer2">
-        <footer class="frame-parent">
-            <div class="developed-by-rtx-team-parent">
-                <h3 class="developed-by-rtx2">Developed by rt(x) Team</h3>
-                <h3 class="propensi-d022">Propensi D02</h3>
-            </div>
-            <div class="text">
-                <h3 class="in-collaboration-with3">In collaboration with</h3>
-                <div class="logo-group">
-                    <img
-                            class="image-1-icon2"
-                            loading="lazy"
-                            alt=""
-                            src="/images/tazkia.svg"
-                    />
-
-                    <img
-                            class="image-18-icon2"
-                            loading="lazy"
-                            alt=""
-                            src="/images/fasilkom.svg"
-                    />
-                </div>
-            </div>
-        </footer>
-        <div class="footerinfo1">
-            <h3 class="copyright-2024-tazkia2">
-                © Copyright 2024 Tazkia Institute. All Rights Reserved.
-            </h3>
-        </div>
-    </section>
 </div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <script>
 let listFieldValues = []; // Array to store input values

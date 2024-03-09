@@ -167,7 +167,7 @@
 }
 .sub-group-container-child {
   margin-left: -104px;
-  height: 117.2px;
+  height: 100px;
   width: 369px;
   position: relative;
   max-width: 100%;
@@ -229,8 +229,8 @@
   font-family: var(--heading-h4);
 }
 .tambah-template-item {
-  width: 355.4px;
-  height: 330.5px;
+  width: 355px;
+  height: 225px;
   position: absolute;
   margin: 0 !important;
   top: -20px;
@@ -624,9 +624,9 @@
   color: var(--black-black-1);
 }
 .buat-template {
-  width: 113px;
+  width: 200px;
   position: relative;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--white-white-1);
   text-align: center;
   align-items: center;
@@ -643,7 +643,7 @@
 .button15 {
   cursor: pointer;
   border: 0;
-  padding: 15.5px var(--padding-xl);
+  padding: 10px var(--padding-smi);
   background-color: var(--green-green-1);
   width: 1010px;
   border-radius: var(--br-xs);

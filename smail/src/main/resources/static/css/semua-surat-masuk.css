@@ -1,0 +1,1511 @@
+.wrapper-group-8-item {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    transform: scale(1.31);
+  }
+  .wrapper-group-81 {
+    height: 39px;
+    width: 30.6px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .beranda1 {
+    flex: 1;
+    position: relative;
+  }
+  .frame-set {
+    width: 88px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs);
+    box-sizing: border-box;
+  }
+  .request-surat1 {
+    flex: 1;
+    position: relative;
+  }
+  .frame-set1 {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs);
+    box-sizing: border-box;
+    min-width: 88px;
+  }
+  .arsip-surat1 {
+    flex: 1;
+    position: relative;
+  }
+  .iconoutlinechevron-down2 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-height: 20px;
+  }
+  .text-label {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs);
+    box-sizing: border-box;
+    gap: 0 10px;
+    min-width: 93px;
+  }
+  .template-surat1 {
+    flex: 1;
+    position: relative;
+  }
+  .frame-set2 {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: var(--padding-3xs);
+    box-sizing: border-box;
+    min-width: 93px;
+  }
+  .faq1 {
+    flex: 1;
+    position: relative;
+  }
+  .frame-set3,
+  .navbar-instance {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .frame-set3 {
+    width: 52px;
+    align-items: flex-start;
+    padding: var(--padding-3xs);
+    box-sizing: border-box;
+  }
+  .navbar-instance {
+    width: 719.6px;
+    align-items: center;
+    gap: 0 26px;
+    max-width: 100%;
+  }
+  .navbar-item {
+    height: 64px;
+    width: 1322px;
+    position: relative;
+    background: linear-gradient(
+      180deg,
+      rgba(238, 238, 238, 0.05),
+      rgba(245, 245, 245, 0.05)
+    );
+    backdrop-filter: blur(40px);
+    display: none;
+    max-width: 100%;
+    z-index: 2;
+  }
+  .admin1 {
+    flex: 1;
+    position: relative;
+    font-weight: 600;
+  }
+  .iconoutlinechevron-down3 {
+    height: 20px;
+    width: 20px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .button3 {
+    height: 40px;
+    border-radius: var(--br-xs);
+    background-color: var(--green-green-1);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    box-sizing: border-box;
+    gap: 0 8px;
+  }
+  .button3,
+  .finance-frame {
+    flex: 1;
+    justify-content: center;
+  }
+  .finance-frame,
+  .navbar1,
+  .search-field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .search-field {
+    width: 127px;
+    justify-content: flex-start;
+    color: var(--white-white-1);
+  }
+  .navbar1 {
+    align-self: stretch;
+    border-radius: var(--br-xs);
+    background-color: var(--green-green-4);
+    justify-content: space-between;
+    padding: 12.5px var(--padding-93xl);
+    box-sizing: border-box;
+    gap: -831.61px;
+    max-width: 100%;
+  }
+  .archipelago-group-child {
+    margin-left: -104px;
+    height: 117.2px;
+    width: 369px;
+    position: relative;
+    max-width: 100%;
+  }
+  .semua {
+    background: linear-gradient(
+      180deg,
+      #bce8a4,
+      #abdfa7 28.5%,
+      #80c9ae 66.5%,
+      #5cb7b3
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .semua-arsip1 {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+  }
+  .keuangan-group {
+    width: 301px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 0 8.199999999999818px;
+    box-sizing: border-box;
+  }
+  .archipelago-group,
+  .archive-frame {
+    display: flex;
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+  .archipelago-group {
+    width: 891px;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0 var(--padding-xl) 0 0;
+    box-sizing: border-box;
+    gap: 0 305px;
+    font-size: var(--heading-h2-size);
+  }
+  .archive-frame {
+    align-self: stretch;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 37px 0;
+    text-align: center;
+    font-size: var(--body-b2-size);
+    color: var(--green-green-5);
+    font-family: var(--heading-h4);
+  }
+  .semua-arsip-child {
+    width: 355.4px;
+    height: 330.5px;
+    position: absolute;
+    margin: 0 !important;
+    top: -20px;
+    right: -69.4px;
+    object-fit: contain;
+    z-index: 1;
+  }
+  .search-icon {
+    height: 24px;
+    width: 24px;
+    position: relative;
+  }
+  .button4,
+  .keuangan2 {
+    display: flex;
+    align-items: center;
+  }
+  .keuangan2 {
+    width: 75px;
+    border: 0;
+    outline: 0;
+    font-family: var(--heading-h4);
+    font-size: var(--body-b2-size);
+    background-color: transparent;
+    height: 19px;
+    position: relative;
+    color: var(--color-gray-100);
+    text-align: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .button4 {
+    height: 48px;
+    width: 392px;
+    border-radius: var(--br-xs);
+    border: 2px solid var(--green-green-1);
+    box-sizing: border-box;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    gap: 0 8px;
+    max-width: 100%;
+  }
+  .solarcalendar-outline-icon {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .periode-20212022 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--green-green-1);
+    text-align: center;
+  }
+  .button5 {
+    cursor: pointer;
+    border: 2px solid var(--green-green-1);
+    padding: var(--padding-5xs) var(--padding-3xl);
+    background-color: transparent;
+    flex: 1;
+    border-radius: var(--br-xs);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0 8px;
+    min-width: 145px;
+    min-height: 48px;
+  }
+  .button5:hover,
+  .button6:hover {
+    background-color: var(--color-seagreen-300);
+    border: 2px solid var(--color-seagreen-200);
+    box-sizing: border-box;
+  }
+  .fluentfilter-12-regular-icon {
+    height: 24px;
+    width: 24px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .button6,
+  .filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .filters {
+    width: 47px;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--green-green-1);
+    text-align: center;
+  }
+  .button6 {
+    cursor: pointer;
+    border: 2px solid var(--green-green-1);
+    padding: var(--padding-5xs) var(--padding-3xl);
+    background-color: transparent;
+    height: 48px;
+    width: 127px;
+    border-radius: var(--br-xs);
+    box-sizing: border-box;
+    flex-direction: row;
+    gap: 0 8px;
+  }
+  .rektor-universitas-andalas-fra {
+    width: 362px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 12px;
+    max-width: 100%;
+  }
+  .frame-archive,
+  .frame-semua-arsip {
+    align-self: stretch;
+    display: flex;
+    max-width: 100%;
+  }
+  .frame-semua-arsip {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--gap-xl);
+  }
+  .frame-archive {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .id-surat1 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat1 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    background-color: var(--green-green-2);
+    height: 50px;
+    width: 160px;
+    border-radius: var(--br-9xs) 0 0 0;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .i-d-surat1:hover,
+  .i-d-surat2:hover,
+  .i-d-surat3:hover,
+  .i-d-surat4:hover,
+  .i-d-surat5:hover,
+  .i-d-surat6:hover {
+    background-color: var(--color-seagreen-100);
+  }
+  .jenis-surat1 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat2 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    background-color: var(--green-green-2);
+    height: 50px;
+    flex: 0.7927;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .nomor-surat1 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat3 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    background-color: var(--green-green-2);
+    height: 50px;
+    flex: 0.7927;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .pengirim1 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat4 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    background-color: var(--green-green-2);
+    height: 50px;
+    flex: 0.7927;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .tanggal-surat-masuk1 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat5 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) 23px;
+    background-color: var(--green-green-2);
+    height: 50px;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .action {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--primary-white-1);
+    text-align: left;
+  }
+  .i-d-surat6 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-21xl);
+    background-color: var(--green-green-2);
+    height: 50px;
+    flex: 0.7927;
+    border-radius: 0 var(--br-9xs) 0 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .tanggal-surat-masuk-group {
+    align-self: stretch;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 1px;
+  }
+  .ku0011 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .tanggal-surat-masuk2 {
+    align-self: stretch;
+    width: 160px;
+    border: 2px solid var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .keuangan3 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .rektorframe {
+    align-self: stretch;
+    flex: 0.9444;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiii20231 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--green-green-5);
+    text-align: left;
+  }
+  .keuanganframes {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .rektor-universitas-andalas1 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: center;
+    display: inline-block;
+    max-width: 180px;
+  }
+  .tanggal-surat-masuk3 {
+    align-self: stretch;
+    flex: 1;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-sm);
+  }
+  .agustus-20221 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .agustusframes {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .button8 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--white-white-1);
+    text-align: center;
+  }
+  .button7,
+  .tanggal-surat-masuk4 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .button7 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: var(--green-green-1);
+    height: 40px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    box-sizing: border-box;
+  }
+  .button7:hover {
+    background-color: var(--color-seagreen-200);
+  }
+  .tanggal-surat-masuk4 {
+    align-self: stretch;
+    flex: 0.9222;
+    border: 2px solid var(--green-green-2);
+    overflow: hidden;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .pengirim2 {
+    width: 1215px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 1px;
+  }
+  .ku0012 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .ku001-wrapper {
+    align-self: stretch;
+    width: 160px;
+    border: 2px solid var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .keuangan4 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .keuangan-container {
+    align-self: stretch;
+    flex: 0.9444;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiii20232 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--green-green-5);
+    text-align: left;
+  }
+  .itsiii2023-container {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .maritza-rahayu-2106751474 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: center;
+    display: inline-block;
+    max-width: 180px;
+  }
+  .maritza-rahayu-2106751474-wrapper {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-sm);
+    background-color: transparent;
+    align-self: stretch;
+    flex: 1;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .maritza-rahayu-2106751474-wrapper:hover {
+    background-color: var(--color-seagreen-400);
+  }
+  .agustus-20222 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .agustus-2022-container {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .button10 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--white-white-1);
+    text-align: center;
+  }
+  .button9 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: var(--green-green-1);
+    height: 40px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .button11:hover,
+  .button9:hover {
+    background-color: var(--color-seagreen-200);
+  }
+  .button-wrapper,
+  .button9,
+  .pengirim3 {
+    display: flex;
+    flex-direction: row;
+  }
+  .button-wrapper {
+    align-self: stretch;
+    flex: 0.9222;
+    border: 2px solid var(--green-green-2);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .pengirim3 {
+    width: 1215px;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 1px;
+  }
+  .ku0013 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .ku001-container {
+    align-self: stretch;
+    width: 160px;
+    border: 2px solid var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .keuangan5 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .keuangan-frame {
+    align-self: stretch;
+    flex: 0.9444;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiii20233 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--green-green-5);
+    text-align: left;
+  }
+  .itsiii2023-frame {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .rektor-universitas-andalas2 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: center;
+    display: inline-block;
+    max-width: 180px;
+  }
+  .rektor-universitas-andalas-container {
+    align-self: stretch;
+    flex: 1;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-sm);
+  }
+  .agustus-20223 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .agustus-2022-frame {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .button12 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--white-white-1);
+    text-align: center;
+  }
+  .button11 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: var(--green-green-1);
+    height: 40px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .button-container,
+  .button11,
+  .pengirim4 {
+    display: flex;
+    flex-direction: row;
+  }
+  .button-container {
+    align-self: stretch;
+    flex: 0.9222;
+    border: 2px solid var(--green-green-2);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .pengirim4 {
+    width: 1215px;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 1px;
+  }
+  .ku0014 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .ku001-frame {
+    align-self: stretch;
+    width: 160px;
+    border: 2px solid var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .keuangan6 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .frame-div {
+    align-self: stretch;
+    flex: 0.9444;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiii20234 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--green-green-5);
+    text-align: left;
+  }
+  .itsiii2023-wrapper1 {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .maritza-rahayu-21067514741 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: center;
+    display: inline-block;
+    max-width: 180px;
+  }
+  .maritza-rahayu-2106751474-container {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-sm);
+    background-color: transparent;
+    align-self: stretch;
+    flex: 1;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .maritza-rahayu-2106751474-container:hover {
+    background-color: var(--color-seagreen-400);
+  }
+  .agustus-20224 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .agustus-2022-wrapper1 {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .button14 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--white-white-1);
+    text-align: center;
+  }
+  .button13 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: var(--green-green-1);
+    height: 40px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .button13:hover,
+  .button15:hover {
+    background-color: var(--color-seagreen-200);
+  }
+  .button-frame,
+  .button13,
+  .pengirim5 {
+    display: flex;
+    flex-direction: row;
+  }
+  .button-frame {
+    align-self: stretch;
+    flex: 0.9222;
+    border: 2px solid var(--green-green-2);
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .pengirim5 {
+    width: 1215px;
+    flex: 1;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0 1px;
+  }
+  .ku0015 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .ku001-wrapper1 {
+    align-self: stretch;
+    width: 160px;
+    border: 2px solid var(--green-green-2);
+    box-sizing: border-box;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .keuangan7 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .keuangan-wrapper1 {
+    align-self: stretch;
+    flex: 0.9444;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiii20235 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--green-green-5);
+    text-align: left;
+  }
+  .itsiii2023-wrapper2 {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .rektor-universitas-andalas3 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: center;
+    display: inline-block;
+    max-width: 180px;
+  }
+  .rektor-universitas-andalas-frame {
+    align-self: stretch;
+    flex: 1;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-sm);
+  }
+  .agustus-20225 {
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-family: var(--heading-h4);
+    color: var(--black-black-1);
+    text-align: left;
+  }
+  .agustus-2022-wrapper2 {
+    align-self: stretch;
+    flex: 0.9333;
+    border-top: 2px solid var(--green-green-2);
+    border-bottom: 2px solid var(--green-green-2);
+    border-left: 2px solid var(--green-green-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .button16 {
+    flex: 1;
+    position: relative;
+    font-size: var(--body-b2-size);
+    font-weight: 600;
+    font-family: var(--heading-h4);
+    color: var(--white-white-1);
+    text-align: center;
+  }
+  .button-wrapper1,
+  .button15 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .button15 {
+    cursor: pointer;
+    border: 0;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: var(--green-green-1);
+    height: 40px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    box-sizing: border-box;
+  }
+  .button-wrapper1 {
+    align-self: stretch;
+    flex: 0.9222;
+    border: 2px solid var(--green-green-2);
+    overflow: hidden;
+    padding: var(--padding-5xs) var(--padding-xl);
+  }
+  .itsiiiframe,
+  .pengirim-frame,
+  .pengirim6 {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .pengirim6 {
+    width: 1215px;
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 0 1px;
+  }
+  .itsiiiframe,
+  .pengirim-frame {
+    flex-direction: column;
+  }
+  .itsiiiframe {
+    width: 1215px;
+    flex: 1;
+    overflow-x: auto;
+    display: flex;
+    max-width: 100%;
+  }
+  .pengirim-frame {
+    align-self: stretch;
+    height: 382px;
+    gap: 12px 0;
+  }
+  .date-frame,
+  .navbar-group,
+  .pengirim-frame {
+    display: flex;
+    max-width: 100%;
+  }
+  .navbar-group {
+    margin: 0;
+    width: 1216px;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 36px 0;
+    z-index: 2;
+  }
+  .date-frame {
+    align-self: stretch;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 var(--padding-xl) 12.199999999999818px;
+    box-sizing: border-box;
+  }
+  .developed-by-rtx1,
+  .propensi-d021 {
+    margin: 0;
+    position: relative;
+    font-size: inherit;
+    font-weight: 400;
+    font-family: inherit;
+  }
+  .developed-by-rtx1 {
+    align-self: stretch;
+  }
+  .propensi-d021 {
+    width: 151px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .rtxteamframe {
+    width: 267px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 20px 0;
+  }
+  .in-collaboration-with1 {
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-size: inherit;
+    font-weight: 600;
+    font-family: inherit;
+  }
+  .image-1-icon1,
+  .image-18-icon1 {
+    position: relative;
+    object-fit: cover;
+  }
+  .image-1-icon1 {
+    height: 117px;
+    flex: 1;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  .image-18-icon1 {
+    height: 99px;
+    width: 95.3px;
+  }
+  .in-collaboration-with-parent,
+  .logopairframe {
+    width: 214.3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0 18px;
+  }
+  .in-collaboration-with-parent {
+    width: 242px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px 0;
+  }
+  .developerframe {
+    align-self: stretch;
+    background-color: var(--green-green-4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: var(--padding-21xl) 149px;
+    gap: var(--gap-xl);
+  }
+  .copyright-2024-tazkia1 {
+    margin: 0;
+    width: 656px;
+    position: relative;
+    font-size: inherit;
+    font-weight: 700;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .copyrightframe {
+    align-self: stretch;
+    background-color: var(--green-green-5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: var(--padding-xl);
+    color: var(--white-white-1);
+  }
+  .footer1,
+  .semua-arsip {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .footer1 {
+    align-self: stretch;
+    text-align: center;
+    font-size: var(--heading-h4-size);
+    color: var(--green-green-5);
+    font-family: var(--heading-h4);
+  }
+  .semua-arsip {
+    width: 100%;
+    position: relative;
+    background-color: var(--white-white-1);
+    overflow: hidden;
+    gap: 76.8px 0;
+    letter-spacing: normal;
+  }
+  @media screen and (max-width: 1050px) {
+    .navbar1 {
+      padding-left: var(--padding-37xl);
+      padding-right: var(--padding-37xl);
+      box-sizing: border-box;
+    }
+  }
+  @media screen and (max-width: 1000px) {
+    .semua-arsip1 {
+      font-size: var(--font-size-19xl);
+    }
+    .archipelago-group {
+      flex-wrap: wrap;
+      gap: 0 152px;
+    }
+    .developerframe,
+    .frame-semua-arsip {
+      flex-wrap: wrap;
+    }
+  }
+  @media screen and (max-width: 725px) {
+    .navbar-instance {
+      flex-wrap: wrap;
+    }
+    .navbar1 {
+      padding-left: var(--padding-9xl);
+      padding-right: var(--padding-9xl);
+      box-sizing: border-box;
+    }
+    .archipelago-group {
+      gap: 0 76px;
+    }
+    .archive-frame {
+      gap: 18px 0;
+    }
+    .frame-archive {
+      gap: 27px 0;
+    }
+    .navbar-group {
+      gap: 18px 0;
+    }
+    .developerframe {
+      padding-left: var(--padding-55xl);
+      padding-right: var(--padding-55xl);
+      box-sizing: border-box;
+    }
+    .semua-arsip {
+      gap: 38px 0;
+    }
+  }
+  @media screen and (max-width: 450px) {
+    .semua-arsip1 {
+      font-size: var(--font-size-10xl);
+    }
+    .rektor-universitas-andalas-fra {
+      flex-wrap: wrap;
+    }
+    .developed-by-rtx1,
+    .in-collaboration-with1,
+    .propensi-d021 {
+      font-size: var(--font-size-lgi);
+    }
+    .developerframe {
+      padding-left: var(--padding-xl);
+      padding-right: var(--padding-xl);
+      box-sizing: border-box;
+    }
+    .copyright-2024-tazkia1 {
+      font-size: var(--font-size-lgi);
+    }
+    .semua-arsip {
+      gap: 19px 0;
+    }
+  }
+  

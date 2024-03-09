@@ -150,13 +150,13 @@ nav .navbar .links li .sub-menu a {
 .button,
 .buttonWrapper,
 .navbarAdmin,
-.navbarUserInner {
+.navbarLoggedInInner {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.navbarUserInner {
+.navbarLoggedInInner {
   margin-left: auto;
 }
 
@@ -167,7 +167,7 @@ nav .navbar .links li .sub-menu a {
 }
 
 .navbarAdmin,
-.navbarUserInner {
+.navbarLoggedInInner {
   justify-content: flex-start;
   color: #fffffe;
 }

@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Template</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 </head>
 <body>
+
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
 <div class="container mt-4">
     <h2>Tambah Template</h2>
     <form action="/template/new-template" method="post" enctype="multipart/form-data">
@@ -58,6 +63,7 @@
         <button type="submit" class="btn btn-primary" onclick="submitForm()">Tambah Template</button>
     </form>
 </div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <script>
 let listFieldValues = []; // Array to store input values

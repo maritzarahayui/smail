@@ -7,55 +7,15 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/detail-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
 </head>
 <body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
 <div class="tambah-template1">
-    <div class="navbar1">
-        <div class="beranda-frame1">
-            <div class="wrapper-group-81">
-                <img
-                        class="wrapper-group-8-item"
-                        loading="lazy"
-                        alt=""
-                        src="/images/Logo SMAIL.svg"
-                />
-            </div>
-            <div class="request-surat-frame">
-                <b class="beranda1">Beranda</b>
-            </div>
-            <div class="request-surat-frame1">
-                <b class="request-surat2">Request Surat</b>
-            </div>
-            <div class="group-a">
-                <b class="arsip-surat1">Arsip Surat</b>
-                <img
-                        class="iconoutlinechevron-down2"
-                        alt=""
-                        src="/images/chevron-down.svg"
-                />
-            </div>
-            <div class="request-surat-frame2">
-                <b class="template-surat4">Template Surat</b>
-            </div>
-            <div class="request-surat-frame3">
-                <b class="faq1">FAQ</b>
-            </div>
-        </div>
-        <header class="navbar-item"></header>
-        <div class="detail-template-label">
-            <div class="input-field-group">
-                <div class="button10">
-                    <div class="admin1">Admin</div>
-                    <img
-                            class="iconoutlinechevron-down3"
-                            alt=""
-                            src="/images/chevron-down.svg"
-                    />
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="label-d">
         <img
                 class="label-d-child"
@@ -184,38 +144,8 @@
             </a>
         </div>
     </div>
-    <div class="developed-by-r-t-x-team-propen">
-        <div class="footer1">
-            <div class="frame-developed-by">
-                <div class="developed-by">
-                    <h3 class="developed-by-rtx1">Developed by rt(x) Team</h3>
-                    <h3 class="propensi-d021">Propensi D02</h3>
-                </div>
-                <div class="in-collaboration-with1">
-                    <h3 class="in-collaboration-with2">In collaboration with</h3>
-                    <div class="footerinfo">
-                        <img
-                                class="image-1-icon1"
-                                loading="lazy"
-                                alt=""
-                                src="/images/tazkia.svg"
-                        />
-
-                        <img
-                                class="image-18-icon1"
-                                loading="lazy"
-                                alt=""
-                                src="/images/fasilkom.svg"
-                        />
-                    </div>
-                </div>
-            </div>
-            <footer class="copyright">
-                <h3 class="copyright-2024-tazkia1">
-                    © Copyright 2024 Tazkia Institute. All Rights Reserved.
-                </h3>
-            </footer>
-        </div>
-    </div>
 </div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
 </body>

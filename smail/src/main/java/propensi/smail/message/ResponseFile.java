@@ -15,4 +15,3 @@ public class ResponseFile {
     private String type;
     private long size;
 }
-

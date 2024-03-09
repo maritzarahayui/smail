@@ -9,16 +9,21 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.TemplateSurat;
+import propensi.smail.model.user.Pengguna;
+import propensi.smail.repository.PenggunaDb;
+import propensi.smail.service.PenggunaService;
 import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 @Controller
 @RequestMapping("/template")
@@ -27,20 +32,57 @@ public class TemplateFEController {
         @Autowired
         private TemplateService templateSuratService;
 
+        @Autowired
+        PenggunaDb penggunaDb;
+
+        @Autowired
+        PenggunaService penggunaService;
+
         @GetMapping("/tes")
-        public String ishowTambahTemplateForm(Model model) {
+        public String ishowTambahTemplateForm(Model model, Authentication auth) {
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
+
             return "add-template";
         }
 
         @GetMapping("/active-templates")
-        public String showActiveTemplates(Model model) {
+        public String showActiveTemplates(Model model, Authentication auth) {
             List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
             model.addAttribute("activeTemplates", activeTemplates);
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
+
             return "daftar-template";
         }
 
         @GetMapping("/search")
-        public String searchTemplates(@RequestParam(name = "namaTemplate", required = false) String namaTemplate, Model model) {
+        public String searchTemplates(@RequestParam(name = "namaTemplate", required = false) String namaTemplate, 
+            Model model, Authentication auth) {
             if (namaTemplate != null && !namaTemplate.isEmpty()) {
                 List<TemplateSurat> searchResults = templateSuratService.searchTemplatesByNamaTemplate(namaTemplate);
                 model.addAttribute("activeTemplates", searchResults);
@@ -48,12 +90,41 @@ public class TemplateFEController {
                 List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
                 model.addAttribute("activeTemplates", activeTemplates);
             }
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
             return "daftar-template";
         }
 
         @GetMapping("/new-template")
-        public String showTambahTemplateForm(Model model) {
+        public String showTambahTemplateForm(Model model, Authentication auth) {
             model.addAttribute("templateSurat", new TemplateSurat());
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
+
             return "add-template";
         }
 
@@ -80,7 +151,7 @@ public class TemplateFEController {
         }
 
         @GetMapping("/detail/{id}")
-        public String previewPDF(@PathVariable("id") String id, Model model) throws IOException {
+        public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
             TemplateSurat file = templateSuratService.getFile(id);
             byte[] pdf = file.getFile();
 
@@ -89,11 +160,26 @@ public class TemplateFEController {
 
             model.addAttribute("base64PDF", base64PDF);
             model.addAttribute("template", file); // Add the template object to the model
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
+
             return "detail-template"; // Return the PDF preview Thymeleaf template
         }
 
         @GetMapping("/soft-delete/{id}")
-        public String softDeleteTemplate(@PathVariable("id") String templateId, Model model) {
+        public String softDeleteTemplate(@PathVariable("id") String templateId, Model model, Authentication auth) {
             try {
                 TemplateSurat deletedTemplate = templateSuratService.softDeleteTemplate(templateId);
                 if (deletedTemplate != null) {
@@ -108,7 +194,7 @@ public class TemplateFEController {
         }
 
         @GetMapping("/update/{id}")
-        public String showUpdateTemplateForm(@PathVariable("id") String id, Model model) {
+        public String showUpdateTemplateForm(@PathVariable("id") String id, Model model, Authentication auth) {
             // Retrieve the template by ID
             TemplateSurat template = templateSuratService.findById(id);
 
@@ -119,6 +205,21 @@ public class TemplateFEController {
             // Populate the model with the template data
             model.addAttribute("template", template);
 //            model.addAttribute("base64PDF", base64PDF);
+
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
+            }
+            
             return "update-template-form"; // Return the update template view
         }
 
@@ -129,7 +230,7 @@ public class TemplateFEController {
                                      @RequestParam("namaTemplate") String namaTemplate,
                                      @RequestParam("listPengguna") ArrayList<String> listPengguna,
                                      @RequestParam("listField") ArrayList<String> listField,
-                                     Model model) {
+                                     Model model, Authentication auth) {
             String message = "";
 
             try {
