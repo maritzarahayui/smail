@@ -41,6 +41,10 @@ public class BaseController {
                 model.addAttribute("email_pengguna", pengguna.getEmail());
                 model.addAttribute("id", pengguna.getId());
 
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+
+                return "home";
             } else {
                 return "auth-failed";
             }
@@ -63,7 +67,10 @@ public class BaseController {
                 model.addAttribute("nama", pengguna.getNama());
                 model.addAttribute("id", pengguna.getId());
                 model.addAttribute("email", pengguna.getEmail());
+
                 model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+
             } else {
                 return "auth-failed";
             }
@@ -91,28 +98,10 @@ public class BaseController {
         } return "login";
     }
 
-    // @GetMapping("/secured")
-    // public String secured() {
-    //     return "logged-in";
-    // }
-
     @GetMapping("/invalid-auth")
     public String failed() {
         return "auth-failed";
     }
-
-    // @GetMapping("/admin")
-    // public String admin() {
-    //     return "admin";
-    // }
-
-    // @GetMapping("/staf")
-    // public String staf() {
-    //     return "staf";
-    // }
-
-
-
 
     
 }

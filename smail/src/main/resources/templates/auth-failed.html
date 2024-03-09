@@ -1,22 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
 
-<!-- <head>
-	<title>
-		SMAIL
-	</title>
-</head>
-
-<body>
-	
-    <h1>Validasi Pengguna Gagal</h1>
-    <p>Akun Anda tidak terdaftar, silahkan coba dengan akun Tazkia Anda.</p>
-    <a href="/logout">Logout</a>
-	
-</body>
-
-</html> -->
-
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -29,8 +13,8 @@
     />
   </head>
   <body>
-    <div class="jawab-faq">
-      <img class="jawab-faq-child" alt="" src="/images/kiri-red.svg" />
+    <div class="auth-failed">
+      <img class="auth-failed-child" alt="" src="/images/kiri-red.svg" />
 
       <div class="frame-parent">
         <img class="frame-child" alt="" src="/images/kanan-red.svg" />
@@ -51,9 +35,6 @@
               Silahkan coba login kembali dengan akun Tazkia Anda.
             </h1>
           </div>
-          <!-- <a class="button-login-again" th:href= "@{/logout}">
-            <div class="button1">Masuk dengan Google</div>
-          </a> -->
           <a class="button-login-again" th:href= "@{/logout}">
             <button class="button">
               <div class="button1">Kembali</div>

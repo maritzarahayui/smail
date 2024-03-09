@@ -1,4 +1,4 @@
-.jawab-faq-child {
+.auth-failed-child {
     margin-left: -405px;
     width: 369px;
     height: 117.2px;
@@ -102,7 +102,7 @@
   }
   .frame-parent,
   .group-f-r-a-m-e,
-  .jawab-faq {
+  .auth-failed {
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
@@ -114,7 +114,7 @@
     max-width: 100%;
   }
   .frame-parent,
-  .jawab-faq {
+  .auth-failed {
     position: relative;
   }
   .frame-parent {
@@ -122,7 +122,7 @@
     flex-direction: row;
     max-width: 100%;
   }
-  .jawab-faq {
+  .auth-failed {
     width: 100%;
     background-color: #fffffe;
     overflow: hidden;
@@ -143,7 +143,7 @@
     .silahkan-coba-login {
       font-size: 26px;
     }
-    .jawab-faq {
+    .auth-failed {
       gap: 28px 0;
       padding-left: 146px;
       padding-right: 147px;
@@ -160,7 +160,7 @@
     .group-f-r-a-m-e {
       gap: 20px 0;
     }
-    .jawab-faq {
+    .auth-failed {
       padding-left: 20px;
       padding-right: 20px;
       box-sizing: border-box;

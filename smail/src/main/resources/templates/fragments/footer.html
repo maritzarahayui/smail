@@ -13,32 +13,30 @@
     <div th:fragment="footer" class="wrapper">
         <div class="footer">
             <header class="frameRoot">
-            <div class="devTeamFrame">
-                <div class="developedByRtx">Developed by rt(x) Team</div>
-                <div class="propensiD02">Propensi D02</div>
-            </div>
-
-            <div class="collaboratorFrames">
-                <div class="inCollaborationWith">
-                In collaboration with
+                <div class="devTeamFrame">
+                    <div class="developedByRtx">Developed by rt(x) Team</div>
+                    <div class="propensiD02">Propensi D02</div>
                 </div>
 
-                <div class="fasilkomRectangle">
-                <img
-                    class="tazkiaIcon"
-                    loading="lazy"
-                    alt=""
-                    th:src="@{/images/tazkia.svg}"
-                />
+                <div class="collaboratorFrames">
+                    <div class="inCollaborationWith">In collaboration with</div>
 
-                <img
-                    class="fasilkomIcon"
-                    loading="lazy"
-                    alt=""
-                    th:src="@{/images/fasilkom.svg}"
-                />
+                    <div class="fasilkomRectangle">
+                    <img
+                        class="tazkiaIcon"
+                        loading="lazy"
+                        alt=""
+                        th:src="@{/images/tazkia.svg}"
+                    />
+
+                    <img
+                        class="fasilkomIcon"
+                        loading="lazy"
+                        alt=""
+                        th:src="@{/images/fasilkom.svg}"
+                    />
+                    </div>
                 </div>
-            </div>
             </header>
             
             <footer class="footerCopyright">
@@ -49,4 +47,22 @@
         </div> 
     </div> 
 </body>
+
+<script>
+    window.addEventListener('scroll', function() {
+        var footer = document.querySelector('.footer');
+        var scrollHeight = document.documentElement.scrollHeight;
+        var scrollTop = document.documentElement.scrollTop;
+        var clientHeight = document.documentElement.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight) {
+            // Tampilkan footer jika pengguna di bagian bawah halaman
+            footer.style.display = 'block';
+        } else {
+            // Sembunyikan footer jika pengguna belum mencapai bagian bawah
+            footer.style.display = 'none';
+        }
+    });
+</script>
+
 </html>

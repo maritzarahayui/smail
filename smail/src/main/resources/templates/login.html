@@ -15,7 +15,7 @@
   <body>
     <div class="homepage">
       <section class="frame-a">
-        <header class="navbar">
+        <nav class="navbar">
           <div class="wrapper-group-7-parent">
             <div class="wrapper-group-7">
 				<img class="wrapper-group-7-child" loading="lazy" alt="" src="/images/logo-smail-lg.svg"/>
@@ -25,7 +25,8 @@
             </div>
           </div>
           <div class="navbar-child"></div>
-        </header>
+        </nav>
+
         <div class="button-frame-a">
           <div class="google-sign-i-n">
             <div class="sub-f-r-a-m-e-b">
@@ -40,11 +41,6 @@
                     <div class="institut-tazkia">Institut Tazkia</div>
                   </div>
                 </div>
-
-				<!-- <a id="button-google" class="btn" th:href= "@{/oauth2/authorization/google}" role="button" style="text-transform:none" >
-					<img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-					Masuk dengan Google
-				</a> -->
 
                 <a class="button" th:href= "@{/oauth2/authorization/google}">
                   <img class="uimgoogle-icon" alt="" src="/images/google.svg"/>
@@ -61,28 +57,17 @@
       <section class="first-vector-frame">
         <img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
 
-        <footer class="sekilas-info-frame">
+        <div class="sekilas-info-frame">
           <div class="about-s-m-a-i-l-system">
             <b class="sekilas-mengenai-smail-container">
               <span class="sekilas-mengenai-smail-container1">
-                <span class="sekilas">Sekilas</span>
-                <span> Mengenai SMAIL</span>
+                <span class="sekilas"></span>
               </span>
             </b>
           </div>
-          <div class="smail-adalah-sistem-container">
-            <span class="smail-adalah-sistem-container1">
-              <b>SMAIL</b>
-              <span class="adalah-sistem-persuratan">
-                adalah sistem persuratan dan disposisi yang digunakan untuk
-                melakukan aktivitas persuratan di Institut Tazkia agar menjadi
-                lebih cepat dan efisien. Melalui SMAIL, pengguna bisa lebih
-                cepat dalam mengetahui progres surat.</span
-              >
-            </span>
-          </div>
-        </footer>
+        </div>
       </section>
     </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
   </body>
 </html>

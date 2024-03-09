@@ -38,43 +38,6 @@
     gap: 0 18px;
   }
   
-  .navbar-child {
-    height: 64px;
-    width: 1322px;
-    position: relative;
-    background: linear-gradient(
-      180deg,
-      rgba(238, 238, 238, 0.05),
-      rgba(245, 245, 245, 0.05)
-    );
-    backdrop-filter: blur(40px);
-    display: none;
-    max-width: 100%;
-  }
-  .navbar {
-    align-self: stretch;
-    border-radius: 12px;
-    background-color: #b1cdb8;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 12.099999999999907px 20px;
-    box-sizing: border-box;
-    gap: 0 442px;
-    z-index: 99;
-    position: sticky;
-    top: 10px;
-    margin: 10px 10px;
-    height: 70px;
-    width: calc(100% - 20px);
-
-    text-align: center;
-    font-size: 32px;
-    color: #0f7454;
-    font-family: Rubik;
-  }
-  
   .wrapper-group-7-item {
     height: 100%;
     width: 100%;
@@ -411,4 +374,3 @@
       line-height: 29px;
     }
   }
-  

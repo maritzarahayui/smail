@@ -35,4 +35,10 @@ public class PenggunaServiceImpl implements PenggunaService {
         } return "";
     }
 
+    @Override
+    public String getFirstName(Pengguna user) {
+        String fullName = user.getNama();
+        String firstName = fullName.split(" ")[0];
+        return firstName;
+    }
 }

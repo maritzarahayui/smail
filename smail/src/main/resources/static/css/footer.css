@@ -4,6 +4,7 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0;
+  min-height: 100vh;
 }
 
 .wrapper {
@@ -25,7 +26,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  gap: 20px 0;
+  gap: 12px 0;
 }
 
 .inCollaborationWith {
@@ -41,13 +42,13 @@ body {
 }
 
 .tazkiaIcon {
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
 }
 
 .fasilkomIcon {
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 50px;
 }
 
 .fasilkomRectangle {
@@ -68,7 +69,7 @@ body {
 .collaboratorFrames {
   flex-direction: column;
   justify-content: flex-start;
-  gap: 20px 0;
+  gap: 12px 0;
 }
 
 .frameRoot {
@@ -79,9 +80,9 @@ body {
   overflow: hidden;
   flex-direction: row;
   justify-content: space-between;
-  padding: 30px 137px;
+  padding: 30px 60px;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #253237;
   font-family: Rubik;
 }
@@ -100,20 +101,21 @@ body {
   justify-content: center;
   padding: 15px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   color: #fffffe;
   font-family: Rubik;
 }
 
 .footer {
-  position: fixed;
-  bottom: 0;
+  /* position: fixed;
+  bottom: 0; */
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   letter-spacing: normal;
+  /* margin-top: auto; */
 }
 
 @media only screen and (max-width: 1100px) {
