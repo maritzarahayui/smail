@@ -49,4 +49,5 @@ public class TemplateSurat {
     private String fileName;
 
     /* RELATIONSHIPS */
+    
 }

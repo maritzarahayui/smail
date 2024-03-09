@@ -111,6 +111,46 @@ public class RequestServiceImpl implements RequestService {
     //     return prefix + String.format("%03d", totalRequests + 1);
     // }
 
+    // @Override
+    // public Map<String, List<String>> generateJenisSuratByKategori() {
+    //     Map<String, List<String>> jenisSuratByKategori = new HashMap<>();
+
+    //     // Menambahkan daftar jenis surat untuk kategori Keputusan
+    //     List<String> jenisSuratLegal = new ArrayList<>();
+    //     jenisSuratLegal.add("Surat Keterangan Studi");
+    //     jenisSuratLegal.add("Surat Tugas Mengajar");
+    //     jenisSuratLegal.add("Surat Tugas Administratif");
+    //     jenisSuratByKategori.put("LEGAL", jenisSuratLegal);
+
+    //     // Menambahkan daftar jenis surat untuk kategori Edaran
+    //     List<String> jenisSuratSDM = new ArrayList<>();
+    //     jenisSuratSDM.add("Surat Pengajuan Cuti");
+    //     jenisSuratSDM.add("Surat Rekomendasi Pemagangan");
+    //     jenisSuratSDM.add("Surat Permohonan Pembebasan dari Tugas Mengajar");
+    //     jenisSuratByKategori.put("SDM", jenisSuratSDM);
+
+    //     // Menambahkan daftar jenis surat untuk kategori Keterangan
+    //     List<String> jenisSuratKeuangan = new ArrayList<>();
+    //     jenisSuratKeuangan.add("Surat Pengajuan Dana Penelitian");
+    //     jenisSuratKeuangan.add("Surat Pengajuan Dana Beasiswa");
+    //     jenisSuratByKategori.put("KEUANGAN", jenisSuratKeuangan);
+
+    //     // Menambahkan daftar jenis surat untuk kategori Kuasa
+    //     List<String> jenisSuratSarana = new ArrayList<>();
+    //     jenisSuratSarana.add("Surat Permohonan Peminjaman Ruang Kelas");
+    //     jenisSuratSarana.add("Surat Izin Penggunaan Fasilitas Olahraga");
+    //     jenisSuratSarana.add("Surat Permohonan Perbaikan Sarana dan Prasarana");
+    //     jenisSuratByKategori.put("SARANA", jenisSuratSarana);
+
+    //     // Menambahkan daftar jenis surat untuk kategori Pengantar
+    //     List<String> jenisSuratKemahasiswaan = new ArrayList<>();
+    //     jenisSuratKemahasiswaan.add("Surat Pengantar Penyelenggaraan Acara Kemahasiswaan");
+    //     jenisSuratKemahasiswaan.add("Surat Permohonan Bantuan Dana untuk Organisasi Mahasiswa");
+    //     jenisSuratByKategori.put("KEMAHASISWAAN", jenisSuratKemahasiswaan);
+
+    //     return jenisSuratByKategori;
+    // }
+
     @Override
     public Map<String, List<String>> generateJenisSuratByKategori() {
         Map<String, List<String>> jenisSuratByKategori = new HashMap<>();
@@ -127,12 +167,14 @@ public class RequestServiceImpl implements RequestService {
         jenisSuratSDM.add("Surat Pengajuan Cuti");
         jenisSuratSDM.add("Surat Rekomendasi Pemagangan");
         jenisSuratSDM.add("Surat Permohonan Pembebasan dari Tugas Mengajar");
+        jenisSuratSDM.add("Lainnya");
         jenisSuratByKategori.put("SDM", jenisSuratSDM);
 
         // Menambahkan daftar jenis surat untuk kategori Keterangan
         List<String> jenisSuratKeuangan = new ArrayList<>();
         jenisSuratKeuangan.add("Surat Pengajuan Dana Penelitian");
         jenisSuratKeuangan.add("Surat Pengajuan Dana Beasiswa");
+        jenisSuratKeuangan.add("Lainnya");
         jenisSuratByKategori.put("KEUANGAN", jenisSuratKeuangan);
 
         // Menambahkan daftar jenis surat untuk kategori Kuasa
@@ -140,12 +182,14 @@ public class RequestServiceImpl implements RequestService {
         jenisSuratSarana.add("Surat Permohonan Peminjaman Ruang Kelas");
         jenisSuratSarana.add("Surat Izin Penggunaan Fasilitas Olahraga");
         jenisSuratSarana.add("Surat Permohonan Perbaikan Sarana dan Prasarana");
+        jenisSuratSarana.add("Lainnya");
         jenisSuratByKategori.put("SARANA", jenisSuratSarana);
 
         // Menambahkan daftar jenis surat untuk kategori Pengantar
         List<String> jenisSuratKemahasiswaan = new ArrayList<>();
         jenisSuratKemahasiswaan.add("Surat Pengantar Penyelenggaraan Acara Kemahasiswaan");
         jenisSuratKemahasiswaan.add("Surat Permohonan Bantuan Dana untuk Organisasi Mahasiswa");
+        jenisSuratKemahasiswaan.add("Lainnya");
         jenisSuratByKategori.put("KEMAHASISWAAN", jenisSuratKemahasiswaan);
 
         return jenisSuratByKategori;
