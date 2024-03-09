@@ -56,33 +56,21 @@ public class SuratMasukController {
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
         @RequestParam("perihal") String perihal, @RequestParam("tanggalDibuat") String tanggalDibuat, 
         @RequestParam("status") int status, @RequestParam("pengirim") String pengirim, 
-        @RequestParam("tembusan") String tembusan, Authentication auth) throws ParseException {
+        @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
 
-        String message = "";
+        
         //convert type of tanggalDibuat from String to Date
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date tanggalDibuatDate = formatter.parse(tanggalDibuat);
 
         try {
             SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
-            // dapatkan surat masuknya
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            // redirect to detail surat masuk
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+            String uploadErrorMessage = "Gagal meng-upload file: " + file.getOriginalFilename() + "!";
+            model.addAttribute("uploadErrorMessage", uploadErrorMessage); // Add error message to model
             return "redirect:/surat-masuk/form";
         }
-    }
-
-    @GetMapping("/files")
-    public ResponseEntity<List<String>> getListFiles() {
-        List<String> fileNames = suratMasukService.getAllFiles().map(fileName -> {
-            String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/surat-masuk/files/").path(fileName.getNomorArsip()).toUriString();
-            return fileDownloadUri;
-        }).collect(Collectors.toList());
-
-        return ResponseEntity.status(HttpStatus.OK).body(fileNames);
     }
 
     @GetMapping("/download/{id}")
@@ -107,8 +95,6 @@ public class SuratMasukController {
     @GetMapping("/all")
     public String getAllSuratMasuk(Model model, Authentication auth) {
         List<SuratMasuk> suratMasukList = suratMasukService.getAllSuratMasuk();
-
-        //masukan ke thymeleaf
         model.addAttribute("suratMasukList", suratMasukList);
 
         if (auth != null) {
