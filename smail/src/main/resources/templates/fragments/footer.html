@@ -47,4 +47,22 @@
         </div> 
     </div> 
 </body>
+
+<script>
+    window.addEventListener('scroll', function() {
+        var footer = document.querySelector('.footer');
+        var scrollHeight = document.documentElement.scrollHeight;
+        var scrollTop = document.documentElement.scrollTop;
+        var clientHeight = document.documentElement.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight) {
+            // Tampilkan footer jika pengguna di bagian bawah halaman
+            footer.style.display = 'block';
+        } else {
+            // Sembunyikan footer jika pengguna belum mencapai bagian bawah
+            footer.style.display = 'none';
+        }
+    });
+</script>
+
 </html>

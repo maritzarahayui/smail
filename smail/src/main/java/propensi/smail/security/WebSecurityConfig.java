@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.beans.factory.annotation.Autowired;
-// import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 
 import propensi.smail.model.user.*;
 import propensi.smail.repository.PenggunaDb;
@@ -123,9 +123,9 @@ public class WebSecurityConfig {
         };
     }
 
-//     @Bean
-//     public SpringSecurityDialect springSecurityDialect() {
-//         return new SpringSecurityDialect();
-//     }
+    @Bean
+    public SpringSecurityDialect springSecurityDialect() {
+        return new SpringSecurityDialect();
+    }
 
 }
