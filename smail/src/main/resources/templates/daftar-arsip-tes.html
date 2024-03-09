@@ -79,7 +79,7 @@
     </style>
   </head>
   <body>
-    <nav th:replace="~{fragments/navbarUser :: navbarUser}"></nav>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
     <h1>Daftar Surat Masuk</h1>
     <table>
       <thead>
@@ -111,7 +111,7 @@
           <td>
             <a
               class="detail-button"
-              th:href="@{'/api/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
+              th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
               >Detail</a
             >
           </td>

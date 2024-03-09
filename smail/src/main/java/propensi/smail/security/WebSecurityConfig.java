@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
@@ -49,10 +50,14 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/profile").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
+                    .requestMatchers("/surat-masuk/all", "/surat-masuk/detail/*", "/surat-masuk/download/*").hasAnyAuthority("PENGURUS")
+                    .requestMatchers("/surat-masuk/**").hasAnyAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAnyAuthority("ADMIN") // Izinkan akses POST untuk testing
                     // .requestMatchers("/staf").hasAnyAuthority("STAF")
                     // .requestMatchers("/admin").hasAnyAuthority("ADMIN")
                     .anyRequest().authenticated())

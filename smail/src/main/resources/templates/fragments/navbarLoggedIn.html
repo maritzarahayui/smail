@@ -28,7 +28,7 @@
                 </div>
 
                 <ul class="links">
-                    <li><a th:href="@{#}">Beranda</a></li>
+                    <li><a th:href="@{/}">Beranda</a></li>
 
                     <li th:if="${role == 'Admin' or role == 'Pengurus'}">
                         <a th:href="@{#}">Request Surat</a>
@@ -43,7 +43,7 @@
                         <a href="#">Arsip Surat</a>
                         <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
                         <ul id="htmlCssSubMenu" class="htmlCss-sub-menu sub-menu">
-                            <li><a href="#">Surat Masuk</a></li>
+                            <li><a th:href="@{/surat-masuk/all}">Surat Masuk</a></li>
                             <hr class="linehrz" />
                             <li><a href="#">Semua Arsip</a></li>
                         </ul>
