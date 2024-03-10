@@ -62,13 +62,17 @@ public class SuratMasukController {
         //convert type of tanggalDibuat from String to Date
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date tanggalDibuatDate = formatter.parse(tanggalDibuat);
+        //console
+
 
         try {
             SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             String uploadErrorMessage = "Gagal meng-upload file: " + file.getOriginalFilename() + "!";
-            model.addAttribute("uploadErrorMessage", uploadErrorMessage); // Add error message to model
+            model.addAttribute("uploadErrorMessage", uploadErrorMessage); 
+            //debug
+            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
         }
     }
@@ -178,12 +182,12 @@ public class SuratMasukController {
             }
         }
 
-        return "form-arsip-tes";
+        return "form-surat-masuk";
     }
 
-    @GetMapping("/form-arsip")
-    public String form(Model model, Authentication auth) {
-        return "form-surat-masuk";
+    @GetMapping("/daftar")
+    public String form(Model model) {
+        return "daftar-surat-masuk";
     }
 
     // route to semua-surat-masuk

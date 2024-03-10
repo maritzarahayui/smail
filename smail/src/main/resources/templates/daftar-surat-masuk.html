@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Daftar Surat Masuk</title>
+    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/daftar-surat-masuk.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  </head>
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="arsip-surat-diterima">
+      <b class="daftar-surat-masuk-container">
+        <span class="daftar">Daftar</span>
+        <span> Surat Masuk</span>
+      </b>
+      <img class="arsip-surat-diterima-child" alt="" src="/images/kiri.svg" />
+
+      <img class="arsip-surat-diterima-item" alt="" src="/images/kanan.svg" />
+      <div class="tabs-group-parent">
+        <div class="tabs-group">
+          <div class="component-2">
+            <img
+              class="iconoutlineexclamation-circl"
+              alt=""
+              src="./public/iconoutlineexclamationcircle.svg"
+            />
+
+            <div class="tabs">Diterima</div>
+          </div>
+          <div class="component-3">
+            <img
+              class="iconoutlineexclamation-circl1"
+              alt=""
+              src="./public/iconoutlineexclamationcircle.svg"
+            />
+
+            <div class="tabs1">Follow Up</div>
+          </div>
+          <div class="component-6">
+            <img
+              class="iconoutlineexclamation-circl2"
+              alt=""
+              src="./public/iconoutlineexclamationcircle.svg"
+            />
+
+            <div class="tabs2">Disposisi</div>
+          </div>
+        </div>
+        <div class="button-parent">
+          <div class="button8">
+            <img class="search-icon" alt="" src="./public/search.svg" />
+
+            <div class="keuangan3">Keuangan</div>
+          </div>
+          <div class="button-group">
+            <div class="button9">
+              <img
+                class="solarcalendar-outline-icon"
+                alt=""
+                src="./public/solarcalendaroutline.svg"
+              />
+
+              <div class="periode-20212022">Periode 2021/2022</div>
+            </div>
+            <div class="button10">
+              <img
+                class="fluentfilter-12-regular-icon"
+                alt=""
+                src="./public/fluentfilter12regular.svg"
+              />
+
+              <div class="filters">Filters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="frame-group">
+        <div class="id-surat-wrapper">
+          <div class="id-surat2">ID Surat</div>
+        </div>
+        <div class="jenis-surat-frame">
+          <div class="jenis-surat2">Jenis Surat</div>
+        </div>
+        <div class="nomor-surat-frame">
+          <div class="nomor-surat2">Nomor Surat</div>
+        </div>
+        <div class="pengirim-frame">
+          <div class="pengirim2">Pengirim</div>
+        </div>
+        <div class="tanggal-surat-masuk-frame">
+          <div class="tanggal-surat-masuk2">Tanggal Surat Masuk</div>
+        </div>
+        <div class="action-wrapper">
+          <div class="action">Action</div>
+        </div>
+      </div>
+      <div class="frame-container">
+        <div class="frame-parent1">
+          <div class="ku001-wrapper">
+            <div class="ku0012">KU001</div>
+          </div>
+          <div class="keuangan-frame">
+            <div class="keuangan4">Keuangan</div>
+          </div>
+          <div class="itsiii2023-frame">
+            <div class="itsiii20232">08.006/ITS/III/2023</div>
+          </div>
+          <div class="rektor-universitas-andalas-frame">
+            <div class="rektor-universitas-andalas2">
+              Rektor Universitas Andalas
+            </div>
+          </div>
+          <div class="agustus-2022-frame">
+            <div class="agustus-20222">8 Agustus 2022</div>
+          </div>
+          <div class="button-container">
+            <div class="button11">
+              <div class="button12">Detail</div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-parent2">
+          <div class="ku001-container">
+            <div class="ku0013">KU001</div>
+          </div>
+          <div class="keuangan-wrapper1">
+            <div class="keuangan5">Keuangan</div>
+          </div>
+          <div class="itsiii2023-wrapper1">
+            <div class="itsiii20233">08.006/ITS/III/2023</div>
+          </div>
+          <div class="rektor-universitas-andalas-wrapper1">
+            <div class="rektor-universitas-andalas3">
+              Rektor Universitas Andalas
+            </div>
+          </div>
+          <div class="agustus-2022-wrapper1">
+            <div class="agustus-20223">8 Agustus 2022</div>
+          </div>
+          <div class="button-frame">
+            <div class="button13">
+              <div class="button14">Detail</div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-parent3">
+          <div class="ku001-frame">
+            <div class="ku0014">KU001</div>
+          </div>
+          <div class="keuangan-wrapper2">
+            <div class="keuangan6">Keuangan</div>
+          </div>
+          <div class="itsiii2023-wrapper2">
+            <div class="itsiii20234">08.006/ITS/III/2023</div>
+          </div>
+          <div class="rektor-universitas-andalas-wrapper2">
+            <div class="rektor-universitas-andalas4">
+              Rektor Universitas Andalas
+            </div>
+          </div>
+          <div class="agustus-2022-wrapper2">
+            <div class="agustus-20224">8 Agustus 2022</div>
+          </div>
+          <div class="button-wrapper1">
+            <div class="button15">
+              <div class="button16">Detail</div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-parent4">
+          <div class="ku001-wrapper1">
+            <div class="ku0015">KU001</div>
+          </div>
+          <div class="keuangan-wrapper3">
+            <div class="keuangan7">Keuangan</div>
+          </div>
+          <div class="itsiii2023-wrapper3">
+            <div class="itsiii20235">08.006/ITS/III/2023</div>
+          </div>
+          <div class="rektor-universitas-andalas-wrapper3">
+            <div class="rektor-universitas-andalas5">
+              Rektor Universitas Andalas
+            </div>
+          </div>
+          <div class="agustus-2022-wrapper3">
+            <div class="agustus-20225">8 Agustus 2022</div>
+          </div>
+          <div class="button-wrapper2">
+            <div class="button17">
+              <div class="button18">Detail</div>
+            </div>
+          </div>
+        </div>
+        <div class="frame-parent5">
+          <div class="ku001-wrapper2">
+            <div class="ku0016">KU001</div>
+          </div>
+          <div class="keuangan-wrapper4">
+            <div class="keuangan8">Keuangan</div>
+          </div>
+          <div class="itsiii2023-wrapper4">
+            <div class="itsiii20236">08.006/ITS/III/2023</div>
+          </div>
+          <div class="rektor-universitas-andalas-wrapper4">
+            <div class="rektor-universitas-andalas6">
+              Rektor Universitas Andalas
+            </div>
+          </div>
+          <div class="agustus-2022-wrapper4">
+            <div class="agustus-20226">8 Agustus 2022</div>
+          </div>
+          <div class="button-wrapper3">
+            <div class="button19">
+              <div class="button20">Detail</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="button21">
+        <img
+          class="fluentadd-16-filled-icon"
+          alt=""
+          src="/images/plus-icon.svg"
+        />
+
+        <div class="input-surat1">Input Surat</div>
+      </div>
+    </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+  </body>
+</html>

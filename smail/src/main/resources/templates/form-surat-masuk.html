@@ -3,284 +3,217 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
-    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-
-    <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/form-surat-masuk.css" />
-    <script src="/js/form-surat-masuk.js"></script>
-
+    <title>Input Arsip</title>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/form-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/global-daftar-template.css" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
     />
   </head>
 
   <body>
-    <div class="input-surat">
-      <header class="navbar">
-        <div class="frames-group">
-          <div class="wrapper-group-8">
-            <img
-              class="wrapper-group-8-child"
-              loading="lazy"
-              alt=""
-              src="./public/group-8.svg"
-            />
-          </div>
-          <div class="sub-frame">
-            <b class="beranda">Beranda</b>
-          </div>
-          <div class="sub-frame1">
-            <b class="request-surat">Request Surat</b>
-          </div>
-          <div class="i-d-input">
-            <b class="arsip-surat">Arsip Surat</b>
-            <img
-              class="iconoutlinechevron-down"
-              alt=""
-              src="./public/iconoutlinechevrondown.svg"
-            />
-          </div>
-          <div class="sub-frame2">
-            <b class="template-surat">Template Surat</b>
-          </div>
-          <div class="sub-frame3">
-            <b class="faq">FAQ</b>
-          </div>
-        </div>
-        <div class="navbar-child"></div>
-        <div class="beranda-frame">
-          <div class="request-frame">
-            <div class="button">
-              <div class="admin">Admin</div>
-              <img
-                class="iconoutlinechevron-down1"
-                alt=""
-                src="/images/surat-kanan.png"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-      <img class="input-surat-child" alt="" src="./public/group-65@2x.png" />
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-      <section class="i-d-label">
-        <div class="file-input-field">
+    <div class="tambah-template2">
+      <section class="home-frame">
+        <div class="sub-group-container">
           <img
-            class="file-input-field-child"
+            class="sub-group-container-child"
             loading="lazy"
             alt=""
-            src="/images/surat-kiri.png"
+            src="/images/kiri.svg"
           />
 
-          <div class="footer-developed-by">
+          <div class="label-pair">
             <h1 class="input-surat-masuk-container">
-              <span>
+              <span class="input-surat-masuk-container1">
                 <span class="input">Input</span>
-                <span> Surat Masuk</span>
+                <span>Arsip</span> <!-- Remove whitespace between spans -->
               </span>
             </h1>
-            <div class="copyright-frame">
-              <div class="i-d-info-fields">
-                <div class="i-d-surat">
-                  <div class="id-surat">ID Surat</div>
-                </div>
-                <div class="keuangan">
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields1">
-                <div class="jenis-surat-wrapper">
-                  <div class="jenis-surat">Jenis Surat</div>
-                </div>
-                <div class="keuangan-wrapper">
-                  <!-- <div class="keuangan1">Keuangan</div> -->
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields2">
-                <div class="nomor-surat-wrapper">
-                  <div class="nomor-surat">Nomor Surat</div>
-                </div>
-                <div class="itsiii2023-wrapper">
-                  <!-- <div class="itsiii2023">08.006/ITS/III/2023</div> -->
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields3">
-                <div class="pengirim-wrapper">
-                  <div class="pengirim">Pengirim</div>
-                </div>
-                <div class="rektor-universitas-andalas-wrapper">
-                  <!-- <div class="rektor-universitas-andalas">
-                    Rektor Universitas Andalas
-                  </div> -->
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields4">
-                <div class="bentuk-surat-wrapper">
-                  <div class="bentuk-surat">Bentuk Surat</div>
-                </div>
-                <div class="soft-copy-wrapper">
-                  <!-- <div class="soft-copy">Soft Copy</div> -->
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields5">
-                <div class="keperluan-wrapper">
-                  <div class="keperluan">Keperluan</div>
-                </div>
-                <div class="undangan-makan-malam-dies-nata-wrapper">
-                  <!-- <div class="undangan-makan-malam">
-                    Undangan makan malam dies natalis
-                  </div> -->
-                  <input type="text" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-              <div class="i-d-info-fields6">
-                <div class="tanggal-surat-masuk-wrapper">
-                  <div class="tanggal-surat-masuk">Tanggal Surat Masuk</div>
-                </div>
-                <div class="agustus-2022-wrapper">
-                  <!-- <div class="agustus-2022">8 Agustus 2022</div> -->
-                  <input type="date" id="id-surat-input" class="input-form" />
-                </div>
-              </div>
-            </div>
           </div>
+          
+          <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
         </div>
+      </section>
 
-        <div class="soft-copy1">
-          <div class="undanganmakanmalamdiesnatalis">
-            <h1 class="label">Unggah Surat</h1>
-            <div class="file-input" onclick="chooseFile()">
-              <div class="secondary-message">secondary message</div>
-              <div class="frame-input">
-                <div class="upload-illustration">
-                  <div class="upload-illustration1">
-                    <div class="chevrondown-icon">
-                      <div class="group-fields">
-                        <div class="wrapper-group">
-                          <img
-                            class="group-icon"
-                            alt=""
-                            src="\images\upload-tengah.png"
+      <section class="attach-button">
+        <div class="label-input-frame">
+          <div class="label-frame">
+            <form
+              action="/surat-masuk/upload"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="text-input-frame">
+                <label for="kategori" class="label9">Kategori:</label>
+                <select
+                  class="text-input14"
+                  id="kategori"
+                  name="kategori"
+                  required
+                >
+                  <option value="">-- Pilih Kategori --</option>
+                  <option value="Legal">Legal</option>
+                  <option value="SDM">SDM</option>
+                  <option value="Keuangan">Keuangan</option>
+                  <option value="Sarana">Sarana</option>
+                  <option value="Kemahasiswaan">Kemahasiswaan</option>
+                </select>
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <div class="label8">Perihal</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="perihal"
+                  name="perihal"
+                  required
+                />
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <div class="label8">Tanggal Dibuat</div>
+                <input
+                  class="text-input14"
+                  type="date"
+                  id="tanggalDibuat"
+                  name="tanggalDibuat"
+                  required
+                />
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <label for="status" class="label9">Status:</label>
+                <select class="text-input14" id="status" name="status" required>
+                  <option value="">-- Pilih Status --</option>
+                  <option value="1">Diarsipkan</option>
+                  <option value="2">Follow Up</option>
+                  <option value="3">Didisposisi</option>
+                </select>
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <div class="label8">Pengirim</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="pengirim"
+                  name="pengirim"
+                  required
+                />
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <div class="label8">Tembusan</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="tembusan"
+                  name="tembusan"
+                />
+              </div>
+              
+              <br /><br /><br />
+              <div class="form-group">
+                <div class="upload-illustration-frame">
+                  <div class="file-input">
+                    <div class="secondary-message">secondary message</div>
+                    <div class="rectangle-frame">
+                      <div class="arsip-surat-frame">
+                        <div class="button-frame1">
+                          <label class="upload-illustration" for="file">
+                            <div class="chevrondown-icon">
+                              <div class="wrapper-group">
+                                <img
+                                  class="group-icon"
+                                  alt=""
+                                  src="/images/upload-atas.svg"
+                                />
+                              </div>
+                              <img
+                                class="chevrondown-icon-child"
+                                alt=""
+                                src="/images/upload.svg"
+                              />
+
+                              <img
+                                class="chevrondown-icon-item"
+                                loading="lazy"
+                                alt=""
+                                src="/images/upload-kanan.svg"
+                              />
+                            </div>
+                            <img
+                              class="upload-illustration-child"
+                              alt=""
+                              src="/images/upload-kiri.svg"
+                            />
+                          </label>
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="file"
+                            name="file"
+                            required
                           />
                         </div>
-                        <img
-                          class="group-fields-child"
-                          alt=""
-                          src="\images\upload-main.png"
-                        />
-                        <img
-                          class="group-fields-item"
-                          loading="lazy"
-                          alt=""
-                          src="\images\upload-kanan.png"
-                        />
+                        <h3 class="upload-file-kamu-container">
+                          <span>Upload</span>
+                          <span class="file-kamu-di"> file kamu di sini</span>
+                        </h3>
+                        <span class="file-name"></span>
+                        <br />
+                        <br />
                       </div>
                     </div>
-                    <!-- Ini adalah tempat untuk menampilkan ikon file yang diunggah -->
-                    <div class="uploaded-file-container"></div>
                   </div>
-                  <h3 class="upload-file-kamu-container">
-                    <span>Upload</span>
-                    <span class="file-kamu-di"> file kamu di sini</span>
-                    <!-- Input file yang sebenarnya, tetapi tersembunyi -->
-                    <input
-                      type="file"
-                      id="file-upload-input"
-                      name="file_upload"
-                      style="display: none"
-                    />
-                  </h3>
                 </div>
               </div>
-            </div>
+              <br /><br /><br />
+              <section class="creator-info-frame">
+                <button type="submit" class="button15" onclick="submitForm()">
+                  <div class="buat-template">Simpan</div>
+                </button>
+              </section>
+            </form>
           </div>
         </div>
-      </section>
-      <section class="savebutton">
-        <div class="button2">
-          <div class="simpan">Simpan</div>
-        </div>
-      </section>
-      <section class="footer">
-        <div class="r-t-x-teamfooter-parent">
-          <div class="r-t-x-teamfooter">
-            <h3 class="developed-by-rtx">Developed by rt(x) Team</h3>
-            <h3 class="propensi-d02">Propensi D02</h3>
-          </div>
-          <div class="incollaborationwith">
-            <h3 class="in-collaboration-with">In collaboration with</h3>
-            <div class="image-1-parent">
-              <img
-                class="image-1-icon"
-                loading="lazy"
-                alt=""
-                src="./public/image-1@2x.png"
-              />
-
-              <img
-                class="image-18-icon"
-                loading="lazy"
-                alt=""
-                src="./public/image-18@2x.png"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <!-- <h1>Form Input Surat Masuk</h1> -->
-          <form
-            action="/surat-masuk/upload"
-            method="post"
-            enctype="multipart/form-data"
-          >
-            <label for="file">File Surat:</label>
-            <input type="file" id="file" name="file" required />
-    
-            <label for="kategori">Kategori:</label>
-            <select class="form-control" id="kategori" name="kategori" required>
-              <option value="">-- Pilih Kategori --</option>
-              <option value="Legal">Legal</option>
-              <option value="SDM">SDM</option>
-              <option value="Keuangan">Keuangan</option>
-              <option value="Sarana">Sarana</option>
-              <option value="Kemahasiswaan">Kemahasiswaan</option>
-            </select>
-    
-            <label for="perihal">Perihal:</label>
-            <input type="text" id="perihal" name="perihal" required />
-    
-            <label for="tanggalDibuat">Tanggal Dibuat:</label>
-            <input type="date" id="tanggalDibuat" name="tanggalDibuat" required />
-    
-            <label for="status">Status:</label>
-            <select id="status" name="status" required>
-              <option value="">-- Pilih Status --</option>
-              <option value="1">Diarsipkan</option>
-              <option value="2">Disposisi</option>
-              <option value="3">Follow Up</option>
-            </select>
-    
-            <label for="pengirim">Pengirim:</label>
-            <input type="text" id="pengirim" name="pengirim" required />
-    
-            <label for="tembusan">Tembusan:</label>
-            <input type="text" id="tembusan" name="tembusan" />
-    
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-        <footer class="footer-info">
-          <h3 class="copyright-2024-tazkia">
-            © Copyright 2024 Tazkia Institute. All Rights Reserved.
-          </h3>
-        </footer>
       </section>
     </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+      document.getElementById("file").addEventListener("change", function () {
+        var fileName = this.files[0].name;
+        document.querySelector(".file-name").textContent = fileName;
+      });
+
+      // Function to submit the form
+      function submitForm() {  
+
+        // Submit the form
+        fetch("/surat-masuk/upload", {
+          method: "POST",
+          body: new FormData(document.querySelector("form"))
+        })
+          .then((response) => {
+            // Handle response as needed
+
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
   </body>
 </html>

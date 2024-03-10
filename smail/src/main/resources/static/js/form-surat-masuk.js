@@ -1,3 +1,23 @@
+document.getElementById("file").addEventListener("change", function () {
+  var fileName = this.files[0].name;
+  document.querySelector(".file-name").textContent = fileName;
+});
+
+// Function to submit the form
+function submitForm() {
+  // Submit the form
+  fetch("/surat-masuk/upload", {
+    method: "POST",
+    body: new FormData(document.querySelector("form")),
+  })
+    .then((response) => {
+      // Handle response as needed
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
 function chooseFile() {
   document.getElementById("file-upload-input").click();
 }
