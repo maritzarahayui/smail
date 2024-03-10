@@ -107,6 +107,12 @@
                     listFieldWrapper.style.display = 'block';
                     reqTemplateWrapper.style.display = 'none';
 
+                    // Change
+                    const element = document.getElementsByName("listFieldData[0].key");
+                    const element2 = document.getElementsByName("listFieldData[0].value");
+                    element[0].remove();
+                    element2[0].remove();
+
                     // Mendapatkan jenis surat yang dipilih
                     var selectedJenisSurat = jenisSuratDropdown.value;
     
