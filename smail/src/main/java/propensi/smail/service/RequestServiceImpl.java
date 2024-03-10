@@ -38,7 +38,7 @@ public class RequestServiceImpl implements RequestService {
             requestSurat.setKategori(requestDTO.getKategori());
             requestSurat.setJenisSurat(requestDTO.getJenisSurat());
             requestSurat.setKeperluan(requestDTO.getKeperluan());
-            requestSurat.setStatus(0); // 0 --> REQUESTED
+            requestSurat.setStatus(1); // 1 --> REQUESTED
             requestSurat.setId(generateRequestId(requestSurat.getPengaju()));
             requestSurat.setListFieldData(requestDTO.getListFieldData());
 
@@ -158,7 +158,7 @@ public class RequestServiceImpl implements RequestService {
         try {
             requestTemplate.setBahasa(requestDTO.getBahasa());
             requestTemplate.setKategori(requestDTO.getKategori());
-            requestTemplate.setStatus(0); // 0 --> REQUESTED
+            requestTemplate.setStatus(1); // 1 --> REQUESTED
             requestTemplate.setKeperluan(requestDTO.getKeperluan()); // 0 --> REQUESTED
             requestTemplate.setId(generateRequestId(requestTemplate.getPengaju()));
             requestTemplate.setListFieldData(requestDTO.getListFieldData());
