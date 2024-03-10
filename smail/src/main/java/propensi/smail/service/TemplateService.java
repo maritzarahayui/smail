@@ -2,6 +2,7 @@ package propensi.smail.service;
 
 import org.hibernate.sql.Template;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
 
 import java.util.ArrayList;
@@ -29,4 +30,7 @@ public interface TemplateService {
     TemplateSurat findById(String id);
 
     TemplateSurat updateTemplate(String id, MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField);
+
+    List<RequestTemplate> getAllReqTemplate();
 }
+

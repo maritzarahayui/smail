@@ -6,7 +6,9 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
+import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.repository.TemplateSuratDb;
 
 import java.io.IOException;
@@ -18,6 +20,9 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Autowired
     TemplateSuratDb templateSuratDb;
+
+    @Autowired
+    RequestTemplateDb requestTemplateDb;
 
     @Override
     public TemplateSurat createTemplate(TemplateSurat templateSurat) {
@@ -62,6 +67,10 @@ public class TemplateServiceImpl implements TemplateService {
         return templateSuratDb.findAll().stream();
     }
 
+    @Override
+    public List<RequestTemplate> getAllReqTemplate() {
+        return requestTemplateDb.findAll();
+    }
 
     @Override
     public String generateIdByKategori(String kategori) {
