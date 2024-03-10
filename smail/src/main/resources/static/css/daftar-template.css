@@ -453,6 +453,10 @@
   gap: 0 8px;
 }
 
+.button4:hover {
+  background-color: #253237;
+}
+
 .template-info {
   flex: 1;
   display: flex;
@@ -479,6 +483,7 @@
   top: 10px;
   right: 10px;
   margin: 10px;
+  text-decoration: none;
 }
 
 .template-surat1 {
@@ -491,6 +496,7 @@
   padding: var(--padding-xl);
   box-sizing: border-box;
   max-width: 100%;
+  width: 744px;
   gap: var(--gap-xl);
 }
 

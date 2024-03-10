@@ -65,14 +65,14 @@
                             <p style="font-weight: 400 !important; font-size: 18px; margin-top: 0;">Kategori: <span th:text="${template.kategori}"></span></p>
                         </div>
 
-                        <a th:href="@{'/template/detail/' + ${template.id}}">
-                            <button class="button-group">
-                                <div class="button4">
-                                    <img class="lets-iconsview-alt" alt="" src="/images/eye.svg" />
-                                    <div class="button5">Detail</div>
-                                </div>
-                            </button>
+                        <!-- <a th:href="@{'/template/detail/' + ${template.id}}"> -->
+                        <a class="button-group" th:href="@{'/template/detail/' + ${template.id}}" style="text-decoration: none;">
+                            <div class="button4">
+                                <img class="lets-iconsview-alt" alt="" src="/images/eye.svg" />
+                                <div class="button5">Detail</div>
+                            </div>
                         </a>
+                        <!-- </a> -->
                     </div>
                 </div>
                 <br><br>

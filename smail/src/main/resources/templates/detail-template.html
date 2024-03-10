@@ -18,25 +18,26 @@
 <div class="tambah-template1">
     <div class="label-d">
         <img
-                class="label-d-child"
-                loading="lazy"
-                alt=""
-                src="/images/kiri.svg"
+            class="label-d-child"
+            loading="lazy"
+            alt=""
+            src="/images/kiri.svg"
         />
 
         <div class="frame-c">
             <h1 class="detail-template">
-            <span>
-              <span class="detail">Detail</span>
-              <span> Template</span>
-            </span>
+                <span>
+                <span class="detail">Detail</span>
+                <span> Template</span>
+                </span>
             </h1>
         </div>
     </div>
+
     <img
-            class="tambah-template-child"
-            alt=""
-            src="/images/kanan.svg"
+        class="tambah-template-child"
+        alt=""
+        src="/images/kanan.svg"
     />
 
     <main class="button-group1">
@@ -126,22 +127,25 @@
     </main>
     <div class="icon-outlinechevrondown">
         <div class="frame-footer">
-            <a th:href="@{'/template/update/' + ${template.id}}" class="button11">
-                <button class="button11">
-                    <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/>
+            <!-- <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;"> -->
+                <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;">
+                    <!-- <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/> -->
                     <div class="ubah-template">
+                        <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/>
                         <div class="ubah-template1">Ubah template</div>
                     </div>
-                </button>
-            </a>
-            <a th:href="@{'/template/soft-delete/' + ${template.id}}" class="button12">
-                <button class="button12">
-                    <img class="mdidelete-icon" alt="" src="/images/delete.svg" />
+                </a>
+            <!-- </a>-->
+
+            <!-- <a th:href="@{'/template/soft-delete/' + ${template.id}}" class="button12" style="text-decoration: none;"> -->
+                <a class="button12" th:href="@{'/template/soft-delete/' + ${template.id}}" style="text-decoration: none;">
+                    <!-- <img class="mdidelete-icon" alt="" src="/images/delete.svg" /> -->
                     <div class="hapus-template-wrapper">
+                        <img class="mdidelete-icon" alt="" src="/images/delete.svg" />
                         <div class="hapus-template">Hapus template</div>
                     </div>
-                </button>
-            </a>
+                </a>
+            <!-- </a> -->
         </div>
     </div>
 </div>
