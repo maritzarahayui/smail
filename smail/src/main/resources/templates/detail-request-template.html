@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/detail-request-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+</head>
+<body>
+<div class="detail-template-diterima">
+    <header class="navbar4">
+        <div class="detail-template1">
+            <div class="wrapper-group-84">
+                <img
+                        class="wrapper-group-8-child2"
+                        loading="lazy"
+                        alt=""
+                        src="./public/group-8.svg"
+                />
+            </div>
+            <div class="f-r-a-m-e">
+                <b class="beranda4">Beranda</b>
+            </div>
+            <div class="f-r-a-m-e1">
+                <b class="request-surat5">Request Surat</b>
+            </div>
+            <div class="beranda-request">
+                <b class="arsip-surat4">Arsip Surat</b>
+                <img
+                        class="iconoutlinechevron-down8"
+                        alt=""
+                        src="./public/iconoutlinechevrondown.svg"
+                />
+            </div>
+            <div class="f-r-a-m-e2">
+                <b class="template-surat7">Template Surat</b>
+            </div>
+            <div class="f-r-a-m-e3">
+                <b class="faq4">FAQ</b>
+            </div>
+        </div>
+        <div class="navbar-child1"></div>
+        <div class="admin-options">
+            <div class="button-frame2">
+                <div class="button30">
+                    <div class="admin4">Admin</div>
+                    <img
+                            class="iconoutlinechevron-down9"
+                            alt=""
+                            src="./public/iconoutlinechevrondown-1.svg"
+                    />
+                </div>
+            </div>
+        </div>
+    </header>
+    <img
+            class="detail-template-diterima-child"
+            alt=""
+            src="/images/kanan.svg"
+    />
+
+    <section class="language-and-formats">
+        <img
+                class="language-and-formats-child"
+                loading="lazy"
+                alt=""
+                src="/images/kiri.svg"
+        />
+
+        <div class="detail-template-text">
+            <h1 class="detail-template2">
+            <span>
+              <span class="detail1">Detail</span>
+              <span class="template"> Template</span>
+            </span>
+            </h1>
+        </div>
+    </section>
+    <section class="i-d-and-status">
+        <div class="data-fields-group">
+            <div class="frame-parts">
+                <div class="i-d-and-types">
+                    <div class="id-surat">ID Surat</div>
+                </div>
+                <div class="jenis-surat1">
+                    <div class="ku001" th:text="${requestTemplate.id}"></div>
+                </div>
+            </div>
+            <div class="frame-parts1">
+                <div class="jenis-surat-wrapper">
+                    <div class="jenis-surat2">Jenis Surat</div>
+                </div>
+                <div class="lainnya-wrapper">
+<!--                    Harusnya jenis surat-->
+                    <div class="lainnya" th:text="${requestTemplate.kategori}"></div>
+                </div>
+            </div>
+            <div class="frame-parts2">
+                <div class="field-wrapper">
+                    <div class="field">Field</div>
+                </div>
+                <div class="lainnya-container">
+                    <div class="lainnya1">Lainnya</div>
+                </div>
+            </div>
+            <div class="frame-parts3">
+                <div class="bahasa-wrapper">
+                    <div class="bahasa">Bahasa</div>
+                </div>
+                <div class="indonesia-wrapper">
+                    <div class="indonesia" th:text="${requestTemplate.bahasa}"></div>
+                </div>
+            </div>
+            <div class="frame-parts4">
+                <div class="bentuk-surat-wrapper">
+                    <div class="bentuk-surat1">Bentuk Surat</div>
+                </div>
+                <div class="soft-copy-wrapper2">
+                    <div class="soft-copy5">Soft Copy</div>
+                </div>
+            </div>
+            <div class="frame-parts6">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="tanggal-pengajuan1">Tanggal Pengajuan</div>
+                </div>
+                <div class="agustus-2022-wrapper2">
+                    <div class="agustus-20225" th:text="${requestTemplate.tanggalPengajuan}"></div>
+                </div>
+            </div>
+            <div class="frame-parts7">
+                <div class="tanggal-selesai-wrapper">
+                    <div class="tanggal-selesai">Tanggal Selesai</div>
+                </div>
+                <div class="agustus-2022-wrapper3">
+                    <div class="agustus-20226" th:text="${requestTemplate.tanggalSelesai}"></div>
+                </div>
+            </div>
+            <div class="frame-parts7">
+                <div class="tanggal-selesai-wrapper">
+                    <div class="tanggal-selesai">Status</div>
+                </div>
+                <div class="agustus-2022-wrapper3">
+                    <div class="agustus-20226">
+                        <span th:if="${requestTemplate.status == 1}">Diajukan</span>
+                        <span th:if="${requestTemplate.status == 2}">Diterima</span>
+                        <span th:if="${requestTemplate.status == 3}">Ditolak</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="nomor-surat1">
+        <div class="button31">
+            <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">
+                <div class="simpan-perubahan">Terima Pengajuan</div>
+            </a>
+        </div>
+    </section>
+    <section class="nomor-surat1">
+        <div class="button31">
+            <a th:href="@{/template/request/reject/{id}(id=${requestTemplate.id})}">
+                <div class="simpan-perubahan">Tolak Pengajuan</div>
+            </a>
+        </div>
+    </section>
+    <section class="footer4">
+        <footer class="developer-frame">
+            <div class="team">
+                <h3 class="developed-by-rtx4">Developed by rt(x) Team</h3>
+                <h3 class="propensi-d024">Propensi D02</h3>
+            </div>
+            <div class="propensi-d">
+                <h3 class="in-collaboration-with5">In collaboration with</h3>
+                <div class="image-1-parent">
+                    <img
+                            class="image-1-icon4"
+                            loading="lazy"
+                            alt=""
+                            src="/images/tazkia.svg"
+                    />
+
+                    <img
+                            class="image-18-icon4"
+                            loading="lazy"
+                            alt=""
+                            src="images/fasilkom.svg"
+                    />
+                </div>
+            </div>
+        </footer>
+        <div class="copyright-frame1">
+            <h3 class="copyright-2024-tazkia4">
+                © Copyright 2024 Tazkia Institute. All Rights Reserved.
+            </h3>
+        </div>
+    </section>
+</div>
+</body>
+</html>

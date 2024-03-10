@@ -164,9 +164,11 @@
                             <td>Soft Copy</td>
                             <td th:text="${requestTemplate.tanggalPengajuan}"></td>
                             <td>
-                                <button class="button20">
-                                    <div class="button21">Detail</div>
-                                </button>
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}">
+                                    <button class="button20">
+                                        <div class="button21">Detail</div>
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                         </tbody>

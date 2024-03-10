@@ -58,6 +58,11 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public RequestTemplate getRequest(String id) {
+        return requestTemplateDb.findById(id).get();
+    }
+
+    @Override
     public TemplateSurat getFile(String id) {
         return templateSuratDb.findById(id).get();
     }
@@ -115,6 +120,36 @@ public class TemplateServiceImpl implements TemplateService {
                 return templateSuratDb.save(template);
             } else {
                 throw new IllegalStateException("Template is already deleted.");
+            }
+        } else {
+            return null; // Or throw an exception indicating the template cannot be found
+        }
+    }
+
+    @Override
+    public RequestTemplate terimaRequest(String requestId) {
+        RequestTemplate reqTemplate = requestTemplateDb.findById(requestId).orElse(null);
+        if (reqTemplate != null) {
+            if (reqTemplate.getStatus() == 1) {
+                reqTemplate.setStatus(2);
+                return requestTemplateDb.save(reqTemplate);
+            } else {
+                throw new IllegalStateException("Template's status is not Diajukan.");
+            }
+        } else {
+            return null; // Or throw an exception indicating the template cannot be found
+        }
+    }
+
+    @Override
+    public RequestTemplate tolakRequest(String requestId) {
+        RequestTemplate reqTemplate = requestTemplateDb.findById(requestId).orElse(null);
+        if (reqTemplate != null) {
+            if (reqTemplate.getStatus() == 1) {
+                reqTemplate.setStatus(3);
+                return requestTemplateDb.save(reqTemplate);
+            } else {
+                throw new IllegalStateException("Template's status is not Diajukan.");
             }
         } else {
             return null; // Or throw an exception indicating the template cannot be found

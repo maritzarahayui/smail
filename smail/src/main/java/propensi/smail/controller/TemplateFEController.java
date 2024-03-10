@@ -36,6 +36,14 @@ public class TemplateFEController {
             return "daftar-request-template";
         }
 
+        @GetMapping("/request/detail/{id}")
+        public String showDetailTemplateRequests(@PathVariable("id") String id, Model model) {
+            RequestTemplate file = templateSuratService.getRequest(id);
+
+            model.addAttribute("requestTemplate", file); // Add the template object to the model
+            return "detail-request-template"; // Return the PDF preview Thymeleaf template
+        }
+
         @GetMapping("/active-templates")
         public String showActiveTemplates(Model model) {
             List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
@@ -109,6 +117,36 @@ public class TemplateFEController {
                 model.addAttribute("errorMessage", e.getMessage());
             }
             return "redirect:/template/active-templates"; // Redirect to the list of active templates
+        }
+
+        @GetMapping("/request/acc/{id}")
+        public String terimaRequest(@PathVariable("id") String requestId, Model model) {
+            try {
+                RequestTemplate targetedRequest = templateSuratService.terimaRequest(requestId);
+                if (targetedRequest != null) {
+                    model.addAttribute("message", "Request accepted successfully.");
+                } else {
+                    model.addAttribute("errorMessage", "Template's status is not updatable.");
+                }
+            } catch (IllegalStateException e) {
+                model.addAttribute("errorMessage", e.getMessage());
+            }
+            return "redirect:/template/request/detail/{id}";
+        }
+
+        @GetMapping("/request/reject/{id}")
+        public String tolakRequest(@PathVariable("id") String requestId, Model model) {
+            try {
+                RequestTemplate targetedRequest = templateSuratService.tolakRequest(requestId);
+                if (targetedRequest != null) {
+                    model.addAttribute("message", "Request rejected successfully.");
+                } else {
+                    model.addAttribute("errorMessage", "Template's status is not updatable.");
+                }
+            } catch (IllegalStateException e) {
+                model.addAttribute("errorMessage", e.getMessage());
+            }
+            return "redirect:/template/request/detail/{id}";
         }
 
         @GetMapping("/update/{id}")

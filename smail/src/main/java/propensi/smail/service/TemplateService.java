@@ -32,5 +32,11 @@ public interface TemplateService {
     TemplateSurat updateTemplate(String id, MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField);
 
     List<RequestTemplate> getAllReqTemplate();
+
+    RequestTemplate getRequest(String id);
+
+    RequestTemplate terimaRequest(String requestId);
+
+    RequestTemplate tolakRequest(String requestId);
 }
 
