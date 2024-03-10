@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/").permitAll()
-                    .requestMatchers("/css/**", "/js/**", "/images/**", "/surat-masuk/upload", "/surat-masuk/all", "/surat-masuk/detail/*", "/template/new-template", "/template/update/*", "/template/**").permitAll()
+                    .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/profile").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
                     .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAuthority("ADMIN") // Izinkan akses POST untuk testing
                     .requestMatchers("/surat-masuk/all", "/surat-masuk/detail/*", "/surat-masuk/download/*").hasAnyAuthority("PENGURUS", "ADMIN")
