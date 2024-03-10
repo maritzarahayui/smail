@@ -64,7 +64,7 @@
             <td
               th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
             ></td>
-            <td th:text="${statusText}"></td>
+            <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Follow Up' : (suratMasuk.status == 3 ? 'Disposisi' : ''))}"></td>
             <td th:text="${suratMasuk.pengirim}"></td>
             <td th:text="${suratMasuk.tembusan}"></td>
             <td th:text="${suratMasuk.fileName}"></td>

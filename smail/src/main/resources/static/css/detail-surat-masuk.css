@@ -1,977 +1,948 @@
-.wrapper-group-8-inner {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-    position: absolute;
-    left: 0;
-    top: 2px;
-    transform: scale(1.31);
-  }
-  .wrapper-group-82 {
-    height: 39px;
-    width: 30.6px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .beranda2 {
-    flex: 1;
-    position: relative;
-  }
-  .sub-frames {
-    width: 88px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-3xs);
+.wrapper-group-8-item {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  position: absolute;
+  left: 0;
+  top: 2px;
+  transform: scale(1.31);
+}
+.wrapper-group-81 {
+  height: 39px;
+  width: 30.6px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.beranda1 {
+  flex: 1;
+  position: relative;
+}
+.template-surat-frame {
+  width: 88px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+  box-sizing: border-box;
+}
+.request-surat1 {
+  flex: 1;
+  position: relative;
+  white-space: nowrap;
+}
+.template-surat-frame1 {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+}
+.arsip-surat1 {
+  flex: 1;
+  position: relative;
+  white-space: nowrap;
+}
+.iconoutlinechevron-down2 {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  min-height: 20px;
+}
+.arsip-surat-parent {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+  gap: 0 10px;
+}
+.template-surat1 {
+  flex: 1;
+  position: relative;
+  white-space: nowrap;
+}
+.template-surat-frame2 {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: var(--padding-3xs);
+}
+.faq1 {
+  flex: 1;
+  position: relative;
+}
+.request-surat-frame,
+.template-surat-frame3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.template-surat-frame3 {
+  width: 52px;
+  align-items: flex-start;
+  padding: var(--padding-3xs) var(--padding-3xs) var(--padding-3xs) 9px;
+  box-sizing: border-box;
+}
+.request-surat-frame {
+  width: 719.6px;
+  align-items: center;
+  gap: 0 26px;
+  max-width: 100%;
+}
+.navbar-item {
+  height: 64px;
+  width: 1322px;
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    rgba(238, 238, 238, 0.05),
+    rgba(245, 245, 245, 0.05)
+  );
+  backdrop-filter: blur(40px);
+  display: none;
+  max-width: 100%;
+  z-index: 2;
+}
+.admin1 {
+  flex: 1;
+  position: relative;
+  font-weight: 600;
+}
+.iconoutlinechevron-down3 {
+  height: 20px;
+  width: 20px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.button3 {
+  height: 40px;
+  border-radius: var(--br-xs);
+  background-color: var(--green-green-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-5xl);
+  box-sizing: border-box;
+  gap: 0 8px;
+}
+.button3,
+.detail-surat-frame {
+  flex: 1;
+  justify-content: center;
+}
+.admin-button,
+.detail-surat-frame,
+.navbar1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.admin-button {
+  width: 127px;
+  justify-content: flex-start;
+  color: var(--white-white-1);
+}
+.navbar1 {
+  align-self: stretch;
+  border-radius: var(--br-xs);
+  background-color: var(--green-green-4);
+  justify-content: space-between;
+  padding: var(--padding-smi-5) var(--padding-93xl);
+  box-sizing: border-box;
+  top: 0;
+  z-index: 99;
+  position: sticky;
+  gap: -831.61px;
+  max-width: 100%;
+  text-align: center;
+  font-size: var(--body-b2-size);
+  color: var(--green-green-5);
+  font-family: var(--heading-h4);
+}
+.soft-copy-text-child {
+  margin-left: -104px;
+  height: 117.2px;
+  width: 369px;
+  position: relative;
+  max-width: 100%;
+}
+.detail {
+  background: linear-gradient(
+    180deg,
+    #bce8a4,
+    #abdfa7 28.5%,
+    #80c9ae 66.5%,
+    #5cb7b3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.detail-surat {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+}
+.date-info-frame,
+.soft-copy-text1 {
+  display: flex;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+.date-info-frame {
+  width: 286px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 8.199999999999818px;
+}
+.soft-copy-text1 {
+  width: 883px;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0 var(--padding-xl) 39.80000000000018px 0;
+  gap: 0 312px;
+  max-width: 100%;
+}
+.detail-arsip-surat-diterima-child {
+  width: 355.4px;
+  height: 330.5px;
+  position: absolute;
+  margin: 0 !important;
+  top: -20px;
+  right: -69.4px;
+  object-fit: contain;
+  z-index: 1;
+}
+.id-surat1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.i-d-label-surat {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.ku0011 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.follow-up-button,
+.frame-i-d-details {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.follow-up-button {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.jenis-surat1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.jenis-surat-container {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.keuangan2 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.frame-i-d-details1,
+.keuangan-container {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.keuangan-container {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details1 {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.nomor-surat1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.nomor-surat-container {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.itsiii20231 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.frame-i-d-details2,
+.itsiii2023-container {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.itsiii2023-container {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details2 {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.pengirim1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.pengirim-container {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.rektor-universitas-andalas1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.frame-i-d-details3,
+.rektor-universitas-andalas-container {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.rektor-universitas-andalas-container {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details3 {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.bentuk-surat1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.bentuk-surat-container {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.soft-copy1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.frame-i-d-details4,
+.soft-copy-container {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.soft-copy-container {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details4 {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.keperluan3 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.frame-div {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.undangan-makan-malam1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.frame-i-d-details5,
+.undangan-makan-malam-dies-nata-container {
+  flex: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.undangan-makan-malam-dies-nata-container {
+  align-self: stretch;
+  border: 1px solid var(--green-green-4);
+  overflow: hidden;
+  align-items: center;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details5 {
+  width: 1198px;
+  border: 2px solid var(--green-green-4);
+  align-items: flex-start;
+}
+.tanggal-surat-masuk1 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--primary-white-1);
+  text-align: left;
+}
+.tanggal-surat-masuk-container {
+  align-self: stretch;
+  flex: 1;
+  background-color: var(--green-green-3);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.agustus-20221 {
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: left;
+}
+.agustus-2022-container {
+  align-self: stretch;
+  flex: 1;
+  border: 1px solid var(--green-green-4);
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-21xl);
+  max-width: 100%;
+}
+.frame-i-d-details6,
+.i-d-surat-holder {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.frame-i-d-details6 {
+  width: 1198px;
+  flex: 1;
+  border: 2px solid var(--green-green-4);
+  box-sizing: border-box;
+  flex-direction: row;
+}
+.i-d-surat-holder {
+  width: 1194px;
+  height: 356px;
+  overflow-x: auto;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 1px 0;
+  max-width: 100%;
+  z-index: 2;
+}
+.label1 {
+  margin: 0;
+  width: 224px;
+  position: relative;
+  font-size: var(--heading-h3-size);
+  font-weight: 700;
+  font-family: var(--heading-h4);
+  color: var(--green-green-5);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.octicondownload-16 {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.download-surat {
+  width: 123px;
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--white-white-1);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button4,
+.copyright-frame1 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.button4 {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-5xs) var(--padding-5xl);
+  background-color: var(--green-green-1);
+  height: 50px;
+  width: 310px;
+  border-radius: var(--br-xs);
+  justify-content: center;
+  box-sizing: border-box;
+  gap: 0 8px;
+  white-space: nowrap;
+}
+.button4:hover {
+  background-color: #369c7a;
+}
+.copyright-frame1 {
+  align-self: stretch;
+  justify-content: space-between;
+  gap: var(--gap-xl);
+}
+.image-20-icon {
+  width: 1014px;
+  height: 1352px;
+  position: relative;
+  object-fit: cover;
+  max-width: 100%;
+}
+.follow-up,
+.footer-frame {
+  display: flex;
+  align-items: center;
+}
+.footer-frame {
+  align-self: stretch;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 12px 0;
+  max-width: 100%;
+}
+.follow-up {
+  width: 76px;
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--white-white-1);
+  text-align: center;
+  justify-content: center;
+}
+.button5 {
+  align-self: stretch;
+  border-radius: var(--br-xs);
+  background-color: var(--green-green-1);
+  flex-direction: row;
+  align-items: flex-start;
+  padding: var(--padding-base-5) var(--padding-xl);
+}
+.button5,
+.button6,
+.disposisi {
+  display: flex;
+  justify-content: center;
+}
+.disposisi {
+  width: 71px;
+  position: relative;
+  font-size: var(--body-b2-size);
+  font-weight: 600;
+  font-family: var(--heading-h4);
+  color: var(--green-green-1);
+  text-align: center;
+  align-items: center;
+}
+.button6 {
+  flex: 1;
+  border-radius: var(--br-xs);
+  border: 2px solid var(--green-green-1);
+  box-sizing: border-box;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: var(--padding-base-5) var(--padding-xl);
+  max-width: 100%;
+}
+.chevrondown-icon,
+.follow-up-group {
+  align-self: stretch;
+  justify-content: flex-start;
+}
+.chevrondown-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 0 0 2px;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.follow-up-group {
+  flex-direction: column;
+  gap: 21px 0;
+}
+.details-frame,
+.follow-up-group,
+.i-d-surat-jenis-nomor-pengirim {
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.i-d-surat-jenis-nomor-pengirim {
+  margin: 0;
+  width: 1196px;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 49.5px 0;
+}
+.details-frame {
+  align-self: stretch;
+  flex-direction: row;
+  justify-content: center;
+  padding: 0 var(--padding-xl) 82px;
+  box-sizing: border-box;
+}
+.developed-by-rtx1,
+.propensi-d021 {
+  margin: 0;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+}
+.developed-by-rtx1 {
+  align-self: stretch;
+}
+.propensi-d021 {
+  width: 151px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.developer-frame {
+  width: 267px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20px 0;
+}
+.in-collaboration-with1 {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: inherit;
+  font-weight: 600;
+  font-family: inherit;
+}
+.image-1-icon1,
+.image-18-icon1 {
+  position: relative;
+  object-fit: cover;
+}
+.image-1-icon1 {
+  height: 117px;
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+}
+.image-18-icon1 {
+  height: 99px;
+  width: 95.3px;
+}
+.collaboration-frame,
+.image-1-group {
+  width: 214.3px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0 18px;
+}
+.collaboration-frame {
+  width: 242px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px 0;
+}
+.copyright-instance {
+  align-self: stretch;
+  background-color: var(--green-green-4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: var(--padding-21xl) var(--padding-130xl);
+  gap: var(--gap-xl);
+}
+.copyright-2024-tazkia1 {
+  margin: 0;
+  width: 656px;
+  position: relative;
+  font-size: inherit;
+  font-weight: 700;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.disposisi-button {
+  align-self: stretch;
+  background-color: var(--green-green-5);
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--padding-xl);
+  color: var(--white-white-1);
+}
+.detail-arsip-surat-diterima,
+.footer1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: center;
+  color: var(--green-green-5);
+  font-family: var(--heading-h4);
+}
+.footer1 {
+  align-self: stretch;
+  font-size: var(--heading-h4-size);
+}
+.detail-arsip-surat-diterima {
+  width: 100%;
+  position: relative;
+  background-color: var(--white-white-1);
+  overflow: hidden;
+  gap: 37px 0;
+  letter-spacing: normal;
+  font-size: var(--heading-h2-size);
+}
+@media screen and (max-width: 1200px) {
+  .navbar1 {
+    padding-left: var(--padding-37xl);
+    padding-right: var(--padding-37xl);
     box-sizing: border-box;
   }
-  .request-surat2 {
-    flex: 1;
-    position: relative;
-  }
-  .sub-frames1 {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-3xs);
-    box-sizing: border-box;
-    min-width: 88px;
-  }
-  .arsip-surat2 {
-    flex: 1;
-    position: relative;
-  }
-  .iconoutlinechevron-down4 {
-    height: 20px;
-    width: 20px;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-    min-height: 20px;
-  }
-  .frame-details {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-3xs);
-    box-sizing: border-box;
-    gap: 0 10px;
-    min-width: 93px;
-  }
-  .template-surat2 {
-    flex: 1;
-    position: relative;
-  }
-  .sub-frames2 {
-    flex: 1;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: var(--padding-3xs);
-    box-sizing: border-box;
-    min-width: 93px;
-  }
-  .faq2 {
-    flex: 1;
-    position: relative;
-  }
-  .frame-home,
-  .sub-frames3 {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .sub-frames3 {
-    width: 52px;
-    align-items: flex-start;
-    padding: var(--padding-3xs);
+  .details-frame {
+    padding-bottom: 53px;
     box-sizing: border-box;
   }
-  .frame-home {
-    width: 719.6px;
-    align-items: center;
-    gap: 0 26px;
-    max-width: 100%;
-  }
-  .navbar-inner {
-    height: 64px;
-    width: 1322px;
-    position: relative;
-    background: linear-gradient(
-      180deg,
-      rgba(238, 238, 238, 0.05),
-      rgba(245, 245, 245, 0.05)
-    );
-    backdrop-filter: blur(40px);
-    display: none;
-    max-width: 100%;
-    z-index: 2;
-  }
-  .admin2 {
-    flex: 1;
-    position: relative;
-    font-weight: 600;
-  }
-  .iconoutlinechevron-down5 {
-    height: 20px;
-    width: 20px;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .button17 {
-    height: 40px;
-    border-radius: var(--br-xs);
-    background-color: var(--green-green-1);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-5xl);
-    box-sizing: border-box;
-    gap: 0 8px;
-  }
-  .button17,
-  .header-section {
-    flex: 1;
-    justify-content: center;
-  }
-  .footer-container,
-  .header-section,
-  .navbar2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .footer-container {
-    width: 127px;
-    justify-content: flex-start;
-    color: var(--white-white-1);
-  }
-  .navbar2 {
-    align-self: stretch;
-    border-radius: var(--br-xs);
-    background-color: var(--green-green-4);
-    justify-content: space-between;
-    padding: var(--padding-smi-5) var(--padding-93xl);
-    box-sizing: border-box;
-    gap: -831.61px;
-    max-width: 100%;
-  }
-  .detail-semua-arsip-child {
-    width: 355.4px;
-    height: 330.5px;
-    position: absolute;
-    margin: 0 !important;
-    top: -20px;
-    right: -69.4px;
-    object-fit: contain;
-    z-index: 1;
-  }
-  .label-frame-child {
-    margin-left: -104px;
-    height: 117.2px;
-    width: 369px;
-    position: relative;
-    max-width: 100%;
-  }
-  .detail {
-    background: linear-gradient(
-      180deg,
-      #bce8a4,
-      #abdfa7 28.5%,
-      #80c9ae 66.5%,
-      #5cb7b3
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+}
+@media screen and (max-width: 1050px) {
   .detail-surat {
-    margin: 0;
-    align-self: stretch;
-    position: relative;
-    font-size: inherit;
-    font-weight: 700;
-    font-family: inherit;
+    font-size: var(--font-size-19xl);
   }
-  .arsip-surat-frame {
-    width: 286px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 0 0 8.199999999999818px;
-    box-sizing: border-box;
-  }
-  .id-surat2,
-  .label-frame {
-    font-family: var(--heading-h4);
-  }
-  .label-frame {
-    width: 863px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    justify-content: flex-start;
-    gap: 0 312px;
-    max-width: 100%;
-    text-align: center;
-    font-size: var(--heading-h2-size);
-    color: var(--green-green-5);
-  }
-  .id-surat2 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .types-frame {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .ku0016 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .k-u-frame,
-  .rektor-frame {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .rektor-frame {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .jenis-surat2 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .jenis-surat-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .keuangan8 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .k-u-frame1,
-  .keuangan-wrapper2 {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .keuangan-wrapper2 {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame1 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .nomor-surat2 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .nomor-surat-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .itsiii20236 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .itsiii2023-wrapper3,
-  .k-u-frame2 {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .itsiii2023-wrapper3 {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame2 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .pengirim7 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .pengirim-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .rektor-universitas-andalas4 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .k-u-frame3,
-  .rektor-universitas-andalas-wrapper1 {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .rektor-universitas-andalas-wrapper1 {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame3 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .bentuk-surat2 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .bentuk-surat-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .soft-copy2 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .k-u-frame4,
-  .soft-copy-container {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .soft-copy-container {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame4 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .keperluan3 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .keperluan-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .undangan-makan-malam1 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .k-u-frame5,
-  .undangan-makan-malam-dies-nata-container {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .undangan-makan-malam-dies-nata-container {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame5 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .tanggal-surat-masuk5 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .tanggal-surat-masuk-container {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .agustus-20226 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .agustus-2022-wrapper3,
-  .k-u-frame6 {
-    flex: 1;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-  .agustus-2022-wrapper3 {
-    align-self: stretch;
-    border: 1px solid var(--green-green-4);
-    overflow: hidden;
-    align-items: center;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .k-u-frame6 {
-    width: 1198px;
-    border: 2px solid var(--green-green-4);
-    align-items: flex-start;
-  }
-  .tanggal-surat-keluar {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--primary-white-1);
-    text-align: left;
-  }
-  .tanggal-surat-keluar-wrapper {
-    align-self: stretch;
-    flex: 1;
-    background-color: var(--green-green-3);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    box-sizing: border-box;
-    max-width: 100%;
-  }
-  .agustus-20227 {
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: left;
-  }
-  .agustus-2022-wrapper4 {
-    align-self: stretch;
-    flex: 1;
-    border: 1px solid var(--green-green-4);
-    box-sizing: border-box;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding: var(--padding-5xs) var(--padding-21xl);
-    max-width: 100%;
-  }
-  .i-d-surat7,
-  .k-u-frame7 {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .k-u-frame7 {
-    width: 1198px;
-    flex: 1;
-    border: 2px solid var(--green-green-4);
-    box-sizing: border-box;
-    flex-direction: row;
-  }
-  .i-d-surat7 {
-    width: 1194px;
-    height: 407px;
-    overflow-x: auto;
-    flex-shrink: 0;
-    flex-direction: column;
-    gap: 1px 0;
-    max-width: 100%;
+  .soft-copy-text1 {
+    flex-wrap: wrap;
+    gap: 0 156px;
   }
   .label1 {
-    margin: 0;
-    width: 224px;
-    position: relative;
-    font-size: var(--heading-h3-size);
-    font-weight: 700;
-    font-family: var(--heading-h4);
-    color: var(--green-green-5);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: var(--font-size-7xl);
   }
-  .octicondownload-16 {
-    height: 24px;
-    width: 24px;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .download-surat {
-    width: 123px;
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--white-white-1);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .button18,
-  .label-parent {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-  .button18 {
-    cursor: pointer;
-    border: 0;
-    padding: var(--padding-5xs) var(--padding-5xl);
-    background-color: var(--green-green-1);
-    height: 50px;
-    width: 310px;
-    border-radius: var(--br-xs);
-    justify-content: center;
+  .details-frame {
+    padding-bottom: 34px;
     box-sizing: border-box;
-    gap: 0 8px;
-    white-space: nowrap;
   }
-  .button18:hover {
-    background-color: var(--color-seagreen-200);
+  .copyright-instance {
+    flex-wrap: wrap;
   }
-  .label-parent {
-    align-self: stretch;
-    justify-content: space-between;
-    gap: var(--gap-xl);
-  }
-  .image-20-icon {
-    width: 1014px;
-    height: 1352px;
-    position: relative;
-    object-fit: cover;
-    max-width: 100%;
-  }
-  .button19,
-  .disposisi {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .disposisi {
-    width: 71px;
-    position: relative;
-    font-size: var(--body-b2-size);
-    font-weight: 600;
-    font-family: var(--heading-h4);
-    color: var(--green-green-1);
-    text-align: center;
-  }
-  .button19 {
-    align-self: stretch;
-    height: 50px;
-    border-radius: var(--br-xs);
-    border: 2px solid var(--green-green-1);
+}
+@media screen and (max-width: 750px) {
+  .navbar1 {
+    padding-left: var(--padding-9xl);
+    padding-right: var(--padding-9xl);
     box-sizing: border-box;
-    flex-direction: row;
-    padding: var(--padding-5xs) var(--padding-5xl);
   }
-  .surat-details,
-  .undangan-frame {
-    flex-direction: column;
-    justify-content: flex-start;
+  .soft-copy-text1 {
+    gap: 0 78px;
   }
-  .undangan-frame {
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    gap: 12px 0;
-    max-width: 100%;
+  .copyright-frame1 {
+    flex-wrap: wrap;
   }
-  .surat-details {
-    margin: 0;
-    width: 1214px;
-    padding: 0 0 0 var(--padding-xl);
+  .i-d-surat-jenis-nomor-pengirim {
+    gap: 25px 0;
+  }
+  .details-frame {
+    padding-bottom: var(--padding-3xl);
     box-sizing: border-box;
-    gap: 60px 0;
-    z-index: 2;
   }
-  .button-download,
-  .sub-detail-frame,
-  .surat-details {
-    display: flex;
-    align-items: flex-start;
-    max-width: 100%;
-  }
-  .button-download {
-    align-self: stretch;
-    flex-direction: row;
-    justify-content: flex-end;
-  }
-  .sub-detail-frame {
-    width: 1335px;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 0 var(--padding-xl) 106px 0;
+  .copyright-instance {
+    padding-left: var(--padding-55xl);
+    padding-right: var(--padding-55xl);
     box-sizing: border-box;
-    gap: 76.8px 0;
   }
-  .developed-by-rtx2,
-  .propensi-d022 {
-    margin: 0;
-    position: relative;
-    font-size: inherit;
-    font-weight: 400;
-    font-family: inherit;
+  .detail-arsip-surat-diterima {
+    gap: 18px 0;
   }
-  .developed-by-rtx2 {
-    align-self: stretch;
+}
+@media screen and (max-width: 450px) {
+  .detail-surat {
+    font-size: var(--font-size-10xl);
   }
-  .propensi-d022 {
-    width: 151px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .developed-by-rtx1,
+  .in-collaboration-with1,
+  .label1,
+  .propensi-d021 {
+    font-size: var(--font-size-lgi);
   }
-  .developedby-frame {
-    width: 267px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    gap: 20px 0;
+  .copyright-instance {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
   }
-  .in-collaboration-with2 {
-    margin: 0;
-    align-self: stretch;
-    position: relative;
-    font-size: inherit;
-    font-weight: 600;
-    font-family: inherit;
+  .copyright-2024-tazkia1 {
+    font-size: var(--font-size-lgi);
   }
-  .image-1-icon2,
-  .image-18-icon2 {
-    position: relative;
-    object-fit: cover;
-  }
-  .image-1-icon2 {
-    height: 117px;
-    flex: 1;
-    max-width: 100%;
-    overflow: hidden;
-  }
-  .image-18-icon2 {
-    height: 99px;
-    width: 95.3px;
-  }
-  .incollaborationwith-frame,
-  .tazkia-instance-all-rights-res {
-    width: 214.3px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0 18px;
-  }
-  .incollaborationwith-frame {
-    width: 242px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px 0;
-  }
-  .r-t-x-team-frame {
-    align-self: stretch;
-    background-color: var(--green-green-4);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: var(--padding-21xl) var(--padding-130xl);
-    gap: var(--gap-xl);
-  }
-  .copyright-2024-tazkia2 {
-    margin: 0;
-    width: 656px;
-    position: relative;
-    font-size: inherit;
-    font-weight: 700;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .developercredit {
-    align-self: stretch;
-    background-color: var(--green-green-5);
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    padding: var(--padding-xl);
-    text-align: center;
-    font-size: var(--heading-h4-size);
-    color: var(--white-white-1);
-    font-family: var(--heading-h4);
-  }
-  .detail-semua-arsip,
-  .footer2 {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-  }
-  .footer2 {
-    margin-left: -2px;
-    align-self: stretch;
-    font-size: var(--heading-h4-size);
-  }
-  .detail-semua-arsip {
-    width: 100%;
-    position: relative;
-    background-color: var(--white-white-1);
-    overflow: hidden;
-    gap: 37px 0;
-    letter-spacing: normal;
-    text-align: center;
-    font-size: var(--body-b2-size);
-    color: var(--green-green-5);
-    font-family: var(--heading-h4);
-  }
-  @media screen and (max-width: 1200px) {
-    .navbar2 {
-      padding-left: var(--padding-37xl);
-      padding-right: var(--padding-37xl);
-      box-sizing: border-box;
-    }
-    .sub-detail-frame {
-      padding-bottom: 45px;
-      box-sizing: border-box;
-    }
-  }
-  @media screen and (max-width: 1050px) {
-    .detail-surat {
-      font-size: var(--font-size-19xl);
-    }
-    .label-frame {
-      flex-wrap: wrap;
-      gap: 0 156px;
-    }
-    .label1 {
-      font-size: var(--font-size-7xl);
-    }
-    .r-t-x-team-frame {
-      flex-wrap: wrap;
-    }
-  }
-  @media screen and (max-width: 750px) {
-    .frame-home {
-      flex-wrap: wrap;
-    }
-    .navbar2 {
-      padding-left: var(--padding-9xl);
-      padding-right: var(--padding-9xl);
-      box-sizing: border-box;
-    }
-    .label-frame {
-      gap: 0 78px;
-    }
-    .label-parent {
-      flex-wrap: wrap;
-    }
-    .surat-details {
-      gap: 30px 0;
-    }
-    .sub-detail-frame {
-      gap: 38px 0;
-      padding-bottom: 29px;
-      box-sizing: border-box;
-    }
-    .r-t-x-team-frame {
-      padding-left: var(--padding-55xl);
-      padding-right: var(--padding-55xl);
-      box-sizing: border-box;
-    }
-    .detail-semua-arsip {
-      gap: 18px 0;
-    }
-  }
-  @media screen and (max-width: 450px) {
-    .detail-surat {
-      font-size: var(--font-size-10xl);
-    }
-    .label1 {
-      font-size: var(--font-size-lgi);
-    }
-    .sub-detail-frame {
-      gap: 19px 0;
-    }
-    .developed-by-rtx2,
-    .in-collaboration-with2,
-    .propensi-d022 {
-      font-size: var(--font-size-lgi);
-    }
-    .r-t-x-team-frame {
-      padding-left: var(--padding-xl);
-      padding-right: var(--padding-xl);
-      box-sizing: border-box;
-    }
-    .copyright-2024-tazkia2 {
-      font-size: var(--font-size-lgi);
-    }
-  }
-  
+}

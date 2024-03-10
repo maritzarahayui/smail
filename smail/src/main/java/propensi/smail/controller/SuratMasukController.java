@@ -141,7 +141,9 @@ public class SuratMasukController {
             }
         }
 
-        return "detail-arsip-tes"; 
+        // return "detail-surat-tes"; 
+        return "detail-surat-masuk"; 
+
     }
 
     // Fungsi untuk mengonversi status menjadi teks
