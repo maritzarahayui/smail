@@ -66,7 +66,6 @@ public class SuratMasukController {
         try {
             SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
             // dapatkan surat masuknya
-
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             // redirect to detail surat masuk
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
