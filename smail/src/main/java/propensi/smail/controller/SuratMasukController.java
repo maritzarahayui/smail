@@ -69,8 +69,6 @@ public class SuratMasukController {
             SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            String uploadErrorMessage = "Gagal meng-upload file: " + file.getOriginalFilename() + "!";
-            model.addAttribute("uploadErrorMessage", uploadErrorMessage); 
             //debug
             System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
@@ -115,7 +113,7 @@ public class SuratMasukController {
             }
         }
 
-        return "daftar-arsip-tes";
+        return "daftar-surat-masuk";
     }
 
     // Metode untuk menampilkan preview PDF
