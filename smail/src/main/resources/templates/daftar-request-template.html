@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/add-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/daftar-request-template.css"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+
+    <style>
+        /* Tambahkan CSS khusus di sini */
+        .table thead {
+            background-color: var(--green-green-2);
+            color: #fff; /* Warna teks putih pada kepala tabel */
+            text-align: center; /* Membuat teks di kepala tabel menjadi ditengah */
+        }
+        .table tbody td {
+            text-align: center; /* Membuat teks di baris tabel menjadi ditengah */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="permintaan-template">
+    <div class="periode-button">
+        <img
+                class="periode-button-child"
+                loading="lazy"
+                alt=""
+                src="/images/kiri.svg"
+        />
+
+        <div class="i-d-template-frame">
+            <h1 class="permintaan-template-baru-container">
+                <span class="permintaan">Permintaan</span>
+                <span> Template Baru</span>
+            </h1>
+        </div>
+    <img
+            class="permintaan-template-child"
+            alt=""
+            src="/images/kanan.svg"
+    />    
+    </div>
+
+    <section class="bentuk-surat-text">
+        <div class="tabs-container">
+            <div class="tabs-group-parent">
+                <div class="tabs-group">
+                    <button class="component-2">
+                        <img
+                                class="iconoutlineexclamation-circl"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs">Diterima</div>
+                    </button>
+                    <div class="component-3">
+                        <img
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs1">Ditolak</div>
+                    </div>
+                </div>
+                <div class="search-button">
+                    <div class="button17">
+                        <img class="search-icon1" alt="" src="/images/search.svg" />
+                        <input class="keuangan3" placeholder="Keuangan" type="text" />
+                    </div>
+                    <div class="button-parent">
+                        <button class="button18">
+                            <img
+                                    class="solarcalendar-outline-icon"
+                                    alt=""
+                                    src="/images/calendar.svg"
+                            />
+                            <div class="periode-20212022">Periode 2021/2022</div>
+                        </button>
+                        <button class="button19">
+                            <img
+                                    class="fluentfilter-12-regular-icon"
+                                    alt=""
+                                    src="/images/filter.svg"
+                            />
+                            <div class="filters">Filters</div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="t-e-m-p-container-parent">
+                <div class="agustus-label-parent">
+                    <!-- Start of the table -->
+                    <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th >ID Template</th>
+                            <th>Kategori</th>
+                            <th>Nama Pengaju</th>
+                            <th>Bahasa</th>
+                            <th>Tanggal Pengajuan</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Iterate through requestTemplates -->
+                        <tr th:each="requestTemplate : ${requestTemplates}">
+                            <td th:text="${requestTemplate.id}"></td>
+                            <td th:text="${requestTemplate.kategori}"></td>
+                            <td th:text="${requestTemplate.pengaju.nama}"></td>
+                            <td th:text="${requestTemplate.bahasa}"></td>
+                            <td th:text="${requestTemplate.tanggalPengajuan}"></td>
+                            <td>
+                                <button class="button20">
+                                    <div class="button21">Detail</div>
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End of the table -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

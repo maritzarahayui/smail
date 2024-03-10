@@ -1,15 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 
 <head>
-	<title>
-		SMAIL
-	</title>
-</head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link rel="stylesheet" th:href="@{/css/home.css}"/>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+  </head>
 
 <body>
-	Hello World!
+	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+	<div class="homepage">
+		<section class="frame-a">
+		<div class="button-frame-a">
+			<div class="google-sign-i-n">
+			<div class="sub-f-r-a-m-e-b">
+				<div class="wrapper-group-71">
+				<img class="wrapper-group-7-item" loading="lazy" alt="" src="/images/logo-smail-lg.svg"/>
+				</div>
+				<div class="text-frame-a">
+				<div class="welcome-label">
+					<div class="selamat-datang-di">Selamat datang di</div>
+					<div class="button-text-a">
+					<b class="smail1">SMAIL</b>
+					<div class="institut-tazkia">Institut Tazkia</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			<div class="group-b">
+				<img class="group-of-frames" loading="lazy" alt="" src="/images/group-surat.svg"/>
+			</div>
+			</div>
+		</div>
+		</section>
+		<section class="first-vector-frame">
+		<img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
+		<div class="sekilas-info-frame">
+			<div class="about-s-m-a-i-l-system">
+			<b class="sekilas-mengenai-smail-container">
+				<span class="sekilas-mengenai-smail-container1">
+				<span class="sekilas"></span>
+				</span>
+			</b>
+			</div>
+		</div>
+		</section>
+	</div>	  
+	<footer th:replace="~{fragments/footer :: footer}"></footer>
+
 </body>
 
 </html>
-

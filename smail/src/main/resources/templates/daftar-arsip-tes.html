@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Semua Surat Masuk</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/semua-surat-masuk.css" />
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css"
+    />
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+  </head>
+
+  <body>
+    <div class="content-wrapper">
+      <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+      <h1>Daftar Surat Masuk</h1>
+
+      <div style="margin: 30px" class="buttonWrapper">
+        <a
+          th:if="${role == 'Admin' or role == 'Pengurus'}"
+          th:href="@{/surat-masuk/form}"
+          class="btn btn-primary"
+          style="background-color: #0f7454;"
+        >
+          <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
+          <div class="input-surat1">Input Surat</div>
+        </a>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Nomor Arsip</th>
+            <th>Kategori</th>
+            <th>Perihal</th>
+            <th>Tanggal Dibuat</th>
+            <th>Status</th>
+            <th>Pengirim</th>
+            <th>Tembusan</th>
+            <th>File Name</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:if="${suratMasukList.size() == 0}">
+            <td colspan="9">Tidak ada surat masuk yang tersedia.</td>
+          </tr>
+          <!-- Iterasi melalui daftar surat masuk -->
+          <tr th:each="suratMasuk : ${suratMasukList}">
+            <td th:text="${suratMasuk.nomorArsip}"></td>
+            <td th:text="${suratMasuk.kategori}"></td>
+            <td th:text="${suratMasuk.perihal}"></td>
+            <td
+              th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
+            ></td>
+            <td th:text="${statusText}"></td>
+            <td th:text="${suratMasuk.pengirim}"></td>
+            <td th:text="${suratMasuk.tembusan}"></td>
+            <td th:text="${suratMasuk.fileName}"></td>
+            <td>
+              <a
+                class="detail-button"
+                th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
+                >Detail</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+  </body>
+</html>

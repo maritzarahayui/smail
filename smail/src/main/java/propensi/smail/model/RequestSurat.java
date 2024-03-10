@@ -1,6 +1,8 @@
 package propensi.smail.model;
 
 import lombok.*;
+import propensi.smail.model.user.Pengguna;
+
 import java.util.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +18,9 @@ public class RequestSurat {
     
     @Id
     private String id;
+    // private UUID id = UUID.randomUUID();
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Long id;
 
     @NotNull
     @Column(name = "kategori", nullable = false)
@@ -39,9 +44,8 @@ public class RequestSurat {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private int status;
+    private int status; // 1 = dibatalkan, 0 = requested;
 
-    @NotNull
     @Column(name = "tanggal_pengajuan", nullable = false)
     private Date tanggalPengajuan;
 
@@ -56,10 +60,10 @@ public class RequestSurat {
 
     
     /* RELATIONSHIPS */
-    // @ManyToOne
-    // @JoinColumn(name = "pengaju")
-    // private User pengaju;  // pending dl ya msh mikir 
-
+    @ManyToOne
+    @JoinColumn(name = "pengaju")
+    private Pengguna pengaju; 
+    
     @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
     private List<FieldData> listFieldData;
 
@@ -67,8 +71,8 @@ public class RequestSurat {
     @JoinColumn(name = "template")
     private TemplateSurat template;
 
-    @OneToOne
-    @JoinColumn(name = "surat")
-    private SuratKeluar surat;
+    // @OneToOne
+    // @JoinColumn(name = "surat")
+    // private SuratKeluar surat;
 
 }
