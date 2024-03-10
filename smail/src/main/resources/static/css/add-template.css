@@ -261,6 +261,7 @@
   flex-shrink: 0;
   flex-direction: row;
   width: 1000px;
+  padding-left: 8px;
 }
 .text-input-frame {
   flex-direction: column;
