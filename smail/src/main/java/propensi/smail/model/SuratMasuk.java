@@ -22,6 +22,10 @@ public class SuratMasuk {
     private String nomorArsip;
 
     @NotNull
+    @Column(name = "judul", nullable = false)
+    private String judul;
+
+    @NotNull
     @Column(name = "kategori", nullable = false)
     private String kategori;
 

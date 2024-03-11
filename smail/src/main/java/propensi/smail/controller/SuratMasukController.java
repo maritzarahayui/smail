@@ -53,22 +53,15 @@ public class SuratMasukController {
     PenggunaService penggunaService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
-        @RequestParam("perihal") String perihal, @RequestParam("tanggalDibuat") String tanggalDibuat, 
-        @RequestParam("status") int status, @RequestParam("pengirim") String pengirim, 
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
+        @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
         @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
-
-        
-        //convert type of tanggalDibuat from String to Date
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date tanggalDibuatDate = formatter.parse(tanggalDibuat);
-
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            String uploadErrorMessage = "Gagal meng-upload file: " + file.getOriginalFilename() + "!";
-            model.addAttribute("uploadErrorMessage", uploadErrorMessage); // Add error message to model
+            //debug
+            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
         }
     }
@@ -111,7 +104,7 @@ public class SuratMasukController {
             }
         }
 
-        return "daftar-arsip-tes";
+        return "daftar-surat-masuk";
     }
 
     // Metode untuk menampilkan preview PDF
@@ -178,12 +171,12 @@ public class SuratMasukController {
             }
         }
 
-        return "form-arsip-tes";
+        return "form-surat-masuk";
     }
 
-    @GetMapping("/form-arsip")
-    public String form(Model model, Authentication auth) {
-        return "form-surat-masuk";
+    @GetMapping("/daftar")
+    public String form(Model model) {
+        return "daftar-surat-masuk";
     }
 
     // route to semua-surat-masuk
