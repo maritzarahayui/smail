@@ -42,7 +42,7 @@
           <tr>
             <th>Nomor Arsip</th>
             <th>Kategori</th>
-            <th>Perihal</th>
+            <th>Judul</th>
             <th>Tanggal Dibuat</th>
             <th>Status</th>
             <th>Pengirim</th>
@@ -59,7 +59,7 @@
           <tr th:each="suratMasuk : ${suratMasukList}">
             <td th:text="${suratMasuk.nomorArsip}"></td>
             <td th:text="${suratMasuk.kategori}"></td>
-            <td th:text="${suratMasuk.perihal}"></td>
+            <td th:text="${suratMasuk.judul}"></td>
             <td
               th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
             ></td>
