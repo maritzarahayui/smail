@@ -204,7 +204,7 @@
 .frame-c {
   width: 373px;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0 0 8.199999999999818px;
   flex-shrink: 0;
 }
@@ -240,7 +240,7 @@
   max-width: 100%;
 }
 .placeholder-text {
-  width: 392px;
+  width: 100%;
   border: 0;
   outline: 0;
   background-color: transparent;
@@ -292,7 +292,7 @@
   box-sizing: border-box;
   font-family: var(--heading-h4);
   font-size: var(--body-b2-size);
-  color: var(--green-green-5);
+  color: var(--black-black-2);
 }
 .text-input2,
 .text-input3 {
@@ -583,27 +583,27 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
-  min-height: 24px;
+  /* padding-right: 12px; */
+  margin-right: 12px;
 }
 .ubah-template1 {
-  align-self: stretch;
+  align-self: center;
   position: relative;
-  font-size: var(--body-b2-size);
+  font-size: 12;
   font-weight: 600;
-  font-family: var(--heading-h4);
+  /* font-family: var(--heading-h4); */
   color: var(--white-white-1);
   text-align: center;
 }
 .button11,
 .ubah-template {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 .ubah-template {
   width: 200px;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  padding: 10 0 0;
   box-sizing: border-box;
 }
 .button11 {
@@ -615,7 +615,9 @@
   border-radius: var(--br-xs);
   flex-direction: row;
   justify-content: center;
-  gap: 0 8px;
+}
+.button11:hover {
+  background-color: #253237;
 }
 .mdidelete-icon {
   height: 24px;
@@ -623,39 +625,42 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
-  min-height: 24px;
+  /* padding-right: 12px; */
+  margin-right: 12px;
 }
 .hapus-template {
-  align-self: stretch;
+  align-self: center;
   position: relative;
-  font-size: var(--body-b2-size);
+  font-size: 12;
   font-weight: 600;
-  font-family: var(--heading-h4);
+  /* font-family: var(--heading-h4); */
   color: var(--white-white-1);
   text-align: center;
 }
 .button12,
 .hapus-template-wrapper {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
 }
 .hapus-template-wrapper {
   width: 200px;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  padding: 10 0 0;
   box-sizing: border-box;
 }
 .button12 {
   cursor: pointer;
   border: 0;
-  padding:10px var(--padding-smi);
+  padding: 10px var(--padding-smi);
   background-color: var(--red-red-1);
   align-self: stretch;
   border-radius: var(--br-xs);
   flex-direction: row;
   justify-content: center;
-  gap: 0 8px;
+  /* gap: 0 8px; */
+}
+.button12:hover {
+  background-color: #6B000C;
 }
 .frame-footer,
 .icon-outlinechevrondown {

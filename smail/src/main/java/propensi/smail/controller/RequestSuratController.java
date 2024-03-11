@@ -98,7 +98,6 @@ public class RequestSuratController {
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestAndFieldDataDTO requestDTO,
                                     BindingResult bindingResult, Authentication auth) {
         if (bindingResult.hasErrors()) {
-            // Ambil semua pesan kesalahan
             return bindingResult.getAllErrors().toString();
         }
 
@@ -119,22 +118,17 @@ public class RequestSuratController {
             requestTemplate.setPengaju(pengguna);
             requestTemplate.setTanggalPengajuan(new Date());
             requestService.createRequestTemplate(requestTemplate,requestDTO);
-            // return "redirect:/request";
-
         } 
         
         try {
-
             RequestSurat requestSurat = new RequestSurat();
             requestSurat.setPengaju(pengguna);
             requestSurat.setTanggalPengajuan(new Date());
             requestService.createRequestSurat(requestSurat, requestDTO);
 
             System.out.println("BERHASIL");
-            return "redirect:/request"; // Redirect ke halaman history jika berhasil
-
+            return "redirect:/request/history";
         } catch (Exception e) {
-            // Tangkap dan tangani kesalahan jika terjadi
             e.printStackTrace();
             return "Gagal membuat permintaan surat: " + e.getMessage(); 
         }
@@ -142,85 +136,33 @@ public class RequestSuratController {
         
     }
     
-    // @PostMapping("request-surat")
-    // public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestSurat requestSurat, 
-    //                                 @Valid @ModelAttribute RequestTemplate requestTemplate,
-    //                                 BindingResult suratBindingResult,
-    //                                 BindingResult templateBindingResult, Model model) {
-    //     if (suratBindingResult.hasErrors() || templateBindingResult.hasErrors()) {
-    //         // Ambil semua pesan kesalahan
-    //         List<ObjectError> suratErrors = suratBindingResult.getAllErrors();
-    //         List<ObjectError> templateErrors = templateBindingResult.getAllErrors();
-    
-    //         // Gabungkan semua pesan kesalahan menjadi satu
-    //         List<ObjectError> allErrors = new ArrayList<>();
-    //         allErrors.addAll(suratErrors);
-    //         allErrors.addAll(templateErrors);
-    
-    //         // Masukkan pesan kesalahan ke dalam model
-    //         model.addAttribute("errorMessages", allErrors);
-    
-    //         // Kembalikan pengguna ke halaman form dengan pesan kesalahan
-    //         return "request-surat"; // Nama template HTML yang menampilkan form request surat
-    //     }
-    //     try {
-    //         requestSurat.setTanggalPengajuan(new Date());
-    //         requestTemplate.setTanggalPengajuan(new Date());
-            
-    //         requestService.createRequestTemplate(requestTemplate);
-    //         requestService.createRequestSurat(requestSurat);
-    //         System.out.println("BERHASIL");
-    //         return "redirect:/request-surat"; // Redirect ke halaman history jika berhasil
-    //     } catch (Exception e) {
-    //         // Tangkap dan tangani kesalahan jika terjadi
-    //         e.printStackTrace();
-    //         model.addAttribute("errorMessage", "Gagal membuat permintaan surat: " + e.getMessage());
-    //         return "ERROR";
-    //     }
-    // }
-
-    // public Pengguna createDummyPengguna(Role role) {
-    //     Pengguna dummyPengguna = new Pengguna();
-    //     switch (role) {
-    //         case DOSEN:
-    //             dummyPengguna.setId("1989897777");
-    //             dummyPengguna.setEmail("dosen@example.com");
-    //             dummyPengguna.setNama("Dummy Dosen");
-    //             dummyPengguna.setRole(Role.DOSEN);
-    //             break;
-    //         case STAF:
-    //             dummyPengguna.setId("9800234722");
-    //             dummyPengguna.setEmail("staf@example.com");
-    //             dummyPengguna.setNama("Dummy Staf");
-    //             dummyPengguna.setRole(Role.STAF);
-    //             break;
-    //         case MAHASISWA:
-    //             dummyPengguna.setId("2106751436");
-    //             dummyPengguna.setEmail("mahasiswa@example.com");
-    //             dummyPengguna.setNama("Dummy Mahasiswa");
-    //             dummyPengguna.setRole(Role.MAHASISWA);
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    //     return dummyPengguna;
-    // }
-
     @GetMapping("all")
     public ResponseEntity<List<RequestSurat>> showAllRequest() {
         List<RequestSurat> allRequests = requestService.getAllRequestsSurat();
         return new ResponseEntity<>(allRequests, HttpStatus.OK);
     }
 
-    // INI BELUM YAKIN, NYAMBUNGINNYA GIMANA KALO UDH KEINTEGRASI
-    // gimana biar nyambung ama IDnya?
-    
-    // @GetMapping("/by-user")
-    // 
-    // public ResponseEntity<List<RequestSurat>> showRequestByUser(@RequestBody Pengguna pengguna) {
-    //     List<RequestSurat> userRequests = requestService.getRequestsByUser(pengguna);
-    //     return new ResponseEntity<>(userRequests, HttpStatus.OK);
-    // }
+    @GetMapping("/request/history")
+    public String showAllRequests(Model model, Authentication auth) {
+        List<RequestSurat> requestSurats = requestService.getAllRequestsSurat();
+        model.addAttribute("requestSurats", requestSurats);
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        return "riwayat-surat";
+    }
 
     @GetMapping("/{requestSuratId}")
     public ResponseEntity<RequestSurat> showDetailRequest(@PathVariable("requestSuratId") String requestSuratId) {

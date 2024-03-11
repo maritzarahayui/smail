@@ -5,9 +5,10 @@
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/add-template.css"/>
+    <!-- <link rel="stylesheet" href="/css/add-template.css"/> -->
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
-    <link rel="stylesheet" href="/css/daftar-request-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link
@@ -44,8 +45,8 @@
 
         <div class="i-d-template-frame">
             <h1 class="permintaan-template-baru-container">
-                <span class="permintaan">Permintaan</span>
-                <span> Template Baru</span>
+                <span class="permintaan">Riwayat</span>
+                <span> Surat</span>
             </h1>
         </div>
     <img
@@ -65,8 +66,18 @@
                                 alt=""
                                 src="/images/iconoutlineexclamationcircle.svg"
                         />
-                        <div class="tabs">Diterima</div>
+                        <div class="tabs">Diajukan</div>
                     </button>
+
+                    <div class="component-3">
+                        <img
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs1">Dibatalkan</div>
+                    </div>
+
                     <div class="component-3">
                         <img
                                 class="iconoutlineexclamation-circl1"
@@ -75,12 +86,32 @@
                         />
                         <div class="tabs1">Ditolak</div>
                     </div>
+
+                    <div class="component-3">
+                        <img
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs1">Diproses</div>
+                    </div>
+
+                    <div class="component-3">
+                        <img
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs1">Selesai</div>
+                    </div>
                 </div>
+
                 <div class="search-button">
                     <div class="button17">
                         <img class="search-icon1" alt="" src="/images/search.svg" />
                         <input class="keuangan3" placeholder="Keuangan" type="text" />
                     </div>
+
                     <div class="button-parent">
                         <button class="button18">
                             <img
@@ -101,34 +132,37 @@
                     </div>
                 </div>
             </div>
+
             <div class="t-e-m-p-container-parent">
                 <div class="agustus-label-parent">
                     <!-- Start of the table -->
                     <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
                         <tr>
-                            <th>ID Template</th>
-                            <th>Kategori</th>
-                            <th>Nama Pengaju</th>
-                            <th>Bahasa</th>
+                            <th>ID Surat</th>
+                            <th>Jenis Surat</th>
+                            <th>Bentuk Surat</th>
                             <th>Tanggal Pengajuan</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <!-- Iterate through requestTemplates -->
-                        <tr th:each="requestTemplate : ${requestTemplates}">
-                            <td th:text="${requestTemplate.id}"></td>
-                            <td th:text="${requestTemplate.kategori}"></td>
-                            <td th:text="${requestTemplate.pengaju.nama}"></td>
-                            <td th:text="${requestTemplate.bahasa}"></td>
-                            <td th:text="${requestTemplate.tanggalPengajuan}"></td>
+                        <tr th:each="requestSurat: ${requestSurats}">
+                            <td th:text="${requestSurat.id}"></td>
+                            <td th:text="${requestSurat.jenisSurat}"></td>
+                            <td th:text="${requestSurat.bentukSurat}"></td>
+                            <td th:text="${requestSurat.tanggalPengajuan}"></td>
                             <td>
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}">
+                                <!-- <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}"> -->
                                     <button class="button20">
                                         <div class="button21">Detail</div>
                                     </button>
-                                </a>
+
+                                    <button class="button20">
+                                        <div class="button21">Batalkan</div>
+                                    </button>
+                                <!-- </a> -->
                             </td>
                         </tr>
                         </tbody>

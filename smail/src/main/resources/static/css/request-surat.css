@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .pengajuan {
   background: linear-gradient(
     180deg,
@@ -27,11 +31,13 @@
 
 .ajukan-surat-item {
   position: absolute;
-  top: -70px;
-  left: 1154px;
-  width: 355.36px;
+  top: -80px;
+  /* left: 1154px; */
+  right: 0;
+  width: 250px;
   height: 330.53px;
   object-fit: contain;
+  overflow: hidden;
 }
 
 .label {
@@ -226,8 +232,11 @@
 
 .text-input-parent {
   position: absolute;
-  top: 265px;
-  left: 209px;
+  /* top: 265px;
+  left: 209px; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   flex-direction: column;
   gap: 30px 0;
   text-align: left;
@@ -313,7 +322,7 @@
     font-weight: 600;
     margin: 0;
     position: absolute;
-    top: 81px;
+    top: 51px;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -325,10 +334,12 @@
   .ajukan-surat-item {
     position: absolute;
     top: 21px;
-    left: 80%;
-    width: 182.68px;
+    /* left: 80%; */
+    right: 0;
+    width: 100px;
     height: 169.91px;
     object-fit: contain;
+    overflow: hidden;
   }
 
   .ajukan-surat-child {

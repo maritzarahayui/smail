@@ -10,6 +10,7 @@
   object-fit: contain;
   z-index: 1;
 }
+
 .ajukan-surat-item {
   position: absolute;
   margin: 0 !important;
@@ -30,6 +31,7 @@
   top: 2px;
   transform: scale(1.31);
 }
+
 .wrapper-group-8 {
   height: 39px;
   width: 30.6px;
@@ -38,10 +40,12 @@
   align-items: center;
   justify-content: center;
 }
+
 .beranda {
   flex: 1;
   position: relative;
 }
+
 .request-frame {
   width: 88px;
   display: flex;
@@ -51,11 +55,13 @@
   padding: var(--padding-3xs);
   box-sizing: border-box;
 }
+
 .request-surat {
   flex: 1;
   position: relative;
   white-space: nowrap;
 }
+
 .request-frame1 {
   flex: 1;
   display: flex;
@@ -64,11 +70,13 @@
   justify-content: flex-start;
   padding: var(--padding-3xs);
 }
+
 .arsip-surat {
   flex: 1;
   position: relative;
   white-space: nowrap;
 }
+
 .iconoutlinechevron-down {
   height: 20px;
   width: 20px;
@@ -77,6 +85,7 @@
   flex-shrink: 0;
   min-height: 20px;
 }
+
 .arsip-frame {
   flex: 1;
   display: flex;
@@ -86,11 +95,13 @@
   padding: var(--padding-3xs);
   gap: 0 10px;
 }
+
 .template-surat {
   flex: 1;
   position: relative;
   white-space: nowrap;
 }
+
 .request-frame2 {
   flex: 1;
   display: flex;
@@ -99,28 +110,33 @@
   justify-content: flex-start;
   padding: var(--padding-3xs);
 }
+
 .faq {
   flex: 1;
   position: relative;
 }
+
 .beranda-frame,
 .request-frame3 {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
 }
+
 .request-frame3 {
   width: 52px;
   align-items: flex-start;
   padding: var(--padding-3xs);
   box-sizing: border-box;
 }
+
 .beranda-frame {
   width: 719.6px;
   align-items: center;
   gap: 0 26px;
   max-width: 100%;
 }
+
 .navbar-child {
   height: 64px;
   width: 1322px;
@@ -135,11 +151,13 @@
   max-width: 100%;
   z-index: 2;
 }
+
 .admin {
   flex: 1;
   position: relative;
   font-weight: 600;
 }
+
 .iconoutlinechevron-down1 {
   height: 20px;
   width: 20px;
@@ -147,6 +165,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .button {
   height: 40px;
   border-radius: var(--br-xs);
@@ -158,11 +177,13 @@
   box-sizing: border-box;
   gap: 0 8px;
 }
+
 .admin-text,
 .button {
   flex: 1;
   justify-content: center;
 }
+
 .admin-text,
 .button-frame,
 .navbar {
@@ -170,28 +191,13 @@
   flex-direction: row;
   align-items: center;
 }
+
 .button-frame {
   width: 127px;
   justify-content: flex-start;
   color: var(--white-white-1);
 }
-.navbar {
-  align-self: stretch;
-  border-radius: var(--br-xs);
-  background-color: var(--green-green-4);
-  justify-content: space-between;
-  padding: 12.5px 112px;
-  box-sizing: border-box;
-  top: 0;
-  z-index: 99;
-  position: sticky;
-  gap: -831.61px;
-  max-width: 100%;
-  text-align: center;
-  font-size: var(--body-b2-size);
-  color: var(--green-green-5);
-  font-family: var(--heading-h4);
-}
+
 .gaji-detail-frame-child {
   margin-left: -104px;
   height: 117.2px;
@@ -199,6 +205,7 @@
   position: relative;
   max-width: 100%;
 }
+
 .daftar {
   background: linear-gradient(
     180deg,
@@ -210,6 +217,7 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
 .daftar-template-surat-container {
   margin: 0;
   height: 57px;
@@ -222,16 +230,19 @@
   box-sizing: border-box;
   padding-left: 1px;
 }
+
 .search-icon {
   height: 24px;
   width: 24px;
   position: relative;
 }
+
 .button1,
 .ketik-kata-kunci {
   display: flex;
   align-items: center;
 }
+
 .ketik-kata-kunci {
   width: 330px;
   border: 0;
@@ -247,6 +258,7 @@
   max-width: calc(100% - 32px);
   padding: 0;
 }
+
 .button1 {
   align-self: stretch;
   height: 48px;
@@ -260,6 +272,7 @@
   gap: 0 8px;
   max-width: 100%;
 }
+
 .fluentadd-16-filled-icon {
   height: 24px;
   width: 24px;
@@ -267,12 +280,14 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .button2,
 .tambah-template {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .tambah-template {
   width: 138px;
   position: relative;
@@ -282,6 +297,7 @@
   color: var(--white-white-1);
   text-align: center;
 }
+
 .button2 {
   cursor: pointer;
   border: 0;
@@ -296,9 +312,12 @@
   min-height: 50px;
   white-space: nowrap;
 }
+
 .button2:hover {
-  background-color: var(--color-seagreen-100);
+  background-color: #253237;
+  color: white;
 }
+
 .lihat-permintaan-template {
   flex: 1;
   position: relative;
@@ -308,6 +327,7 @@
   color: var(--green-green-1);
   text-align: center;
 }
+
 .button3 {
   cursor: pointer;
   border: 2px solid var(--green-green-1);
@@ -323,11 +343,13 @@
   min-width: 169px;
   min-height: 50px;
 }
+
 .button3:hover {
   background-color: rgba(54, 156, 122, 0.09);
   border: 2px solid var(--color-seagreen-100);
   box-sizing: border-box;
 }
+
 .keuangan-frame,
 .search-bar,
 .template-list {
@@ -338,6 +360,7 @@
   justify-content: center;
   gap: 0 12px;
 }
+
 .search-bar,
 .template-list {
   flex-direction: column;
@@ -345,9 +368,11 @@
   gap: 24px 0;
   max-width: 100%;
 }
+
 .template-list {
   gap: 41px 0;
 }
+
 .gaji-detail-frame,
 .keuangan-template,
 .r-t-x-footer {
@@ -356,49 +381,48 @@
   justify-content: center;
   max-width: 100%;
 }
-.r-t-x-footer {
-  width: 532px;
-  flex-direction: column;
-  padding: 52px 0 0;
-  box-sizing: border-box;
-  min-width: 532px;
-}
+
 .gaji-detail-frame,
 .keuangan-template {
   flex-direction: row;
 }
+
 .gaji-detail-frame {
   width: 986px;
   gap: 0 189px;
 }
+
 .keuangan-template {
   align-self: stretch;
 }
+
 .keuangan {
   margin: 0;
-  width: 1000px;
+  max-width: 80%;
   position: relative;
-  font-size: inherit;
-  font-weight: 600;
-  font-family: inherit;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  text-align: left;
 }
+
 .template-ini-digunakan {
   align-self: stretch;
   position: relative;
   font-size: var(--body-b2-size);
 }
+
 .f-a-q {
   width: 391px;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 12px 0;
-  max-width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
 }
+
 .lets-iconsview-alt {
   height: 24px;
   width: 24px;
@@ -406,6 +430,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .button5 {
   flex: 1;
   position: relative;
@@ -415,6 +440,7 @@
   color: var(--white-white-1);
   text-align: center;
 }
+
 .button4 {
   flex: 1;
   border-radius: var(--br-xs);
@@ -426,30 +452,54 @@
   padding: var(--padding-5xs) var(--padding-5xl);
   gap: 0 8px;
 }
-.button-group,
-.template-surat1 {
+
+.button4:hover {
+  background-color: #253237;
+}
+
+.template-info {
+  flex: 1;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 4px;
   align-items: flex-start;
 }
+
+.template-info p {
+  font-weight: 200;
+}
+
 .button-group {
   cursor: pointer;
   border: 0;
   padding: 0;
   background-color: transparent;
   width: 126px;
-  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 10px;
+  text-decoration: none;
 }
+
 .template-surat1 {
-  align-self: stretch;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
   border-radius: var(--br-xs);
   background-color: var(--green-green-4);
-  justify-content: space-between;
   padding: var(--padding-xl);
   box-sizing: border-box;
   max-width: 100%;
+  width: 744px;
   gap: var(--gap-xl);
 }
+
 .keuangan1 {
   margin: 0;
   width: 118px;
@@ -461,11 +511,13 @@
   align-items: center;
   justify-content: center;
 }
+
 .template-ini-digunakan1 {
   align-self: stretch;
   position: relative;
   font-size: var(--body-b2-size);
 }
+
 .keuangan-parent {
   width: 391px;
   display: flex;
@@ -475,6 +527,7 @@
   gap: 12px 0;
   max-width: 100%;
 }
+
 .lets-iconsview-alt1 {
   height: 24px;
   width: 24px;
@@ -482,6 +535,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .button7 {
   flex: 1;
   position: relative;
@@ -491,6 +545,7 @@
   color: var(--white-white-1);
   text-align: center;
 }
+
 .button6 {
   flex: 1;
   border-radius: var(--br-xs);
@@ -502,12 +557,14 @@
   padding: var(--padding-5xs) var(--padding-5xl);
   gap: 0 8px;
 }
+
 .button-wrapper,
 .template-surat2 {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
+
 .button-wrapper {
   cursor: pointer;
   border: 0;
@@ -516,6 +573,7 @@
   width: 126px;
   justify-content: flex-start;
 }
+
 .template-surat2 {
   align-self: stretch;
   border-radius: var(--br-xs);
@@ -526,6 +584,7 @@
   max-width: 100%;
   gap: var(--gap-xl);
 }
+
 .keuangan2 {
   margin: 0;
   width: 118px;
@@ -537,11 +596,13 @@
   align-items: center;
   justify-content: center;
 }
+
 .template-ini-digunakan2 {
   align-self: stretch;
   position: relative;
   font-size: var(--body-b2-size);
 }
+
 .keuangan-group {
   width: 391px;
   display: flex;
@@ -551,6 +612,7 @@
   gap: 12px 0;
   max-width: 100%;
 }
+
 .lets-iconsview-alt2 {
   height: 24px;
   width: 24px;
@@ -558,6 +620,7 @@
   overflow: hidden;
   flex-shrink: 0;
 }
+
 .button9 {
   flex: 1;
   position: relative;
@@ -567,11 +630,13 @@
   color: var(--white-white-1);
   text-align: center;
 }
+
 .button-container,
 .button8 {
   display: flex;
   flex-direction: row;
 }
+
 .button8 {
   flex: 1;
   border-radius: var(--br-xs);
@@ -581,6 +646,7 @@
   padding: var(--padding-5xs) var(--padding-5xl);
   gap: 0 8px;
 }
+
 .button-container {
   cursor: pointer;
   border: 0;
@@ -590,11 +656,13 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
+
 .request-surat1,
 .template-surat3 {
   align-items: flex-start;
   box-sizing: border-box;
 }
+
 .template-surat3 {
   align-self: stretch;
   border-radius: var(--br-xs);
@@ -606,12 +674,14 @@
   max-width: 100%;
   gap: var(--gap-xl);
 }
+
 .request-surat1 {
   width: 764px;
   padding: 0 0 0 var(--padding-xl);
   gap: 20px 0;
   font-size: var(--heading-h4-size);
 }
+
 .keuangan-template-frame,
 .request-surat1,
 .template-frame {
@@ -620,14 +690,16 @@
   justify-content: flex-start;
   max-width: 100%;
 }
+
 .keuangan-template-frame {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Menengahkan secara horizontal */
-  justify-content: center; /* Menengahkan secara vertikal */
+  align-items: center;
+  justify-content: center;
   gap: 47px 0;
-  margin: auto; /* Mengatur margin otomatis untuk menengahkan frame */
+  margin: auto;
 }
+
 .template-frame {
   align-self: stretch;
   align-items: flex-start;
@@ -637,116 +709,16 @@
   color: var(--green-green-5);
   font-family: var(--heading-h4);
 }
-.developed-by-rtx,
-.propensi-d02 {
-  margin: 0;
-  position: relative;
-  font-size: inherit;
-  font-weight: 400;
-  font-family: inherit;
-}
-.propensi-d02 {
-  width: 151px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.footer-info {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 20px 0;
-}
-.in-collaboration-with {
-  margin: 0;
-  align-self: stretch;
-  position: relative;
-  font-size: inherit;
-  font-weight: 600;
-  font-family: inherit;
-}
-.image-1-icon,
-.image-18-icon {
-  position: relative;
-  object-fit: cover;
-}
-.image-1-icon {
-  height: 117px;
-  flex: 1;
-  max-width: 100%;
-  overflow: hidden;
-}
-.image-18-icon {
-  height: 99px;
-  width: 95.3px;
-}
-.collaboration-frame,
-.logo-images {
-  width: 214.3px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0 18px;
-}
-.collaboration-frame {
-  width: 242px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px 0;
-}
-.copyright-frame {
-  align-self: stretch;
-  background-color: var(--green-green-4);
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 40px 149px;
-  gap: var(--gap-xl);
-  text-align: center;
-  font-size: var(--heading-h4-size);
-  color: var(--green-green-5);
-  font-family: var(--heading-h4);
-}
-.copyright-2024-tazkia {
-  margin: 0;
-  width: 657px;
-  position: relative;
-  font-size: inherit;
-  font-weight: 700;
-  font-family: inherit;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.footer-container {
-  align-self: stretch;
-  background-color: var(--green-green-5);
-  overflow: hidden;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
-  padding: var(--padding-xl);
-}
-.daftar-template-surat,
-.footer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-}
-.footer {
-  align-self: stretch;
-  text-align: center;
-  font-size: var(--heading-h4-size);
-  color: var(--white-white-1);
-  font-family: var(--heading-h4);
-}
+
 .daftar-template-surat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.daftar-template-surat {
+  padding-top: 50px;
   width: 100%;
   position: relative;
   background-color: var(--white-white-1);
@@ -754,6 +726,7 @@
   gap: 204px 0;
   letter-spacing: normal;
 }
+
 @media screen and (max-width: 1100px) {
   .navbar {
     padding-left: var(--padding-37xl);
@@ -768,113 +741,4 @@
     flex-wrap: wrap;
     gap: 0 94px;
   }
-}
-@media screen and (max-width: 1000px) {
-  .daftar-template-surat-container {
-    font-size: 38px;
-  }
-  .copyright-frame {
-    flex-wrap: wrap;
-  }
-}
-@media screen and (max-width: 750px) {
-  .navbar {
-    padding-left: var(--padding-9xl);
-    padding-right: var(--padding-9xl);
-    box-sizing: border-box;
-  }
-  .template-list {
-    gap: 20px 0;
-  }
-  .r-t-x-footer {
-    min-width: 100%;
-  }
-  .gaji-detail-frame {
-    gap: 0 47px;
-  }
-  .template-surat1,
-  .template-surat2,
-  .template-surat3 {
-    flex-wrap: wrap;
-  }
-  .keuangan-template-frame {
-    gap: 23px 0;
-  }
-  .template-frame {
-    gap: 18px 0;
-  }
-  .copyright-frame {
-    padding-left: var(--padding-55xl);
-    padding-right: var(--padding-55xl);
-    box-sizing: border-box;
-  }
-  .daftar-template-surat {
-    gap: 102px 0;
-  }
-}
-@media screen and (max-width: 450px) {
-  .daftar-template-surat-container {
-    font-size: 29px;
-  }
-  .keuangan-frame {
-    flex-wrap: wrap;
-  }
-  .gaji-detail-frame {
-    gap: 0 24px;
-  }
-  .developed-by-rtx,
-  .in-collaboration-with,
-  .keuangan,
-  .keuangan1,
-  .keuangan2,
-  .propensi-d02 {
-    font-size: var(--font-size-lgi);
-  }
-  .copyright-frame {
-    padding-left: var(--padding-xl);
-    padding-right: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .copyright-2024-tazkia {
-    font-size: var(--font-size-lgi);
-  }
-  .daftar-template-surat {
-    gap: 51px 0;
-  }
-
-  .card {
-    align-self: stretch;
-    border-radius: var(--br-xs);
-    background-color: var(--green-green-4);
-    justify-content: space-between;
-    padding: var(--padding-xl);
-    box-sizing: border-box;
-    max-width: 100%;
-    gap: var(--gap-xl);
-    border: none;
-  }
-
-  .card-body {
-    display: flex;
-    flex-direction: column;
-    gap: 12px; /* Adjust as needed */
-  }
-
-  .card h3 {
-    margin: 0;
-  }
-
-  .card p {
-    margin: 0;
-  }
-
-  .card .btn {
-    align-self: flex-start;
-  }
-
-  p {
-    font-size: 14px; /* Ubah ukuran font sesuai preferensi Anda */
-  }
-
-
 }
