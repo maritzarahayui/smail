@@ -34,10 +34,10 @@
                         <a th:href="@{#}">Request Surat</a>
                     </li>
                     <li th:if="${role == 'Dosen' or role == 'Staf'}">
-                        <a th:href="@{#}">Ajukan Surat</a>
+                        <a th:href="@{/request}">Ajukan Surat</a>
                     </li>
 
-                    <li th:if="${role == 'Dosen' or role == 'Mahasiswa' or role == 'Staf'}"><a th:href="@{#}">Riwayat Surat</a></li>
+                    <li th:if="${role == 'Dosen' or role == 'Mahasiswa' or role == 'Staf'}"><a th:href="@{/request/history}">Riwayat Surat</a></li>
 
                     <li th:if="${role == 'Admin' or role == 'Pengurus'}">
                         <a href="#">Arsip Surat</a>
@@ -49,7 +49,7 @@
                         </ul>
                     </li>
 
-                    <li th:if="${role == 'Admin'}"><a th:href="@{#}">Template Surat</a></li>
+                    <li th:if="${role == 'Admin'}"><a th:href="@{/template/active-templates}">Template Surat</a></li>
 
                     <li><a href="#">FAQ</a></li>
                 </ul>
@@ -57,13 +57,13 @@
 
             <div class="navbarLoggedInInner">
                 <div class="buttonWrapper">
-                    <div class="button">
+                    <div class="buttonUser">
                         <div class="admin" th:text="${namaDepan}"></div>
                         <img class="iconoutlinechevronDown" alt="" th:src="@{/images/chevron-down.svg}" />
                         <div id="dropdownContent" class="dropdownContent">
                             <div class="iconTextContainer">
                                 <img class="profile" alt="" th:src="@{/images/profile.svg}" />
-                                <a th:href="@{/profile}">Profile</a>
+                                <a th:href="@{#}">Profile</a>
                             </div>
 
                             <hr class="horizontalLine" />

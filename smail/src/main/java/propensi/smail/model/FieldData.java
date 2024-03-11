@@ -14,7 +14,8 @@ import jakarta.validation.constraints.NotNull;
 public class FieldData {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotNull
     @Column(name = "key", nullable = false)

@@ -131,7 +131,7 @@ nav .navbar .links li .sub-menu a {
   flex-shrink: 0;
 }
 
-.button {
+.buttonUser {
   min-width: 152px;
   border-radius: 12px;
   background-color: #0f7454;
@@ -147,7 +147,7 @@ nav .navbar .links li .sub-menu a {
   
 .arsip,
 .berandaWrapper, 
-.button,
+.buttonUser,
 .buttonWrapper,
 .navbarAdmin,
 .navbarLoggedInInner {

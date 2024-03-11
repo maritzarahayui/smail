@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .pengajuan {
   background: linear-gradient(
     180deg,
@@ -12,14 +16,14 @@
 
 .pengajuan-permohonan-surat-container {
   position: absolute;
-  top: 154px;
+  top: 90px;
   left: calc(50% - 359px);
   font-size: 48px;
 }
 
 .ajukan-surat-child {
   position: absolute;
-  top: 102px;
+  top: 50px;
   left: -104px;
   width: 368.98px;
   height: 117.2px;
@@ -27,11 +31,13 @@
 
 .ajukan-surat-item {
   position: absolute;
-  top: -20px;
-  left: 1154px;
-  width: 355.36px;
+  top: -80px;
+  /* left: 1154px; */
+  right: 0;
+  width: 250px;
   height: 330.53px;
   object-fit: contain;
+  overflow: hidden;
 }
 
 .label {
@@ -226,8 +232,11 @@
 
 .text-input-parent {
   position: absolute;
-  top: 296px;
-  left: 209px;
+  /* top: 265px;
+  left: 209px; */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   flex-direction: column;
   gap: 30px 0;
   text-align: left;
@@ -247,6 +256,8 @@
   justify-content: center;
   padding: 8px 24px;
   color: #fffffe;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .button:hover {
@@ -254,6 +265,8 @@
 }
 
 .action-buttons {
+  position: relative;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 40px;
 }
@@ -262,12 +275,32 @@
   width: 100%;
   position: relative;
   background-color: #fffffe;
-  height: 1599px;
-  overflow: hidden;
+  height: 1150px;
+  overflow: auto;
   text-align: center;
   font-size: 16px;
   color: #253237;
   font-family: Rubik;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-row > input:first-child {
+  flex: 1 1 33%; /* takes up 1/3 of the space */
+  margin-right: 5px; 
+  border-radius: 8px;
+  border: 2px solid #3a8b5a;
+  overflow: hidden;
+}
+
+.input-row > input:last-child {
+  flex: 2 1 66%; /* takes up 2/3 of the space */
+  border-radius: 8px;
+  border: 2px solid #3a8b5a;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 1100px) {
@@ -289,36 +322,24 @@
     font-weight: 600;
     margin: 0;
     position: absolute;
-    top: 81px;
+    top: 51px;
     left: 50%;
     transform: translateX(-50%);
   }
 
   .button {
-    position: absolute;
-    top: 647px;
-    left: calc(50% - 164px);
-    border-radius: 12px;
-    background-color: #0f7454;
-    width: 328px;
-    height: 34px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 24px;
-    box-sizing: border-box;
-    font-size: 12px;
-    color: #fffffe;
+    width: 100%;
   }
 
   .ajukan-surat-item {
     position: absolute;
     top: 21px;
-    left: 80%;
-    width: 182.68px;
+    /* left: 80%; */
+    right: 0;
+    width: 100px;
     height: 169.91px;
     object-fit: contain;
+    overflow: hidden;
   }
 
   .ajukan-surat-child {
@@ -380,11 +401,13 @@
 
   .text-input,
   .text-input-parent {
+    width: 100%;
     justify-content: flex-start;
   }
 
   .text-input7 {
-    width: 50%;
+    width: 100%;
+    box-sizing: border-box;
     gap: 16px 0;
   }
 
@@ -396,6 +419,8 @@
     margin-right: 16px;
     font-size: 14px;
     color: #100f0f;
+    width: calc(100% - 32px);
+    box-sizing: border-box;
   }
 
   .ajukan-surat {

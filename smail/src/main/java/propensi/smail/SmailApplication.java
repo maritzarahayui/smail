@@ -12,6 +12,7 @@ public class SmailApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SmailApplication.class, args);
+	
 	}
 
 	@Bean

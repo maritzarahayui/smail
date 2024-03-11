@@ -58,6 +58,11 @@ public class WebSecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAuthority("ADMIN") // Izinkan akses POST untuk testing
                     .requestMatchers("/surat-masuk/all", "/surat-masuk/detail/*", "/surat-masuk/download/*").hasAnyAuthority("PENGURUS", "ADMIN")
                     .requestMatchers("/surat-masuk/**").hasAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/template/new-template", "/template/update/*").hasAuthority("ADMIN") // Izinkan akses POST untuk testing
+                    .requestMatchers("/template/**").hasAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+                    .requestMatchers("/request/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+
                     // .requestMatchers("/staf").hasAnyAuthority("STAF")
                     // .requestMatchers("/admin").hasAnyAuthority("ADMIN")
                     .anyRequest().authenticated())
