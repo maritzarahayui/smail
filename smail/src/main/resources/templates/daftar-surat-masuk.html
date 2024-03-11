@@ -9,8 +9,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/global" />
+    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
     <link rel="stylesheet" href="/css/semua-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/daftar-surat-masuk.css" />
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -19,6 +21,38 @@
       rel="stylesheet"
       href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
     />
+    <style>
+      .button {
+        background-color: #3a8b5a;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        display: flex; /* Menggunakan flexbox */
+        align-items: center; /* Pusatkan item di dalam tombol secara vertikal */
+        justify-content: center; /* Pusatkan item di dalam tombol secara horizontal */
+        transition: background-color 0.3s;
+        width: 200px; /* Lebar tombol */
+        text-align: center; /* Pusatkan teks di dalam tombol */
+    }
+
+    .button img {
+        width: 20px; /* Lebar gambar */
+        height: 20px; /* Tinggi gambar */
+        margin-right: 5px; /* Jarak antara gambar dan teks */
+    }
+
+    .button-text {
+        flex: 1; /* Item teks akan memperluas ruang yang tersedia */
+        text-align: center; /* Pusatkan teks di dalam tombol */
+    }
+
+    .button:hover {
+        background-color: #0f7454;
+    }
+  </style>
+  
   </head>
 
   <body>
