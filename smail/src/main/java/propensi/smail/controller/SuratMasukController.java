@@ -53,20 +53,11 @@ public class SuratMasukController {
     PenggunaService penggunaService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
-        @RequestParam("perihal") String perihal, @RequestParam("tanggalDibuat") String tanggalDibuat, 
-        @RequestParam("status") int status, @RequestParam("pengirim") String pengirim, 
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
+        @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
         @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
-
-        
-        //convert type of tanggalDibuat from String to Date
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date tanggalDibuatDate = formatter.parse(tanggalDibuat);
-        //console
-
-
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, tanggalDibuatDate, status, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             //debug

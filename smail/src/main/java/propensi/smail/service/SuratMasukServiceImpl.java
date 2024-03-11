@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.io.IOException;
+import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +24,25 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     private SuratMasukDb suratMasukDb;
 
     @Override
-    public SuratMasuk store(MultipartFile file, String kategori, String perihal, Date tanggalDibuat, int status, String pengirim, String tembusan) {
+    public SuratMasuk store(MultipartFile file, String judul, String kategori, String perihal, String pengirim, String tembusan) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        //debug
+        System.out.println("File Name: " + fileName);
+        System.out.println(judul);
+        System.out.println(kategori);
+        System.out.println(perihal);
+        System.out.println(pengirim);
+        System.out.println(tembusan);
+
         try {
             SuratMasuk suratMasuk = new SuratMasuk();
                 suratMasuk.setNomorArsip(generateId(kategori));
                 suratMasuk.setFile(file.getBytes());
+                suratMasuk.setJudul(judul);
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
-                suratMasuk.setTanggalDibuat(tanggalDibuat);
-                suratMasuk.setStatus(status);
+                suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setTembusan(tembusan);
                 suratMasuk.setFileName(fileName);

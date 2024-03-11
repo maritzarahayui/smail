@@ -35,11 +35,11 @@
             <h1 class="input-surat-masuk-container">
               <span class="input-surat-masuk-container1">
                 <span class="input">Input</span>
-                <span>Arsip</span> <!-- Remove whitespace between spans -->
+                <span>Arsip</span>
               </span>
             </h1>
           </div>
-          
+
           <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
         </div>
       </section>
@@ -52,6 +52,16 @@
               method="post"
               enctype="multipart/form-data"
             >
+              <div class="text-input-frame">
+                <div class="label8">Judul</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="judul"
+                  name="judul"
+                  required
+                />
+              </div>
               <div class="text-input-frame">
                 <label for="kategori" class="label9">Kategori:</label>
                 <select
@@ -81,27 +91,6 @@
               </div>
               <br />
               <div class="text-input-frame">
-                <div class="label8">Tanggal Dibuat</div>
-                <input
-                  class="text-input14"
-                  type="date"
-                  id="tanggalDibuat"
-                  name="tanggalDibuat"
-                  required
-                />
-              </div>
-              <br />
-              <div class="text-input-frame">
-                <label for="status" class="label9">Status:</label>
-                <select class="text-input14" id="status" name="status" required>
-                  <option value="">-- Pilih Status --</option>
-                  <option value="1">Diarsipkan</option>
-                  <option value="2">Follow Up</option>
-                  <option value="3">Didisposisi</option>
-                </select>
-              </div>
-              <br />
-              <div class="text-input-frame">
                 <div class="label8">Pengirim</div>
                 <input
                   class="text-input14"
@@ -121,7 +110,7 @@
                   name="tembusan"
                 />
               </div>
-              
+
               <br /><br /><br />
               <div class="form-group">
                 <div class="upload-illustration-frame">
@@ -168,7 +157,9 @@
                         </div>
                         <h3 class="upload-file-kamu-container">
                           <span>Upload</span>
-                          <span class="file-kamu-di"> file kamu di sini</span>
+                          <span class="file-kamu-di">
+                            file kamu di sini (Max. 2MB)</span
+                          >
                         </h3>
                         <span class="file-name"></span>
                         <br />
@@ -180,7 +171,7 @@
               </div>
               <br /><br /><br />
               <section class="creator-info-frame">
-                <button type="submit" class="button15" onclick="submitForm()">
+                <button type="submit" class="button15">
                   <div class="buat-template">Simpan</div>
                 </button>
               </section>
@@ -197,23 +188,6 @@
         var fileName = this.files[0].name;
         document.querySelector(".file-name").textContent = fileName;
       });
-
-      // Function to submit the form
-      function submitForm() {  
-
-        // Submit the form
-        fetch("/surat-masuk/upload", {
-          method: "POST",
-          body: new FormData(document.querySelector("form"))
-        })
-          .then((response) => {
-            // Handle response as needed
-
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      }
     </script>
   </body>
 </html>

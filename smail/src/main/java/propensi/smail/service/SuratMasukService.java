@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import propensi.smail.model.SuratMasuk;
 public interface SuratMasukService {
-    SuratMasuk store(MultipartFile file, String kategori, String perihal, Date tanggalDibuat, int status, String pengirim, String tembusan);
+    SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim, String tembusan, String judul);
     SuratMasuk getFile(String id);
     Stream<SuratMasuk> getAllFiles();
     List<SuratMasuk> getAllSuratMasuk();
