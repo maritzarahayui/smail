@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
@@ -127,6 +127,8 @@
                     </div>
                     <br>
                     <button type="button" class="button15" onclick="addRow()" style="color:#fffffe">Add Row</button>
+                    <br>
+                    <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe">Delete Row</button> <!-- Added Delete Row button -->
                     <br><br><br>
                     <div class="form-group">
                         <div class="upload-illustration-frame">
@@ -216,6 +218,21 @@ function addRow() {
     newInput.addEventListener('input', function() {
         listFieldValues.push(newInput.value); // Push the value to the array
     });
+}
+
+// Function to delete the last row
+function deleteRow() {
+    let container = document.getElementById('listFieldContainer');
+    let inputs = container.querySelectorAll('.listField');
+
+    if (inputs.length > 0) {
+        let lastInput = inputs[inputs.length - 1];
+        container.removeChild(lastInput.previousElementSibling); // Remove the <br> element
+        container.removeChild(lastInput); // Remove the input element
+
+        // Remove the last value from the listFieldValues array
+        listFieldValues.pop();
+    }
 }
 
 // Function to submit the form

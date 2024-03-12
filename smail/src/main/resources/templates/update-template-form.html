@@ -134,6 +134,8 @@
                     <br>
                     <button type="button" class="button15" onclick="addRow()" style="color:#fffffe">Add Row</button>
                     <br>
+                    <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe">Delete Row</button>
+                    <br>
                     <br>
                     <div class="form-group">
                         <div class="upload-illustration-frame">
@@ -226,6 +228,23 @@ function addRow() {
     newInput.addEventListener('input', function() {
         listFieldValues.push(newInput.value); // Push the value to the array
     });
+}
+
+function deleteRow() {
+    let container = document.getElementById('listFieldContainer');
+    let inputs = container.querySelectorAll('.text-input14');
+
+    // Hapus input field terakhir dan br sebelumnya
+    if (inputs.length > 1) {
+        let lastInput = inputs[inputs.length - 1];
+        let precedingBr = lastInput.previousElementSibling;
+
+        if (precedingBr && precedingBr.tagName === 'BR') {
+            container.removeChild(precedingBr);
+        }
+
+        container.removeChild(lastInput);
+    }
 }
 
 // Function to submit the form

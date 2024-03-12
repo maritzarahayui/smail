@@ -95,14 +95,6 @@
             </div>
             <div class="frame-parts7">
                 <div class="tanggal-selesai-wrapper">
-                    <div class="tanggal-selesai">Tanggal Selesai</div>
-                </div>
-                <div class="agustus-2022-wrapper3">
-                    <div class="agustus-20226" th:text="${requestTemplate.tanggalSelesai}"></div>
-                </div>
-            </div>
-            <div class="frame-parts7">
-                <div class="tanggal-selesai-wrapper">
                     <div class="tanggal-selesai">Status</div>
                 </div>
                 <div class="agustus-2022-wrapper3">
@@ -115,7 +107,21 @@
             </div>
         </div>
     </section>
-    <section class="nomor-surat1">
+    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
+        <div class="button31">
+            <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">
+                <div class="simpan-perubahan">Terima Pengajuan</div>
+            </a>
+        </div>
+    </section>
+    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
+        <div class="button31-red">
+            <a th:href="@{/template/request/reject/{id}(id=${requestTemplate.id})}">
+                <div class="simpan-perubahan">Tolak Pengajuan</div>
+            </a>
+        </div>
+    </section>
+    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
         <div class="button31">
             <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">
                 <div class="simpan-perubahan">Terima Pengajuan</div>
@@ -124,8 +130,8 @@
     </section>
     <section class="nomor-surat1">
         <div class="button31">
-            <a th:href="@{/template/request/reject/{id}(id=${requestTemplate.id})}">
-                <div class="simpan-perubahan">Tolak Pengajuan</div>
+            <a th:href="@{'/template/new-requests'}">
+                <div class="simpan-perubahan">Daftar Request Template</div>
             </a>
         </div>
     </section>

@@ -652,6 +652,17 @@
 .button15:hover {
   background-color: var(--color-seagreen-100);
 }
+.button15-red {
+  cursor: pointer;
+  border: 0;
+  padding: 10px var(--padding-smi);
+  background-color: var(--red-red-1);
+  width: 1010px;
+  border-radius: var(--br-xs);
+}
+.button15-red:hover {
+  background-color: #d63031; /* Darker shade of red */
+}
 .creator-info-frame {
   align-self: stretch;
   padding: 0 var(--padding-xl) 44.19999999999982px;

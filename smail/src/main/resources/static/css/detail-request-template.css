@@ -699,6 +699,19 @@
   flex-direction: row;
   justify-content: center;
   gap: 0 8px;
+  width: 1010px;
+}
+.button31-red {
+  cursor: pointer;
+  border: 0;
+  padding: var(--padding-smi) var(--padding-xl);
+  background-color: var(--red-red-1);
+  align-self: stretch;
+  border-radius: var(--br-xs);
+  flex-direction: row;
+  justify-content: center;
+  gap: 0 8px;
+  width: 1010px;
 }
 .nomor-surat1 {
   align-self: stretch;
@@ -890,5 +903,18 @@
   }
   .copyright-2024-tazkia4 {
     font-size: var(--font-size-lgi);
+  }
+
+  .frame-footer,
+  .icon-outlinechevrondown {
+    display: flex;
+    align-items: flex-start;
+    max-width: 100%;
+  }
+  .frame-footer {
+    width: 1010px;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 20px 0;
   }
 }
