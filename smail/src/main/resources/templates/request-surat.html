@@ -17,9 +17,7 @@
             display: none; /* Defaultnya disembunyikan */
             margin-top: 20px; /* Jarak antara form dan preview */
             padding: 20px; /* Padding agar tampilan lebih baik */
-            border: 1px solid #ccc; /* Border untuk memisahkan preview dengan form */
-            border-radius: 5px; /* Agar preview memiliki sudut yang melengkung */
-            background-color: #f9f9f9; /* Warna latar belakang */
+            background-color: transparent;
         }
 
         #preview-template embed {
@@ -201,6 +199,7 @@
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="ajukan-surat">
+        <div class="home-frame">
         <b class="pengajuan-permohonan-surat-container">
             <span class="pengajuan">Pengajuan</span>
             <span> Permohonan Surat</span>
@@ -208,6 +207,7 @@
 
         <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
         <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
+    </div>
 
         <form th:action="@{/request}" th:object="${requestDTO}" method="POST">
             

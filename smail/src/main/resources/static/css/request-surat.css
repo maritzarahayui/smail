@@ -220,7 +220,18 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
 }
+/* Pastikan elemen preview-template tidak memiliki batasan lebar */
+#preview-template {
+  width: 100%; /* Memastikan elemen mengambil lebar penuh */
+  box-sizing: border-box; /* Menghitung padding dan border dalam total lebar */
+}
 
+/* Mengatur ulang lebar container jika perlu */
+.container {
+  max-width: 100%; /* Menghilangkan batasan maksimal lebar */
+  padding: 0; /* Menghilangkan padding */
+  margin: 0 auto; /* Pusatkan konten tanpa membatasi lebar */
+}
 .text-input7 {
   width: 1010px;
   border-radius: 8px;
