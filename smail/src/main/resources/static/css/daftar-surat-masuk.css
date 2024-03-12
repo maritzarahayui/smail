@@ -9,6 +9,82 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.sub-group-container-child {
+  margin-left: -104px;
+  height: 100px;
+  width: 369px;
+  position: relative;
+  max-width: 100%;
+}
+.home-frame,
+.label-pair,
+.sub-group-container {
+  display: flex;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.input-surat-masuk-container {
+  margin: 0;
+  height: 57px;
+  position: relative;
+  font-size: inherit;
+  font-weight: 600;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+}
+.label-pair {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 0 8.199999999999818px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.sub-group-container {
+  width: 950px;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0 var(--padding-xl) 0 0;
+  box-sizing: border-box;
+  gap: 0 245px;
+  font-size: var(--heading-h2-size);
+}
+.home-frame {
+  align-self: stretch;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 37px 0;
+  text-align: center;
+  font-size: var(--body-b2-size);
+  color: var(--green-green-5);
+  font-family: var(--heading-h4);
+}
+.input {
+  background: linear-gradient(
+    180deg,
+    #bce8a4,
+    #abdfa7 28.5%,
+    #80c9ae 66.5%,
+    #5cb7b3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.input-surat-masuk-container1 {
+  width: 100%;
+}
+.tambah-template-item {
+  width: 355px;
+  height: 225px;
+  position: absolute;
+  margin: 0 !important;
+  top: -20px;
+  right: -69.4px;
+  object-fit: contain;
+  z-index: 1;
+}
 .daftar-surat-masuk-container {
   position: absolute;
   top: 154px;

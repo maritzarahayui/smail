@@ -50,15 +50,41 @@
 
     .button:hover {
         background-color: #0f7454;
+        text-decoration: none;
+        outline: none;
+        color: white;
     }
+    
   </style>
   
   </head>
 
   <body>
-    <div class="content-wrapper">
-      <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
-      <h1>Daftar Surat Masuk</h1>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <section class="home-frame">
+      <div class="sub-group-container">
+        <img
+          class="sub-group-container-child"
+          loading="lazy"
+          alt=""
+          src="/images/kiri.svg"
+        />
+
+        <div class="label-pair">
+          <h1 class="input-surat-masuk-container">
+            <span class="input-surat-masuk-container1">
+              <span class="input">Daftar</span>
+              <span>Surat Masuk</span>
+            </span>
+          </h1>
+        </div>
+
+        <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
+      </div>
+    </section>
+    
+    <div class="content-wrapper" style="margin-inline: 55px;">
 
       <div style="margin: 30px" class="buttonWrapper">
         <a

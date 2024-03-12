@@ -217,10 +217,10 @@
 }
 .detail-arsip-surat-diterima-child {
   width: 355.4px;
-  height: 330.5px;
+  height: 300.5px;
   position: absolute;
   margin: 0 !important;
-  top: -20px;
+  top: -85px;
   right: -69.4px;
   object-fit: contain;
   z-index: 1;
