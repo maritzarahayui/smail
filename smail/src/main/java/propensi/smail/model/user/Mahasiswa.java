@@ -3,7 +3,6 @@ package propensi.smail.model.user;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 @Getter
 @Setter
@@ -16,15 +15,15 @@ import jakarta.validation.constraints.*;
 
 public class Mahasiswa extends Pengguna {
 
-    @NotNull
+    // @NotNull
     @Column(name = "jurusan", nullable = false)
     private String jurusan;
 
-    @NotNull
+    // @NotNull
     @Column(name = "semester", nullable = false)
     private String semester;
 
-    @NotNull
+    // @NotNull
     @Column(name = "ipk", nullable = false)
     private float ipk;
     
