@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
+    <link rel="stylesheet" th:href="@{/css/asset.css}"/>
+</head>
+
+<body>
+    <div th:fragment="asset" class="wrapper">
+        <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
+        <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
+    </div> 
+</body>
+</html>
