@@ -164,6 +164,65 @@ public class RequestSuratController {
         return "riwayat-surat";
     }
 
+    // Admin
+    @GetMapping("/admin/request/history")
+    public String showAllRequest(Model model, Authentication auth) {
+        List<RequestSurat> requestSurats = requestService.getAllRequestsSurat();
+        model.addAttribute("requestSurats", requestSurats);
+
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        return "riwayat-surat-admin";
+    }
+
+    @GetMapping("/admin/request/{id}")
+    public String showDetaileRequests(@PathVariable("id") String id, Model model, Authentication auth) {
+        RequestSurat req = requestService.getRequestSuratById(id);
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        model.addAttribute("requestSurat", req); // Add the template object to the model
+        return "detail-request-admin";
+    }
+
+    @PostMapping("/admin/request/updateStatus")
+    public String updateRequestStatus(@RequestParam("requestId") String requestId, @RequestParam("status") int status) {
+        // Retrieve the request by ID
+        RequestSurat req = requestService.getRequestSuratById(requestId);
+
+        // Update the status
+        req.setStatus(status);
+        requestService.saveOrUpdate(req); // Assuming there's a method to save/update the request
+
+        // Redirect to the detail page of the request
+        return "redirect:/admin/request/" + requestId;
+    }
+
     @GetMapping("/{requestSuratId}")
     public ResponseEntity<RequestSurat> showDetailRequest(@PathVariable("requestSuratId") String requestSuratId) {
         try {

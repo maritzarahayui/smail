@@ -31,7 +31,7 @@
                     <li><a th:href="@{/}">Beranda</a></li>
 
                     <li th:if="${role == 'Admin' or role == 'Pengurus'}">
-                        <a th:href="@{#}">Request Surat</a>
+                        <a th:href="@{/}">Request Surat</a>
                     </li>
                     <li th:if="${role == 'Dosen' or role == 'Staf'}">
                         <a th:href="@{/request}">Ajukan Surat</a>

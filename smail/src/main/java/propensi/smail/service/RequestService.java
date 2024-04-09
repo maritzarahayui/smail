@@ -10,6 +10,7 @@ import propensi.smail.model.RequestTemplate;
 
 public interface RequestService {
     // METHOD REQUEST SURAT
+    void saveOrUpdate(RequestSurat requestSurat);
     RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO);
     List<RequestSurat> getAllRequestsSurat();
     RequestSurat getRequestSuratById(String requestSuratId);

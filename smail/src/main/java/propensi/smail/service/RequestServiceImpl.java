@@ -31,6 +31,11 @@ public class RequestServiceImpl implements RequestService {
     TemplateService templateService;
 
     @Override
+    public void saveOrUpdate(RequestSurat requestSurat) {
+        requestSuratDb.save(requestSurat);
+    }
+
+    @Override
     public RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO) {
         try {
             requestSurat.setBentukSurat(requestDTO.getBentukSurat());

@@ -62,6 +62,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/template/**").hasAuthority("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
                     .requestMatchers("/request/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+                    .requestMatchers("/admin/**").hasAuthority("ADMIN")
 
                     // .requestMatchers("/staf").hasAnyAuthority("STAF")
                     // .requestMatchers("/admin").hasAnyAuthority("ADMIN")
