@@ -1,6 +1,14 @@
 package propensi.smail.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import propensi.smail.model.RequestTemplate;
+import propensi.smail.repository.RequestTemplateDb;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import java.util.*;
 
@@ -43,7 +51,7 @@ public class RequestServiceImpl implements RequestService {
             requestSurat.setKategori(requestDTO.getKategori());
             requestSurat.setJenisSurat(requestDTO.getJenisSurat());
             requestSurat.setKeperluan(requestDTO.getKeperluan());
-            requestSurat.setStatus(1); // 1 --> REQUESTED
+            requestSurat.setStatus(1); // Diajukan
             requestSurat.setId(generateRequestId(requestSurat.getPengaju()));
             requestSurat.setListFieldData(requestDTO.getListFieldData());
 
@@ -67,10 +75,30 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratDb.findAll();
     }
 
-    // @Override
-    // public List<RequestSurat> getRequestsByUser(Pengguna pengguna) {
-    //     return requestSuratDb.findByPengaju(pengguna);
-    // }
+    @Override
+    public List<RequestSurat> getAllSubmitedRequestsSurat() {
+        return requestSuratDb.findByStatus(1);
+    }
+
+    @Override
+    public List<RequestSurat> getAllCanceledRequestsSurat() {
+        return requestSuratDb.findByStatus(2);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRejectedRequestsSurat() {
+        return requestSuratDb.findByStatus(3);
+    }
+
+    @Override
+    public List<RequestSurat> getAllOnProcessRequestsSurat() {
+        return requestSuratDb.findByStatus(4);
+    }
+
+    @Override
+    public List<RequestSurat> getAllFinishedRequestsSurat() {
+        return requestSuratDb.findByStatus(5);
+    }
 
     @Override
     public RequestSurat getRequestSuratById(String requestSuratId) {
@@ -78,10 +106,18 @@ public class RequestServiceImpl implements RequestService {
         return requestSurat.orElseThrow(() -> new NoSuchElementException("RequestSurat with id: " + requestSuratId + " not found"));
     }
 
+    // @Override
+    // public RequestSurat batalkanRequestSurat(String requestSuratId) {
+    //     RequestSurat requestSurat = getRequestSuratById(requestSuratId);
+    //     requestSurat.setStatus(2); // Dibatalkan
+    //     return requestSuratDb.save(requestSurat);
+    // }
+
     @Override
-    public RequestSurat batalkanRequestSurat(String requestSuratId) {
+    public RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan) {
         RequestSurat requestSurat = getRequestSuratById(requestSuratId);
-        requestSurat.setStatus(1); // Misalnya, 1 mewakili status "Dibatalkan"
+        requestSurat.setStatus(2); // Dibatalkan
+        requestSurat.setAlasanPembatalan(alasanPembatalan);
         return requestSuratDb.save(requestSurat);
     }
 

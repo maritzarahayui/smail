@@ -21,4 +21,6 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
 
     @Query("SELECT COUNT(rs) FROM RequestSurat rs WHERE rs.pengaju.id IN (SELECT m.id FROM Mahasiswa m)")
     long countRequestByMahasiswa();
+
+    List<RequestSurat> findByStatus(int status);
 }

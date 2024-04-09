@@ -13,8 +13,14 @@ public interface RequestService {
     void saveOrUpdate(RequestSurat requestSurat);
     RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO);
     List<RequestSurat> getAllRequestsSurat();
+    List<RequestSurat> getAllSubmitedRequestsSurat();
+    List<RequestSurat> getAllCanceledRequestsSurat();
+    List<RequestSurat> getAllRejectedRequestsSurat();
+    List<RequestSurat> getAllOnProcessRequestsSurat();
+    List<RequestSurat> getAllFinishedRequestsSurat();
     RequestSurat getRequestSuratById(String requestSuratId);
-    RequestSurat batalkanRequestSurat(String requestSuratId);
+    // RequestSurat batalkanRequestSurat(String requestSuratId);
+    RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan);
     int countAllRequests();
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);
     Map<Integer, String> listBentukSurat();

@@ -6,5 +6,5 @@ import propensi.smail.model.SuratKeluar;
 
 @Repository
 public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
-    
+    long countByKategori(String kategori);
 }

@@ -18,9 +18,6 @@ public class RequestSurat {
     
     @Id
     private String id;
-    // private UUID id = UUID.randomUUID();
-    // @GeneratedValue(strategy = GenerationType.IDENTITY)
-    // private Long id;
 
     @NotNull
     @Column(name = "kategori", nullable = false)
@@ -44,7 +41,7 @@ public class RequestSurat {
 
     @NotNull
     @Column(name = "status", nullable = false)
-    private int status; // 1 = dibatalkan, 0 = requested;
+    private int status;
 
     @Column(name = "tanggal_pengajuan", nullable = false)
     private Date tanggalPengajuan;
@@ -52,8 +49,14 @@ public class RequestSurat {
     @Column(name = "tanggal_selesai")
     private Date tanggalSelesai;
 
+    @Column(name = "tanggal_penolakan")
+    private Date tanggalPenolakan;
+
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+
+    @Column(name = "tanggal_dibatalkan")
+    private Date tanggalDibatalkan;
 
     @Column(name = "alasan_pembatalan")
     private String alasanPembatalan;
@@ -71,8 +74,8 @@ public class RequestSurat {
     @JoinColumn(name = "template")
     private TemplateSurat template;
 
-    // @OneToOne
-    // @JoinColumn(name = "surat")
-    // private SuratKeluar surat;
+    @OneToOne
+    @JoinColumn(name = "surat")
+    private SuratKeluar surat;
 
 }
