@@ -1,0 +1,589 @@
+body {
+  overflow-x: hidden;
+}
+
+.tambah-template2 {
+  width: 100%;
+  position: relative;
+  background-color: #fffffe;
+  overflow: auto;
+  text-align: center;
+  font-size: 16px;
+  color: #253237;
+  font-family: Rubik;
+}
+
+.pengajuan {
+  background: linear-gradient(
+    180deg,
+    #bce8a4,
+    #abdfa7 28.5%,
+    #80c9ae 66.5%,
+    #5cb7b3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.pengajuan-permohonan-surat-container {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+}
+
+.text-input-frame,
+.text-input14 {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.text-input14 {
+  border: 2px solid var(--green-green-2);
+  outline: 0;
+  background-color: transparent;
+  height: 43px;
+  border-radius: var(--br-5xs);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: row;
+  width: 1000px;
+  padding-left: 8px;
+}
+
+.text-input-frame {
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.label9 {
+  align-self: stretch;
+  position: relative;
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+
+.label-frame {
+  gap: 30px 0;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox label {
+  position: relative;
+  display: inline-block;
+  margin-right: 10px;
+  padding-left: 25px;
+  cursor: pointer;
+}
+
+.custom-checkbox .check {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #999;
+  border-radius: 3px;
+  background-color: transparent;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label .check {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.custom-checkbox .label-text {
+  margin-left: 30px;
+}
+
+.secondary-message {
+  width: 616.8px;
+  height: 38px;
+  position: relative;
+  font-size: var(--font-size-6xl-2);
+  line-height: 150%;
+  font-weight: 500;
+  font-family: var(--font-inter);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.group-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  left: 0;
+  top: 17px;
+  transform: scale(2.001);
+}
+
+.wrapper-group {
+  position: absolute;
+  top: 0;
+  left: 52.1px;
+  width: 69px;
+  height: 80.4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chevrondown-icon-child {
+  position: absolute;
+  top: 66px;
+  left: 0;
+  width: 220.1px;
+  height: 116px;
+  z-index: 1;
+}
+
+.chevrondown-icon-item {
+  position: absolute;
+  top: 18px;
+  left: 103.1px;
+  width: 169.1px;
+  height: 165.8px;
+  object-fit: contain;
+  z-index: 2;
+}
+
+.chevrondown-icon {
+  height: 183.8px;
+  width: 272.2px;
+  position: relative;
+  justify-content: center;
+  left: 181px;
+}
+
+.upload-illustration-child {
+  height: 337.2px;
+  width: 334.4px;
+  position: absolute;
+  margin: auto;
+  bottom: -52.4px;
+  left: 51px;
+  object-fit: contain;
+  z-index: 3;
+}
+
+.button-frame1,
+.upload-illustration {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.upload-illustration {
+  width: 314.7px;
+  justify-content: center;
+  padding: 32.600000000000364px 0 35.399999999999636px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex; /* Menambahkan properti display: flex; */
+  align-items: center; /* Menambahkan properti align-items: center; */
+}
+
+.button-frame1 {
+  align-self: stretch;
+  justify-content: center;
+  padding: 0 var(--padding-xl);
+}
+
+.file-kamu-di {
+  color: var(--green-green-5);
+}
+
+.upload-file-kamu-container {
+  margin: 0;
+  align-self: stretch;
+  position: relative;
+  font-size: inherit;
+  font-weight: 600;
+  font-family: inherit;
+}
+.arsip-surat-frame {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px 0;
+}
+.or-frame-child {
+  align-self: stretch;
+  height: 6.3px;
+  position: relative;
+  border-radius: 3.15px;
+  background-color: var(--green-green-5);
+}
+.or-frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 10.800000000000182px 0 0;
+  box-sizing: border-box;
+  min-width: 174px;
+}
+
+.atau {
+  margin: 0;
+  width: 51px;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.or-frame-item {
+  align-self: stretch;
+  height: 6.3px;
+  position: relative;
+  border-radius: 3.15px;
+  background-color: var(--green-green-5);
+}
+
+.or-frame1 {
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 10.800000000000182px 0 0;
+  box-sizing: border-box;
+  min-width: 174px;
+}
+
+.or-frame-parent,
+.or-frame1,
+.rectangle-frame {
+  display: flex;
+  align-items: flex-start;
+}
+
+.or-frame-parent {
+  align-self: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 15.7px;
+  color: var(--black-black-2);
+}
+
+.rectangle-frame {
+  width: 616.8px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 29.9px 0;
+  max-width: 100%;
+  color: var(--green-green-2);
+}
+
+.cantumkan-link-google {
+  margin: 0;
+  flex: 1;
+  position: relative;
+  font-size: inherit;
+  font-weight: 400;
+  font-family: inherit;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.input-field-label {
+  align-self: stretch;
+  align-items: flex-start;
+  padding: 0 0 0 1.6000000000021828px;
+  max-width: 100%;
+}
+
+.footer-frame,
+.input-field-label,
+.input-field1 {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.input-field1 {
+  flex: 1;
+  border-radius: 18.88px;
+  border: 3.1px solid var(--green-green-2);
+  overflow: hidden;
+  align-items: center;
+  padding: 18.8817195892334px 50.35125350952149px;
+  min-width: 212px;
+  max-width: 100%;
+}
+
+.save-icon {
+  height: 37.8px;
+  width: 37.8px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.body-14pt {
+  align-self: stretch;
+  width: 82px;
+  position: relative;
+  line-height: 37.76px;
+  font-weight: 600;
+  display: none;
+  align-items: center;
+}
+
+.button14 {
+  border-radius: 18.88px;
+  background-color: var(--green-green-1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 18.8817195892334px 50px;
+  gap: 0 12.59px;
+}
+
+.file-input {
+  flex: 1;
+  border-radius: 37.76px;
+  border: 6.3px dashed var(--green-green-2);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  padding: 0 var(--padding-xl) 84.69999999999982px var(--padding-3xl);
+  gap: 39.9px 0;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.file-input,
+.label-input-frame,
+.upload-illustration-frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  place-items: center;
+}
+
+.upload-illustration-frame {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 59px 10px 65px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: var(--heading-h4-size);
+  color: var(--black-black-2);
+}
+
+.label-input-frame {
+  margin-top: 100px;
+}
+
+.attach-button,
+.buat-template {
+  font-size: var(--body-b2-size);
+  font-family: var(--heading-h4);
+  display: flex;
+  justify-content: center;
+}
+
+.attach-button {
+  align-self: stretch;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0 var(--padding-xl) 43.5px;
+  box-sizing: border-box;
+  max-width: 100%;
+  text-align: left;
+  color: var(--black-black-1);
+}
+
+.buat-template {
+  width: 200px;
+  position: relative;
+  font-weight: 400;
+  color: var(--white-white-1);
+  text-align: center;
+  align-items: center;
+}
+
+.button15,
+.creator-info-frame {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.button15 {
+  cursor: pointer;
+  border: 0;
+  padding: 10px var(--padding-smi);
+  background-color: var(--green-green-1);
+  width: 1000px;
+  border-radius: var(--br-xs);
+}
+
+.button15:hover {
+  background-color: var(--color-seagreen-100);
+}
+
+.button15-red {
+  padding-top: 10px;
+  cursor: pointer;
+  border: 0;
+  padding: 10px var(--padding-smi);
+  background-color: var(--red-red-1);
+  width: 1000px;
+  border-radius: var(--br-xs);
+}
+
+.button15-red:hover {
+  background-color: #d63031; 
+}
+
+.creator-info-frame {
+  align-self: stretch;
+  padding: 0 var(--padding-xl) 44.19999999999982px;
+}
+
+@media screen and (max-width: 1050px) {
+  .navbar2 {
+    padding-left: var(--padding-37xl);
+    padding-right: var(--padding-37xl);
+    box-sizing: border-box;
+  }
+  .sub-group-container {
+    gap: 0 122px;
+  }
+  .upload-illustration-frame {
+    padding-left: 32px;
+    padding-right: 29px;
+    box-sizing: border-box;
+    align-items: center;
+  }
+  .label-input-frame {
+    gap: 42px 0;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .sub-group-container-child {
+    flex: 1;
+  }
+  .tambah-template3 {
+    font-size: var(--font-size-19xl);
+  }
+  .sub-group-container {
+    flex-wrap: wrap;
+  }
+  .attach-button {
+    padding-bottom: var(--padding-9xl);
+    box-sizing: border-box;
+  }
+  .frame-parent {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 725px) {
+  .template-settings {
+    flex-wrap: wrap;
+  }
+  .navbar2 {
+    padding-left: var(--padding-9xl);
+    padding-right: var(--padding-9xl);
+    box-sizing: border-box;
+  }
+  .sub-group-container {
+    gap: 0 61px;
+  }
+  .home-frame {
+    gap: 18px 0;
+  }
+  .link-area {
+    gap: 21px 0;
+  }
+  .file-input {
+    gap: 20px 0;
+    padding-bottom: 55px;
+    box-sizing: border-box;
+  }
+  .label-input-frame {
+    gap: 21px 0;
+  }
+  .frame-parent {
+    padding-left: var(--padding-55xl);
+    padding-right: var(--padding-55xl);
+    box-sizing: border-box;
+  }
+  .tambah-template2 {
+    gap: 38px 0;
+  }
+}
+@media screen and (max-width: 450px) {
+  .tambah-template3 {
+    font-size: var(--font-size-10xl);
+  }
+  .sub-group-container {
+    gap: 0 31px;
+  }
+  .secondary-message {
+    font-size: var(--font-size-xl);
+    line-height: 30px;
+  }
+  .atau,
+  .cantumkan-link-google,
+  .upload-file-kamu-container {
+    font-size: var(--font-size-lgi);
+  }
+  .input-field1 {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .body-14pt {
+    font-size: var(--font-size-xl);
+    line-height: 30px;
+  }
+  .attach-button {
+    padding-bottom: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .developed-by-rtx2,
+  .in-collaboration-with3,
+  .propensi-d022 {
+    font-size: var(--font-size-lgi);
+  }
+  .frame-parent {
+    padding-left: var(--padding-xl);
+    padding-right: var(--padding-xl);
+    box-sizing: border-box;
+  }
+  .copyright-2024-tazkia2 {
+    font-size: var(--font-size-lgi);
+  }
+  .tambah-template2 {
+    gap: 19px 0;
+  }
+
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/detail-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+</head>
+<body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="tambah-template1">
+    <div class="label-d">
+        <img
+            class="label-d-child"
+            loading="lazy"
+            alt=""
+            src="/images/kiri.svg"
+        />
+
+        <div class="frame-c">
+            <h1 class="detail-template">
+                <span>
+                <span class="detail">Detail</span>
+                <span> Template</span>
+                </span>
+            </h1>
+        </div>
+    </div>
+
+    <img
+        class="tambah-template-child"
+        alt=""
+        src="/images/kanan.svg"
+    />
+
+    <main class="button-group1">
+        <section class="admin-button-group">
+            <div class="text-input">
+                <div class="label">Nama Template</div>
+                <div class="text-input1">
+                    <input
+                            class="placeholder-text"
+                            placeholder="Template Name"
+                            type="text"
+                            th:value="${template.namaTemplate}" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input2">
+                <div class="label1">ID</div>
+                <div class="text-input1">
+                    <input
+                            class="placeholder-text1"
+                            placeholder="Template ID"
+                            type="text"
+                            th:value="${template.id}" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input4">
+                <div class="label2">Kategori</div>
+                <div class="text-input5">
+                    <input
+                            class="placeholder-text2"
+                            placeholder="Category"
+                            type="text"
+                            th:value="${template.kategori}" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input6">
+                <div class="label3">Tanggal Dibuat</div>
+                <div class="text-input7">
+                    <input
+                            class="placeholder-text3"
+                            placeholder="Date Created"
+                            type="text"
+                            th:value="${template.tanggalDibuat}" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input8">
+                <div class="label4">Status</div>
+                <div class="text-input9">
+                    <input
+                            class="placeholder-text4"
+                            placeholder="Status"
+                            type="text"
+                            th:value="${template.isActive} ? 'Active' : 'Inactive'" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input10">
+                <div class="label5">List Pengguna</div>
+                <div class="text-input11" th:each="user : ${template.listPengguna}">
+                    <input
+                            class="placeholder-text5"
+                            placeholder="User List"
+                            type="text"
+                            th:value="${user}" readonly
+                    />
+                </div>
+            </div>
+            <div class="text-input12">
+                <div class="label6">List Field</div>
+                <div class="text-input13" th:each="field : ${template.listField}">
+                    <input
+                            class="placeholder-text6"
+                            placeholder="Field List"
+                            type="text"
+                            th:value="${field}" readonly
+                    />
+                </div>
+            </div>
+            <div class="frame-button">
+                <h3 class="label6">File</h3>
+                <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
+            </div>
+        </section>
+    </main>
+    <div class="icon-outlinechevrondown">
+        <div class="frame-footer">
+            <!-- <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;"> -->
+                <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;">
+                    <!-- <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/> -->
+                    <div class="ubah-template">
+                        <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/>
+                        <div class="ubah-template1">Ubah template</div>
+                    </div>
+                </a>
+            <!-- </a>-->
+
+            <!-- <a th:href="@{'/template/soft-delete/' + ${template.id}}" class="button12" style="text-decoration: none;"> -->
+                <a class="button12" th:href="@{'/template/soft-delete/' + ${template.id}}" style="text-decoration: none;">
+                    <!-- <img class="mdidelete-icon" alt="" src="/images/delete.svg" /> -->
+                    <div class="hapus-template-wrapper">
+                        <img class="mdidelete-icon" alt="" src="/images/delete.svg" />
+                        <div class="hapus-template">Hapus template</div>
+                    </div>
+                </a>
+            <!-- </a> -->
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>

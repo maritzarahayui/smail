@@ -1,0 +1,422 @@
+.wrapper-group-7-child {
+  height: 100%;
+  width: 100%;
+  min-height: 41px;
+  object-fit: contain;
+  position: absolute;
+  left: 0;
+  top: 2px;
+  transform: scale(1.313);
+}
+
+.wrapper-group-7 {
+  height: 40.8px;
+  width: 32px;
+  position: relative;
+  min-height: 41px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smail {
+  align-self: stretch;
+  position: relative;
+}
+
+.slogan-text,
+.wrapper-group-7-parent {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.slogan-text {
+  flex: 1;
+  flex-direction: column;
+  padding: 1.400000000000091px 0 0;
+}
+
+.wrapper-group-7-parent {
+  width: 151px;
+  flex-direction: row;
+  gap: 0 18px;
+}
+
+.wrapper-group-7-item {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  position: absolute;
+  left: 0;
+  top: 16px;
+  transform: scale(1.311);
+}
+
+.wrapper-group-71 {
+  height: 334px;
+  width: 262px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.selamat-datang-di {
+  align-self: stretch;
+  position: relative;
+  font-weight: 500;
+}
+
+.smail1 {
+  width: 201px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.institut-tazkia {
+  align-self: stretch;
+  position: relative;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+.button-text-a,
+.welcome-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+
+.button-text-a {
+  width: 337px;
+  gap: 12px 0;
+  font-size: 64px;
+}
+
+.welcome-label {
+  align-self: stretch;
+  gap: 20px 0;
+}
+
+.uimgoogle-icon {
+  height: 24px;
+  width: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.button1 {
+  flex: 1;
+  position: relative;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: Rubik;
+  color: #fffffe;
+  text-align: center;
+}
+
+.button {
+  cursor: pointer;
+  border: 0;
+  padding: 8px 24px;
+  background-color: #0f7454;
+  width: 251px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: 0 8px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #369c7a;
+  text-decoration: none;
+}
+
+.text-frame-a {
+  width: 349px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 32px 0;
+  min-width: 349px;
+  max-width: 100%;
+}
+
+.sub-f-r-a-m-e-b {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 518px;
+  max-width: 100%;
+  gap: 20px;
+}
+
+.group-of-frames-child,
+.group-of-frames-inner,
+.group-of-frames-item {
+  height: 301.5px;
+  flex: 1;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.group-of-frames-inner,
+.group-of-frames-item {
+  height: 415px;
+}
+
+.group-of-frames-inner {
+  height: 204px;
+}
+
+.group-of-frames,
+.group-of-frames-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.group-of-frames {
+  align-self: stretch;
+  flex-direction: row;
+  gap: 0 20.5px;
+}
+
+.group-of-frames-wrapper {
+  width: 191px;
+  flex-direction: column;
+  padding: 0 0 16px;
+  box-sizing: border-box;
+}
+
+.button-frame-a,
+.google-sign-i-n {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+}
+
+.google-sign-i-n {
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 0 113.8px;
+}
+
+.button-frame-a {
+  width: 1214px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 0 56px;
+  box-sizing: border-box;
+}
+
+.frame-a,
+.vector-node-icon {
+  align-self: stretch;
+  max-width: 100%;
+}
+
+.frame-a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-start;
+  text-align: center;
+  font-size: 40px;
+  color: #253237;
+  font-family: Rubik;
+}
+
+.vector-node-icon {
+  position: relative;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.sekilas {
+  background: linear-gradient(
+    180deg,
+    #bce8a4,
+    #abdfa7 28.5%,
+    #80c9ae 66.5%,
+    #5cb7b3
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sekilas-mengenai-smail-container1 {
+  width: 100%;
+}
+
+.sekilas-mengenai-smail-container {
+  height: 57px;
+  width: 573px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.about-s-m-a-i-l-system {
+  width: 945.5px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.adalah-sistem-persuratan {
+  color: #000;
+}
+
+.smail-adalah-sistem-container1 {
+  width: 100%;
+}
+
+.smail-adalah-sistem-container {
+  width: 947px;
+  position: relative;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  line-height: 150%;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  color: #0f7454;
+}
+
+.first-vector-frame,
+.homepage,
+.sekilas-info-frame {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sekilas-info-frame {
+  align-self: stretch;
+  background-color: #fffffe;
+  overflow: hidden;
+  align-items: center;
+  padding: 40px 20px;
+  /* box-sizing: border-box; */
+  gap: 55px 0;
+  max-width: 100%;
+  text-align: center;
+  font-size: 48px;
+  color: #253237;
+  font-family: Rubik;
+}
+
+.first-vector-frame,
+.homepage {
+  align-items: flex-start;
+}
+
+.first-vector-frame {
+  align-self: stretch;
+  max-width: 100%;
+}
+
+.homepage {
+  width: 100%;
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    #bce8a4,
+    #abdfa7 28.5%,
+    #80c9ae 66.5%,
+    #5cb7b3
+  );
+  overflow: hidden;
+  gap: 58px 0;
+  letter-spacing: normal;
+}
+
+@media screen and (max-width: 1200px) {
+  .google-sign-i-n {
+    gap: 0 57px;
+  }
+  .button-frame-a {
+    padding-left: 28px;
+    padding-right: 28px;
+    box-sizing: border-box;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  .selamat-datang-di {
+    font-size: 32px;
+  }
+  .smail1 {
+    font-size: 51px;
+  }
+  .institut-tazkia,
+  .sekilas-mengenai-smail-container {
+    font-size: 38px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .wrapper-group-7-item {
+    flex: 1;
+  }
+  .text-frame-a {
+    flex: 1;
+    min-width: 100%;
+  }
+  .sub-f-r-a-m-e-b {
+    flex-wrap: wrap;
+    min-width: 100%;
+  }
+  .google-sign-i-n {
+    gap: 0 28px;
+  }
+  .sekilas-info-frame {
+    gap: 27px 0;
+  }
+  .homepage {
+    gap: 29px 0;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .selamat-datang-di {
+    font-size: 24px;
+  }
+  .smail1 {
+    font-size: 38px;
+  }
+  .institut-tazkia {
+    font-size: 29px;
+  }
+  .text-frame-a {
+    gap: 16px 0;
+  }
+  .sekilas-mengenai-smail-container {
+    font-size: 29px;
+  }
+  .smail-adalah-sistem-container {
+    font-size: 19px;
+    line-height: 29px;
+  }
+}

@@ -4,34 +4,36 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
     <link rel="stylesheet" href="/css/request-surat.css"/>
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"/>   
 </head>
 
 <body>
+	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+	
     <div class="ajukan-surat">
-        <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Pengajuan</span>
-            <span> Permohonan Surat</span>
-        </b>
+        <div class="home-frame">
+            <b class="pengajuan-permohonan-surat-container">
+                <span class="pengajuan">Pengajuan</span>
+                <span> Permohonan Surat</span>
+            </b>
 
-        <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
-        <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
+            <nav th:replace="~{fragments/asset :: asset}"></nav>
+        </div>
 
-        <form th:action="@{/request-template}" th:object="${requestTemplate}" method="POST">
-<!--        <form th:action="@{/api/request-template/new}" th:object="${requestTemplate}" method="POST">-->
+        <form th:action="@{/request}" th:object="${requestDTO}" method="POST">
+            
             <div class="text-input-parent">
                 <div class="text-input">
                     <div class="label">Bahasa</div>
                     <div class="text-input7">
                         <select name="bahasa" class="form-select" th:field="*{bahasa}">
-                            <option th:each="entry : ${listBahasa}" th:value="${entry.key}" th:text="${entry.value}"></option>
+                            <option value="">Pilih Bahasa Surat</option>
+                            <option th:each="entry : ${listBahasa}" th:value="${entry.value}" th:text="${entry.value}"></option>
                         </select>
                     </div>
                 </div>
@@ -40,38 +42,25 @@
                     <div class="label">Bentuk Surat</div>
                     <div class="frame-parent">
                         <div class="radio-parent">
-                            <input type="radio" id="softCopy" name="jenisDokumen" value="softCopy" />
+                            <input type="radio" id="softCopy" name="bentukSurat" value="Soft Copy" />
                             <div class="label-group">
                                 <div class="body-14pt">Soft Copy</div>
                                 <div class="body-14pt">Surat dapat diunduh di website ini.</div>
                             </div>
                         </div>
-
                         <div class="radio-parent">
-                            <input type="radio" id="hardCopy" name="jenisDokumen" value="hardCopy" />
+                            <input type="radio" id="hardCopy" name="bentukSurat" value="Hard Copy" />
                             <div class="label-group">
                                 <div class="body-14pt">Hard Copy</div>
-                                <div class="body-14pt">
-                                    Surat dapat diambil di kantor administrasi.
-                                </div>
+                                <div class="body-14pt">Surat dapat diambil di kantor administrasi.</div>
                             </div>
                         </div>
                     </div>
-
                     <div class="error-message-wrapper">
                         <div class="placeholder">
                             Jika membutuhkan hardcopy dan softcopy untuk surat yang sama,
                             silakan buat dua pengajuan yang berbeda.
                         </div>
-                    </div>
-                </div>
-
-                <div class="text-input">
-                    <div class="label">Jenis Surat</div>
-                    <div class="text-input7">
-                        <select name="kategori" class="form-select" th:field="*{kategori}">
-                            <option th:each="entry : ${listKategori}" th:value="${entry.key}" th:text="${entry.value}"></option>
-                        </select>
                     </div>
                 </div>
 
@@ -82,11 +71,194 @@
                     </div>
                 </div>
 
+                <div class="text-input">
+                    <div class="label">Kategori Surat</div>
+                    <div class="text-input7">
+                        <select id="kategori" name="kategori" class="form-select" th:field="*{kategori}">
+                            <option value="">Pilih Kategori Surat</option>
+                            <option th:each="entry : ${jenisSuratByKategori}" th:value="${entry.key}" th:text="${entry.key}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="text-input" id="jenisSuratWrapper">
+                        <div class="label">Jenis Surat</div>
+                        <div class="text-input7">
+                            <select id="jenisSurat" name="jenisSurat" class="form-select" th:field="*{jenisSurat}">
+                                <option value="">Pilih Jenis Surat</option>
+                                <option th:each="jenisSurat : ${jenisSuratByKategori}" th:value="${jenisSurat.value}" th:text="${jenisSurat.value}"></option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="preview-template" class="preview-template">
+                    <div class="preview-title">Preview Template</div>
+                </div>
+
+                <div id="listFieldWrapper"></div>
+
+                <div class="container" id="reqTemplateWrapper">
+                    <div class="label">Deskripsi Surat</div>
+                    <div id="list-field-data" class="form-group">
+                        <div class="input-row d-flex mt-3 mb-2">
+                            <input type="hidden" name="listFieldData[0].key" value="deskripsi">
+                            <input type="text" class="form-control" placeholder="Beri penjelasan terkait surat yang diajukan" name="listFieldData[0].value" required>
+                        </div>
+                    </div>
+                </div>                
+
                 <div class="text-center action-buttons">
                     <button type="submit" class="button">Ajukan Surat</button>
                 </div>
             </div>
         </form>
-    </div>
+    </div>    
+    
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        document.addEventListener('DOMContentLoaded', function () {
+            var kategoriDropdown = document.getElementById('kategori');
+            var jenisSuratWrapper = document.getElementById('jenisSuratWrapper');
+            var jenisSuratDropdown = document.getElementById('jenisSurat');
+            var previewTemplateWrapper = document.getElementById('preview-template');
+            var listFieldWrapper = document.getElementById('listFieldWrapper');
+            var reqTemplateWrapper = document.getElementById('reqTemplateWrapper');
+    
+            jenisSuratWrapper.style.display = 'none';
+            previewTemplateWrapper.style.display = 'none';
+            listFieldWrapper.style.display = 'none';
+            reqTemplateWrapper.style.display = 'none';
+    
+            kategoriDropdown.addEventListener('change', function () {
+                if (kategoriDropdown.value !== '') {
+                    jenisSuratWrapper.style.display = 'block';
+                } else {
+                    jenisSuratWrapper.style.display = 'none';
+                }
+    
+                jenisSuratDropdown.innerHTML = '';
+    
+                var defaultOption = document.createElement('option');
+                defaultOption.text = 'Pilih Jenis Surat';
+                defaultOption.value = '';
+                jenisSuratDropdown.appendChild(defaultOption);
+    
+                var selectedKategori = kategoriDropdown.value;
+                var jenisSuratByKategori = /*[[${jenisSuratByKategori}]]*/ {};
+                var jenisSuratList = jenisSuratByKategori[selectedKategori] ?? [];
+    
+                if (jenisSuratList) {
+                    jenisSuratList.forEach(function (jenisSurat) {
+                        var option = document.createElement('option');
+                        option.text = jenisSurat;
+                        option.value = jenisSurat;
+                        jenisSuratDropdown.appendChild(option);
+                    });
+
+                    var lainnyaOption = document.createElement('option');
+                    lainnyaOption.text = 'Lainnya';
+                    lainnyaOption.value = 'Lainnya';
+                    jenisSuratDropdown.appendChild(lainnyaOption);
+                }
+            });
+    
+            var base64PDF = /*[[${base64PDF}]]*/ '';
+            jenisSuratDropdown.addEventListener('change', function() {
+                if (jenisSuratDropdown.value == 'Lainnya') {
+                    reqTemplateWrapper.style.display = 'block';
+                    previewTemplateWrapper.style.display = 'none';
+                    listFieldWrapper.style.display = 'none';
+
+                } else if (jenisSuratDropdown.value !== '') {
+                    previewTemplateWrapper.style.display = 'block';
+                    listFieldWrapper.style.display = 'block';
+                    reqTemplateWrapper.style.display = 'none';
+
+                    // Change
+                    const element = document.getElementsByName("listFieldData[0].key");
+                    const element2 = document.getElementsByName("listFieldData[0].value");
+                    element[0].remove();
+                    element2[0].remove();
+
+                    // Mendapatkan jenis surat yang dipilih
+                    var selectedJenisSurat = jenisSuratDropdown.value;
+    
+                    // Mendapatkan kategori surat yang dipilih
+                    var selectedKategori = kategoriDropdown.value;
+    
+                    // Mendapatkan template surat yang sesuai dengan jenis surat yang dipilih
+                    var listTemplateSurat = /*[[${listTemplateSurat}]]*/ [];
+                    var selectedTemplate = listTemplateSurat.find(function(template) {
+                        return template.namaTemplate === selectedJenisSurat && template.kategori === selectedKategori;
+                    });
+
+                    console.log("===== selectedTemplate:", selectedTemplate)
+
+    
+                    // Jika template ditemukan, tampilkan preview PDF
+                    if (selectedTemplate) {
+                        var base64PDF = selectedTemplate.file;
+                        var listFieldData = selectedTemplate.listField;
+
+                        previewTemplateWrapper.innerHTML = `
+                        <div id="preview-title" class="preview-title">Preview Template</div>
+                            <embed src='data:application/pdf;base64,${base64PDF}' type="application/pdf" width="100%" height="500px">
+                        `;
+
+                        listFieldWrapper.innerHTML = '';
+
+                        if (selectedTemplate && selectedTemplate.listField) {
+                            selectedTemplate.listField.forEach(function(field, index) {
+                                // Create input element for each field
+                                var inputDiv = document.createElement('div');
+                                inputDiv.className = 'text-input';
+                                
+                                var labelDiv = document.createElement('div');
+                                labelDiv.className = 'label';
+                                labelDiv.textContent = field; 
+                                
+                                var hiddenElement = document.createElement('input');
+                                hiddenElement.type = 'hidden';
+                                hiddenElement.className = 'form-control';
+                                hiddenElement.name = `listFieldData[${index}].key`; // Menggunakan index
+                                hiddenElement.field = field;
+                                hiddenElement.value = field;
+
+                                var textDiv = document.createElement('div');
+                                textDiv.className = 'text-input7';
+
+                                var inputElement = document.createElement('input');
+                                inputElement.type = 'text';
+                                inputElement.className = 'form-control';
+                                inputElement.name = `listFieldData[${index}].value`; // Menggunakan index
+                                inputElement.required = true;
+                                
+                                var breakElement = document.createElement('br');
+
+                                textDiv.appendChild(inputElement); 
+                                inputDiv.appendChild(labelDiv);
+                                inputDiv.appendChild(hiddenElement);
+                                inputDiv.appendChild(textDiv);
+                                listFieldWrapper.appendChild(inputDiv);
+                                listFieldWrapper.appendChild(breakElement);
+                            });
+
+                            listFieldWrapper.style.display = 'block';
+                        }
+                    } else {
+                        previewTemplateWrapper.innerHTML = '<div class="error-message">Template tidak ditemukan untuk jenis surat yang dipilih.</div>';
+                    }
+                } else {
+                    previewTemplateWrapper.style.display = 'none';
+                    listFieldWrapper.style.display = 'none';
+                }
+            });
+        });
+        /*]]>*/
+    </script> 
 </body>
 </html>

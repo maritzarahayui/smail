@@ -1,6 +1,8 @@
 package propensi.smail.model;
 
 import lombok.*;
+import propensi.smail.model.user.Pengguna;
+
 import java.util.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -41,25 +43,30 @@ public class RequestSurat {
     @Column(name = "status", nullable = false)
     private int status;
 
-    @NotNull
     @Column(name = "tanggal_pengajuan", nullable = false)
     private Date tanggalPengajuan;
 
     @Column(name = "tanggal_selesai")
     private Date tanggalSelesai;
 
+    @Column(name = "tanggal_penolakan")
+    private Date tanggalPenolakan;
+
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
+
+    @Column(name = "tanggal_dibatalkan")
+    private Date tanggalDibatalkan;
 
     @Column(name = "alasan_pembatalan")
     private String alasanPembatalan;
 
     
     /* RELATIONSHIPS */
-    // @ManyToOne
-    // @JoinColumn(name = "pengaju")
-    // private User pengaju;  // pending dl ya msh mikir 
-
+    @ManyToOne
+    @JoinColumn(name = "pengaju")
+    private Pengguna pengaju; 
+    
     @OneToMany(mappedBy = "requestSurat", cascade = CascadeType.ALL)
     private List<FieldData> listFieldData;
 
