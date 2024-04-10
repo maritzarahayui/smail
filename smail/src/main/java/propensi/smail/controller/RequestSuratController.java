@@ -164,7 +164,7 @@ public class RequestSuratController {
         return "riwayat-surat";
     }
 
-    @GetMapping("/{requestSuratId}")
+    @GetMapping("/detail/{requestSuratId}")
     public ResponseEntity<RequestSurat> showDetailRequest(@PathVariable("requestSuratId") String requestSuratId) {
         try {
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);

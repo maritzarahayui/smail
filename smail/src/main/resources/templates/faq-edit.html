@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+</head>
+
+<body>
+	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+        <form th:action="@{/faq/{idFAQ}/edit (idFAQ=${newFaq.id})}" th:object="${newFaq}" method="POST">
+            <input class="form-control" type="hidden" th:field="*{id}" />
+            <input class="form-control" type="hidden" th:field="*{status}" />
+            <input class="form-control" type="text" th:field="*{pertanyaan}" disabled/><br>
+            <input class="form-control" type="text" th:field="*{jawaban}" required/><br>
+            <button class="button" type="submit">Submit</button>
+            <a class="button" th:href="@{/faq/{idFAQ}/edit (idFAQ=${newFaq.id})}">Edit</a>
+        </form>
+
+	<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>

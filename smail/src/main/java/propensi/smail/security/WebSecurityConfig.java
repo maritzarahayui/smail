@@ -62,9 +62,11 @@ public class WebSecurityConfig {
                     .requestMatchers("/template/**").hasAuthority("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
                     .requestMatchers("/request/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
-
-                    // .requestMatchers("/staf").hasAnyAuthority("STAF")
-                    // .requestMatchers("/admin").hasAnyAuthority("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/faq/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA", "PENGURUS", "ADMIN")
+                    .requestMatchers("/faq").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA", "PENGURUS", "ADMIN")
+                    .requestMatchers("/faq/tanya").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+                    .requestMatchers("/faq/{id:\\d+}/jawab", "/faq/{id:\\d+}/detail").hasAnyAuthority("PENGURUS", "ADMIN")
+                    .requestMatchers("/faq/{id:\\d+}/eskalasi", "/faq/{id:\\d+}/hapus").hasAuthority("ADMIN")
                     .anyRequest().authenticated())
                 
                 .oauth2Login(oauth2 -> oauth2

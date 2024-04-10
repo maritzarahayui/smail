@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+</head>
+
+<body>
+	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+	<div th:each="faq : ${faqsDieskalasi}">
+        <h3 th:text="${faq.pertanyaan}"></h3>
+        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/jawab'}">Jawab</a>
+    </div>
+
+    <div th:each="faq : ${faqsTerjawab}">
+        <h3 th:text="${faq.pertanyaan}"></h3>
+        <h3 th:text="${faq.jawaban}"></h3>
+        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/detail'}">Detail</a>
+    </div>
+
+	<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+
+</html>
