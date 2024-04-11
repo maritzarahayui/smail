@@ -2,40 +2,31 @@ package propensi.smail.controller;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.Base64;
-import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
+import propensi.smail.model.Email;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.SuratMasukService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
@@ -60,8 +51,6 @@ public class SuratMasukController {
             SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            //debug
-            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
         }
     }
@@ -189,6 +178,20 @@ public class SuratMasukController {
     @GetMapping("/detail-surat-masuk")
     public String detailSuratMasuk(Model model, Authentication auth) {
         return "detail-surat-masuk";
+    }
+
+    
+    // send email 
+    @GetMapping("/send")
+    public String sendEmail(Model model, Authentication auth) {
+        suratMasukService.sendEmail("laela.putri@ui.ac.id", "kirim email dari smail", "hai bella, ini email dari smail");
+        suratMasukService.sendEmail("hana.devi@ui.ac.id", "kirim email dari smail", "hai hana, ini email dari smail");
+        suratMasukService.sendEmail("azmi.rahmadisha@ui.ac.id", "kirim email dari smail", "hai adish, ini email dari smail");
+        suratMasukService.sendEmail("meilany.mita@ui.ac.id", "kirim email dari smail", "hai emmi, ini email dari smail");
+        suratMasukService.sendEmail("maritza.rahayu@ui.ac.id", "kirim email dari smail", "hai caca, ini email dari smail");
+
+
+        return "tes-email";
     }
     
 }

@@ -50,8 +50,11 @@ public class BaseController {
             }
 
         }
+        // asli:
+        // return "login";
 
-        return "login";
+        // debug disposisi:
+        return "disposisi";
     }
 
     @GetMapping("/profile")

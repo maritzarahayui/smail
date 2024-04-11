@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,5 +95,20 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
     }
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Async
+    public void sendEmail(String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body);
+        message.setFrom("instituttazkia.adm@gmail.com");
+        mailSender.send(message);
+        
+    }
+
     
 }
