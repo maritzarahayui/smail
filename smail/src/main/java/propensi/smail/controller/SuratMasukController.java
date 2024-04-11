@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import jakarta.mail.MessagingException;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.model.Email;
@@ -46,7 +47,7 @@ public class SuratMasukController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
         @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
-        @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
+        @RequestParam("tembusan") String[] tembusan, Authentication auth, Model model) throws ParseException {
         try {
             SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
@@ -163,35 +164,38 @@ public class SuratMasukController {
         return "form-surat-masuk";
     }
 
-    @GetMapping("/daftar")
-    public String form(Model model) {
-        return "daftar-surat-masuk";
+    // root to disposisi arsip surat dengan id tertentu
+    @GetMapping("/disposisi/{id}")
+    public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "disposisi";
     }
 
-    // route to semua-surat-masuk
-    @GetMapping("/daftar-arsip")
-    public String semuaSuratMasuk(Model model, Authentication auth) {
-        return "daftar-arsip-tes";
-    }
-
-    // route to detail-surat-masuk
-    @GetMapping("/detail-surat-masuk")
-    public String detailSuratMasuk(Model model, Authentication auth) {
-        return "detail-surat-masuk";
-    }
-
-    
-    // send email 
-    @GetMapping("/send")
-    public String sendEmail(Model model, Authentication auth) {
-        suratMasukService.sendEmail("laela.putri@ui.ac.id", "kirim email dari smail", "hai bella, ini email dari smail");
-        suratMasukService.sendEmail("hana.devi@ui.ac.id", "kirim email dari smail", "hai hana, ini email dari smail");
-        suratMasukService.sendEmail("azmi.rahmadisha@ui.ac.id", "kirim email dari smail", "hai adish, ini email dari smail");
-        suratMasukService.sendEmail("meilany.mita@ui.ac.id", "kirim email dari smail", "hai emmi, ini email dari smail");
-        suratMasukService.sendEmail("maritza.rahayu@ui.ac.id", "kirim email dari smail", "hai caca, ini email dari smail");
-
+    // route to send email 
+    @GetMapping("/send/{id}")
+    public String sendEmail(@PathVariable("id") String id, Model model, Authentication auth) throws MessagingException, IOException {
+        SuratMasuk file = suratMasukService.getFile(id);
+        file.setStatus(3);
+        suratMasukService.sendEmail("salsabiella4@gmail.com", "hai bell", "hai bella, ini email dari smail", file);
 
         return "tes-email";
     }
+
+
     
 }

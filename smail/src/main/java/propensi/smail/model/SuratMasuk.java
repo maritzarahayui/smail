@@ -46,7 +46,7 @@ public class SuratMasuk {
     private String pengirim; // email or nama pengirim
 
     @Column(name = "tembusan")
-    private String tembusan; // email
+    private String[] tembusan; // email
 
     @Lob
     @Column(name = "file", nullable = false)
@@ -55,8 +55,7 @@ public class SuratMasuk {
     @NotNull
     @Column(name = "file_name")
     private String fileName; // filename
-
-
+ 
     /* RELATIONSHIPS */
     @OneToOne
     @JoinColumn(name = "surat_follow_up")

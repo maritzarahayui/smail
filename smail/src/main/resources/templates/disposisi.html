@@ -8,8 +8,8 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
-    <link rel="stylesheet" href="./global.css" />
-    <link rel="stylesheet" href="./disposisi-surat.css" />
+    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/disposisi.css" />
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link
@@ -26,63 +26,14 @@
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="disposisi-surat">
-      <header class="navbar4">
-        <div class="wrapper-group-8-group">
-          <div class="wrapper-group-83">
-            <img
-              class="wrapper-group-8-child1"
-              loading="lazy"
-              alt=""
-              src="./public/group-81.svg"
-            />
-          </div>
-          <div class="request-surat3">
-            <b class="beranda3">Beranda</b>
-          </div>
-          <div class="request-surat4">
-            <b class="request-surat5">Request Surat</b>
-          </div>
-          <div class="arsip-surat-container">
-            <b class="arsip-surat3">Arsip Surat</b>
-            <img
-              class="iconoutlinechevron-down6"
-              alt=""
-              src="./public/iconoutlinechevrondown.svg"
-            />
-          </div>
-          <div class="request-surat6">
-            <b class="template-surat3">Template Surat</b>
-          </div>
-          <div class="request-surat7">
-            <b class="faq3">FAQ</b>
-          </div>
-        </div>
-        <div class="rectangle-div"></div>
-        <div class="admin-button-wrapper">
-          <div class="admin-button1">
-            <div class="button22">
-              <div class="admin3">Admin</div>
-              <img
-                class="iconoutlinechevron-down7"
-                alt=""
-                src="./public/iconoutlinechevrondown-1.svg"
-              />
-            </div>
-          </div>
-        </div>
-      </header>
-      <img
-        class="disposisi-surat-child"
-        alt=""
-        src="./public/group-65@2x.png"
-      />
+      <img class="disposisi-surat-child" alt="" src="/images/kanan.svg" />
 
       <section class="footer-info1">
         <img
           class="footer-info-child"
           loading="lazy"
           alt=""
-          src="./public/group-64.svg"
+          src="/images/kiri.svg"
         />
 
         <div class="label-disposisi">
@@ -100,7 +51,11 @@
               <div class="gmail-logo-parent">
                 <div class="gmail-logo">
                   <div class="cacaccacacacacagmailcom">
-                    cacaccacacacaca@gmail.com
+                    <input
+                      class="cacaccacacacacagmailcom1"
+                      placeholder="cacaccacacacaca@gmail.com"
+                      type="text"
+                    />
                   </div>
                 </div>
                 <button class="delete-button-wrapper">
@@ -109,7 +64,7 @@
                       <img
                         class="lets-iconsadd-round"
                         alt=""
-                        src="./public/letsiconsaddround.svg"
+                        src="/images/plus-icon.svg"
                       />
                     </div>
                   </div>
@@ -130,7 +85,7 @@
                         class="lets-iconsadd-round1"
                         loading="lazy"
                         alt=""
-                        src="./public/letsiconsaddround.svg"
+                        src="/images/plus-icon.svg"
                       />
                     </div>
                     <div class="button25">
@@ -138,7 +93,7 @@
                         class="mdidelete-icon"
                         loading="lazy"
                         alt=""
-                        src="./public/mdidelete.svg"
+                        src="/images/delete.svg"
                       />
                     </div>
                   </div>
@@ -159,7 +114,7 @@
                         class="lets-iconsadd-round2"
                         loading="lazy"
                         alt=""
-                        src="./public/letsiconsaddround.svg"
+                        src="/images/plus-icon.svg"
                       />
                     </div>
                     <div class="button27">
@@ -167,36 +122,7 @@
                         class="mdidelete-icon1"
                         loading="lazy"
                         alt=""
-                        src="./public/mdidelete.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="frame-parent8">
-                <div class="cacaccacacacacagmailcom-frame">
-                  <input
-                    class="cacaccacacacacagmailcom3"
-                    placeholder="cacaccacacacaca@gmail.com"
-                    type="text"
-                  />
-                </div>
-                <div class="frame-wrapper2">
-                  <div class="button-parent3">
-                    <div class="button28">
-                      <img
-                        class="lets-iconsadd-round3"
-                        loading="lazy"
-                        alt=""
-                        src="./public/letsiconsaddround.svg"
-                      />
-                    </div>
-                    <div class="button29">
-                      <img
-                        class="mdidelete-icon2"
-                        loading="lazy"
-                        alt=""
-                        src="./public/mdidelete.svg"
+                        src="/images/delete.svg"
                       />
                     </div>
                   </div>
@@ -204,44 +130,16 @@
               </div>
             </form>
           </div>
-          <div class="button30">
+          <a
+            class="button30"
+            th:href="@{'/surat-masuk/send/' + ${suratMasuk.nomorArsip}}"
+          >
             <div class="disposisikan-surat">Disposisikan surat</div>
-          </div>
+          </a>
         </div>
-      </section>
-      <section class="footer3">
-        <div class="frame-parent9">
-          <div class="developed-by-rtx-team-group">
-            <h3 class="developed-by-rtx3">Developed by rt(x) Team</h3>
-            <h3 class="propensi-d023">Propensi D02</h3>
-          </div>
-          <div class="collaborator-label">
-            <h3 class="in-collaboration-with3">In collaboration with</h3>
-            <div class="image-1-parent1">
-              <img
-                class="image-1-icon3"
-                loading="lazy"
-                alt=""
-                src="./public/image-1@2x.png"
-              />
-
-              <img
-                class="image-18-icon3"
-                loading="lazy"
-                alt=""
-                src="./public/image-18@2x.png"
-              />
-            </div>
-          </div>
-        </div>
-        <footer class="r-t-x-team-footer">
-          <h3 class="copyright-2024-tazkia3">
-            © Copyright 2024 Tazkia Institute. All Rights Reserved.
-          </h3>
-        </footer>
       </section>
     </div>
-
+    
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
   </body>
