@@ -1,32 +1,210 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-
-<head>
+<html>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
+
     <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
-</head>
+  </head>
 
-<body>
-	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+  <style>
+    .content-container {
+        width: 100%;
+        position: relative;
+        background-color: var(--white-white-1);
+        overflow: hidden;
+        height: 100%;  
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
 
-	<div th:each="faq : ${faqsTerjawab}">
-        <h3 th:text="${faq.pertanyaan}"></h3>
-        <h2 th:text="${faq.jawaban}"></h3>
+    .accordion-container {
+        min-width: 85%;
+        max-width: 85%;
+    }
+
+    .accordion {
+        background-color: var(--blue-blue-2);
+        border-radius: var(--br-xs);
+        color: var(--white-white-1);
+        padding: var(--padding-xl);
+        gap: var(--gap-xl);
+        min-width: 95%;
+        display: flex;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+  
+    .panel {
+        min-width: 85%;
+        max-width: 85%;
+
+        background-color: var(--green-green-5);
+        border-radius: var(--br-5xs);
+        color: var(--white-white-1);
+        padding: var(--padding-xl);
+        gap: var(--gap-xl);
+
+        display: none;
+        overflow: hidden;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+
+    .panel.active {
+        display: block;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .accordion.active {
+        background-color: var(--green-green-5);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .chevron-rotate {
+        transform: rotate(180deg);
+    }
+
+    .faq-person {
+        width: auto;
+        position: center;
+    }
+
+    .question-form {
+        font-family: var(--body-b2);
+    }
+
+    .question-input {
+        border: 2px solid var(--green-green-5); 
+        outline: none; 
+        border-radius: var(--br-5xs);
+    }
+
+    .question-input:focus {
+        border-color: var(--green-green-5); 
+        box-shadow: 0 0 5px var(--green-green-5); 
+    }
+
+    .question-submit {
+        color: var(--white-white-1);
+        width: fit-content;
+        border: 0;
+        padding: 10.5px var(--padding-5xl);
+        background-color: var(--green-green-1);
+        border-radius: var(--br-xs);
+        flex-direction: row;
+    }
+
+    .question-submit:hover {
+        color: var(--white-white-1);
+        background-color: var(--green-green-2);
+    }
+
+    .question-submit-row {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .form-question {
+        width: 85%; 
+    }
+
+  </style>
+
+  <body>
+
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="content-container">
+
+        <b class="title-container">
+            <span class="title-gradient">Frequently Asked</span>
+            <span>Question</span>
+        </b>
+    
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+    
+        <div class="search-bar">
+            <form th:action="@{/template/search}" method="get">
+                <img class="search-icon" alt="" src="/images/search.svg" />
+                <input
+                    class="disclosure-icon-up"
+                    placeholder="Ketik kata kunci untuk menemukan jawaban"
+                    type="text"
+                    name="searchFaq"
+                />
+            </form>
+        </div>
+
+        <br><br><br><br><br>
+
+        <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
+            <div class="accordion">
+                <strong th:text="${faq.pertanyaan}"></strong>
+                <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
+            </div>
+            <div class="panel" th:text="${faq.jawaban}"></div>
+            <br>
+        </div>
+
+        <br><br><br>
+
+        <div class="row form-question">
+            <div class="col-md-3" style="justify-content: center;">
+                <img class="faq-person img-fluid" src="/images/faq-person.svg"/>
+            </div>
+            <form class="col-md-9 question-form" th:action="@{/faq/tanya}" th:object="${newFaq}" method="POST">
+                <div class="row">
+                    <p style="font-weight: bold;">Masih memiliki pertanyaan?</p>
+                </div>
+                <div class="row">
+                    <p>Tidak dapat menemukan jawaban yang Anda cari. Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
+                </div>
+                <div class="row">
+                    <textarea class="form-control question-input" rows="4" th:field="*{pertanyaan}" placeholder="Type your question here" required></textarea>
+                </div>
+                <br>
+                <div class="row question-submit-row">
+                    <button type="submit" class="btn btn-primary question-submit">Kirim pertanyaan</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
-    <form th:action="@{/faq/tanya}" th:object="${newFaq}" method="POST">
-        <h2>Masih memiliki pertanyaan?</h3>
-        <input class="form-control" type="text" th:field="*{pertanyaan}" required/><br>
-        <button class="button" type="submit">Tanya</button>
-    </form>
+    <br><br><br>
 
-	<footer th:replace="~{fragments/footer :: footer}"></footer>
-</body>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                panel.classList.toggle("active");
+                var chevron = this.querySelector('.chevron');
+                if (chevron) {
+                    chevron.classList.toggle("chevron-rotate");
+                }
+            });
+        }
+    </script>
+
+  </body>
 
 </html>

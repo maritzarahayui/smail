@@ -10,37 +10,49 @@
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
+    <link rel="stylesheet" th:href="@{/css/asset.css}"/>
+    <link rel="stylesheet" th:href="@{/css/global-final.css}"/>
+    <link rel="stylesheet" th:href="@{/css/faq.css}"/>
 </head>
 
 <body>
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div th:each="faq : ${faqsBelumDijawab}">
-        <h3 th:text="${faq.pertanyaan}"></h3>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/jawab'}">Jawab</a>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
+    <div class="content-container">
+        <b class="title-container">
+            <span class="title-gradient">Frequently Asked</span>
+            <span>Question</span>
+        </b>
+    
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+    
+        <div th:each="faq : ${faqsBelumDijawab}">
+            <h3 th:text="${faq.pertanyaan}"></h3>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/jawab'}">Jawab</a>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
+        </div>
+    
+        <div th:each="faq : ${faqsDieskalasi}">
+            <h3 th:text="${faq.pertanyaan}"></h3>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/detail'}">Detail</a>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
+        </div>
+    
+        <div th:each="faq : ${faqsTerjawab}">
+            <h3 th:text="${faq.pertanyaan}"></h3>
+            <h3 th:text="${faq.jawaban}"></h3>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/detail'}">Detail</a>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/edit'}">Ubah</a>
+            <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
+        </div>
+    
+        <div th:each="faq : ${faqsDihapus}">
+            <h3 th:text="${faq.pertanyaan}"></h3>
+            <h2 th:text="${faq.jawaban}"></h3>
+        </div>
     </div>
-
-    <div th:each="faq : ${faqsDieskalasi}">
-        <h3 th:text="${faq.pertanyaan}"></h3>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/detail'}">Detail</a>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
-    </div>
-
-    <div th:each="faq : ${faqsTerjawab}">
-        <h3 th:text="${faq.pertanyaan}"></h3>
-        <h3 th:text="${faq.jawaban}"></h3>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/detail'}">Detail</a>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/edit'}">Ubah</a>
-        <a class="button" th:href="@{'/faq/' + ${faq.id} + '/hapus'}">Hapus</a>
-    </div>
-
-	<div th:each="faq : ${faqsDihapus}">
-        <h3 th:text="${faq.pertanyaan}"></h3>
-        <h2 th:text="${faq.jawaban}"></h3>
-    </div>
-
-	<footer th:replace="~{fragments/footer :: footer}"></footer>
+    
+	<!-- <footer th:replace="~{fragments/footer :: footer}"></footer> -->
 </body>
 
 </html>
