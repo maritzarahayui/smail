@@ -86,13 +86,13 @@
         font-family: var(--body-b2);
     }
 
-    .question-input {
+    .faq-input {
         border: 2px solid var(--green-green-5); 
         outline: none; 
         border-radius: var(--br-5xs);
     }
 
-    .question-input:focus {
+    .faq-input:focus {
         border-color: var(--green-green-5); 
         box-shadow: 0 0 5px var(--green-green-5); 
     }
@@ -173,7 +173,7 @@
                     <p>Tidak dapat menemukan jawaban yang Anda cari. Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
                 </div>
                 <div class="row">
-                    <textarea class="form-control question-input" rows="4" th:field="*{pertanyaan}" placeholder="Type your question here" required></textarea>
+                    <textarea class="form-control faq-input" rows="4" th:field="*{pertanyaan}" placeholder="Type your question here" required></textarea>
                 </div>
                 <br>
                 <div class="row question-submit-row">

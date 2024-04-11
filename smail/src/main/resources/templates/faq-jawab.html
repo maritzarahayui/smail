@@ -6,26 +6,126 @@
     <meta name="viewport" content="initial-scale=1, width=device-width" />
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
+
     <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
 </head>
 
+<style>
+
+.pertanyaan-box {
+    background-color: var(--blue-blue-2);
+    border-radius: var(--br-5xs);
+    border: 2px solid var(--green-green-2);
+    color: var(--white-white-1);
+    padding: var(--padding-xl);
+    width: 80%;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: flex-start;
+    font-size: var(--body-b2-size);
+}
+
+.content-container {
+    width: 100%;
+    position: relative;
+    background-color: var(--white-white-1);
+    overflow: hidden;
+    height: 100%;  
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.faq-input {
+    border: 2px solid var(--green-green-5); 
+    outline: none; 
+    border-radius: var(--br-5xs);
+}
+
+.faq-input:focus {
+    border-color: var(--green-green-5); 
+    box-shadow: 0 0 5px var(--green-green-5); 
+}
+
+.question-form {
+    width: 80%;
+    display: flex;
+}
+
+.question-submit {
+    color: var(--white-white-1);
+    display: flex;
+    flex-direction: row;
+    border: 0;
+    padding: 10.5px var(--padding-5xl);
+    background-color: var(--green-green-1);
+    border-radius: var(--br-xs);
+    justify-content: center;
+}
+
+.question-submit:hover {
+    color: var(--white-white-1);
+    background-color: var(--green-green-2);
+    text-decoration: none;
+}
+
+</style>
+
 <body>
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
-        <form th:action="@{/faq/{idFAQ}/jawab (idFAQ=${newFaq.id})}" th:object="${newFaq}" method="POST">
-            <h3 th:text="${pertanyaan}"></h3>
-            <input class="form-control" type="hidden" th:field="*{id}" />
-            <input class="form-control" type="hidden" th:field="*{pertanyaan}" />
-            <input class="form-control" type="hidden" th:field="*{status}" />
-            <input class="form-control" type="text" th:field="*{jawaban}" required/><br>
-            <button class="button" type="submit">Submit</button>
 
-            <a th:if="${role == 'Admin'}" class="button" th:href="@{/faq/{idFAQ}/eskalasi (idFAQ=${newFaq.id})}">Eskalasi ke Pengurus</a>
-        </form>
+    <div class="content-container">
+    
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+
+            <b class="title-container">
+                <span class="title-gradient">Jawab</span>
+                <span>Pertanyaan</span>
+            </b>
+
+            <br><br><br><br><br><br>
+
+            <div class="pertanyaan-box">
+                <span th:text="${newFaq.pertanyaan}"></span>
+            </div>
+
+            <br>
+
+            <form th:action="@{/faq/{idFAQ}/jawab (idFAQ=${newFaq.id})}" th:object="${newFaq}" method="POST" class="question-form">
+                <input class="form-control" type="hidden" th:field="*{id}" />
+                <input class="form-control" type="hidden" th:field="*{status}" />
+                <input class="form-control" type="hidden" th:field="*{pertanyaan}"/>
+                <div class="col">
+                    <div class="row">
+                        <textarea class="form-control faq-input" style="min-height: 150px;" th:field="*{jawaban}" placeholder="Jawab pertanyaan di sini" required></textarea>
+                    </div>
+                    <br><br>
+                    <div class="row">
+                        <div class="col d-flex justify-content-end">
+                            <a th:if="${role == 'Admin'}" class="question-submit w-50" th:href="@{/faq/{idFAQ}/eskalasi (idFAQ=${newFaq.id})}"
+                            style="background-color: var(--blue-blue-2);"
+                            >Eskalasi ke Pengurus</a>
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="question-submit w-50"
+                            >Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <br><br><br><br>
+    </div>
 
 	<footer th:replace="~{fragments/footer :: footer}"></footer>
+
 </body>
 
 </html>
