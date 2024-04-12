@@ -46,29 +46,12 @@
                     </div>
 
                     <div class="search-button">
-                        <div class="button17">
-                            <img class="search-icon1" alt="" src="/images/search.svg" />
-                            <input class="keuangan3" placeholder="Cari surat" type="text" />
-                        </div>
-
-                        <div class="button-parent">
-                            <button class="button18">
-                                <img
-                                    class="solarcalendar-outline-icon"
-                                    alt=""
-                                    src="/images/calendar.svg"
-                                />
-                                <div class="periode-20212022">Periode 2021/2022</div>
-                            </button>
-                            <button class="button19">
-                                <img
-                                    class="fluentfilter-12-regular-icon"
-                                    alt=""
-                                    src="/images/filter.svg"
-                                />
-                                <div class="filters">Filters</div>
-                            </button>
-                        </div>
+                        <form th:action="@{/request/history/search}" method="get">
+                            <div class="button17">
+                                <img class="search-icon1" alt="" src="/images/search.svg" />
+                                <input class="keuangan3" placeholder="Cari surat" type="text" name="searchValue" />
+                            </div>
+                        </form>
                     </div>
                 </div>
 

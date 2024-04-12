@@ -73,29 +73,12 @@
                     </div>
 
                     <div class="search-button">
-                        <div class="button17">
-                            <img class="search-icon1" alt="" src="/images/search.svg" />
-                            <input class="keuangan3" placeholder="Cari surat" type="text" />
-                        </div>
-
-                        <div class="button-parent">
-                            <button class="button18">
-                                <img
-                                    class="solarcalendar-outline-icon"
-                                    alt=""
-                                    src="/images/calendar.svg"
-                                />
-                                <div class="periode-20212022">Periode 2021/2022</div>
-                            </button>
-                            <button class="button19">
-                                <img
-                                    class="fluentfilter-12-regular-icon"
-                                    alt=""
-                                    src="/images/filter.svg"
-                                />
-                                <div class="filters">Filters</div>
-                            </button>
-                        </div>
+                        <form th:action="@{/request/history/finished/search}" method="get">
+                            <div class="button17">
+                                <img class="search-icon1" alt="" src="/images/search.svg" />
+                                <input class="keuangan3" placeholder="Cari surat" type="text" name="searchValue" />
+                            </div>
+                        </form>
                     </div>
                 </div>
 
@@ -125,17 +108,20 @@
                                     <td th:text="${requestSurat.id}"></td>
                                     <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
                                     <td th:text="${requestSurat.bentukSurat}"></td>
-                                    <td th:text="${requestSurat.tanggalPengajuan}"></td>
-                                    <td th:text="${requestSurat.tanggalSelesai}"></td>
+                                    <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                                    <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd')}"></td>
                                     <td style="display: flex; justify-content: space-between;">
-                                        <button class="button20">
+                                        <a th:href="@{/detail/{id}/finished(id=${requestSurat.id})}" class="button20">
                                             <div class="button21">Detail</div>
-                                        </button>
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <!-- End of the table -->
+                        <div th:if="${message}">
+                            <p th:text="${message}" style="text-align: center;"></p>
+                        </div>
                     </div>
                 </div>
             </div>

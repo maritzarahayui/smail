@@ -13,4 +13,5 @@ public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
     long countByKategori(String kategori);
     List<SuratKeluar> findByPenandatanganId(String penandatanganId);
     SuratKeluar findByRequestSurat(Optional<RequestSurat> requestSurat);
+    SuratKeluar findByNomorArsipContainingIgnoreCase(String nomorArsip);
 }
