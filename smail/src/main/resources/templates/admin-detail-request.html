@@ -86,6 +86,16 @@
                 </div>
             </div>
 
+            <div class="row" th:if="${requestSurat.status == 5}">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Selesai</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.tanggalSelesai}"></div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="detail-wrapper">
                     <div class="detail">Status</div>

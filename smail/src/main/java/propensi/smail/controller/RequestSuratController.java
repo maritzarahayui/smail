@@ -963,6 +963,36 @@ public class RequestSuratController {
         return "admin-detail-diajukan";
     }
 
+    @GetMapping("/admin/detail/{id}/rejected")
+    public String detailRequestSuratAdminTolak(@PathVariable("id") String id, Model model, Authentication auth) {
+        RequestSurat requestSurats = requestService.getRequestSuratById(id);
+        model.addAttribute("requestSurats", requestSurats);
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        Map<Integer, String> statusMap = new HashMap<>();
+        statusMap.put(1, "Diajukan");
+        statusMap.put(3, "Ditolak");
+        statusMap.put(4, "Diproses");
+        statusMap.put(5, "Selesai");
+
+        model.addAttribute("statusMap", statusMap);
+
+        return "admin-detail-ditolak";
+    }
+
     @PostMapping("/admin/detail/{id}/updateStatus")
     public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
                                Model model, Authentication auth) {
@@ -985,6 +1015,7 @@ public class RequestSuratController {
 
         if (status == 3) {
             requestSurat.setAlasanPenolakan(alasanPenolakan);
+            requestSurat.setTanggalPenolakan(new Date());
         } else {
             requestSurat.setAlasanPenolakan(null);
         }
