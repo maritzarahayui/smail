@@ -73,10 +73,12 @@
                     </div>
 
                     <div class="search-button">
-                        <div class="button17">
-                            <img class="search-icon1" alt="" src="/images/search.svg" />
-                            <input class="keuangan3" placeholder="Cari surat" type="text" />
-                        </div>
+                        <form th:action="@{/admin/request/rejected}" method="get">
+                            <div class="button17">
+                                <img class="search-icon1" alt="" src="/images/search.svg" />
+                                <input class="keuangan3" placeholder="Cari surat" type="text" name="keyword" />
+                            </div>
+                        </form>
 
                         <div class="button-parent">
                             <button class="button18">

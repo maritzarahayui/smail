@@ -13,6 +13,7 @@ public interface RequestService {
     void saveOrUpdate(RequestSurat requestSurat);
     RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO);
     List<RequestSurat> getAllRequestsSurat();
+    List<RequestSurat> searchRequests(String keyword, int status);
     List<RequestSurat> getAllSubmitedRequestsSurat();
     List<RequestSurat> getAllCanceledRequestsSurat();
     List<RequestSurat> getAllRejectedRequestsSurat();

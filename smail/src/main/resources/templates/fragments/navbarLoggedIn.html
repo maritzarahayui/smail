@@ -33,8 +33,8 @@
                     <li th:if="${role == 'Admin'}">
                         <a th:href="@{/admin/request}">Request Surat</a>
                     </li>
-                    <li th:if="${role == 'Pengurus'}">
-                        <a th:href="@{/pengurus/request}">Tanda Tangan</a>
+                    <li th:if="${role == 'Pengurus' or role == 'Dosen'}">
+                        <a th:href="@{/ttd/request}">Tanda Tangan</a>
                     </li>
                     <li th:if="${role == 'Dosen' or role == 'Staf'}">
                         <a th:href="@{/request}">Ajukan Surat</a>

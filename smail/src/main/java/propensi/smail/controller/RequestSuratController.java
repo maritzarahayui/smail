@@ -389,8 +389,15 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/request")
-    public String showAllRequestsAdmin(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllSubmitedRequestsSurat();
+    @Transactional(readOnly = true)
+    public String showAllRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestSurat> requestSurats;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            requestSurats = requestService.searchRequests(keyword, 1);
+        } else {
+            requestSurats = requestService.getAllSubmitedRequestsSurat();
+        }
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -411,8 +418,15 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/request/cancelled")
-    public String showAllCancelledRequestsAdmin(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllCanceledRequestsSurat();
+    @Transactional(readOnly = true)
+    public String showAllCancelledRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestSurat> requestSurats;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            requestSurats = requestService.searchRequests(keyword, 2);
+        } else {
+            requestSurats = requestService.getAllCanceledRequestsSurat();
+        }
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -433,8 +447,15 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/request/rejected")
-    public String showAllRejectedRequestsAdmin(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllRejectedRequestsSurat();
+    @Transactional(readOnly = true)
+    public String showAllRejectedRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestSurat> requestSurats;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            requestSurats = requestService.searchRequests(keyword, 3);
+        } else {
+            requestSurats = requestService.getAllRejectedRequestsSurat();
+        }
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -456,9 +477,14 @@ public class RequestSuratController {
 
     @GetMapping("/admin/request/process")
     @Transactional(readOnly = true)
-    public String showAllProcessingRequestsAdmin(Model model, Authentication auth) {
+    public String showAllProcessingRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
         try {
-            List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
+            List<RequestSurat> requestSurats;
+            if (keyword != null && !keyword.isEmpty()) {
+                requestSurats = requestService.searchRequests(keyword, 4);
+            } else {
+                requestSurats = requestService.getAllOnProcessRequestsSurat();
+            }
             model.addAttribute("requestSurats", requestSurats);
 
             if (auth != null) {
@@ -484,8 +510,14 @@ public class RequestSuratController {
 
     @GetMapping("/admin/request/finished")
     @Transactional(readOnly = true)
-    public String showAllFinishedRequestsAdmin(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllFinishedRequestsSurat();
+    public String showAllFinishedRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestSurat> requestSurats;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            requestSurats = requestService.searchRequests(keyword, 5);
+        } else {
+            requestSurats = requestService.getAllFinishedRequestsSurat();
+        }
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {

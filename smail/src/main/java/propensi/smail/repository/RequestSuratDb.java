@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import propensi.smail.model.SuratKeluar;
@@ -26,6 +27,13 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     List<RequestSurat> findByStatus(int status);
 
     List<RequestSurat> findByStatusAndPengajuId(int status, String penggunaId);
+
+    @Query("SELECT r FROM RequestSurat r WHERE " +
+            "LOWER(r.bentukSurat) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(r.pengaju.nama) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(r.jenisSurat) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
+            "LOWER(r.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
+    List<RequestSurat> findByKeyword(@Param("keyword") String keyword);
 
 
 }

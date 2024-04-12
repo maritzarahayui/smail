@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import propensi.smail.model.*;
@@ -191,6 +192,39 @@ public class RequestServiceImpl implements RequestService {
         bentuk.put(2, "Hard Copy");
 
         return bentuk;
+    }
+
+    @Override
+    public List<RequestSurat> searchRequests(String keyword, int status) {
+
+        List<RequestSurat> suratList = requestSuratDb.findByKeyword(keyword);
+        List<RequestSurat> resultSurat = new ArrayList<>();
+
+        for (RequestSurat rs : suratList) {
+            if (status == 1) {
+                if (rs.getStatus() == 1) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 2) {
+                if (rs.getStatus() == 2) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 3) {
+                if (rs.getStatus() == 3) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 4) {
+                if (rs.getStatus() == 4) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 5) {
+                if (rs.getStatus() == 5) {
+                    resultSurat.add(rs);
+                }
+            }
+        }
+
+        return resultSurat;
     }
 
     @Override
