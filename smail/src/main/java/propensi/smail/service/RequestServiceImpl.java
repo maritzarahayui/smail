@@ -199,6 +199,16 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
+    public List<RequestSurat> getAllCancelledRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(2, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRejectedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(3, penggunaId);
+    }
+
+    @Override
     public List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId) {
         return requestSuratDb.findByStatusAndPengajuId(4, penggunaId);
     }
