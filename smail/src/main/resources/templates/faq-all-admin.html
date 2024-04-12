@@ -124,7 +124,7 @@ table.table tbody tr {
 
         <!-- BELUM DIJAWAB -->
         <div class="tab-pane active" id="belumDijawab">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
@@ -133,7 +133,10 @@ table.table tbody tr {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="faq: ${faqsBelumDijawab}">
+                    <tr th:if="${#lists.isEmpty(faqsBelumDijawab)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Belum Dijawab</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsBelumDijawab}" th:unless="${#lists.isEmpty(faqsBelumDijawab)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
                         <td style="display: flex;">
@@ -151,7 +154,7 @@ table.table tbody tr {
 
         <!-- DIESKALASI -->
         <div class="tab-pane" id="dieskalasi">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
@@ -160,7 +163,10 @@ table.table tbody tr {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="faq: ${faqsDieskalasi}">
+                    <tr th:if="${#lists.isEmpty(faqsDieskalasi)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dieskalasi</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
                         <td style="display: flex;">
@@ -178,16 +184,19 @@ table.table tbody tr {
 
         <!-- TERJAWAB -->
         <div class="tab-pane" id="terjawab">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th style="width: 5%; text-align: center; vertical-align: middle;">ID</th>
-                        <th style="width: 60%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
+                        <th style="width: 55%; text-align: center; vertical-align: middle;">Pertanyaan</th>
                         <th style="width: 35%; text-align: center; vertical-align: middle;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="faq: ${faqsTerjawab}">
+                    <tr th:if="${#lists.isEmpty(faqsTerjawab)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Terjawab</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
                         <td style="display: flex;">
@@ -208,7 +217,7 @@ table.table tbody tr {
 
          <!-- DIHAPUS -->
          <div class="tab-pane" id="dihapus">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
@@ -216,7 +225,10 @@ table.table tbody tr {
                     </tr>
                 </thead>
                 <tbody style="font-weight: 400;">
-                    <tr th:each="faq: ${faqsDihapus}">
+                    <tr th:if="${#lists.isEmpty(faqsDihapus)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dihapus</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsDihapus}" th:unless="${#lists.isEmpty(faqsDihapus)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
                     </tr>

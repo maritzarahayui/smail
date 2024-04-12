@@ -82,6 +82,11 @@ table.table tbody tr {
   background-color: #ffffff;
 }
 
+.table-striped tbody tr {
+    --bs-table-accent-bg: #fffff;
+    background-color: #ffffff !important;
+}
+
 .table-button {
     color: var(--white-white-1);
     display: flex;
@@ -104,25 +109,36 @@ table.table tbody tr {
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="content-container">
+
         <b class="title-container">
             <span class="title-gradient">Frequently Asked</span>
             <span>Question</span>
         </b>
-    
+
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <br><br><br>
+        <div class="search-bar">
+            <form th:action="@{/template/search}" method="get">
+                <img class="search-icon" alt="" src="/images/search.svg" />
+                <input
+                    class="disclosure-icon-up"
+                    placeholder="Ketik kata kunci untuk menemukan jawaban"
+                    type="text"
+                    name="searchFaq"
+                />
+            </form>
+        </div>
 
         <div class="tabs-group" id="tab">
-              <a class="tab-link active" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
-              <a class="tab-link" data-toggle="tab" href="#terjawab">Terjawab</a>
+            <a class="tab-link active" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
+            <a class="tab-link" data-toggle="tab" href="#terjawab">Terjawab</a>
         </div>
     
         <br><br>
 
         <!-- DIESKALASI -->
         <div class="tab-pane active" id="dieskalasi">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 5%; text-align: center; vertical-align: middle;">ID</th>
@@ -131,11 +147,14 @@ table.table tbody tr {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="faq: ${faqsDieskalasi}">
+                    <tr th:if="${#lists.isEmpty(faqsDieskalasi)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dieskalasi</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                        <td style="display: flex;">
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
+                        <td style="justify-content: center;">
+                            <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
                             style="background-color: var(--green-green-1);"
                             >Jawab</a>
                         </td>
@@ -146,7 +165,7 @@ table.table tbody tr {
 
          <!-- TERJAWAB -->
          <div class="tab-pane" id="terjawab">
-            <table class="table table-bordered table-striped" style="width:100%">
+            <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th style="width: 5%; text-align: center; vertical-align: middle;">ID</th>
@@ -155,11 +174,14 @@ table.table tbody tr {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="faq: ${faqsTerjawab}">
+                    <tr th:if="${#lists.isEmpty(faqsTerjawab)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Terjawab</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
                         <td th:text="${faq.id}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                        <td style="display: flex; margin: auto;">
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
+                        <td style="justify-content: center;">
+                            <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
                             style="background-color: var(--green-green-1);"
                             >Detail</a>
                         </td>
@@ -168,7 +190,6 @@ table.table tbody tr {
             </table>
         </div>
 
-        
         <br><br><br><br>
 
     </div>
