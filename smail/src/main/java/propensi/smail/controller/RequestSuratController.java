@@ -34,8 +34,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 @Controller
-// @RestController
-// @RequestMapping("/request")
+@RequestMapping("/request")
 public class RequestSuratController {
     
     @Autowired
@@ -50,7 +49,7 @@ public class RequestSuratController {
     @Autowired
     PenggunaService penggunaService;
 
-    @GetMapping("/request")
+    @GetMapping()
     public String formRequestSurat(Model model, Authentication auth){
 
         String role = "";
@@ -94,7 +93,7 @@ public class RequestSuratController {
         return "request-surat";
     }
 
-    @PostMapping("/request")
+    @PostMapping()
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestAndFieldDataDTO requestDTO,
                                     BindingResult bindingResult, Authentication auth) {
         if (bindingResult.hasErrors()) {
@@ -142,7 +141,7 @@ public class RequestSuratController {
         return new ResponseEntity<>(allRequests, HttpStatus.OK);
     }
 
-    @GetMapping("/request/history")
+    @GetMapping("/history")
     public String showAllRequests(Model model, Authentication auth) {
         List<RequestSurat> requestSurats = requestService.getAllRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
@@ -164,7 +163,7 @@ public class RequestSuratController {
         return "riwayat-surat";
     }
 
-    @GetMapping("/detail/{requestSuratId}")
+    @GetMapping("/{requestSuratId}/detail")
     public ResponseEntity<RequestSurat> showDetailRequest(@PathVariable("requestSuratId") String requestSuratId) {
         try {
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);

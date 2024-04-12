@@ -10,5 +10,6 @@ public interface FAQService {
     FAQ editFAQ(FAQ newFaq);
     FAQ deleteFAQ(int idFAQ);
     List<FAQ> getFaqsByStatus(int status);
+    List<FAQ> getFaqsByStatusAndSearch(String search, int status);
     FAQ getFAQbyId(int idFAQ);
 } 

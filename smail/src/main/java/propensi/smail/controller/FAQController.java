@@ -30,11 +30,24 @@ public class FAQController {
     private PenggunaDb penggunaDb;
 
     @GetMapping
-    public String showFAQ(Model model, Authentication auth) {
-        List<FAQ> faqsBelumDijawab = faqService.getFaqsByStatus(0);
-        List<FAQ> faqsDieskalasi = faqService.getFaqsByStatus(1);
-        List<FAQ> faqsTerjawab = faqService.getFaqsByStatus(2);
-        List<FAQ> faqsDihapus = faqService.getFaqsByStatus(3);
+    public String showFAQ(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
+
+        List<FAQ> faqsBelumDijawab;
+        List<FAQ> faqsDieskalasi;
+        List<FAQ> faqsTerjawab;
+        List<FAQ> faqsDihapus;
+
+        if (search != null && !search.isEmpty()) {
+            faqsBelumDijawab = faqService.getFaqsByStatusAndSearch(search,0);
+            faqsDieskalasi = faqService.getFaqsByStatusAndSearch(search, 1);
+            faqsTerjawab = faqService.getFaqsByStatusAndSearch(search, 2);
+            faqsDihapus = faqService.getFaqsByStatusAndSearch(search, 3);
+        } else {
+            faqsBelumDijawab = faqService.getFaqsByStatus(0);
+            faqsDieskalasi = faqService.getFaqsByStatus(1);
+            faqsTerjawab = faqService.getFaqsByStatus(2);
+            faqsDihapus = faqService.getFaqsByStatus(3);
+        }
 
         model.addAttribute("faqsBelumDijawab", faqsBelumDijawab);
         model.addAttribute("faqsDieskalasi", faqsDieskalasi);
@@ -65,6 +78,35 @@ public class FAQController {
         }
 
     }
+
+    // @GetMapping("/search")
+    // public String searchTemplates(@RequestParam(name = "pertanyaan", required = false) String pertanyaan, 
+    //     Model model, Authentication auth) {
+
+    //     if (namaTemplate != null && !namaTemplate.isEmpty()) {
+    //         List<TemplateSurat> searchResults = templateSuratService.searchTemplatesByNamaTemplate(namaTemplate);
+    //         model.addAttribute("activeTemplates", searchResults);
+    //     } else {
+    //         List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
+    //         model.addAttribute("activeTemplates", activeTemplates);
+    //     }
+
+    //     if (auth != null) {
+    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+    //         String email = oauthUser.getEmail();
+    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+    //         if (user.isPresent()) {
+    //             Pengguna pengguna = user.get();
+    //             model.addAttribute("role", penggunaService.getRole(pengguna));
+    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+    //         } else {
+    //             return "auth-failed";
+    //         }
+    //     }
+    //     return "daftar-template";
+    // }
+
 
     @PostMapping("/tanya")
     public String tanyaFAQ(Model model, Authentication auth, FAQ faqDTO) {

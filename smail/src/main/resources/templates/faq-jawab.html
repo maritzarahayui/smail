@@ -107,9 +107,9 @@
                         <textarea class="form-control faq-input" style="min-height: 150px;" th:field="*{jawaban}" placeholder="Jawab pertanyaan di sini" required></textarea>
                     </div>
                     <br><br>
-                    <div class="row">
+                    <div th:if="${role == 'Admin'}" class="row">
                         <div class="col d-flex justify-content-end">
-                            <a th:if="${role == 'Admin'}" class="question-submit w-50" th:href="@{/faq/{idFAQ}/eskalasi (idFAQ=${newFaq.id})}"
+                            <a class="question-submit w-50" th:href="@{/faq/{idFAQ}/eskalasi (idFAQ=${newFaq.id})}"
                             style="background-color: var(--blue-blue-2);"
                             >Eskalasi ke Pengurus</a>
                         </div>
@@ -118,6 +118,11 @@
                             >Submit</button>
                         </div>
                     </div>
+
+                    <div th:if="${role == 'Pengurus'}" class="row d-flex justify-content-end">
+                        <button type="submit" class="question-submit w-25">Submit</button>
+                    </div>
+
                 </div>
             </form>
 

@@ -62,5 +62,10 @@ public class FAQServiceImpl implements FAQService {
         faqDb.save(faq);
         return faq;
     }
+
+    @Override
+    public List<FAQ> getFaqsByStatusAndSearch(String search, int status) {
+        return faqDb.findByPertanyaanContainingIgnoreCaseAndStatus(search, status) ;
+    }
     
 }

@@ -121,6 +121,52 @@
         width: 85%; 
     }
 
+    .search-bar {
+        align-self: stretch;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0 12px;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px 0;
+        max-width: 100%;
+	}
+
+    .search-box {
+        align-self: stretch;
+        height: 48px;
+        border-radius: var(--br-xs);
+        background-color: var(--white-white-1);
+        border: 2px solid var(--green-green-1);
+        box-sizing: border-box;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: var(--padding-5xs) var(--padding-5xl);
+        gap: 0 8px;
+        max-width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .ketik-kata-kunci {
+        width: 330px;
+        border: 0;
+        outline: 0;
+        font-family: var(--heading-h4);
+        font-size: var(--body-b2-size);
+        background-color: transparent;
+        height: 19px;
+        position: relative;
+        color: var(--black-black-2);
+        text-align: start;
+        vertical-align: middle;
+        justify-content: start;
+        max-width: calc(100% - 32px);
+        padding: 0;
+    }
+
   </style>
 
   <body>
@@ -136,19 +182,18 @@
     
         <nav th:replace="~{fragments/asset :: asset}"></nav>
     
+        <br><br>
+
         <div class="search-bar">
-            <form th:action="@{/template/search}" method="get">
-                <img class="search-icon" alt="" src="/images/search.svg" />
-                <input
-                    class="disclosure-icon-up"
-                    placeholder="Ketik kata kunci untuk menemukan jawaban"
-                    type="text"
-                    name="searchFaq"
-                />
+            <form th:action="@{/faq}" method="get">
+                <div class="search-box">
+                    <img class="search-icon" alt="" src="/images/search.svg" />
+                    <input class="ketik-kata-kunci" placeholder="Cari pertanyaan..." type="text" name="search" />
+                </div>
             </form>
         </div>
 
-        <br><br><br><br><br>
+        <br><br><br>
 
         <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
             <div class="accordion">

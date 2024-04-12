@@ -11,4 +11,5 @@ public interface FAQDb extends JpaRepository<FAQ, Integer> {
     FAQ findById(int id);
     List<FAQ> findAll();
     List<FAQ> findByStatus(int status);
+    List<FAQ> findByPertanyaanContainingIgnoreCaseAndStatus(String search, int status);
 }
