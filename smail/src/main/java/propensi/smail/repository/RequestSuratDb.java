@@ -24,4 +24,8 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     long countRequestByMahasiswa();
 
     List<RequestSurat> findByStatus(int status);
+
+    List<RequestSurat> findByStatusAndPengajuId(int status, String penggunaId);
+
+
 }

@@ -82,6 +82,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         }
     }
 
+    @Override
     public SuratKeluar findSuratKeluarByRequestID(String id) {
         List<SuratKeluar> suratKeluars = suratKeluarDb.findAll();
 
@@ -91,6 +92,12 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             }
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void update(SuratKeluar suratKeluar) {
+        suratKeluarDb.save(suratKeluar);
     }
 
     @Override
@@ -112,6 +119,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
                 suratKeluar.getRequestSurat().setStatus(5);
+                suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
                 suratKeluarDb.save(suratKeluar);
             }
 

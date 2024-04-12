@@ -93,12 +93,7 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <select class="content" th:field="${requestSurats.status}">
-                            <option th:each="entry : ${statusMap.entrySet()}"
-                                    th:value="${entry.key}" th:text="${entry.value}" 
-                                    th:selected="${entry.key == requestSurats.status}">
-                            </option>
-                        </select>
+                        <div class="content" th:text="${statusMap[requestSurat.status]}"></div>
                     </div>
                 </div>
 

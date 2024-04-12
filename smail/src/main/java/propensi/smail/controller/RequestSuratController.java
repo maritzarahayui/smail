@@ -155,9 +155,6 @@ public class RequestSuratController {
 
     @GetMapping("/request/history")
     public String showAllRequests(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllSubmitedRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -165,6 +162,9 @@ public class RequestSuratController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
+                String userId = pengguna.getId();
+                List<RequestSurat> requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(userId);
+                model.addAttribute("requestSurats", requestSurats);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
@@ -220,10 +220,8 @@ public class RequestSuratController {
     }
 
     @GetMapping("/request/history/process")
+    @Transactional(readOnly = true)
     public String showOnProcessRequests(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -231,6 +229,9 @@ public class RequestSuratController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
+                String userId = pengguna.getId();
+                List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSuratByPengaju(userId);
+                model.addAttribute("requestSurats", requestSurats);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
@@ -242,10 +243,8 @@ public class RequestSuratController {
     }
 
     @GetMapping("/request/history/finished")
+    @Transactional(readOnly = true)
     public String showFinishedRequests(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllFinishedRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -253,6 +252,9 @@ public class RequestSuratController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
+                String userId = pengguna.getId();
+                List<RequestSurat> requestSurats = requestService.getAllFinishedRequestsSuratByPengaju(userId);
+                model.addAttribute("requestSurats", requestSurats);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {

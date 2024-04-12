@@ -18,6 +18,9 @@ public interface RequestService {
     List<RequestSurat> getAllRejectedRequestsSurat();
     List<RequestSurat> getAllOnProcessRequestsSurat();
     List<RequestSurat> getAllFinishedRequestsSurat();
+    List<RequestSurat> getAllSubmittedRequestsSuratByPengaju(String penggunaId);
+    List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId);
+    List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId);
     RequestSurat getRequestSuratById(String requestSuratId);
     // RequestSurat batalkanRequestSurat(String requestSuratId);

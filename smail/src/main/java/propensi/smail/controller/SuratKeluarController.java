@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -160,27 +161,31 @@ public class SuratKeluarController {
                                     @RequestParam("penandatangan") String penandatanganId,
                                     Model model) {
         try {
-            System.out.println("masuk?");
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
             Pengguna pengguna = penggunaService.getPenggunaById(penandatanganId);
 
-//            suratKeluarService.store(requestSurat, file, kategori, jenisSurat, pengguna);
-
-            // Create and store SuratKeluar first
-            SuratKeluar suratKeluar = suratKeluarService.store(requestSurat, file, kategori, jenisSurat, pengguna);
-
-            // Associate SuratKeluar with RequestSurat and save RequestSurat
-            requestSurat.setSurat(suratKeluar);
-            requestSuratDb.save(requestSurat);
-
-            System.out.println("UDaH MASUK ANJAAAYYY");
+            SuratKeluar existingSuratKeluar = suratKeluarService.findSuratKeluarByRequestID(requestSuratId);
+            if (existingSuratKeluar != null) {
+                if (file != null && !file.isEmpty()) {
+                    existingSuratKeluar.setFile(file.getBytes());
+                    existingSuratKeluar.setFileName(StringUtils.cleanPath(file.getOriginalFilename()));
+                }
+                if (penandatanganId != null && !penandatanganId.isEmpty()) {
+                    existingSuratKeluar.setPenandatangan(pengguna);
+                }
+                suratKeluarService.update(existingSuratKeluar); // Update existing SuratKeluar
+            } else {
+                // Create and store SuratKeluar
+                suratKeluarService.store(requestSurat, file, kategori, jenisSurat, pengguna);
+            }
 
             return "redirect:/admin/request/process";
         } catch (Exception e) {
-            System.out.println("error kenapee:" + e.getMessage());
+            System.out.println("error:" + e.getMessage());
             return "redirect:/admin/request/process";
         }
     }
+
 
     @GetMapping("/pengurus/request")
     public String showAllRequestsPengurus(Model model, Authentication auth) {

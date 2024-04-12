@@ -13,4 +13,6 @@ public interface SuratKeluarService {
     String generateId(String kategori);
     SuratKeluar getFile(String id);
     void updateSuratKeluarFile(String id, MultipartFile file);
+    SuratKeluar findSuratKeluarByRequestID(String id);
+    void update(SuratKeluar suratKeluar);
 }
