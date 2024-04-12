@@ -35,4 +35,8 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     List<RequestSurat> findByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan);
     List<RequestSurat> findByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan);
     List<RequestSurat> findByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai);
+
+    List<RequestSurat> findByStatusAndPengajuId(int status, String penggunaId);
+
+
 }

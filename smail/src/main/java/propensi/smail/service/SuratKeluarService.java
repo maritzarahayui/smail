@@ -17,4 +17,5 @@ public interface SuratKeluarService {
     void updateSuratKeluarFile(String id, MultipartFile file);
     SuratKeluar findSuratKeluarByRequestID(String id);
     SuratKeluar findSuratKeluarByNomorArsip(String nomorArsip);
+    void update(SuratKeluar suratKeluar);
 }

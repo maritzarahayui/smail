@@ -103,6 +103,11 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     public SuratKeluar findSuratKeluarByNomorArsip(String nomorArsip) {
         return suratKeluarDb.findByNomorArsipContainingIgnoreCase(nomorArsip);
     }
+    
+    @Transactional
+    public void update(SuratKeluar suratKeluar) {
+        suratKeluarDb.save(suratKeluar);
+    }
 
     @Override
     public void updateSuratKeluarFile(String id, MultipartFile file) {
@@ -123,6 +128,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
                 suratKeluar.getRequestSurat().setStatus(5);
+                suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
                 suratKeluarDb.save(suratKeluar);
             }
 

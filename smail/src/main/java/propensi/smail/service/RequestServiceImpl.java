@@ -90,7 +90,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestSurat> getAllOnProcessRequestsSurat() {
+
         return requestSuratDb.findByStatus(4);
+
     }
 
     @Override
@@ -239,6 +241,31 @@ public class RequestServiceImpl implements RequestService {
         bentuk.put(2, "Hard Copy");
 
         return bentuk;
+    }
+
+    @Override
+    public List<RequestSurat> getAllSubmittedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(1, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllCancelledRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(2, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRejectedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(3, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(4, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(5, penggunaId);
     }
 
     @Override
