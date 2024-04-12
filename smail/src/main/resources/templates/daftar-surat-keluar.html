@@ -57,7 +57,6 @@
       .table tbody td {
           text-align: center; /* Membuat teks di baris tabel menjadi ditengah */
       }
-  
       .search-wrapper {
           display: flex;
           justify-content: center;
@@ -66,18 +65,14 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Tangkap elemen formulir dan input pencarian
         const searchForm = document.getElementById('searchForm');
         const searchInput = document.getElementById('searchInput');
-        const tabs = document.querySelectorAll('.tabs-group button');
         const inputSuratButton = document.querySelector('.button');
-
-        // Periksa apakah query parameter 'status' sudah ada pada URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const defaultStatus = urlParams.get('status');
 
         // Tambahkan event listener untuk menangani pengiriman formulir
         searchForm.addEventListener('submit', function(event) {
@@ -90,42 +85,19 @@
             // Ubah URL berdasarkan nilai input pencarian
             const searchParams = new URLSearchParams();
             searchParams.set('q', searchQuery);
-            const newUrl = '/surat-masuk/search?' + searchParams.toString();
+            const newUrl = '/surat-keluar/search?' + searchParams.toString();
 
-            // Redirect ke URL baru
+            // Redirect ke URL pencarian baru
             window.location.href = newUrl;
-        });
-
-        // Jika tidak ada query parameter 'status' atau 'status' tidak diarsipkan, maka tandai tab "Diarsipkan"
-        if (!defaultStatus || defaultStatus !== 'Diarsipkan') {
-            document.getElementById('tab-diarsipkan').classList.add('active');
-        }
-        tabs.forEach(tab => {
-          tab.addEventListener('click', function() {
-              // Hapus kelas active dari semua tab
-              tabs.forEach(t => t.classList.remove('active'));
-
-              // Tambahkan kelas active ke tab yang diklik
-              this.classList.add('active');
-
-              const status = this.textContent.trim();
-              let newUrl = '/surat-masuk/all'; // Default URL
-              if (status !== 'Diarsipkan') {
-                  const searchParams = new URLSearchParams();
-                  searchParams.set('status', status);
-                  newUrl = '/surat-masuk/all?' + searchParams.toString();
-              }
-              window.location.href = newUrl;
-          });
         });
 
         // Event listener untuk button "Input Surat"
         inputSuratButton.addEventListener('click', function(event) {
             // Redirect ke halaman input surat
-            window.location.href = '/surat-masuk/form';
+            window.location.href = '/surat-keluar/form';
         });
     });
-  </script>
+    </script>
 </head>
 
 <body>
@@ -136,7 +108,7 @@
   <b class="pengajuan-permohonan-surat-container">
     <span class="pengajuan">Daftar</span>
     <span>Surat</span>
-    <span>&nbsp;Masuk</span>
+    <span>&nbsp;Keluar</span>
   </b>
 
     <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
@@ -146,7 +118,7 @@
       <div style="margin: 30px" class="buttonWrapper">
           <a
               th:if="${role == 'Admin' or role == 'Pengurus'}"
-              th:href="@{/surat-masuk/form}"
+              th:href="@{/surat-keluar/form}"
               class="button"
           >
               <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
@@ -157,25 +129,8 @@
 
       <section class="bentuk-surat-text">
       
-
         <div class="tabs-container">
             <div class="tabs-group-parent">
-                <div class="tabs-group">
-                  <button class="component-2" id="tab-diarsipkan">
-                      <img class="iconoutlineexclamation-circl" alt="" src="/images/iconoutlineexclamationcircle.svg" />
-                      <div class="tabs">Diarsipkan</div>
-                  </button>
-              
-                  <button class="component-3" id="tab-follow-up">
-                      <img class="iconoutlineexclamation-circl1" alt="" src="/images/iconoutlineexclamationcircle.svg" />
-                      <div class="tabs1">Follow Up</div>
-                  </button>
-              
-                  <button class="component-3" id="tab-disposisi">
-                      <img class="iconoutlineexclamation-circl1" alt="" src="/images/iconoutlineexclamationcircle.svg" />
-                      <div class="tabs1">Disposisi</div>
-                  </button>
-              </div>
 
               <div class="search-wrapper">
                 <form action="/surat-masuk/search" method="get" id="searchForm">
@@ -194,31 +149,32 @@
                             <tr>
                                 <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
                                 <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                                <th style="width: 10%; text-align: center; vertical-align: middle;">Jenis Surat</th>
                                 <th style="width: 45%; text-align: center; vertical-align: middle;">Perihal</th>
                                 <td style="width: 15%; text-align: center; vertical-align: middle;">
                                     <div style="display: block;">Tanggal</div>
                                     <div style="display: block;">Diarsipkan</div>
                                 </td>
-                                <th style="width: 25%; text-align: center; vertical-align: middle;">Pengirim</th>
+                                <th style="width: 25%; text-align: center; vertical-align: middle;">Penerima</th>
                                 <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                          <tr th:if="${suratMasukList.size() == 0}">
-                            <td colspan="9">Tidak ada surat masuk yang tersedia.</td>
+                          <tr th:if="${suratKeluarList.size() == 0}">
+                            <td colspan="9">Tidak ada surat keluar yang tersedia.</td>
                           </tr>
                         <!-- Iterate through requestTemplates -->
-                        <tr th:each="suratMasuk : ${suratMasukList}">
-                          <td th:text="${suratMasuk.nomorArsip}"></td>
-                          <td th:text="${suratMasuk.kategori}"></td>
-                          <td th:text="${suratMasuk.perihal}"></td>
+                        <tr th:each="suratKeluar : ${suratKeluarList}">
+                          <td th:text="${suratKeluar.nomorArsip}"></td>
+                          <td th:text="${suratKeluar.kategori}"></td>
+                          <td th:text="${suratKeluar.jenisSurat}"></td>
+                          <td th:text="${suratKeluar.perihal}"></td>
                           <td
-                            th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
+                            th:text="${#dates.format(suratKeluar.tanggalDibuat, 'dd-MM-yyyy')}"
                           ></td>
-                          <!-- <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Follow Up' : (suratMasuk.status == 3 ? 'Disposisi' : ''))}"></td> -->
-                          <td th:text="${suratMasuk.pengirim}"></td>
+                          <td th:text="${suratKeluar.penerimaEksternal}"></td>
                           <td>
-                            <a class="detail-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                            <a class="detail-button" th:href="@{'/surat-keluar/detail/' + ${suratKeluar.nomorArsip}}">
                                 <div class="button-text">Detail</div>
                             </a>
                         </td>

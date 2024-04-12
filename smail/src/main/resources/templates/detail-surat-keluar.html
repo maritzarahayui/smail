@@ -52,7 +52,7 @@
                 <div class="jenis-surat1">Perihal</div>
               </div>
               <div class="keuangan-container">
-                <div class="keuangan2" th:text="${suratMasuk.perihal}"></div>
+                <div class="keuangan2" th:text="${suratKeluar.perihal}"></div>
               </div>
             </div>
             <!-- Nomor Surat -->
@@ -61,7 +61,7 @@
                 <div class="id-surat1">Nomor Arsip</div>
               </div>
               <div class="follow-up-button">
-                <div class="ku0011" th:text="${suratMasuk.nomorArsip}"></div>
+                <div class="ku0011" th:text="${suratKeluar.nomorArsip}"></div>
               </div>
             </div>
             <!-- tanggal -->
@@ -72,7 +72,7 @@
               <div class="itsiii2023-container">
                 <div
                   class="itsiii20231"
-                  th:text="${suratMasuk.tanggalDibuat}"
+                  th:text="${suratKeluar.tanggalDibuat}"
                 ></div>
               </div>
             </div>
@@ -82,42 +82,27 @@
                 <div class="jenis-surat1">Kategori</div>
               </div>
               <div class="keuangan-container">
-                <div class="keuangan2" th:text="${suratMasuk.kategori}"></div>
+                <div class="keuangan2" th:text="${suratKeluar.kategori}"></div>
               </div>
             </div>
-            <!-- status -->
-            <div class="frame-i-d-details3">
-              <div class="pengirim-container">
-                <div class="pengirim1">Status</div>
+            <!-- jenis surat -->
+            <div class="frame-i-d-details1">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">Jenis Surat</div>
+                </div>
+                <div class="keuangan-container">
+                  <div class="keuangan2" name="jenis_surat" th:text="${suratKeluar.jenisSurat}"></div>
+                </div>
               </div>
-              <div class="rektor-universitas-andalas-container">
-                <div
-                  class="rektor-universitas-andalas1"
-                  th:text="${statusText}"
-                ></div>
+              <div class="frame-i-d-details1">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">Penerima</div>
+                </div>
+                <div class="keuangan-container">
+                  <div class="keuangan2" name="penerima_eksternal" th:text="${suratKeluar.penerimaEksternal}"></div>
+                </div>
               </div>
-            </div>
-            <!-- Bentuk Surat -->
-            <div class="frame-i-d-details4">
-              <div class="bentuk-surat-container">
-                <div class="bentuk-surat1">Pengirim</div>
-              </div>
-              <div class="soft-copy-container">
-                <div class="soft-copy1" th:text="${suratMasuk.pengirim}"></div>
-              </div>
-            </div>
-            <!-- tembusan -->
-            <div class="frame-i-d-details5">
-              <div class="frame-div">
-                <div class="keperluan3">Tembusan</div>
-              </div>
-              <div class="undangan-makan-malam-dies-nata-container">
-                <div
-                  class="undangan-makan-malam1"
-                  th:text="${suratMasuk.tembusan}"
-                ></div>
-              </div>
-            </div>
+            
             <!-- filename -->
             <div class="frame-i-d-details6">
               <div class="tanggal-surat-masuk-container">
@@ -126,7 +111,7 @@
               <div class="agustus-2022-container">
                 <div
                   class="agustus-20221"
-                  th:text="${suratMasuk.fileName}"
+                  th:text="${suratKeluar.fileName}"
                 ></div>
               </div>
             </div>
@@ -136,7 +121,7 @@
           <div class="footer-frame">
             <div class="copyright-frame1">
               <h1 class="label1">Preview Surat</h1>
-              <a class="button4" th:href="@{'/surat-masuk/download/' + ${suratMasuk.nomorArsip}}">
+              <a class="button4" th:href="@{'/surat-keluar/download/' + ${suratKeluar.nomorArsip}}">
                 <img
                   class="octicondownload-16"
                   alt=""
@@ -153,18 +138,6 @@
               width="100%"
               height="300px"
             />
-          </div>
-
-          <!-- Follow Up and Disposisi Buttons -->
-          <div class="follow-up-group">
-            <div class="button5">
-              <div class="follow-up">Follow Up</div>
-            </div>
-            <div class="chevrondown-icon">
-              <div class="button6">
-                <div class="disposisi">Disposisi</div>
-              </div>
-            </div>
           </div>
         </form>
       </main>

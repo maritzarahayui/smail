@@ -1,8 +1,10 @@
 package propensi.smail.service;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.io.IOException;
 import java.util.Date;
@@ -24,11 +26,10 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     private SuratMasukDb suratMasukDb;
 
     @Override
-    public SuratMasuk store(MultipartFile file, String judul, String kategori, String perihal, String pengirim, String tembusan) {
+    public SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim, String tembusan) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         //debug
         System.out.println("File Name: " + fileName);
-        System.out.println(judul);
         System.out.println(kategori);
         System.out.println(perihal);
         System.out.println(pengirim);
@@ -38,7 +39,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             SuratMasuk suratMasuk = new SuratMasuk();
                 suratMasuk.setNomorArsip(generateId(kategori));
                 suratMasuk.setFile(file.getBytes());
-                suratMasuk.setJudul(judul);
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
@@ -78,7 +78,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 "SDM", "SDM",
                 "KEUANGAN", "KEU",
                 "SARANA", "SAR",
-                "KEMAHASISWAAN", "KMH"
+                "LAINNYA", "LN"
         );
 
         String abbreviation = kategoriMap.get(kategori.toUpperCase());
@@ -92,5 +92,31 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
     }
-    
+
+    @Override
+    public List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
+        List<SuratMasuk> suratMasukList = suratMasukDb.findAll();
+
+        // Filter berdasarkan query pencarian
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            suratMasukList = suratMasukList.stream()
+                    .filter(surat -> surat.getNomorArsip().toLowerCase().contains(searchQuery.toLowerCase())
+                            || surat.getKategori().toLowerCase().contains(searchQuery.toLowerCase())
+                            || surat.getPerihal().toLowerCase().contains(searchQuery.toLowerCase())
+                            || surat.getPengirim().toLowerCase().contains(searchQuery.toLowerCase())
+                            || surat.getTembusan().toLowerCase().contains(searchQuery.toLowerCase()))
+                    .collect(Collectors.toList());
+        }
+
+        if (tanggalDibuat != null) {
+            suratMasukList = suratMasukDb.findByTanggalDibuat(tanggalDibuat);
+        }
+        
+        return suratMasukList;
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukByStatus(int status) {
+        return suratMasukDb.findByStatus(status);
+    }
 }
