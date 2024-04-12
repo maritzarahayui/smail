@@ -623,6 +623,9 @@
   align-items: center;
   justify-content: center;
 }
+.disposisikan-surat:hover {
+  color: white; /* Menetapkan warna teks sesuai dengan pewarisan */
+}
 .button30,
 .confirmation-button {
   display: flex;
@@ -637,6 +640,11 @@
   padding: var(--padding-base-5) var(--padding-xl);
   text-align: center;
   color: var(--white-white-1);
+  cursor: pointer;
+
+}
+.button30:hover {
+  color: inherit; /* Menetapkan warna teks sesuai dengan pewarisan */
 }
 .confirmation-button {
   width: 1151px;

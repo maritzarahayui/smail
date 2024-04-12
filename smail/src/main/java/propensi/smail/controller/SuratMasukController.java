@@ -187,38 +187,16 @@ public class SuratMasukController {
     }
 
     // // route to send email 
-    // @GetMapping("/send/{id}")
-    // public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
-    //     SuratMasuk file = suratMasukService.getFile(id);
-    //     file.setStatus(3);
-        
-    //     // Ubah string alamat email menjadi array
-    //     String[] toList = to.split(",");
-
-    //     suratMasukService.sendEmail(toList, "hai bell 1 dan 2", "hai bella, ini email dari smail", file);
-    //     System.out.println("masuk ke send email");
-    //     // debug isi to 
-    //     for (String email : toList) {
-    //         System.out.println(email);
-    //     }
-    //     return "tes-email";
-    // }
     @GetMapping("/send/{id}")
-    public void sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
+    public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
         SuratMasuk file = suratMasukService.getFile(id);
+
         file.setStatus(3);
-        String[] recipients = to.split(","); // Pisahkan string to menjadi array alamat email
-        // Lakukan operasi lainnya dengan array alamat email
-        suratMasukService.sendEmail(recipients, file.getPerihal(), "hai bella, ini email dari fe smail", file);
 
-        System.out.println("masuk ke send email");
-        // Debug isi to 
-        for (String email : recipients) {
-            System.out.println(email);
-        }
+        String[] recipients = to.split(","); 
+        
+        suratMasukService.sendEmail(recipients, file.getPerihal(), "", file);
+        return "redirect:/surat-masuk/detail/" + id;
     }
-
-
-
     
 }

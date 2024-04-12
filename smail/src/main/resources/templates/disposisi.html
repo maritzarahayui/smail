@@ -77,7 +77,11 @@
               </div>
             </form>
           </div>
-          <a class="button30" onclick="sendData()">
+          <a
+            class="button30"
+            th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
+            onclick="sendData()"
+          >
             <div class="disposisikan-surat">Disposisikan surat</div>
           </a>
         </div>
@@ -143,17 +147,19 @@
           group.remove();
         });
       }
-      
+
       function sendData() {
         // Mendapatkan ID surat dari URL
         let url = window.location.href;
         let id = url.substring(url.lastIndexOf("/") + 1);
 
         // Mengumpulkan semua input alamat email
-        let emailInputs = document.querySelectorAll(".cacaccacacacacagmailcom1");
+        let emailInputs = document.querySelectorAll(
+          ".cacaccacacacacagmailcom1"
+        );
         let to = [];
         emailInputs.forEach(function (input) {
-            to.push(input.value);
+          to.push(input.value);
         });
 
         // Mengonversi array alamat email menjadi string dengan dipisahkan koma
@@ -161,19 +167,15 @@
 
         // Mengirim data ke controller Spring Boot dengan menyisipkan daftar alamat email sebagai query dalam URL
         fetch(`/surat-masuk/send/${id}?to=${emailString}`, {
-            method: "GET",
+          method: "GET",
         })
-            .then((response) => {
-                console.log(response);
-                window.location.href = `/surat-masuk/detail/${id}`;
-                // Tambahkan logika atau tindakan lain setelah berhasil mengirim data
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                // Tambahkan logika atau tindakan lain untuk menangani kesalahan
-            });
-    }
-
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
     </script>
   </body>
 </html>

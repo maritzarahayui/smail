@@ -106,12 +106,22 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        body = "Yth Bapak/Ibu,\n"
+                    + "Surat yang terlampir di bawah ini ditujukan kepada anda. "
+                    + "Berikut adalah informasi lebih detail mengenai surat tersebut:\n\n"
+                    + "Perihal : " + suratMasuk.getPerihal() + "\n"
+                    + "dari    : "+ suratMasuk.getPengirim() + "\n"
+                    + "Tanggal : " + suratMasuk.getTanggalDibuat()
+
+
+                    +"\n\n\n"
+                    + "Terima kasih,\n"
+                    + "Yayasan Tazkia\n"
+                    + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n";
+
         helper.setTo(to);
         helper.setSubject(subject);
-        
-        // Explicitly set the Content-Type for the email body
-        helper.setText(body, false); // The second parameter "false" indicates plain text
-        
+        helper.setText(body, false); 
         helper.setFrom("instituttazkia.adm@gmail.com");
         helper.addAttachment(suratMasuk.getFileName(), new ByteArrayDataSource(suratMasuk.getFile(), "application/pdf")); // Specify the content type for the attachment
         
