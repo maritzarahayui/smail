@@ -191,7 +191,8 @@ public class SuratMasukController {
     public String sendEmail(@PathVariable("id") String id, Model model, Authentication auth) throws MessagingException, IOException {
         SuratMasuk file = suratMasukService.getFile(id);
         file.setStatus(3);
-        suratMasukService.sendEmail("salsabiella4@gmail.com", "hai bell", "hai bella, ini email dari smail", file);
+        String[] to = {"salsabiella4@gmail.com","laela.putri@ui.ac.id"};
+        suratMasukService.sendEmail(to, "hai bell 1 dan 2", "hai bella, ini email dari smail", file);
 
         return "tes-email";
     }

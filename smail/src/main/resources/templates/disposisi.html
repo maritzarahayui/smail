@@ -47,6 +47,7 @@
         <div class="confirmation-button">
           <div class="cancel-button">
             <div class="label2">Masukkan alamat email yang dituju</div>
+
             <form class="collaborator-logos">
               <div class="gmail-logo-parent">
                 <div class="gmail-logo">
@@ -58,7 +59,11 @@
                     />
                   </div>
                 </div>
-                <button class="delete-button-wrapper">
+                <button
+                  class="delete-button-wrapper"
+                  type="button"
+                  onclick="addRow(event)"
+                >
                   <div class="delete-button">
                     <div class="button23">
                       <img
@@ -69,64 +74,6 @@
                     </div>
                   </div>
                 </button>
-              </div>
-              <div class="frame-parent6">
-                <div class="cacaccacacacacagmailcom-wrapper">
-                  <input
-                    class="cacaccacacacacagmailcom1"
-                    placeholder="cacaccacacacaca@gmail.com"
-                    type="text"
-                  />
-                </div>
-                <div class="frame-wrapper">
-                  <div class="button-parent1">
-                    <div class="button24">
-                      <img
-                        class="lets-iconsadd-round1"
-                        loading="lazy"
-                        alt=""
-                        src="/images/plus-icon.svg"
-                      />
-                    </div>
-                    <div class="button25">
-                      <img
-                        class="mdidelete-icon"
-                        loading="lazy"
-                        alt=""
-                        src="/images/delete.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="frame-parent7">
-                <div class="cacaccacacacacagmailcom-container">
-                  <input
-                    class="cacaccacacacacagmailcom2"
-                    placeholder="cacaccacacacaca@gmail.com"
-                    type="text"
-                  />
-                </div>
-                <div class="frame-wrapper1">
-                  <div class="button-parent2">
-                    <div class="button26">
-                      <img
-                        class="lets-iconsadd-round2"
-                        loading="lazy"
-                        alt=""
-                        src="/images/plus-icon.svg"
-                      />
-                    </div>
-                    <div class="button27">
-                      <img
-                        class="mdidelete-icon1"
-                        loading="lazy"
-                        alt=""
-                        src="/images/delete.svg"
-                      />
-                    </div>
-                  </div>
-                </div>
               </div>
             </form>
           </div>
@@ -139,8 +86,65 @@
         </div>
       </section>
     </div>
-    
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script>
+      function addRow(event) {
+        event.preventDefault(); // Menghentikan perilaku default tombol
+        let group = document.createElement("div");
+        group.className = "gmail-logo-parent";
+        // Buat elemen div untuk mengelompokkan input dan tombol
+        let rowDiv = document.createElement("div");
+        rowDiv.className = "gmail-logo"; // Menggunakan class frame-parent7
+
+        // Buat input email
+        let newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.className = "cacaccacacacacagmailcom2";
+        newInput.placeholder = "Masukkan alamat email";
+
+        // Buat div untuk wrapper tombol
+        let frameWrapperDiv = document.createElement("div");
+        frameWrapperDiv.className = "frame-wrapper1";
+
+        // Buat div untuk parent tombol
+        let buttonParentDiv = document.createElement("div");
+        buttonParentDiv.className = "button-parent2";
+
+        // Buat tombol plus
+        let plusButton = document.createElement("div");
+        plusButton.className = "button26";
+        plusButton.innerHTML =
+          '<img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">';
+
+        // Buat tombol delete
+        let deleteButton = document.createElement("div");
+        deleteButton.className = "button27";
+        deleteButton.innerHTML =
+          '<img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">';
+
+        // Tambahkan input dan tombol ke dalam div rowDiv
+        rowDiv.appendChild(newInput);
+        buttonParentDiv.appendChild(plusButton);
+        buttonParentDiv.appendChild(deleteButton);
+        frameWrapperDiv.appendChild(buttonParentDiv);
+        group.appendChild(rowDiv);
+        group.appendChild(frameWrapperDiv);
+
+        // Temukan elemen dengan class gmail-logo-parent
+        let gmailLogoParent = document.querySelector(".gmail-logo-parent");
+
+        // Tambahkan baris baru di bawah elemen gmail-logo-parent
+        gmailLogoParent.parentNode.insertBefore(
+          group,
+          gmailLogoParent.nextSibling
+        );
+
+        // Tambahkan event listener untuk mengambil nilai input email ke dalam array jika diperlukan
+        newInput.addEventListener("input", function () {
+          // listFieldValues.push(newInput.value); // uncomment this line if you want to push the value to an array
+        });
+      }
+    </script>
   </body>
 </html>

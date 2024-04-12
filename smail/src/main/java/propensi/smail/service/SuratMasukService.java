@@ -23,5 +23,5 @@ public interface SuratMasukService {
     Stream<SuratMasuk> getAllFiles();
     List<SuratMasuk> getAllSuratMasuk();
     String generateId(String kategori);
-    void sendEmail(String to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException;
+    void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException;
 }

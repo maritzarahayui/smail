@@ -103,7 +103,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     private JavaMailSender mailSender;
 
     @Async
-    public void sendEmail(String to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
+    public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         helper.setTo(to);
