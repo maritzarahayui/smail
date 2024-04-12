@@ -107,6 +107,56 @@ public class RequestServiceImpl implements RequestService {
         return requestSurat.orElseThrow(() -> new NoSuchElementException("RequestSurat with id: " + requestSuratId + " not found"));
     }
 
+    @Override
+    public RequestSurat findRequestById(String id) {
+        return requestSuratDb.findByIdContainingIgnoreCase(id);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByJenisSurat(String jenisSurat) {
+        return requestSuratDb.findByJenisSuratContainingIgnoreCase(jenisSurat);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByBentukSurat(String bentukSurat) {
+        return requestSuratDb.findByBentukSuratContainingIgnoreCase(bentukSurat);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan) {
+        return requestSuratDb.findByTanggalPengajuan(tanggalPengajuan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan) {
+        return requestSuratDb.findByTanggalDibatalkan(tanggalDibatalkan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalDibatalkan(tanggalPengajuan, tanggalDibatalkan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan) {
+        return requestSuratDb.findByTanggalPenolakan(tanggalPenolakan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalPenolakan(tanggalPengajuan, tanggalPenolakan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalSelesai(Date tanggalSelesai) {
+        return requestSuratDb.findByTanggalSelesai(tanggalSelesai);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalSelesai(tanggalPengajuan, tanggalSelesai);
+    }
+
     // @Override
     // public RequestSurat batalkanRequestSurat(String requestSuratId) {
     //     RequestSurat requestSurat = getRequestSuratById(requestSuratId);

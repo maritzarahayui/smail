@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +27,16 @@ public interface RequestService {
     List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId);
     RequestSurat getRequestSuratById(String requestSuratId);
-    // RequestSurat batalkanRequestSurat(String requestSuratId);
+    RequestSurat findRequestById(String id);
+    List<RequestSurat> getRequestByJenisSurat(String jenisSurat);
+    List<RequestSurat> getRequestByBentukSurat(String bentukSurat);
+    List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan);
+    List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan);
+    List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan);
+    List<RequestSurat> getRequestByTanggalSelesai(Date tanggalSelesai);
+    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan);
+    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan);
+    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai);
     RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan);
     int countAllRequests();
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);

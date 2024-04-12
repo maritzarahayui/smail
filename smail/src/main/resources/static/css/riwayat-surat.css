@@ -146,6 +146,11 @@ table.table tbody tr {
 }
 
 /* Filter */
+.search-button {
+  text-align: center;
+  margin: 0 auto;
+}
+
 .search-icon1 {
   height: 24px;
   width: 24px;
@@ -175,104 +180,16 @@ table.table tbody tr {
 
 .button17 {
   height: 48px;
-  width: 392px;
   border-radius: var(--br-xs);
   border: 2px solid var(--green-green-1);
   box-sizing: border-box;
-  flex-direction: row;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: var(--padding-5xs) var(--padding-5xl);
   gap: 0 8px;
-  max-width: 100%;
-}
-
-.solarcalendar-outline-icon {
-  height: 24px;
-  width: 24px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.periode-20212022 {
-  flex: 1;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-family: var(--heading-h4);
-  color: var(--green-green-1);
+  width: 100%;
   text-align: center;
-}
-
-.button18 {
-  cursor: pointer;
-  border: 2px solid var(--green-green-1);
-  padding: var(--padding-5xs) var(--padding-3xl);
-  background-color: transparent;
-  flex: 1;
-  border-radius: var(--br-xs);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0 8px;
-  min-width: 145px;
-  min-height: 48px;
-}
-
-.button18:hover,
-.button19:hover {
-  background-color: var(--color-seagreen-300);
-  border: 2px solid var(--color-seagreen-200);
-  box-sizing: border-box;
-}
-
-.fluentfilter-12-regular-icon {
-  height: 24px;
-  width: 24px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.filters {
-  width: 47px;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-family: var(--heading-h4);
-  color: var(--green-green-1);
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button-parent,
-.button19 {
-  display: flex;
-  flex-direction: row;
-}
-
-.button19 {
-  cursor: pointer;
-  border: 2px solid var(--green-green-1);
-  padding: var(--padding-5xs) var(--padding-3xl);
-  background-color: transparent;
-  height: 48px;
-  width: 127px;
-  border-radius: var(--br-xs);
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  gap: 0 8px;
-}
-
-.button-parent {
-  width: 400px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0 12px;
-  max-width: 100%;
 }
 
 .search-button,
@@ -281,6 +198,7 @@ table.table tbody tr {
   display: flex;
   max-width: 100%;
 }
+
 .search-button {
   flex-direction: row;
   align-items: flex-start;

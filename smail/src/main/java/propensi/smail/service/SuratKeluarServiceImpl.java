@@ -25,6 +25,11 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Autowired
     RequestSuratDb requestSuratDb;
+
+    @Override
+    public List<SuratKeluar> getAllSuratKeluar() {
+        return suratKeluarDb.findAll();
+    }
     
     @Override
     @Transactional
@@ -95,6 +100,10 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
+    public SuratKeluar findSuratKeluarByNomorArsip(String nomorArsip) {
+        return suratKeluarDb.findByNomorArsipContainingIgnoreCase(nomorArsip);
+    }
+    
     @Transactional
     public void update(SuratKeluar suratKeluar) {
         suratKeluarDb.save(suratKeluar);

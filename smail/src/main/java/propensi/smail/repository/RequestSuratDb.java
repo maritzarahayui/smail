@@ -1,5 +1,6 @@
 package propensi.smail.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,6 +26,16 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     long countRequestByMahasiswa();
 
     List<RequestSurat> findByStatus(int status);
+    RequestSurat findByIdContainingIgnoreCase(String id);
+    List<RequestSurat> findByJenisSuratContainingIgnoreCase(String jenisSurat);
+    List<RequestSurat> findByBentukSuratContainingIgnoreCase(String bentukSurat);
+    List<RequestSurat> findByTanggalPengajuan(Date tanggalPengajuan);
+    List<RequestSurat> findByTanggalDibatalkan(Date tanggalDibatalkan);
+    List<RequestSurat> findByTanggalPenolakan(Date tanggalPenolakan);
+    List<RequestSurat> findByTanggalSelesai(Date tanggalSelesai);
+    List<RequestSurat> findByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan);
+    List<RequestSurat> findByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan);
+    List<RequestSurat> findByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai);
 
     List<RequestSurat> findByStatusAndPengajuId(int status, String penggunaId);
 
