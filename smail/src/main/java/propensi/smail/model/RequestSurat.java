@@ -17,6 +17,7 @@ import jakarta.validation.constraints.NotNull;
 public class RequestSurat {
     
     @Id
+    @Column(name="id")
     private String id;
 
     @NotNull
@@ -61,7 +62,6 @@ public class RequestSurat {
     @Column(name = "alasan_pembatalan")
     private String alasanPembatalan;
 
-    
     /* RELATIONSHIPS */
     @ManyToOne
     @JoinColumn(name = "pengaju")
@@ -74,8 +74,8 @@ public class RequestSurat {
     @JoinColumn(name = "template")
     private TemplateSurat template;
 
-    @OneToOne
-    @JoinColumn(name = "surat")
+    @OneToOne(mappedBy = "requestSurat", cascade = CascadeType.ALL)
+    @JoinColumn(name = "surat_id", referencedColumnName = "nomor_arsip")
     private SuratKeluar surat;
-
 }
+

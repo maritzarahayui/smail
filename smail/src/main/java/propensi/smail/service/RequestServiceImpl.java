@@ -2,8 +2,8 @@ package propensi.smail.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import propensi.smail.model.RequestTemplate;
-import propensi.smail.repository.RequestTemplateDb;
+import propensi.smail.model.*;
+import propensi.smail.repository.*;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -16,13 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.model.FieldData;
-import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.TemplateSurat;
-import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.RequestTemplateDb;
-import propensi.smail.repository.TemplateSuratDb;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -34,6 +29,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Autowired
     TemplateSuratDb templateSuratDb;
+
+    @Autowired
+    SuratKeluarDb suratKeluarDb;
 
     @Autowired
     TemplateService templateService;
@@ -191,6 +189,27 @@ public class RequestServiceImpl implements RequestService {
         bentuk.put(2, "Hard Copy");
 
         return bentuk;
+    }
+
+    @Override
+    public List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId) {
+        // Retrieve all SuratKeluar objects associated with the specified penandatanganId
+        List<SuratKeluar> suratKeluarList = suratKeluarDb.findByPenandatanganId(penandatanganId);
+
+        // Create a list to store the associated RequestSurat objects
+        List<RequestSurat> requestSuratList = new ArrayList<>();
+
+        // Iterate over the SuratKeluar objects
+        for (SuratKeluar suratKeluar : suratKeluarList) {
+            // Retrieve the associated RequestSurat object
+            RequestSurat requestSurat = suratKeluar.getRequestSurat();
+
+            // Add the retrieved RequestSurat object to the list
+            requestSuratList.add(requestSurat);
+        }
+
+        // Return the list of associated RequestSurat objects
+        return requestSuratList;
     }
 
     // ------------------REQUEST TEMPLATE----------------

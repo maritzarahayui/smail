@@ -102,6 +102,13 @@
                     </div>
                 </div>
 
+                <br>
+                <div class="frame-button" th:if="${base64PDF != null}">
+                    <h3 class="label6">File</h3>
+                    <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
+                </div>
+                <br>
+
                 <div class="form-group">
                     <div class="upload-illustration-frame">
                         <div class="file-input">
@@ -152,18 +159,20 @@
 
                 <div class="forward-frame">
                     <div class="label">Teruskan ke ...</div>
-                    
                     <div class="tembusan">
                         <div class="tembusan-wrapper">
-                            <select class="tembusan-content">
+                            <select class="tembusan-content" name="penandatangan">
+                                <option value="" disabled>Select Penandatangan</option>
                                 <option th:each="pengguna : ${listTembusan}"
-                                        th:value="${pengguna.nama}"
-                                        th:text="${pengguna.nama}">
+                                        th:value="${pengguna.id}"
+                                        th:text="${pengguna.nama}"
+                                        th:selected="${suratKeluar != null and suratKeluar.penandatangan != null and suratKeluar.penandatangan.id == pengguna.id}">
                                 </option>
                             </select>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="text-center action-buttons">
                     <button type="submit" class="button">Simpan perubahan</button>

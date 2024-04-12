@@ -23,10 +23,10 @@
         <nav th:replace="~{fragments/asset :: asset}"></nav>
         
         <div class="frame-parent" th:each="requestSurat: ${requestSurats}">
-            
-            <form th:action="@{/pengurus/detail/{id}/updateStatus(id=${requestSurat.id})}" method="post">
 
-                <div class="row">
+            <form th:action="@{/ttd/update/{id}(id=${requestSurat.id})}" method="post" enctype="multipart/form-data">
+
+            <div class="row">
                     <div class="detail-wrapper">
                         <div class="detail">ID Surat</div>
                     </div>
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <div class="content" th:text="${requestSurat.bentukSurat}"></div>
+                        <div class="content" th:text="${outgoing.nomorArsip}"></div>
                     </div>
                 </div>
 
@@ -92,27 +92,67 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <select class="content" th:field="${requestSurats.status}">
-                            <option th:each="entry : ${statusMap.entrySet()}"
-                                    th:value="${entry.key}" th:text="${entry.value}" 
-                                    th:selected="${entry.key == requestSurats.status}">
-                            </option>
-                        </select>
+                        <div class="content" th:text="${statusMap[requestSurat.status]}"></div>
                     </div>
                 </div>
 
-                <div id="preview-template" class="preview-template">
-                    <div class="preview-title">Preview Template</div>
+
+                <br>
+                <div class="frame-button" th:if="${base64PDF != null}">
+                    <h3 class="label6">File</h3>
+                    <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
+                </div>
+                <br>
+
+                <div class="form-group" th:if="${requestSurat.status != 5}">
+                    <div class="upload-illustration-frame">
+                        <div class="file-input">
+                            <div class="secondary-message">secondary message</div>
+                            <div class="rectangle-frame">
+                                <div class="arsip-surat-frame">
+                                    <div class="button-frame1">
+                                        <label class="upload-illustration" for="file">
+                                            <div class="chevrondown-icon">
+                                                <div class="wrapper-group">
+                                                    <img
+                                                            class="group-icon"
+                                                            alt=""
+                                                            src="/images/imagetengah.png"
+                                                    />
+                                                </div>
+                                                <img
+                                                        class="chevrondown-icon-child"
+                                                        alt=""
+                                                        src="/images/upload.svg"
+                                                />
+
+                                                <img
+                                                        class="chevrondown-icon-item"
+                                                        loading="lazy"
+                                                        alt=""
+                                                        src="/images/imagekanan.png"
+                                                />
+                                            </div>
+                                            <img
+                                                    class="upload-illustration-child"
+                                                    alt=""
+                                                    src="/images/imagekiri.png"
+                                            />
+                                        </label>
+                                        <input type="file" class="custom-file-input" id="file" name="file">
+                                    </div>
+                                    <h3 class="upload-file-kamu-container">
+                                        <span>Upload</span>
+                                        <span class="file-kamu-di"> file yang sudah ditandatangani di sini dalam format .pdf</span>
+                                    </h3>
+                                    <span class="file-name"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <embed
-                    th:attr="src='data:application/pdf;base64,' + ${base64PDF}"
-                    type="application/pdf"
-                    width="100%"
-                    height="300px"
-                />
-
-                <div class="text-center action-buttons">
+                <div class="text-center action-buttons" th:if="${requestSurat.status != 5}">
                     <button type="submit" class="button">Simpan perubahan</button>
                 </div>
 
@@ -121,6 +161,17 @@
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        let listFieldValues = []; // Array to store input values
+
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.querySelector('.file-name').textContent = fileName;
+        });
+    </script>
+
+
 
     
 </body>

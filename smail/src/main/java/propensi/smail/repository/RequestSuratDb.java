@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.user.*;
 import propensi.smail.model.RequestSurat;
 

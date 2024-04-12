@@ -82,27 +82,32 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <select class="content" th:field="${requestSurats.status}">
+                        <select class="content" th:field="${requestSurats.status}" onchange="toggleReasonField(this)">
                             <option th:each="entry : ${statusMap.entrySet()}"
-                                    th:value="${entry.key}" th:text="${entry.value}" 
+                                    th:value="${entry.key}" th:text="${entry.value}"
                                     th:selected="${entry.key == requestSurats.status}">
                             </option>
                         </select>
                     </div>
                 </div>
 
-                <div class="forward-frame">
-                    <div class="label">Teruskan ke ...</div>
-                    
-                    <div class="tembusan">
-                        <div class="tembusan-wrapper">
-                            <select class="tembusan-content">
-                                <option th:each="pengguna : ${listTembusan}"
-                                        th:value="${pengguna.nama}"
-                                        th:text="${pengguna.nama}">
-                                </option>
-                            </select>
-                        </div>
+                <div class="row" id="reasonField" style="display: none;">
+                    <div class="detail-wrapper">
+                        <div class="detail">Alasan Penolakan</div>
+                    </div>
+
+                    <div class="content-wrapper">
+                        <input type="text" class="content" th:field="${requestSurats.alasanPenolakan}" />
+                    </div>
+
+                </div>
+
+                <div class="row" th:if="${requestSurats.status == 3}">
+                    <div class="detail-wrapper">
+                        <div class="detail">Alasan Penolakan</div>
+                    </div>
+                    <div class="content-wrapper">
+                        <div class="content" th:text="${requestSurats.alasanPenolakan}"></div>
                     </div>
                 </div>
 
@@ -115,5 +120,18 @@
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+
+    <script th:inline="javascript">
+    function toggleReasonField(select) {
+        var selectedValue = select.value;
+        var reasonField = document.getElementById("reasonField");
+        if (selectedValue === '3') {
+            reasonField.style.display = "block";
+        } else {
+            reasonField.style.display = "none";
+        }
+    }
+    </script>
 </body>
 </html>

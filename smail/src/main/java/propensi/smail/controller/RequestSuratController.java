@@ -1,5 +1,6 @@
 package propensi.smail.controller;
 
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -452,28 +453,35 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/request/process")
+    @Transactional(readOnly = true)
     public String showAllProcessingRequestsAdmin(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
+        try {
+            List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
+            model.addAttribute("requestSurats", requestSurats);
 
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+            if (auth != null) {
+                OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+                String email = oauthUser.getEmail();
+                Optional<Pengguna> user = penggunaDb.findByEmail(email);
 
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
+                if (user.isPresent()) {
+                    Pengguna pengguna = user.get();
+                    model.addAttribute("role", penggunaService.getRole(pengguna));
+                    model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                } else {
+                    return "auth-failed";
+                }
             }
-        }
 
-        return "admin-history-diproses";
+            return "admin-history-diproses";
+        } catch (Exception e) {
+            // Handle exception
+            return "error-page";
+        }
     }
 
     @GetMapping("/admin/request/finished")
+    @Transactional(readOnly = true)
     public String showAllFinishedRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats = requestService.getAllFinishedRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
@@ -530,12 +538,13 @@ public class RequestSuratController {
                 .collect(Collectors.toList());
 
         model.addAttribute("listTembusan", listTembusan);
-        
-        return "admin-detail-diajukan"; 
+
+        return "admin-detail-diajukan";
     }
 
     @PostMapping("/admin/detail/{id}/updateStatus")
-    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, Model model, Authentication auth) {
+    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
+                               Model model, Authentication auth) {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -552,6 +561,13 @@ public class RequestSuratController {
         
         RequestSurat requestSurat = requestService.getRequestSuratById(id);
         requestSurat.setStatus(status);
+
+        if (status == 3) {
+            requestSurat.setAlasanPenolakan(alasanPenolakan);
+        } else {
+            requestSurat.setAlasanPenolakan(null);
+        }
+
         requestSuratDb.save(requestSurat);
 
         String redirectUrl = "/admin/detail/" + id;
