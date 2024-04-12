@@ -54,7 +54,7 @@
                   <div class="cacaccacacacacagmailcom">
                     <input
                       class="cacaccacacacacagmailcom1"
-                      placeholder="cacaccacacacaca@gmail.com"
+                      placeholder="Masukkan alamat email"
                       type="text"
                     />
                   </div>
@@ -116,13 +116,17 @@
         plusButton.className = "button26";
         plusButton.innerHTML =
           '<img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">';
-
+        plusButton.onclick = function() {
+          addRow(event);
+        };
         // Buat tombol delete
         let deleteButton = document.createElement("div");
         deleteButton.className = "button27";
         deleteButton.innerHTML =
           '<img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">';
-
+        deleteButton.addEventListener("click", function () {
+          group.remove(); // Hapus baris yang berisi elemen-elemen tersebut
+        });
         // Tambahkan input dan tombol ke dalam div rowDiv
         rowDiv.appendChild(newInput);
         buttonParentDiv.appendChild(plusButton);
@@ -131,14 +135,9 @@
         group.appendChild(rowDiv);
         group.appendChild(frameWrapperDiv);
 
-        // Temukan elemen dengan class gmail-logo-parent
-        let gmailLogoParent = document.querySelector(".gmail-logo-parent");
-
-        // Tambahkan baris baru di bawah elemen gmail-logo-parent
-        gmailLogoParent.parentNode.insertBefore(
-          group,
-          gmailLogoParent.nextSibling
-        );
+        // Temukan elemen dengan id gmail-logo-parent
+        let parent = document.querySelector(".collaborator-logos");
+        parent.appendChild(group);
 
         // Tambahkan event listener untuk mengambil nilai input email ke dalam array jika diperlukan
         newInput.addEventListener("input", function () {
