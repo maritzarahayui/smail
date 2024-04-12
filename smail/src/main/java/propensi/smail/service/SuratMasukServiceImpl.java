@@ -106,18 +106,18 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        body = "Yth Bapak/Ibu,\n"
+        body = String.format("Yth Bapak/Ibu,\n"
                     + "Surat yang terlampir di bawah ini ditujukan kepada anda. "
                     + "Berikut adalah informasi lebih detail mengenai surat tersebut:\n\n"
-                    + "Perihal : " + suratMasuk.getPerihal() + "\n"
-                    + "dari    : "+ suratMasuk.getPengirim() + "\n"
-                    + "Tanggal : " + suratMasuk.getTanggalDibuat()
-
-
-                    +"\n\n\n"
+                    + "Perihal  : %-20s %s\n" // %s untuk memasukkan nilai variabel, dan %-20s untuk mengatur panjang string
+                    + "Dari     : %-20s %s\n"
+                    + "Tanggal  : %-20s %s\n\n\n"
                     + "Terima kasih,\n"
                     + "Yayasan Tazkia\n"
-                    + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n";
+                    + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
+                    suratMasuk.getPerihal(), "", // Tambahkan spasi kosong untuk menjaga titik dua sejajar
+                    suratMasuk.getPengirim(), "",
+                    suratMasuk.getTanggalDibuat(), "");
 
         helper.setTo(to);
         helper.setSubject(subject);
