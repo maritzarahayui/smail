@@ -2,6 +2,7 @@ package propensi.smail.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.Base64;
 import java.io.IOException;
 import java.text.ParseException;
@@ -47,9 +48,9 @@ public class SuratMasukController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
         @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
-        @RequestParam("tembusan") String[] tembusan, Authentication auth, Model model) throws ParseException {
+        Authentication auth, Model model) throws ParseException {
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             return "redirect:/surat-masuk/form";
@@ -102,6 +103,16 @@ public class SuratMasukController {
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         byte[] pdf = suratMasuk.getFile();
+        // debug
+        System.out.println("debug coy");
+        // debug iterate tembusan
+        System.out.println("tembusan");
+        if (suratMasuk.getTembusan() != null) {
+            for (String tembusan : suratMasuk.getTembusan()) {
+                System.out.println(tembusan);
+            }
+        }
+        System.out.println(suratMasuk.getStatus());
 
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
@@ -169,7 +180,7 @@ public class SuratMasukController {
     public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
         model.addAttribute("suratMasuk", suratMasuk);
-        
+        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -190,13 +201,40 @@ public class SuratMasukController {
     @GetMapping("/send/{id}")
     public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
         SuratMasuk file = suratMasukService.getFile(id);
-
-        file.setStatus(3);
-
         String[] recipients = to.split(","); 
         
         suratMasukService.sendEmail(recipients, file.getPerihal(), "", file);
         return "redirect:/surat-masuk/detail/" + id;
+    }
+
+    // route to follow up arsip surat 
+    @GetMapping("/follow-up/{id}")
+    public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+
+        List<Pengguna> listTembusan = penggunaDb.findAll().stream()
+                .filter(user -> {
+                    String role = penggunaService.getRole(user);
+                    return role.equals("Dosen") || role.equals("Pengurus");
+                })
+                .collect(Collectors.toList());
+        model.addAttribute("listTembusan", listTembusan);
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "follow-up";
     }
     
 }

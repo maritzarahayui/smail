@@ -18,7 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 public interface SuratMasukService {
-    SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim, String judul, String[] tembusan);
+    SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim, String judul);
     SuratMasuk getFile(String id);
     Stream<SuratMasuk> getAllFiles();
     List<SuratMasuk> getAllSuratMasuk();

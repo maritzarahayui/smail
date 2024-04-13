@@ -30,16 +30,8 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     private SuratMasukDb suratMasukDb;
 
     @Override
-    public SuratMasuk store(MultipartFile file, String judul, String kategori, String perihal, String pengirim, String[] tembusan) {
+    public SuratMasuk store(MultipartFile file, String judul, String kategori, String perihal, String pengirim) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        //debug
-        System.out.println("File Name: " + fileName);
-        System.out.println(judul);
-        System.out.println(kategori);
-        System.out.println(perihal);
-        System.out.println(pengirim);
-        System.out.println(tembusan);
-
         try {
             SuratMasuk suratMasuk = new SuratMasuk();
                 suratMasuk.setNomorArsip(generateId(kategori));
@@ -50,10 +42,8 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
                 suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
-                suratMasuk.setTembusan(tembusan);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
-            
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file " + fileName, e);
         }
@@ -104,21 +94,27 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Async
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
+        // ubah status dan tembusan objek surat masuk
+        suratMasuk.setStatus(2);
+        suratMasuk.setTembusan(to);
+        suratMasukDb.save(suratMasuk);
+        
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
         body = String.format("Yth Bapak/Ibu,\n"
-                    + "Surat yang terlampir di bawah ini ditujukan kepada anda. "
-                    + "Berikut adalah informasi lebih detail mengenai surat tersebut:\n\n"
+                    + "Surat yang terlampir di bawah ini ditujukan kepada Anda. "
+                    + "Berikut adalah keterangan mengenai surat tersebut.\n\n"
                     + "Perihal  : %-20s %s\n" // %s untuk memasukkan nilai variabel, dan %-20s untuk mengatur panjang string
                     + "Dari     : %-20s %s\n"
-                    + "Tanggal  : %-20s %s\n\n\n"
-                    + "Terima kasih,\n"
+                    + "Tanggal  : %-20s %s\n\n"
+                    + "Untuk informasi lebih lanjut, Anda dapat mengaksesnya melalui file yang terlampir atau hubungi (021)87962291\n\n\n\n"
+                    + "Salam,\n"
                     + "Yayasan Tazkia\n"
                     + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
                     suratMasuk.getPerihal(), "", // Tambahkan spasi kosong untuk menjaga titik dua sejajar
                     suratMasuk.getPengirim(), "",
                     suratMasuk.getTanggalDibuat(), "");
-
+        
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(body, false); 
@@ -126,6 +122,17 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         helper.addAttachment(suratMasuk.getFileName(), new ByteArrayDataSource(suratMasuk.getFile(), "application/pdf")); // Specify the content type for the attachment
         
         mailSender.send(message);
+
+        
+
+        // debug
+        System.out.println("Email sent to: "  );
+        // iterate
+        for (String email : to) {
+            System.out.println(email);
+        }
+        // status
+        System.out.println("Status: " + suratMasuk.getStatus());
     }
 
 
