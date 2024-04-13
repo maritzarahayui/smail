@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -101,20 +102,23 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String tanggalDibuat = dateFormat.format(suratMasuk.getTanggalDibuat());
         body = String.format("Yth Bapak/Ibu,\n"
-                    + "Surat yang terlampir di bawah ini ditujukan kepada Anda. "
-                    + "Berikut adalah keterangan mengenai surat tersebut.\n\n"
-                    + "Perihal  : %-20s %s\n" // %s untuk memasukkan nilai variabel, dan %-20s untuk mengatur panjang string
-                    + "Dari     : %-20s %s\n"
-                    + "Tanggal  : %-20s %s\n\n"
-                    + "Untuk informasi lebih lanjut, Anda dapat mengaksesnya melalui file yang terlampir atau hubungi (021)87962291\n\n\n\n"
-                    + "Salam,\n"
-                    + "Yayasan Tazkia\n"
-                    + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
-                    suratMasuk.getPerihal(), "", // Tambahkan spasi kosong untuk menjaga titik dua sejajar
-                    suratMasuk.getPengirim(), "",
-                    suratMasuk.getTanggalDibuat(), "");
-        
+        + "Surat yang terlampir di bawah ini ditujukan kepada Anda. "
+        + "Berikut adalah keterangan mengenai surat tersebut.\n\n"
+        + "Perihal  : %-20s %s\n" // %s untuk memasukkan nilai variabel, dan %-20s untuk mengatur panjang string
+        + "Dari     : %-20s %s\n"
+        + "Tanggal  : %-20s %s\n\n"
+        + "Untuk informasi lebih lanjut, Anda dapat mengaksesnya melalui file yang terlampir atau hubungi (021)87962291\n\n\n"
+        + "Salam,\n"
+        + "Yayasan Tazkia\n"
+        + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
+        suratMasuk.getPerihal(), "", // Tambahkan spasi kosong untuk menjaga titik dua sejajar
+        suratMasuk.getPengirim(), "",
+        tanggalDibuat, ""); // Masukkan tanggal yang sudah diformat
+
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(body, false); 
