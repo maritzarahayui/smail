@@ -103,17 +103,7 @@ public class SuratMasukController {
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         byte[] pdf = suratMasuk.getFile();
-        // debug
-        System.out.println("debug coy");
-        // debug iterate tembusan
-        System.out.println("tembusan");
-        if (suratMasuk.getTembusan() != null) {
-            for (String tembusan : suratMasuk.getTembusan()) {
-                System.out.println(tembusan);
-            }
-        }
-        System.out.println(suratMasuk.getStatus());
-
+        
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 

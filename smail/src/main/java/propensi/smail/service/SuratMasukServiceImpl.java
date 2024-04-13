@@ -122,20 +122,5 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         helper.addAttachment(suratMasuk.getFileName(), new ByteArrayDataSource(suratMasuk.getFile(), "application/pdf")); // Specify the content type for the attachment
         
         mailSender.send(message);
-
-        
-
-        // debug
-        System.out.println("Email sent to: "  );
-        // iterate
-        for (String email : to) {
-            System.out.println(email);
-        }
-        // status
-        System.out.println("Status: " + suratMasuk.getStatus());
     }
-
-
-    
-
 }
