@@ -121,13 +121,6 @@
             </a>
         </div>
     </section>
-    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
-        <div class="button31">
-            <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">
-                <div class="simpan-perubahan">Terima Pengajuan</div>
-            </a>
-        </div>
-    </section>
     <section class="nomor-surat1">
         <div class="button31">
             <a th:href="@{'/template/new-requests'}">

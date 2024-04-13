@@ -79,26 +79,8 @@
                                 <input class="keuangan3" placeholder="Cari surat" type="text" name="keyword" />
                             </div>
                         </form>
-
-                        <div class="button-parent">
-                            <button class="button18">
-                                <img
-                                    class="solarcalendar-outline-icon"
-                                    alt=""
-                                    src="/images/calendar.svg"
-                                />
-                                <div class="periode-20212022">Periode 2021/2022</div>
-                            </button>
-                            <button class="button19">
-                                <img
-                                    class="fluentfilter-12-regular-icon"
-                                    alt=""
-                                    src="/images/filter.svg"
-                                />
-                                <div class="filters">Filters</div>
-                            </button>
-                        </div>
                     </div>
+
                 </div>
 
                 <div class="t-e-m-p-container-parent">
@@ -125,10 +107,6 @@
                                     <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
                                     <td>
                                         <span th:text="${requestSurat.pengaju.nama}"></span>
-                                        <br/>
-                                        (<span th:text="${requestSurat.pengaju.id}"></span>)
-                                        <br/>
-                                        <span th:text="${requestSurat.pengaju.email}"></span>
                                     </td>
                                     <td th:text="${requestSurat.bentukSurat}"></td>
                                     <td th:text="${requestSurat.tanggalPengajuan}"></td>
