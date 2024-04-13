@@ -32,7 +32,7 @@ public class RequestSurat {
 
     @NotNull
     @Column(name = "bentuk_surat", nullable = false)
-    private String bentukSurat;
+    private List<String> bentukSurat;
 
     @NotNull
     @Column(name = "bahasa", nullable = false)
