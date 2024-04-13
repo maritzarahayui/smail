@@ -1,6 +1,15 @@
 package propensi.smail.service;
 
+import org.apache.coyote.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import propensi.smail.model.*;
+import propensi.smail.repository.*;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import java.util.*;
 
@@ -8,13 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.model.FieldData;
-import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.TemplateSurat;
-import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.RequestTemplateDb;
-import propensi.smail.repository.TemplateSuratDb;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -28,7 +32,15 @@ public class RequestServiceImpl implements RequestService {
     TemplateSuratDb templateSuratDb;
 
     @Autowired
+    SuratKeluarDb suratKeluarDb;
+
+    @Autowired
     TemplateService templateService;
+
+    @Override
+    public void saveOrUpdate(RequestSurat requestSurat) {
+        requestSuratDb.save(requestSurat);
+    }
 
     @Override
     public RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO) {
@@ -38,7 +50,7 @@ public class RequestServiceImpl implements RequestService {
             requestSurat.setKategori(requestDTO.getKategori());
             requestSurat.setJenisSurat(requestDTO.getJenisSurat());
             requestSurat.setKeperluan(requestDTO.getKeperluan());
-            requestSurat.setStatus(1); // 1 --> REQUESTED
+            requestSurat.setStatus(1); // Diajukan
             requestSurat.setId(generateRequestId(requestSurat.getPengaju()));
             requestSurat.setListFieldData(requestDTO.getListFieldData());
 
@@ -62,10 +74,32 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratDb.findAll();
     }
 
-    // @Override
-    // public List<RequestSurat> getRequestsByUser(Pengguna pengguna) {
-    //     return requestSuratDb.findByPengaju(pengguna);
-    // }
+    @Override
+    public List<RequestSurat> getAllSubmitedRequestsSurat() {
+        return requestSuratDb.findByStatus(1);
+    }
+
+    @Override
+    public List<RequestSurat> getAllCanceledRequestsSurat() {
+        return requestSuratDb.findByStatus(2);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRejectedRequestsSurat() {
+        return requestSuratDb.findByStatus(3);
+    }
+
+    @Override
+    public List<RequestSurat> getAllOnProcessRequestsSurat() {
+
+        return requestSuratDb.findByStatus(4);
+
+    }
+
+    @Override
+    public List<RequestSurat> getAllFinishedRequestsSurat() {
+        return requestSuratDb.findByStatus(5);
+    }
 
     @Override
     public RequestSurat getRequestSuratById(String requestSuratId) {
@@ -74,9 +108,68 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public RequestSurat batalkanRequestSurat(String requestSuratId) {
+    public RequestSurat findRequestById(String id) {
+        return requestSuratDb.findByIdContainingIgnoreCase(id);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByJenisSurat(String jenisSurat) {
+        return requestSuratDb.findByJenisSuratContainingIgnoreCase(jenisSurat);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByBentukSurat(String bentukSurat) {
+        return requestSuratDb.findByBentukSuratContainingIgnoreCase(bentukSurat);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan) {
+        return requestSuratDb.findByTanggalPengajuan(tanggalPengajuan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan) {
+        return requestSuratDb.findByTanggalDibatalkan(tanggalDibatalkan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalDibatalkan(tanggalPengajuan, tanggalDibatalkan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan) {
+        return requestSuratDb.findByTanggalPenolakan(tanggalPenolakan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalPenolakan(tanggalPengajuan, tanggalPenolakan);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalSelesai(Date tanggalSelesai) {
+        return requestSuratDb.findByTanggalSelesai(tanggalSelesai);
+    }
+
+    @Override
+    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai) {
+        return requestSuratDb.findByTanggalPengajuanOrTanggalSelesai(tanggalPengajuan, tanggalSelesai);
+    }
+
+    // @Override
+    // public RequestSurat batalkanRequestSurat(String requestSuratId) {
+    //     RequestSurat requestSurat = getRequestSuratById(requestSuratId);
+    //     requestSurat.setStatus(2); // Dibatalkan
+    //     return requestSuratDb.save(requestSurat);
+    // }
+
+    @Override
+    public RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan) {
         RequestSurat requestSurat = getRequestSuratById(requestSuratId);
-        requestSurat.setStatus(1); // Misalnya, 1 mewakili status "Dibatalkan"
+        requestSurat.setStatus(2); // Dibatalkan
+        requestSurat.setAlasanPembatalan(alasanPembatalan);
+        requestSurat.setTanggalDibatalkan(new Date());
         return requestSuratDb.save(requestSurat);
     }
 
@@ -150,6 +243,85 @@ public class RequestServiceImpl implements RequestService {
         bentuk.put(2, "Hard Copy");
 
         return bentuk;
+    }
+
+    @Override
+    public List<RequestSurat> searchRequests(String keyword, int status) {
+
+        List<RequestSurat> suratList = requestSuratDb.findByKeyword(keyword);
+        List<RequestSurat> resultSurat = new ArrayList<>();
+
+        for (RequestSurat rs : suratList) {
+            if (status == 1) {
+                if (rs.getStatus() == 1) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 2) {
+                if (rs.getStatus() == 2) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 3) {
+                if (rs.getStatus() == 3) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 4) {
+                if (rs.getStatus() == 4) {
+                    resultSurat.add(rs);
+                }
+            } if (status == 5) {
+                if (rs.getStatus() == 5) {
+                    resultSurat.add(rs);
+                }
+            }
+        }
+
+        return resultSurat;
+    }
+
+    @Override
+    public List<RequestSurat> getAllSubmittedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(1, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllCancelledRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(2, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRejectedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(3, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(4, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId) {
+        return requestSuratDb.findByStatusAndPengajuId(5, penggunaId);
+    }
+
+    @Override
+    public List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId) {
+        // Retrieve all SuratKeluar objects associated with the specified penandatanganId
+        List<SuratKeluar> suratKeluarList = suratKeluarDb.findByPenandatanganId(penandatanganId);
+
+        // Create a list to store the associated RequestSurat objects
+        List<RequestSurat> requestSuratList = new ArrayList<>();
+
+        // Iterate over the SuratKeluar objects
+        for (SuratKeluar suratKeluar : suratKeluarList) {
+            // Retrieve the associated RequestSurat object
+            RequestSurat requestSurat = suratKeluar.getRequestSurat();
+
+            // Add the retrieved RequestSurat object to the list
+            requestSuratList.add(requestSurat);
+        }
+
+        // Return the list of associated RequestSurat objects
+        return requestSuratList;
     }
 
     // ------------------REQUEST TEMPLATE----------------

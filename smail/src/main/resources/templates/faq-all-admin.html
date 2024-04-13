@@ -213,7 +213,7 @@ table.table tbody tr {
         <!-- DIESKALASI -->
         <div class="tab-pane" id="dieskalasi">
             <table class="table table-bordered" style="width:100%">
-                <thead>
+                <!-- <thead>
                     <tr>
                         <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
                         <th style="width: 70%; text-align: center; vertical-align: middle;">Pertanyaan</th>
@@ -235,6 +235,21 @@ table.table tbody tr {
                             style="background-color: var(--red-red-1);"
                             >Hapus</a>
                         </td>
+                    </tr>
+                </tbody> -->
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID</th>
+                        <th style="width: 90%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                    </tr>
+                </thead>
+                <tbody style="font-weight: 400;">
+                    <tr th:if="${#lists.isEmpty(faqsDieskalasi)}">
+                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dieskalasi</td>
+                    </tr>
+                    <tr th:each="faq : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
+                        <td th:text="${faq.id}"></td>
+                        <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
                     </tr>
                 </tbody>
             </table>
