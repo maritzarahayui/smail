@@ -3,39 +3,32 @@ package propensi.smail.controller;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.Base64;
-import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.mail.MessagingException;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
+import propensi.smail.model.Email;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.SuratMasukService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
@@ -55,13 +48,11 @@ public class SuratMasukController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
         @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
-        @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
+        Authentication auth, Model model) throws ParseException {
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            //debug
-            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
         }
     }
@@ -112,7 +103,7 @@ public class SuratMasukController {
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         byte[] pdf = suratMasuk.getFile();
-
+        
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
@@ -174,21 +165,66 @@ public class SuratMasukController {
         return "form-surat-masuk";
     }
 
-    @GetMapping("/daftar")
-    public String form(Model model) {
-        return "daftar-surat-masuk";
+    // root to disposisi arsip surat dengan id tertentu
+    @GetMapping("/disposisi/{id}")
+    public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "disposisi";
     }
 
-    // route to semua-surat-masuk
-    @GetMapping("/daftar-arsip")
-    public String semuaSuratMasuk(Model model, Authentication auth) {
-        return "daftar-arsip-tes";
+    // // route to send email 
+    @GetMapping("/send/{id}")
+    public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
+        SuratMasuk file = suratMasukService.getFile(id);
+        String[] recipients = to.split(","); 
+        
+        suratMasukService.sendEmail(recipients, file.getPerihal(), "", file);
+        return "redirect:/surat-masuk/detail/" + id;
     }
 
-    // route to detail-surat-masuk
-    @GetMapping("/detail-surat-masuk")
-    public String detailSuratMasuk(Model model, Authentication auth) {
-        return "detail-surat-masuk";
+    // route to follow up arsip surat 
+    @GetMapping("/follow-up/{id}")
+    public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+
+        List<Pengguna> listTembusan = penggunaDb.findAll().stream()
+                .filter(user -> {
+                    String role = penggunaService.getRole(user);
+                    return role.equals("Dosen") || role.equals("Pengurus");
+                })
+                .collect(Collectors.toList());
+        model.addAttribute("listTembusan", listTembusan);
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "follow-up";
     }
     
 }

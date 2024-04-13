@@ -106,18 +106,6 @@
                 <div class="soft-copy1" th:text="${suratMasuk.pengirim}"></div>
               </div>
             </div>
-            <!-- tembusan -->
-            <div class="frame-i-d-details5">
-              <div class="frame-div">
-                <div class="keperluan3">Tembusan</div>
-              </div>
-              <div class="undangan-makan-malam-dies-nata-container">
-                <div
-                  class="undangan-makan-malam1"
-                  th:text="${suratMasuk.tembusan}"
-                ></div>
-              </div>
-            </div>
             <!-- filename -->
             <div class="frame-i-d-details6">
               <div class="tanggal-surat-masuk-container">
@@ -130,13 +118,31 @@
                 ></div>
               </div>
             </div>
+            <!-- tembusan -->
+            <div class="frame-i-d-details5 tembusan-container">
+              <div class="frame-div">
+                <div class="keperluan3">Tembusan</div>
+              </div>
+              <div class="undangan-makan-malam-dies-nata-container" style="display: flex; flex-wrap: wrap;">
+                <div
+                  class="undangan-makan-malam1"
+                  th:each="tembusanItem, iterStat : ${suratMasuk.tembusan}"
+                  th:text="${tembusanItem + (iterStat.last ? '' : ', ')}"
+                  th:if="${!#lists.isEmpty(suratMasuk.tembusan)}"
+                  style="margin-right: 5px;">
+                ></div>
+              </div>
+            </div>
           </div>
 
           <!-- Footer with Download Button -->
           <div class="footer-frame">
             <div class="copyright-frame1">
               <h1 class="label1">Preview Surat</h1>
-              <a class="button4" th:href="@{'/surat-masuk/download/' + ${suratMasuk.nomorArsip}}">
+              <a
+                class="button4"
+                th:href="@{'/surat-masuk/download/' + ${suratMasuk.nomorArsip}}"
+              >
                 <img
                   class="octicondownload-16"
                   alt=""
@@ -161,9 +167,12 @@
               <div class="follow-up">Follow Up</div>
             </div>
             <div class="chevrondown-icon">
-              <div class="button6">
+              <a
+                class="button6"
+                th:href="@{'/surat-masuk/disposisi/' + ${suratMasuk.nomorArsip}}"
+              >
                 <div class="disposisi">Disposisi</div>
-              </div>
+              </a>
             </div>
           </div>
         </form>
