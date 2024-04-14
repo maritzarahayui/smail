@@ -21,9 +21,9 @@ public class SuratMasuk {
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
 
-    @NotNull
-    @Column(name = "judul", nullable = false)
-    private String judul;
+    // @NotNull
+    // @Column(name = "judul", nullable = false)
+    // private String judul;
 
     @NotNull
     @Column(name = "kategori", nullable = false)

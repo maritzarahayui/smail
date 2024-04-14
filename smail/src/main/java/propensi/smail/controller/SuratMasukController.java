@@ -1,13 +1,16 @@
 package propensi.smail.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.Base64;
+import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +49,11 @@ public class SuratMasukController {
     PenggunaService penggunaService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
-        @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
+        @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
         Authentication auth, Model model) throws ParseException {
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim);
+            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, pengirim);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             return "redirect:/surat-masuk/form";
@@ -77,8 +80,36 @@ public class SuratMasukController {
 
     //get all surat masuk
     @GetMapping("/all")
-    public String getAllSuratMasuk(Model model, Authentication auth) {
-        List<SuratMasuk> suratMasukList = suratMasukService.getAllSuratMasuk();
+    public String getAllSuratMasuk(Model model, Authentication auth, 
+        @RequestParam(value = "status", required = false) String status,
+        @RequestParam(value = "tanggalDibuat", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat) {
+        List<SuratMasuk> suratMasukList;
+        if (status != null && !status.isEmpty()) {
+            switch (status) {
+                case "Diarsipkan":
+                    suratMasukList = suratMasukService.getSuratMasukByStatus(1);
+                    break;
+                case "Follow Up":
+                    suratMasukList = suratMasukService.getSuratMasukByStatus(2);
+                    break;
+                case "Disposisi":
+                    suratMasukList = suratMasukService.getSuratMasukByStatus(3);
+                    break;
+                default:
+                    suratMasukList = suratMasukService.getAllSuratMasuk();
+                    break;
+            }
+        } else {
+            suratMasukList = suratMasukService.getAllSuratMasuk();
+        }
+
+        // Filter surat masuk berdasarkan tanggal dibuat jika parameter tanggalDibuat diberikan
+        if (tanggalDibuat != null) {
+            suratMasukList = suratMasukList.stream()
+                    .filter(surat -> surat.getTanggalDibuat().equals(tanggalDibuat))
+                    .collect(Collectors.toList());
+        }
+
         model.addAttribute("suratMasukList", suratMasukList);
 
         if (auth != null) {
@@ -225,6 +256,58 @@ public class SuratMasukController {
             }
         }
         return "follow-up";
+    }
+
+
+    /* BRANCH ARSIP
+     * BRANCH ARSIP
+     * BRANCH ARSIP
+     */
+    @GetMapping("/daftar")
+    public String form(Model model) {
+        return "daftar-surat-masuk";
+    }
+
+    // route to semua-surat-masuk
+    @GetMapping("/daftar-arsip")
+    public String semuaSuratMasuk(Model model, Authentication auth) {
+        return "daftar-arsip-tes";
+    }
+
+    // route to detail-surat-masuk
+    @GetMapping("/detail-surat-masuk")
+    public String detailSuratMasuk(Model model, Authentication auth) {
+        return "detail-surat-masuk";
+    }
+
+    @GetMapping("/search")
+    public String searchSuratMasuk(@RequestParam Map<String, String> params, Model model, Authentication auth,
+                                @RequestParam(value = "tanggalDibuat", required = false)
+                                @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
+                                @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
+
+        // Mendapatkan nilai pencarian dari parameter "q"
+        String searchQuery = params.get("q");
+
+        // Melakukan pencarian dan filtering surat masuk berdasarkan nilai pencarian
+        List<SuratMasuk> suratMasukList = suratMasukService.searchSuratMasuk(params, tanggalDibuat, sort, searchQuery);
+        model.addAttribute("suratMasukList", suratMasukList);
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        return "daftar-surat-masuk";
     }
     
 }

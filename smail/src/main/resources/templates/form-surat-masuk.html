@@ -10,6 +10,8 @@
     />
     <link rel="stylesheet" href="/css/form-surat-masuk.css" />
     <link rel="stylesheet" href="/css/global-daftar-template.css" />
+    <link rel="stylesheet" th:href="@{/css/riwayat-surat.css}"/>
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link
@@ -52,13 +54,23 @@
               method="post"
               enctype="multipart/form-data"
             >
-              <div class="text-input-frame">
+              <!-- <div class="text-input-frame">
                 <div class="label8">Judul</div>
                 <input
                   class="text-input14"
                   type="text"
                   id="judul"
                   name="judul"
+                  required
+                />
+              </div> -->
+              <div class="text-input-frame">
+                <div class="label8">Perihal</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="perihal"
+                  name="perihal"
                   required
                 />
               </div>
@@ -76,19 +88,8 @@
                   <option value="SDM">SDM</option>
                   <option value="Keuangan">Keuangan</option>
                   <option value="Sarana">Sarana</option>
-                  <option value="Kemahasiswaan">Kemahasiswaan</option>
+                  <option value="Lainnya">Lainnya</option>
                 </select>
-              </div>
-              <br />
-              <div class="text-input-frame">
-                <div class="label8">Perihal</div>
-                <input
-                  class="text-input14"
-                  type="text"
-                  id="perihal"
-                  name="perihal"
-                  required
-                />
               </div>
               <br />
               <div class="text-input-frame">
@@ -102,16 +103,7 @@
                 />
               </div>
               <br />
-              <!-- <div class="text-input-frame">
-                <div class="label8">Tembusan</div>
-                <input
-                  class="text-input14"
-                  type="text"
-                  id="tembusan"
-                  name="tembusan"
-                />
-              </div> -->
-
+        
               <br /><br /><br />
               <div class="form-group">
                 <div class="upload-illustration-frame">

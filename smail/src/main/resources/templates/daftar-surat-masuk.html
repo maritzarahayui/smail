@@ -1,26 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Semua Surat Masuk</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="/css/global" />
-    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
-    <link rel="stylesheet" href="/css/semua-surat-masuk.css" />
-    <link rel="stylesheet" href="/css/daftar-surat-masuk.css" />
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-
-    <link
-      rel="stylesheet"
-      href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"
-    />
+    
     <style>
       .button {
         background-color: #3a8b5a;
@@ -35,115 +24,218 @@
         transition: background-color 0.3s;
         width: 200px; /* Lebar tombol */
         text-align: center; /* Pusatkan teks di dalam tombol */
-    }
+      }
 
-    .button img {
-        width: 20px; /* Lebar gambar */
-        height: 20px; /* Tinggi gambar */
-        margin-right: 5px; /* Jarak antara gambar dan teks */
-    }
+      .detail-button {
+        width: 94px;
+        height: 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background: #0F7454;
+        border-radius: 12px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        display: inline-flex;
+        text-align: center;
+        color: #FFFFFE;
+        font-size: 16px;
+        font-family: Rubik;
+        font-weight: 600;
+        word-wrap: break-word;
+        text-decoration: none; /* Remove underline */
+      }
 
-    .button-text {
-        flex: 1; /* Item teks akan memperluas ruang yang tersedia */
-        text-align: center; /* Pusatkan teks di dalam tombol */
-    }
-
-    .button:hover {
-        background-color: #0f7454;
-        text-decoration: none;
-        outline: none;
-        color: white;
-    }
-    
-  </style>
+        /* Tambahkan CSS khusus di sini */
+      .table thead {
+          background-color: var(--green-green-2);
+          color: #fff; /* Warna teks putih pada kepala tabel */
+          text-align: center; /* Membuat teks di kepala tabel menjadi ditengah */
+      }
+      .table tbody td {
+          text-align: center; /* Membuat teks di baris tabel menjadi ditengah */
+      }
   
-  </head>
+      .search-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px; /* Atur margin sesuai kebutuhan */
+      }
+    </style>
 
-  <body>
-    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-    <section class="home-frame">
-      <div class="sub-group-container">
-        <img
-          class="sub-group-container-child"
-          loading="lazy"
-          alt=""
-          src="/images/kiri.svg"
-        />
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap elemen formulir dan input pencarian
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+        const tabs = document.querySelectorAll('.tabs-group button');
+        const inputSuratButton = document.querySelector('.button');
 
-        <div class="label-pair">
-          <h1 class="input-surat-masuk-container">
-            <span class="input-surat-masuk-container1">
-              <span class="input">Daftar</span>
-              <span>Surat Masuk</span>
-            </span>
-          </h1>
-        </div>
+        // Periksa apakah query parameter 'status' sudah ada pada URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const defaultStatus = urlParams.get('status');
 
-        <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
-      </div>
-    </section>
+        // Tambahkan event listener untuk menangani pengiriman formulir
+        searchForm.addEventListener('submit', function(event) {
+            // Hentikan pengiriman formulir default
+            event.preventDefault();
+            
+            // Ambil nilai input pencarian
+            const searchQuery = searchInput.value.trim();
+
+            // Ubah URL berdasarkan nilai input pencarian
+            const searchParams = new URLSearchParams();
+            searchParams.set('q', searchQuery);
+            const newUrl = '/surat-masuk/search?' + searchParams.toString();
+
+            // Redirect ke URL baru
+            window.location.href = newUrl;
+        });
+
+        // Jika tidak ada query parameter 'status' atau 'status' tidak diarsipkan, maka tandai tab "Diarsipkan"
+        if (!defaultStatus || defaultStatus !== 'Diarsipkan') {
+            document.getElementById('tab-diarsipkan').classList.add('active');
+        }
+        tabs.forEach(tab => {
+          tab.addEventListener('click', function() {
+              // Hapus kelas active dari semua tab
+              tabs.forEach(t => t.classList.remove('active'));
+
+              // Tambahkan kelas active ke tab yang diklik
+              this.classList.add('active');
+
+              const status = this.textContent.trim();
+              let newUrl = '/surat-masuk/all'; // Default URL
+              if (status !== 'Diarsipkan') {
+                  const searchParams = new URLSearchParams();
+                  searchParams.set('status', status);
+                  newUrl = '/surat-masuk/all?' + searchParams.toString();
+              }
+              window.location.href = newUrl;
+          });
+        });
+
+        // Event listener untuk button "Input Surat"
+        inputSuratButton.addEventListener('click', function(event) {
+            // Redirect ke halaman input surat
+            window.location.href = '/surat-masuk/form';
+        });
+    });
+  </script>
+</head>
+
+<body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="permintaan-template">
+  
+  <b class="pengajuan-permohonan-surat-container">
+    <span class="pengajuan">Daftar</span>
+    <span>Surat Masuk</span>
+  </b>
+
+  <nav th:replace="~{fragments/asset :: asset}"></nav>
     
     <div class="content-wrapper" style="margin-inline: 55px;">
-
       <div style="margin: 30px" class="buttonWrapper">
-        <a
-          th:if="${role == 'Admin' or role == 'Pengurus'}"
-          th:href="@{/surat-masuk/form}"
-          class="button"
-        >
-          <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
-          <div class="input-surat1">Input Surat</div>
-        </a>
+          <a
+              th:if="${role == 'Admin' or role == 'Pengurus'}"
+              th:href="@{/surat-masuk/form}"
+              class="button"
+          >
+              <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
+              <div class="input-surat1">Input Surat</div>
+          </a>
       </div>
+    
 
-      <table id="suratMasukTable">
-        <thead>
-          <tr>
-            <th>Nomor Arsip</th>
-            <th>Kategori</th>
-            <th>Judul</th>
-            <th>Tanggal Dibuat</th>
-            <th>Status</th>
-            <th>Pengirim</th>
-            <th>File Name</th>
-            <th>Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:if="${suratMasukList.size() == 0}">
-            <td colspan="9">Tidak ada surat masuk yang tersedia.</td>
-          </tr>
-          <!-- Iterasi melalui daftar surat masuk -->
-          <tr th:each="suratMasuk : ${suratMasukList}">
-            <td th:text="${suratMasuk.nomorArsip}"></td>
-            <td th:text="${suratMasuk.kategori}"></td>
-            <td th:text="${suratMasuk.judul}"></td>
-            <td
-              th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
-            ></td>
-            <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Disposisi' : (suratMasuk.status == 3 ? 'Follow Up' : ''))}"></td>
-            <td th:text="${suratMasuk.pengirim}"></td>
-            <td th:text="${suratMasuk.fileName}"></td>
-            <td>
-              <a
-                class="detail-button"
-                th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
-                >Detail</a
-              >
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <section class="bentuk-surat-text">
+      
+
+        <div class="tabs-container">
+            <div class="tabs-group-parent">
+                <div class="tabs-group">
+                  <button class="component-2" id="tab-diarsipkan">
+                      <img class="iconoutlineexclamation-circl" alt="" src="/images/iconoutlineexclamationcircle.svg" />
+                      <div class="tabs">Diarsipkan</div>
+                  </button>
+              
+                  <button class="component-3" id="tab-follow-up">
+                      <img class="iconoutlineexclamation-circl1" alt="" src="/images/iconoutlineexclamationcircle.svg" />
+                      <div class="tabs1">Follow Up</div>
+                  </button>
+              
+                  <button class="component-3" id="tab-disposisi">
+                      <img class="iconoutlineexclamation-circl1" alt="" src="/images/iconoutlineexclamationcircle.svg" />
+                      <div class="tabs1">Disposisi</div>
+                  </button>
+              </div>
+
+              <div class="search-wrapper">
+                <form action="/surat-masuk/search" method="get" id="searchForm">
+                    <div class="button17">
+                        <img class="search-icon1" alt="" src="/images/search.svg" />
+                        <input class="keuangan3" placeholder="Cari..." type="text" name="q" id="searchInput" />
+                    </div>
+                </form>
+              </div>
+
+            <div class="t-e-m-p-container-parent">
+                <div class="agustus-label-parent">
+                    <!-- Start of the table -->
+                    <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                                <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                                <th style="width: 45%; text-align: center; vertical-align: middle;">Perihal</th>
+                                <td style="width: 15%; text-align: center; vertical-align: middle;">
+                                    <div style="display: block;">Tanggal</div>
+                                    <div style="display: block;">Diarsipkan</div>
+                                </td>
+                                <th style="width: 25%; text-align: center; vertical-align: middle;">Pengirim</th>
+                                <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                          <tr th:if="${suratMasukList.size() == 0}">
+                            <td colspan="9">Tidak ada surat masuk yang tersedia.</td>
+                          </tr>
+                        <!-- Iterate through requestTemplates -->
+                        <tr th:each="suratMasuk : ${suratMasukList}">
+                          <td th:text="${suratMasuk.nomorArsip}"></td>
+                          <td th:text="${suratMasuk.kategori}"></td>
+                          <td th:text="${suratMasuk.perihal}"></td>
+                          <td
+                            th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
+                          ></td>
+                          <!-- <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Follow Up' : (suratMasuk.status == 3 ? 'Disposisi' : ''))}"></td> -->
+                          <td th:text="${suratMasuk.pengirim}"></td>
+                          <td>
+                            <a class="detail-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                                <div class="button-text">Detail</div>
+                            </a>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End of the table -->
+                </div>
+            </div>
+        </div>
+      </div>
+      <!-- </div> -->
+    </section>
     </div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-    <script>
-      $(document).ready(function () {
-        $('#suratMasukTable').DataTable();
-      });
-    </script>
-  </body>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
 </html>

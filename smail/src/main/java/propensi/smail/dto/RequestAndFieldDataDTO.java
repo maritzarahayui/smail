@@ -11,7 +11,7 @@ public class RequestAndFieldDataDTO {
 
     private String kategori;
     private String jenisSurat;
-    private String bentukSurat;
+    private List<String> bentukSurat;
     private String bahasa;
     private String keperluan;
 
