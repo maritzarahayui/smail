@@ -22,16 +22,19 @@ public class FAQ {
     @Column(name = "pertanyaan", nullable = false)
     private String pertanyaan;
 
-    @NotNull
-    @Column(name = "jawaban", nullable = false)
+    @Column(name = "jawaban")
     private String jawaban;
 
+    /* STATUS
+     * 0 : Belum dijawab
+     * 1 : Dieskalasi
+     * 2 : Terjawab
+     * 3 : Dihapus */
     @NotNull
     @Column(name = "status", nullable = false)
     private int status;
 
-    @NotNull
-    @Column(name = "tanggal_post", nullable = false)
+    @Column(name = "tanggal_post")
     private Date tanggalPost;
 
 }

@@ -7,17 +7,81 @@
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/home.css}"/>
+	<link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
     <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
 </head>
 
+<style>
+    .content-container {
+        width: 100%;
+        position: relative;
+        background-color: var(--white-white-1);
+        overflow: hidden;
+        height: 100%;  
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+        background-color: var(--white-white-1);
+    }
+
+    .accordion-container {
+        min-width: 85%;
+        max-width: 85%;
+    }
+
+    .accordion {
+        background-color: var(--blue-blue-2);
+        border-radius: var(--br-xs);
+        color: var(--white-white-1);
+        padding: var(--padding-xl);
+        gap: var(--gap-xl);
+        display: flex;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+  
+    .panel {
+        background-color: var(--green-green-5);
+        border-radius: var(--br-5xs);
+        color: var(--white-white-1);
+        padding: var(--padding-xl);
+        gap: var(--gap-xl);
+
+        display: none;
+        overflow: hidden;
+        box-sizing: border-box;
+        justify-content: space-between;
+    }
+
+    .panel.active {
+        display: block;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .accordion.active {
+        background-color: var(--green-green-5);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .chevron-rotate {
+        transform: rotate(180deg);
+    }
+
+  </style>
+
 <body>
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 	<div class="homepage">
-		<section class="frame-a">
+        
+		<div class="frame-a">
 		<div class="button-frame-a">
 			<div class="google-sign-i-n">
 			<div class="sub-f-r-a-m-e-b">
@@ -39,8 +103,11 @@
 			</div>
 			</div>
 		</div>
-		</section>
-		<section class="first-vector-frame">
+		</div>
+
+        <br><br><br><br>
+
+		<div class="first-vector-frame">
 		<img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
 		<div class="sekilas-info-frame">
 			<div class="about-s-m-a-i-l-system">
@@ -51,9 +118,50 @@
 			</b>
 			</div>
 		</div>
-		</section>
+		</div>
+
+        <div class="content-container">
+
+            <b class="title-container" style="margin: 0;">
+                <span class="title-gradient">Frequently Asked</span>
+                <span>Question</span>
+            </b>
+            
+            <br><br><br><br>
+
+            <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
+                <div class="accordion">
+                    <strong th:text="${faq.pertanyaan}"></strong>
+                    <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
+                </div>
+                <div class="panel" th:text="${faq.jawaban}"></div>
+                <br>
+            </div>
+
+            <br><br><br><br><br>
+
+        </div>
+
 	</div>	  
+
 	<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                panel.classList.toggle("active");
+                var chevron = this.querySelector('.chevron');
+                if (chevron) {
+                    chevron.classList.toggle("chevron-rotate");
+                }
+            });
+        }
+    </script>
 
 </body>
 

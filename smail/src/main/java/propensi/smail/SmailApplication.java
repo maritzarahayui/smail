@@ -9,10 +9,8 @@ import propensi.smail.service.AuthService;
 
 @SpringBootApplication
 public class SmailApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SmailApplication.class, args);
-	
 	}
 
 	@Bean
@@ -21,6 +19,8 @@ public class SmailApplication {
 		return args -> {
 			authService.importDataPengguna();
 		};
+		
+
 	}
 
 }

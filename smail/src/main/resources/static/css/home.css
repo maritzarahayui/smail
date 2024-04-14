@@ -307,7 +307,6 @@
 .first-vector-frame,
 .homepage,
 .sekilas-info-frame {
-  display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
