@@ -122,7 +122,7 @@
             <td
               th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"
             ></td>
-            <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Disposisi' : (suratMasuk.status == 3 ? 'Follow Up' : ''))}"></td>
+            <td th:text="${suratMasuk.status == 1 ? 'Diarsipkan' : (suratMasuk.status == 2 ? 'Disposisi' : (suratMasuk.status == 3 ? 'Mengajukan Follow Up' : ''))}"></td>
             <td th:text="${suratMasuk.pengirim}"></td>
             <td th:text="${suratMasuk.fileName}"></td>
             <td>

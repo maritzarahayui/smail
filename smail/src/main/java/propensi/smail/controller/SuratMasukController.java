@@ -138,7 +138,7 @@ public class SuratMasukController {
             case 2:
                 return "Disposisi";
             case 3:
-                return "Follow Up";
+                return "Mengajukan Follow Up";
             default:
                 return "Status Tidak Diketahui";
         }
@@ -202,15 +202,9 @@ public class SuratMasukController {
     public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
         model.addAttribute("suratMasuk", suratMasuk);
-
-        List<Pengguna> listTembusan = penggunaDb.findAll().stream()
-                .filter(user -> {
-                    String role = penggunaService.getRole(user);
-                    return role.equals("Dosen") || role.equals("Pengurus");
-                })
-                .collect(Collectors.toList());
-        model.addAttribute("listTembusan", listTembusan);
-        
+        // panggil listpenandatangan
+        List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
+        model.addAttribute("penandatangan", penandatangan);
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -226,5 +220,42 @@ public class SuratMasukController {
         }
         return "follow-up";
     }
-    
+
+    // route to follow up arsip surat
+    @PostMapping("/follow-up/{id}")
+    public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penerimaEksternal") String penerimaEksternal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
+        SuratMasuk arsipAwal = suratMasukService.getFile(id);
+        Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
+        SuratMasuk arsipFollowUp = suratMasukService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
+        model.addAttribute("suratMasuk", arsipAwal);
+        // debug
+        System.out.println("ID Penandatangan: " + idPenandatangan);
+        System.out.println("Penandatangan: " + penandatangan.getNama());
+        // debug arsip follow up
+        System.out.println("Arsip Follow Up: " + arsipFollowUp.getNomorArsip());
+        System.out.println("Judul: " + arsipFollowUp.getJudul());
+        System.out.println("Kategori: " + arsipFollowUp.getKategori());
+        System.out.println("Perihal: " + arsipFollowUp.getPerihal());
+        // System.out.println("Pengirim: " + arsipFollowUp.getPengirim());
+        System.out.println("Tanggal Dibuat: " + arsipFollowUp.getTanggalDibuat());
+        System.out.println("Status: " + arsipFollowUp.getStatus());
+        System.out.println("File: " + arsipFollowUp.getFileName());
+        System.out.println("Penandatangan: " + arsipFollowUp.getPenandatangan().getNama());
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        model.addAttribute("noArsipAwal", arsipAwal.getNomorArsip());
+        return "redirect:/surat-masuk/detail/" + arsipFollowUp.getNomorArsip();
+    }
 }
