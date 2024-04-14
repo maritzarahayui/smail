@@ -28,7 +28,6 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     List<RequestSurat> findByStatus(int status);
     RequestSurat findByIdContainingIgnoreCase(String id);
     List<RequestSurat> findByJenisSuratContainingIgnoreCase(String jenisSurat);
-    List<RequestSurat> findByBentukSuratContainingIgnoreCase(String bentukSurat);
     List<RequestSurat> findByTanggalPengajuan(Date tanggalPengajuan);
     List<RequestSurat> findByTanggalDibatalkan(Date tanggalDibatalkan);
     List<RequestSurat> findByTanggalPenolakan(Date tanggalPenolakan);
@@ -40,7 +39,6 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     List<RequestSurat> findByStatusAndPengajuId(int status, String penggunaId);
 
     @Query("SELECT r FROM RequestSurat r WHERE " +
-            "LOWER(r.bentukSurat) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(r.pengaju.nama) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(r.jenisSurat) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(r.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")

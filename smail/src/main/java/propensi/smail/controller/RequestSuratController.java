@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.stream.Collectors;
 
 import jakarta.validation.Valid;
@@ -150,12 +151,6 @@ public class RequestSuratController {
             return "Gagal membuat permintaan surat: " + e.getMessage(); 
         }
     }
-    
-    @GetMapping("all")
-    public ResponseEntity<List<RequestSurat>> showAllRequest() {
-        List<RequestSurat> allRequests = requestService.getAllRequestsSurat();
-        return new ResponseEntity<>(allRequests, HttpStatus.OK);
-    }
 
     @GetMapping("/request/history")
     public String showAllRequests(Model model, Authentication auth) {
@@ -236,12 +231,6 @@ public class RequestSuratController {
                     return "user-history-diajukan";
                 }
 
-                List<RequestSurat> requestSuratsByBentukSurat = requestService.getRequestByBentukSurat(searchValue);
-                if (!requestSuratsByBentukSurat.isEmpty()) {
-                    model.addAttribute("requestSurats", requestSuratsByBentukSurat);
-                    return "user-history-diajukan";
-                }
-
                 RequestSurat requestSuratsById = (RequestSurat) requestService.findRequestById(searchValue);
                 if (requestSuratsById != null) {
                     model.addAttribute("requestSurats", requestSuratsById);
@@ -313,12 +302,6 @@ public class RequestSuratController {
                 List<RequestSurat> requestSuratsByJenisSurat = requestService.getRequestByJenisSurat(searchValue);
                 if (!requestSuratsByJenisSurat.isEmpty()) {
                     model.addAttribute("requestSurats", requestSuratsByJenisSurat);
-                    return "user-history-dibatalkan";
-                }
-
-                List<RequestSurat> requestSuratsByBentukSurat = requestService.getRequestByBentukSurat(searchValue);
-                if (!requestSuratsByBentukSurat.isEmpty()) {
-                    model.addAttribute("requestSurats", requestSuratsByBentukSurat);
                     return "user-history-dibatalkan";
                 }
 
@@ -396,12 +379,6 @@ public class RequestSuratController {
                     return "user-history-ditolak";
                 }
 
-                List<RequestSurat> requestSuratsByBentukSurat = requestService.getRequestByBentukSurat(searchValue);
-                if (!requestSuratsByBentukSurat.isEmpty()) {
-                    model.addAttribute("requestSurats", requestSuratsByBentukSurat);
-                    return "user-history-ditolak";
-                }
-
                 RequestSurat requestSuratsById = (RequestSurat) requestService.findRequestById(searchValue);
                 if (requestSuratsById != null) {
                     model.addAttribute("requestSurats", requestSuratsById);
@@ -476,12 +453,6 @@ public class RequestSuratController {
                 List<RequestSurat> requestSuratsByJenisSurat = requestService.getRequestByJenisSurat(searchValue);
                 if (!requestSuratsByJenisSurat.isEmpty()) {
                     model.addAttribute("requestSurats", requestSuratsByJenisSurat);
-                    return "user-history-diproses";
-                }
-
-                List<RequestSurat> requestSuratsByBentukSurat = requestService.getRequestByBentukSurat(searchValue);
-                if (!requestSuratsByBentukSurat.isEmpty()) {
-                    model.addAttribute("requestSurats", requestSuratsByBentukSurat);
                     return "user-history-diproses";
                 }
 
@@ -726,6 +697,18 @@ public class RequestSuratController {
     public String detailRequestSuratFinished(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
+
+        SuratKeluar suratKeluar = suratKeluarService.getFileTtd(id);
+        byte[] pdf = suratKeluar.getFile();
+
+        SuratKeluar suratKeluar1 = requestSurats.getSurat();
+        model.addAttribute("outgoing", suratKeluar1);
+
+        // Mengonversi konten PDF ke Base64
+        String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+        model.addAttribute("base64PDF", base64PDF);
+        model.addAttribute("suratKeluar", suratKeluar);
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -740,6 +723,14 @@ public class RequestSuratController {
                 return "auth-failed";
             }
         }
+
+        Map<Integer, String> statusMap = new HashMap<>();
+        statusMap.put(1, "Diajukan");
+        statusMap.put(3, "Ditolak");
+        statusMap.put(4, "Diproses");
+        statusMap.put(5, "Selesai");
+
+        model.addAttribute("statusMap", statusMap);
 
         return "user-detail-selesai"; 
     }

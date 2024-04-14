@@ -1,6 +1,8 @@
 package propensi.smail.model;
 
 import lombok.*;
+import propensi.smail.model.user.Pengguna;
+
 import java.util.*;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -21,9 +23,9 @@ public class SuratMasuk {
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
 
-    @NotNull
-    @Column(name = "judul", nullable = false)
-    private String judul;
+    // @NotNull
+    // @Column(name = "judul", nullable = false)
+    // private String judul;
 
     @NotNull
     @Column(name = "kategori", nullable = false)
@@ -60,5 +62,9 @@ public class SuratMasuk {
     @OneToOne
     @JoinColumn(name = "surat_follow_up")
     private SuratKeluar suratFollowUp;
+
+    @ManyToOne
+    @JoinColumn(name = "penandatangan")
+    private Pengguna penandatangan;
 
 }

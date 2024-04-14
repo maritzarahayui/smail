@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.tanggalPengajuan}"></div>
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
