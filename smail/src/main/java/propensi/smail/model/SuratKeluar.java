@@ -26,11 +26,14 @@ public class SuratKeluar {
     @Column(name = "jenis_surat")
     private String jenisSurat;
 
+    @Column(name = "perihal")
+    private String perihal = "Permohonan request surat";
+
     // @Column(name = "penerima")
     // private User penerima;  // pending dl ya msh mikir
 
     @Column(name = "penerima_eksternal")
-    private String penerimaEksternal; // email
+    private String penerimaEksternal = " "; // email
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)

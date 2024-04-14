@@ -82,7 +82,8 @@
                             <td th:text="${requestSurat.id}" class="custom-td"></td>
                             <td th:text="${requestSurat.namaTemplate}" style="text-align: left;" class="custom-td"></td>
                             <td th:text="${requestSurat.kategori}" class="custom-td"></td>
-                            <td th:text="${requestSurat.isActive}" class="custom-td"></td>
+                            <td class="custom-td" th:if="${requestSurat.isActive}">Active</td>
+                            <td class="custom-td" th:unless="${requestSurat.isActive}">Inactive</td>
                             <td th:text="${requestSurat.tanggalDibuat}" class="custom-td"></td>
                             <td style="display: flex; justify-content: space-between;" class="custom-td">
                                 <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="button20">

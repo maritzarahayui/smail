@@ -82,7 +82,7 @@
                     <div class="tanggal-pengajuan1">Tanggal Pengajuan</div>
                 </div>
                 <div class="agustus-2022-wrapper2">
-                    <div class="agustus-20225" th:text="${requestSurat.tanggalPengajuan}"></div>
+                    <div class="agustus-20225" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
             <div class="frame-parts7">

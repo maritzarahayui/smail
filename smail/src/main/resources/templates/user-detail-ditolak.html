@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.tanggalPengajuan}"></div>
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
@@ -79,7 +79,7 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.tanggalPenolakan}"></div>
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 

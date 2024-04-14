@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Detail Surat Masuk</title>
+    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/detail-surat-masuk.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  </head>
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="detail-arsip-surat-diterima">
+      <div class="soft-copy-text1">
+        <img
+          class="soft-copy-text-child"
+          loading="lazy"
+          alt=""
+          src="/images/kiri.svg"
+        />
+
+        <div class="date-info-frame">
+          <h1 class="detail-surat">
+            <span class="detail">Detail</span>
+            <span> Surat</span>
+          </h1>
+        </div>
+      </div>
+      <img
+        class="detail-arsip-surat-diterima-child"
+        alt=""
+        src="/images/kanan.svg"
+      />
+      <!-- Detail Display Section -->
+      <main class="details-frame">
+        <form class="i-d-surat-jenis-nomor-pengirim">
+          <!-- Detail display content -->
+          <div class="i-d-surat-holder">
+            <!-- perihal -->
+            <div class="frame-i-d-details1">
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">Perihal</div>
+              </div>
+              <div class="keuangan-container">
+                <div class="keuangan2" th:text="${suratKeluar.perihal}"></div>
+              </div>
+            </div>
+            <!-- Nomor Surat -->
+            <div class="frame-i-d-details">
+              <div class="i-d-label-surat">
+                <div class="id-surat1">Nomor Arsip</div>
+              </div>
+              <div class="follow-up-button">
+                <div class="ku0011" th:text="${suratKeluar.nomorArsip}"></div>
+              </div>
+            </div>
+            <!-- tanggal -->
+            <div class="frame-i-d-details2">
+              <div class="nomor-surat-container">
+                <div class="nomor-surat1">Tanggal Dibuat</div>
+              </div>
+              <div class="itsiii2023-container">
+                <div
+                  class="itsiii20231"
+                  th:text="${suratKeluar.tanggalDibuat}"
+                ></div>
+              </div>
+            </div>
+            <!-- Kategori -->
+            <div class="frame-i-d-details1">
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">Kategori</div>
+              </div>
+              <div class="keuangan-container">
+                <div class="keuangan2" th:text="${suratKeluar.kategori}"></div>
+              </div>
+            </div>
+            <!-- jenis surat -->
+            <div class="frame-i-d-details1" th:if="${suratKeluar.jenisSurat != null}">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">Jenis Surat</div>
+                </div>
+                <div class="keuangan-container">
+                  <div class="keuangan2" name="jenis_surat" th:text="${suratKeluar.jenisSurat}"></div>
+                </div>
+              </div>
+              <div class="frame-i-d-details1" th:if="${suratKeluar.penerimaEksternal != ' '}">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">Penerima</div>
+                </div>
+                <div class="keuangan-container">
+                  <div class="keuangan2" name="penerima_eksternal" th:text="${suratKeluar.penerimaEksternal}"></div>
+                </div>
+              </div>
+            
+            <!-- filename -->
+            <div class="frame-i-d-details6">
+              <div class="tanggal-surat-masuk-container">
+                <div class="tanggal-surat-masuk1">Nama File</div>
+              </div>
+              <div class="agustus-2022-container">
+                <div
+                  class="agustus-20221"
+                  th:text="${suratKeluar.fileName}"
+                ></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Footer with Download Button -->
+          <div class="footer-frame">
+            <div class="copyright-frame1">
+              <h1 class="label1">Preview Surat</h1>
+              <a class="button4" th:href="@{'/surat-keluar/download/' + ${suratKeluar.nomorArsip}}">
+                <img
+                  class="octicondownload-16"
+                  alt=""
+                  src="\images\download-icon.svg"
+                />
+                <div class="download-surat">Download surat</div>
+              </a>
+            </div>
+            <!-- Embed PDF using Base64 content -->
+            <embed
+              class="image-20-icon"
+              th:attr="src='data:application/pdf;base64,' + ${base64PDF}"
+              type="application/pdf"
+              width="100%"
+              height="300px"
+            />
+          </div>
+        </form>
+      </main>
+    </div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+  </body>
+</html>

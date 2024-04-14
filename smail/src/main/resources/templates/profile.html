@@ -7,6 +7,7 @@
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/profile.css}"/>
+    <link rel="stylesheet" th:href="@{/css/riwayat-surat.css}"/>
     <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
@@ -16,127 +17,55 @@
 <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div class="profile">
-
-        <section class="main-frame">
-        <img class="main-frame-child" loading="lazy" alt="" src="/images/kiri.svg"/>
-
-        <div class="edit-profile-text">
-            <h1 class="edit-profile">
-            <span class="edit">Profile</span>
-            <!-- <span> Profile</span> -->
-            </h1>
-        </div>
-
-        <img class="main-frame-child" loading="lazy" alt="" src="/images/kanan.svg"/>
-        </section>
+    <div class="permintaan-template">
+        <b class="pengajuan-permohonan-surat-container">
+          <span class="pengajuan">Profile</span>
+        </b>
+      
+        <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
+        <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
 
         <section class="button-frame">
         <div class="inner-frame">
             <div class="ellipse-shape-parent">
             <div class="ellipse-shape">
-                <div class="button">
-                <!-- <img
-                    class="button-text-icon"
-                    loading="lazy"
-                    alt=""
-                    src="./public/ellipse-7@2x.png"
-                /> -->
-
-                <div class="button1">
-                    <div class="ubah-foto">Ubah foto</div>
-                    <!-- <img
-                    class="bitcoin-iconsedit-filled"
-                    loading="lazy"
-                    alt=""
-                    src="./public/bitcoiniconseditfilled.svg"
-                    /> -->
-                </div>
-                </div>
+                
                 <div class="text-input-frame">
                 <div class="text-input">
                     <div class="label">Nama Lengkap</div>
                     <div class="text-input1">
-                    <div class="placeholder-text">
-                        <div class="placeholder" th:text="${nama}"></div>
-                    </div>
-                    <!-- <input
-                        class="placeholder-text"
-                        placeholder="Maritza Rahayu"
-                        type="text"
-                        disabled
-                    /> -->
+                        <div class="placeholder-text">
+                            <div class="placeholder" th:text="${nama}"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-input2">
                     <div class="label1" th:text="${role == 'mahasiswa' ? 'NPM' : 'NIP'}"></div>
                     <div class="text-input3">
-                    <div class="placeholder-text1">
-                        <div class="placeholder" th:text="${id}"></div>
-                    </div>
-                    <!-- <input
-                        class="placeholder-text1"
-                        placeholder="2106751474"
-                        type="text"
-                        disabled
-                    /> -->
+                        <div class="placeholder-text1">
+                            <div class="placeholder" th:text="${id}"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-input4">
                     <div class="label2">Email</div>
                     <div class="text-input5">
-                    <div class="placeholder-text2">
-                        <div class="placeholder" th:text="${email}"></div>
-                    </div>
-                    <!-- <input
-                        class="placeholder-text2"
-                        placeholder="maritzarahayui@gmail.com"
-                        type="text"
-                        disabled
-                    /> -->
+                        <div class="placeholder-text2">
+                            <div class="placeholder" th:text="${email}"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="text-input6">
                     <div class="label3">Role</div>
                     <div class="text-input7">
-                    <div class="placeholder-text3">
-                        <div class="placeholder" th:text="${role}"></div>
-                    </div>
-                    <!-- <input
-                        class="placeholder-text3"
-                        placeholder="Mahasiswa"
-                        type="text"
-                        disabled
-                    /> -->
+                        <div class="placeholder-text3">
+                            <div class="placeholder" th:text="${role}"></div>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="text-input8">
-                    <div class="label4">Alamat</div>
-                    <div class="text-input9">
-                    <div class="placeholder-text4">
-                        <div class="placeholder">1234567890</div>
-                    </div>
-                    <input
-                        class="placeholder-text4"
-                        placeholder="Depok"
-                        type="text"
-                        disabled
-                    />
-                    </div>
                 </div>
-                <div class="text-input10">
-                    <div class="label5">Telepon</div>
-                    <div class="text-input11">
-                    <div class="placeholder-text5">
-                        <div class="placeholder">1234567890</div>
-                    </div>
-                    </div>
-                </div> -->
-                </div>
+
             </div>
-            <!-- <div class="button2">
-                <div class="simpan-perubahan">Simpan perubahan</div>
-            </div> -->
             </div>
         </div>
         </section>

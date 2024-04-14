@@ -26,7 +26,7 @@
             <div class="tabs-container">
                 <div class="tabs-group-parent">
                     <div class="tabs-group">
-                        <a class="component-2" th:href="@{/pengurus/request}">
+                        <a class="component-2" th:href="@{/ttd/request}">
                             <img
                                 class="iconoutlineexclamation-circl"
                                 alt=""
@@ -35,7 +35,7 @@
                             <div class="tabs">Request Surat</div>
                         </a>
 
-                        <a class="component-3" th:href="@{/pengurus/request}">
+                        <a class="component-3" th:href="@{#}">
                             <img
                                 class="iconoutlineexclamation-circl1"
                                 alt=""
@@ -79,13 +79,9 @@
                                     <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
                                     <td>
                                         <span th:text="${requestSurat.pengaju.nama}"></span>
-                                        <br/>
-                                        (<span th:text="${requestSurat.pengaju.id}"></span>)
-                                        <br/>
-                                        <span th:text="${requestSurat.pengaju.email}"></span>
                                     </td>
                                     <td th:text="${requestSurat.bentukSurat}"></td>
-                                    <td th:text="${requestSurat.tanggalPengajuan}"></td>
+                                    <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td style="display: flex; justify-content: space-between;">
                                         <a th:href="@{/pengurus/detail/{id}(id=${requestSurat.id})}" class="button20">
                                             <div class="button21">Detail</div>

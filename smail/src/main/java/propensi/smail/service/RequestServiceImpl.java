@@ -118,11 +118,6 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestSurat> getRequestByBentukSurat(String bentukSurat) {
-        return requestSuratDb.findByBentukSuratContainingIgnoreCase(bentukSurat);
-    }
-
-    @Override
     public List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan) {
         return requestSuratDb.findByTanggalPengajuan(tanggalPengajuan);
     }

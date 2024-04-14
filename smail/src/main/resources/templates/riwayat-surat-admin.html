@@ -138,7 +138,7 @@
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
                             <td th:text="${requestSurat.pengaju.nama}"></td>
                             <td th:text="${requestSurat.bentukSurat}"></td>
-                            <td th:text="${requestSurat.tanggalPengajuan}"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/admin/request/{id}(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>

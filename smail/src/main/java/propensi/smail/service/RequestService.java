@@ -29,7 +29,6 @@ public interface RequestService {
     RequestSurat getRequestSuratById(String requestSuratId);
     RequestSurat findRequestById(String id);
     List<RequestSurat> getRequestByJenisSurat(String jenisSurat);
-    List<RequestSurat> getRequestByBentukSurat(String bentukSurat);
     List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan);
     List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan);
     List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan);
