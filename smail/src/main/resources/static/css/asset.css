@@ -1,0 +1,17 @@
+.surat-kiri {
+    position: absolute;
+    top: 50px;
+    left: -104px;
+    width: 368.98px;
+    height: 117.2px;
+}
+  
+.surat-kanan {
+    position: absolute;
+    top: -80px;
+    right: 0;
+    width: 250px;
+    height: 330.53px;
+    object-fit: contain;
+    overflow: hidden;
+}
