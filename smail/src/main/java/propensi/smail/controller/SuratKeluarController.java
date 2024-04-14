@@ -213,7 +213,7 @@ public class SuratKeluarController {
     //     return "pengurus-ttd-request";
     // }
 
-    @GetMapping("/pengurus/detail/{id}")
+    @GetMapping("/ttd/detail/{id}")
     public String detailRequestSuratPengurus(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);

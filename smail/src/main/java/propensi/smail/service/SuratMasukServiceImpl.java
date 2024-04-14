@@ -222,6 +222,9 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setPengirim(penerimaEksternal);
                 suratMasuk.setFileName(fileName);
                 suratMasuk.setPenandatangan(penandatangan);
+
+                arsipAwal.setStatus(3);
+                suratMasukDb.save(arsipAwal);
                 
 
                 // debug print semuanya
