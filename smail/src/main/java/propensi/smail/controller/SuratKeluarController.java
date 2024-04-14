@@ -186,30 +186,7 @@ public class SuratKeluarController {
         }
     }
 
-
-    @GetMapping("/pengurus/request")
-    public String showAllRequestsPengurus(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "pengurus-ttd-request";
-    }
-
-    @GetMapping("/pengurus/detail/{id}")
+    @GetMapping("/ttd/detail/{id}")
     public String detailRequestSuratPengurus(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
@@ -271,12 +248,12 @@ public class SuratKeluarController {
             message = "PDF updated successfully";
             System.out.println(message);
             model.addAttribute("message", message);
-            return "redirect:/pengurus/detail/{id}";
+            return "redirect:/ttd/detail/{id}";
         } catch (Exception e) {
             message = "Failed to update the template: " + e.getMessage();
             System.out.println(message);
             model.addAttribute("errorMessage", message);
-            return "redirect:/pengurus/detail/{id}";
+            return "redirect:/ttd/detail/{id}";
         }
     }
 
