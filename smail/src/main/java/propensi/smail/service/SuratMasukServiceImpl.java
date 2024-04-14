@@ -142,7 +142,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         List<Pengguna> listTembusan = penggunaDb.findAll().stream()
             .filter(user -> {
                 String role = penggunaService.getRole(user);
-                return role.equals("Dosen") || role.equals("Pengurus");
+                return role.equals("Pengurus");
             })
             .collect(Collectors.toList());
         return listTembusan;
@@ -154,6 +154,8 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             String penerimaEksternal, Pengguna penandatangan) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
+            // arsipAwal.setStatus(4);
+            // suratMasukDb.save(arsipAwal);
             SuratMasuk suratMasuk = new SuratMasuk();
                 suratMasuk.setNomorArsip(generateId(arsipAwal.getKategori()));
                 suratMasuk.setFile(file.getBytes());
@@ -165,18 +167,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setPengirim(penerimaEksternal);
                 suratMasuk.setFileName(fileName);
                 suratMasuk.setPenandatangan(penandatangan);
-                
-
-                // debug print semuanya
-                System.out.println("Nomor Arsip: " + suratMasuk.getNomorArsip());
-                System.out.println("Judul: " + suratMasuk.getJudul());
-                System.out.println("Kategori: " + suratMasuk.getKategori());
-                System.out.println("Perihal: " + suratMasuk.getPerihal());
-                System.out.println("Tanggal Dibuat: " + suratMasuk.getTanggalDibuat());
-                System.out.println("Status: " + suratMasuk.getStatus());
-                System.out.println("Pengirim: " + suratMasuk.getPengirim());
-                System.out.println("File Name: " + suratMasuk.getFileName());
-                System.out.println("Penandatangan: " + suratMasuk.getPenandatangan().getNama());
                 return suratMasukDb.save(suratMasuk);
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file " + fileName, e);

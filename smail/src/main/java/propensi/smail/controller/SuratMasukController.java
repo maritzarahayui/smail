@@ -228,19 +228,6 @@ public class SuratMasukController {
         Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
         SuratMasuk arsipFollowUp = suratMasukService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
         model.addAttribute("suratMasuk", arsipAwal);
-        // debug
-        System.out.println("ID Penandatangan: " + idPenandatangan);
-        System.out.println("Penandatangan: " + penandatangan.getNama());
-        // debug arsip follow up
-        System.out.println("Arsip Follow Up: " + arsipFollowUp.getNomorArsip());
-        System.out.println("Judul: " + arsipFollowUp.getJudul());
-        System.out.println("Kategori: " + arsipFollowUp.getKategori());
-        System.out.println("Perihal: " + arsipFollowUp.getPerihal());
-        // System.out.println("Pengirim: " + arsipFollowUp.getPengirim());
-        System.out.println("Tanggal Dibuat: " + arsipFollowUp.getTanggalDibuat());
-        System.out.println("Status: " + arsipFollowUp.getStatus());
-        System.out.println("File: " + arsipFollowUp.getFileName());
-        System.out.println("Penandatangan: " + arsipFollowUp.getPenandatangan().getNama());
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
