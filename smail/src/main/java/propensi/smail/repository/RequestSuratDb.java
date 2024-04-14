@@ -43,6 +43,12 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
             "LOWER(r.jenisSurat) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(r.id) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<RequestSurat> findByKeyword(@Param("keyword") String keyword);
-
+    
+    @Query("SELECT r FROM RequestSurat r WHERE (" +
+    "LOWER(r.pengaju.nama) LIKE LOWER(CONCAT('%', :search, '%')) OR " + 
+    "LOWER(r.jenisSurat) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+    "LOWER(r.id) LIKE LOWER(CONCAT('%', :search, '%'))) AND " + 
+    "r.status = :status AND r.pengaju.id = :pengajuId")
+    List<RequestSurat> findBySearchAndStatusAndPengajuId(@Param("search") String search, @Param("status") int status, @Param("pengajuId") String pengajuId);
 
 }

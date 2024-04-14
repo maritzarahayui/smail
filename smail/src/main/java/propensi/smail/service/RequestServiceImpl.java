@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.model.RequestTemplate;
 import propensi.smail.repository.RequestTemplateDb;
 
 @Service
@@ -364,6 +363,11 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public List<String> getAllJenisByKategori(String kategori) {
         return templateSuratDb.findNamaTemplateByKategori(kategori);
+    }
+
+    @Override
+    public List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju) {
+        return requestSuratDb.findBySearchAndStatusAndPengajuId(search, status, pengaju);
     }
 }
 

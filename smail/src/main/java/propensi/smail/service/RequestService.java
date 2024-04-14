@@ -53,5 +53,7 @@ public interface RequestService {
 
     // PREVIEW TEMPLATE
     List<String> getAllJenisByKategori(String Kategori);
+
+    List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju);
 }
 
