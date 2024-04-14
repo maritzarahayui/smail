@@ -199,6 +199,7 @@ public class RequestSuratController {
     }
 
     @GetMapping("/request/history/search")
+    @Transactional(readOnly = true)
     public String searchHistory(@RequestParam(name = "searchValue", required = false) String searchValue,
                                 Model model, Authentication auth) {
 
