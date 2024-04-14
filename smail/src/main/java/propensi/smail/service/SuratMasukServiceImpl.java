@@ -22,10 +22,12 @@ import org.springframework.web.multipart.MultipartFile;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
+import jakarta.transaction.Transactional;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.repository.SuratMasukDb;
 
 @Service
+@Transactional
 public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Autowired
@@ -178,5 +180,10 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Override
     public List<SuratMasuk> getSuratMasukByStatus(int status) {
         return suratMasukDb.findByStatus(status);
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratBySearchAndStatus(String search, int status) {
+        return suratMasukDb.findBySearchAndStatus(search, status);
     }
 }

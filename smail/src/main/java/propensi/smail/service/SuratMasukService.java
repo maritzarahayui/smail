@@ -30,4 +30,6 @@ public interface SuratMasukService {
     SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim);
     List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
     List<SuratMasuk> getSuratMasukByStatus(int status);
+
+    List<SuratMasuk> getSuratBySearchAndStatus(String search, int status);
 }
