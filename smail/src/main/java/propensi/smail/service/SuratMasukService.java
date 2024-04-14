@@ -1,6 +1,8 @@
 package propensi.smail.service;
 
 import propensi.smail.model.SuratMasuk;
+import propensi.smail.model.user.Pengguna;
+
 import java.io.IOException;
 import java.util.Date;
 import java.util.stream.Stream;
@@ -32,4 +34,7 @@ public interface SuratMasukService {
     List<SuratMasuk> getSuratMasukByStatus(int status);
 
     List<SuratMasuk> getSuratBySearchAndStatus(String search, int status);
+    // getallpenandatangan
+    List<Pengguna> getAllPenandatangan();
+    SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
 }

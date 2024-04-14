@@ -4,6 +4,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.io.IOException;
 import java.util.Optional;
@@ -13,6 +14,7 @@ import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.service.FAQService;
 import propensi.smail.service.PenggunaService;
+import propensi.smail.service.SuratMasukService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -23,6 +25,9 @@ public class BaseController {
     
     @Autowired
     PenggunaDb penggunaDb;
+    // hapus
+    @Autowired
+    private SuratMasukService suratMasukService;
 
     @Autowired
     PenggunaService penggunaService;
@@ -60,7 +65,9 @@ public class BaseController {
         // return "login";
 
         // debug disposisi:
-        return "disposisi";
+        List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
+        model.addAttribute("penandatangan", penandatangan);
+        return "follow-up";
     }
 
     @GetMapping("/profile")

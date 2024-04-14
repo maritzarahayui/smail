@@ -685,6 +685,7 @@
   flex-direction: row;
   align-items: flex-start;
   padding: var(--padding-base-5) var(--padding-xl);
+  cursor: pointer;
 }
 .button5,
 .button6,

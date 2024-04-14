@@ -49,7 +49,7 @@
             <!-- Nomor Surat -->
             <div class="frame-i-d-details">
               <div class="i-d-label-surat">
-                <div class="id-surat1">Nomor Arsip</div>
+                <div class="id-surat1">Nomor Surat</div>
               </div>
               <div class="follow-up-button">
                 <div class="ku0011" th:text="${suratMasuk.nomorArsip}"></div>
@@ -118,19 +118,33 @@
                 ></div>
               </div>
             </div>
+            <!-- judul -->
+            <div class="frame-i-d-details1" th:if="${suratMasuk.status == 3}">
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">penandatangan</div>
+              </div>
+              <div class="keuangan-container">
+                <div class="keuangan2" th:text="${suratMasuk.penandatangan.nama}"></div>
+              </div>
+            </div>
             <!-- tembusan -->
             <div class="frame-i-d-details5 tembusan-container">
               <div class="frame-div">
                 <div class="keperluan3">Tembusan</div>
               </div>
-              <div class="undangan-makan-malam-dies-nata-container" style="display: flex; flex-wrap: wrap;">
+              <div
+                class="undangan-makan-malam-dies-nata-container"
+                style="display: flex; flex-wrap: wrap"
+              >
                 <div
                   class="undangan-makan-malam1"
                   th:each="tembusanItem, iterStat : ${suratMasuk.tembusan}"
                   th:text="${tembusanItem + (iterStat.last ? '' : ', ')}"
                   th:if="${!#lists.isEmpty(suratMasuk.tembusan)}"
-                  style="margin-right: 5px;">
-                ></div>
+                  style="margin-right: 5px"
+                >
+                  >
+                </div>
               </div>
             </div>
           </div>
@@ -162,11 +176,15 @@
           </div>
 
           <!-- Follow Up and Disposisi Buttons -->
-          <div class="follow-up-group">
-            <div class="button5">
+          <div class="follow-up-group" th:if="${suratMasuk.status != 3}">
+            <a
+              class="button5"
+              th:href="@{'/surat-masuk/follow-up/' + ${suratMasuk.nomorArsip}}"
+            >
               <div class="follow-up">Follow Up</div>
-            </div>
-            <div class="chevrondown-icon">
+            </a>
+            <!-- Tampilkan tombol disposisi jika status surat bukan 3 -->
+            <div class="chevrondown-icon" >
               <a
                 class="button6"
                 th:href="@{'/surat-masuk/disposisi/' + ${suratMasuk.nomorArsip}}"
