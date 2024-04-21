@@ -105,19 +105,18 @@
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="permintaan-template">
-  <b class="pengajuan-permohonan-surat-container">
-    <span class="pengajuan">Daftar</span>
-    <span>Surat</span>
-    <span>&nbsp;Keluar</span>
-  </b>
 
-    <img class="ajukan-surat-child" alt="" src="/images/kiri.svg" />
-    <img class="ajukan-surat-item" alt="" src="/images/kanan.svg" />
+    <b class="pengajuan-permohonan-surat-container">
+        <span class="pengajuan">Daftar</span>
+        <span>Surat Keluar</span>
+    </b>
+
+    <nav th:replace="~{fragments/asset :: asset}"></nav>
     
     <div class="content-wrapper" style="margin-inline: 55px;">
       <div style="margin: 30px" class="buttonWrapper">
           <a
-              th:if="${role == 'Admin' or role == 'Pengurus'}"
+              th:if="${role == 'Admin'}"
               th:href="@{/surat-keluar/form}"
               class="button"
           >
@@ -148,15 +147,12 @@
                         <thead>
                             <tr>
                                 <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-                                <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-                                <th style="width: 10%; text-align: center; vertical-align: middle;">Jenis Surat</th>
-                                <th style="width: 45%; text-align: center; vertical-align: middle;">Perihal</th>
+                                <th style="width: 15%; text-align: center; vertical-align: middle;">Kategori</th>
+                                <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
                                 <td style="width: 15%; text-align: center; vertical-align: middle;">
-                                    <div style="display: block;">Tanggal</div>
-                                    <div style="display: block;">Diarsipkan</div>
+                                    <div style="display: block;">Tanggal Diarsipkan</div>
                                 </td>
-                                <th style="width: 25%; text-align: center; vertical-align: middle;">Penerima</th>
-                                <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                                <th style="width: 15%; text-align: center; vertical-align: middle;">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -167,12 +163,10 @@
                         <tr th:each="suratKeluar : ${suratKeluarList}">
                           <td th:text="${suratKeluar.nomorArsip}"></td>
                           <td th:text="${suratKeluar.kategori}"></td>
-                          <td th:text="${suratKeluar.jenisSurat}"></td>
                           <td th:text="${suratKeluar.perihal}"></td>
                           <td
                             th:text="${#dates.format(suratKeluar.tanggalDibuat, 'dd-MM-yyyy')}"
                           ></td>
-                          <td th:text="${suratKeluar.penerimaEksternal}"></td>
                           <td>
                             <a class="detail-button" th:href="@{'/surat-keluar/detail/' + ${suratKeluar.nomorArsip}}">
                                 <div class="button-text">Detail</div>

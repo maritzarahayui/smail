@@ -86,7 +86,7 @@
               </div>
             </div>
             <!-- jenis surat -->
-            <div class="frame-i-d-details1">
+            <div class="frame-i-d-details1" th:if="${suratKeluar.jenisSurat != null}">
                 <div class="jenis-surat-container">
                   <div class="jenis-surat1">Jenis Surat</div>
                 </div>
@@ -94,7 +94,7 @@
                   <div class="keuangan2" name="jenis_surat" th:text="${suratKeluar.jenisSurat}"></div>
                 </div>
               </div>
-              <div class="frame-i-d-details1">
+              <div class="frame-i-d-details1" th:if="${suratKeluar.penerimaEksternal != ' '}">
                 <div class="jenis-surat-container">
                   <div class="jenis-surat1">Penerima</div>
                 </div>

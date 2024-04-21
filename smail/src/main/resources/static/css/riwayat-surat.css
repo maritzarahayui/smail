@@ -29,29 +29,19 @@
   text-align: center;
   font-size: 48px;
   width: 100%;
-  max-width: 347px;
   margin: 40px auto 0;
 }
 
-.ajukan-surat-child {
-  position: absolute;
-  top: 50px;
-  left: -104px;
-  width: 368.98px;
-  height: 117.2px;
-}
-
-.ajukan-surat-item {
-  position: absolute;
-  top: -80px;
-  right: 0;
-  width: 250px;
-  height: 330.53px;
-  object-fit: contain;
-  overflow: hidden;
-}
-
 /* Tab status */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
 .iconoutlineexclamation-circl {
   height: 24px;
   width: 24px;
@@ -68,6 +58,7 @@
   font-family: var(--heading-h4);
   color: var(--white-white-1);
   text-align: left;
+  text-decoration: none;
 }
 
 .component-2 {
@@ -86,15 +77,18 @@
   width: 171.8px;
   height: 56px;
   max-height: 100%;
+  text-decoration: none;
 }
 
 .component-2:hover {
-  background-color: var(--color-seagreen-200);
+  text-decoration: none;
 }
 
 .tabs1 {
   position: relative;
   font-weight: 600;
+  text-decoration: none;
+  color: var(--white-white-1);
 }
 
 .component-3,
@@ -113,7 +107,14 @@
   padding: var(--padding-3xs) var(--padding-13xl);
   gap: 0 8px;
   width: 171.8px;
-  min-height: 30px;
+  height: 56px;
+  max-height: 100%;
+  text-decoration: none;
+}
+
+.component-3:hover {
+  background-color: var(--color-seagreen-200);
+  text-decoration: none;
 }
 
 .tabs-group {
@@ -129,7 +130,27 @@
   row-gap: 20px;
 }
 
+/* Tabel */
+.table thead {
+  background-color: var(--green-green-2);
+  color: #fff;
+  text-align: center;
+}
+
+.table tbody td {
+  text-align: center;
+}
+
+table.table tbody tr {
+  background-color: #ffffff;
+}
+
 /* Filter */
+.search-button {
+  text-align: center;
+  margin: 0 auto;
+}
+
 .search-icon1 {
   height: 24px;
   width: 24px;
@@ -143,7 +164,7 @@
 }
 
 .keuangan3 {
-  width: 75px;
+  width: 392px;
   border: 0;
   outline: 0;
   font-family: var(--heading-h4);
@@ -152,111 +173,23 @@
   height: 19px;
   position: relative;
   color: var(--black-black-2);
-  text-align: center;
+  text-align: left;
   justify-content: center;
   padding: 0;
 }
 
 .button17 {
   height: 48px;
-  width: 392px;
   border-radius: var(--br-xs);
   border: 2px solid var(--green-green-1);
   box-sizing: border-box;
-  flex-direction: row;
-  justify-content: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: var(--padding-5xs) var(--padding-5xl);
   gap: 0 8px;
-  max-width: 100%;
-}
-
-.solarcalendar-outline-icon {
-  height: 24px;
-  width: 24px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.periode-20212022 {
-  flex: 1;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-family: var(--heading-h4);
-  color: var(--green-green-1);
+  width: 100%;
   text-align: center;
-}
-
-.button18 {
-  cursor: pointer;
-  border: 2px solid var(--green-green-1);
-  padding: var(--padding-5xs) var(--padding-3xl);
-  background-color: transparent;
-  flex: 1;
-  border-radius: var(--br-xs);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 0 8px;
-  min-width: 145px;
-  min-height: 48px;
-}
-
-.button18:hover,
-.button19:hover {
-  background-color: var(--color-seagreen-300);
-  border: 2px solid var(--color-seagreen-200);
-  box-sizing: border-box;
-}
-
-.fluentfilter-12-regular-icon {
-  height: 24px;
-  width: 24px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-
-.filters {
-  width: 47px;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-family: var(--heading-h4);
-  color: var(--green-green-1);
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button-parent,
-.button19 {
-  display: flex;
-  flex-direction: row;
-}
-
-.button19 {
-  cursor: pointer;
-  border: 2px solid var(--green-green-1);
-  padding: var(--padding-5xs) var(--padding-3xl);
-  background-color: transparent;
-  height: 48px;
-  width: 127px;
-  border-radius: var(--br-xs);
-  box-sizing: border-box;
-  align-items: center;
-  justify-content: center;
-  gap: 0 8px;
-}
-
-.button-parent {
-  width: 400px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0 12px;
-  max-width: 100%;
 }
 
 .search-button,
@@ -265,6 +198,7 @@
   display: flex;
   max-width: 100%;
 }
+
 .search-button {
   flex-direction: row;
   align-items: flex-start;
@@ -525,6 +459,7 @@
   text-align: center;
   margin: auto;
   justify-content: center;
+  text-decoration: none;
 }
 .button20 {
   cursor: pointer;
@@ -538,6 +473,7 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  text-decoration: none;
 }
 .button20:hover,
 .button22:hover,
@@ -545,6 +481,7 @@
 .button26:hover,
 .button28:hover {
   background-color: var(--color-seagreen-200);
+  text-decoration: none;
 }
 .agustus-label,
 .button-group4,

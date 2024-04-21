@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Disposisi Arsip</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
+    <link rel="stylesheet" href="/css/disposisi.css" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+  </head>
+
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="disposisi-surat">
+      <img class="disposisi-surat-child" alt="" src="/images/kanan.svg" />
+
+      <section class="footer-info1">
+        <img
+          class="footer-info-child"
+          loading="lazy"
+          alt=""
+          src="/images/kiri.svg"
+        />
+
+        <div class="label-disposisi">
+          <h1 class="disposisi-surat1">
+            <span class="disposisi1">Disposisi</span>
+            <span> Surat</span>
+          </h1>
+        </div>
+      </section>
+      <section class="confirmation-button-wrapper">
+        <div class="confirmation-button">
+          <div class="cancel-button">
+            <div class="label2">Masukkan alamat email yang dituju</div>
+
+            <form class="collaborator-logos">
+              <div class="gmail-logo-parent">
+                <div class="gmail-logo">
+                  <div class="cacaccacacacacagmailcom">
+                    <input
+                      class="cacaccacacacacagmailcom1"
+                      placeholder="Masukkan alamat email"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <button
+                  class="delete-button-wrapper"
+                  type="button"
+                  onclick="addRow(event)"
+                >
+                  <div class="delete-button">
+                    <div class="button23">
+                      <img
+                        class="lets-iconsadd-round"
+                        alt=""
+                        src="/images/plus-icon.svg"
+                      />
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </form>
+          </div>
+          <a
+            class="button30"
+            th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
+            onclick="sendData()"
+          >
+            <div class="disposisikan-surat">Disposisikan surat</div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script>
+      function addRow(event) {
+        event.preventDefault(); // Menghentikan perilaku default tombol
+
+        // Buat elemen div untuk mengelompokkan input dan tombol
+        let group = document.createElement("div");
+        group.className = "gmail-logo-parent";
+
+        // Buat elemen div untuk mengelompokkan input dan tombol
+        let rowDiv = document.createElement("div");
+        rowDiv.className = "gmail-logo";
+
+        // Buat input email
+        let newInput = document.createElement("input");
+        newInput.type = "text";
+        newInput.className = "cacaccacacacacagmailcom1";
+        newInput.placeholder = "Masukkan alamat email";
+
+        // Buat div untuk wrapper tombol
+        let frameWrapperDiv = document.createElement("div");
+        frameWrapperDiv.className = "frame-wrapper1";
+
+        // Buat div untuk parent tombol
+        let buttonParentDiv = document.createElement("div");
+        buttonParentDiv.className = "button-parent2";
+
+        // Buat tombol plus
+        let plusButton = document.createElement("div");
+        plusButton.className = "button26";
+        plusButton.innerHTML =
+          '<img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">';
+
+        // Buat tombol delete
+        let deleteButton = document.createElement("div");
+        deleteButton.className = "button27";
+        deleteButton.innerHTML =
+          '<img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">';
+
+        // append semua elemen ke dalam group
+        rowDiv.appendChild(newInput);
+        buttonParentDiv.appendChild(plusButton);
+        buttonParentDiv.appendChild(deleteButton);
+        frameWrapperDiv.appendChild(buttonParentDiv);
+        group.appendChild(rowDiv);
+        group.appendChild(frameWrapperDiv);
+
+        // addrow
+        let parent = document.querySelector(".collaborator-logos");
+        parent.appendChild(group);
+
+        // button event listener
+        plusButton.onclick = function () {
+          addRow(event);
+        };
+        deleteButton.addEventListener("click", function () {
+          group.remove();
+        });
+      }
+
+      function sendData() {
+        // Mendapatkan ID surat dari URL
+        let url = window.location.href;
+        let id = url.substring(url.lastIndexOf("/") + 1);
+
+        // Mengumpulkan semua input alamat email
+        let emailInputs = document.querySelectorAll(
+          ".cacaccacacacacagmailcom1"
+        );
+        let to = [];
+        emailInputs.forEach(function (input) {
+          to.push(input.value);
+        });
+
+        // Mengonversi array alamat email menjadi string dengan dipisahkan koma
+        let emailString = to.join(",");
+
+        // Mengirim data ke controller Spring Boot dengan menyisipkan daftar alamat email sebagai query dalam URL
+        fetch(`/surat-masuk/send/${id}?to=${emailString}`, {
+          method: "GET",
+        })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
+</html>

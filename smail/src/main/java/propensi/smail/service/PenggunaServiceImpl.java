@@ -41,4 +41,11 @@ public class PenggunaServiceImpl implements PenggunaService {
         String firstName = fullName.split(" ")[0];
         return firstName;
     }
+
+    @Override
+    public Pengguna getPenggunaById(String id) {
+        Optional<Pengguna> existUser = penggunaDb.findById(id);
+        Pengguna user = existUser.orElseThrow(() -> new EntityNotFoundException("Pengguna tidak ditemukan"));
+        return user;
+    }
 }

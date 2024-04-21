@@ -6,4 +6,5 @@ public interface PenggunaService {
     Pengguna getPenggunaLoggedIn(String email);
     String getRole(Pengguna user);
     String getFirstName(Pengguna user);
+    Pengguna getPenggunaById(String id);
 } 

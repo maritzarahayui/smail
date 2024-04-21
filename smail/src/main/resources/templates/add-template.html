@@ -4,49 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-LdG/VIBk5lH/5GjtuZW9jpjqQuSc5O+Z4e8C8Ad+MlI3yd4fPnYNkIPLsGyOxPk4" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/add-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
     <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
     />
       
-    <style>
-         .custom-checkbox input[type="checkbox"] {
-            display: none;
-        }
-
-        .custom-checkbox label {
-            position: relative;
-            display: inline-block;
-            margin-right: 10px;
-            padding-left: 25px;
-            cursor: pointer;
-        }
-
-        .custom-checkbox .check {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 18px;
-            height: 18px;
-            border: 2px solid #999;
-            border-radius: 3px;
-            background-color: transparent;
-        }
-
-        .custom-checkbox input[type="checkbox"]:checked + label .check {
-            background-color: #28a745; /* Ubah warna latar belakang menjadi hijau */
-            border-color: #28a745; /* Ubah warna border menjadi hijau */
-}
-        .custom-checkbox .label-text {
-            margin-left: 30px;
-        }
-
-    </style>
 </head>
 
 <body>
@@ -54,36 +24,25 @@
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="tambah-template2">
-    <section class="home-frame">
-        <div class="sub-group-container">
-            <img
-                    class="sub-group-container-child"
-                    loading="lazy"
-                    alt=""
-                    src="/images/kiri.svg"
-            />
+    <div class="home-frame">
+        <b class="pengajuan-permohonan-surat-container">
+            <span class="pengajuan">Tambah</span>
+            <span> Template</span>
+        </b>
 
-            <div class="label-pair">
-                <h1 class="tambah-template3">
-              <span>
-                <span class="tambah">Tambah</span>
-                <span> Template</span>
-              </span>
-                </h1>
-            </div>
-            <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
-        </div>
-    </section>
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+    </div>
 
-    <section class="attach-button">
+    <div class="attach-button">
         <div class="label-input-frame">
             <div class="label-frame">
                 <form action="/template/new-template" method="post" enctype="multipart/form-data">
+                    
                     <div class="text-input-frame">
-                        <div class="label8">Nama Template</div>
+                        <div class="label9">Nama Template</div>
                         <input class="text-input14" type="text" id="namaTemplate" name="namaTemplate" />
                     </div>
-                    <br>
+                   
                     <div class="text-input-frame">
                         <label for="kategori" class="label9">Kategori:</label>
                         <select class="text-input14" id="kategori" name="kategori" required>
@@ -95,7 +54,7 @@
                             <option value="Kemahasiswaan">Kemahasiswaan</option>
                         </select>
                     </div>
-                    <br>
+                    
                     <div class="text-input-frame">
                         <label for="listPengguna" class="label9">List Pengguna:</label>
                         <div class="custom-checkbox">
@@ -105,6 +64,7 @@
                                 <span class="label-text">Mahasiswa</span>
                             </label>
                         </div>
+
                         <div class="custom-checkbox">
                             <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen">
                             <label for="pengguna2">
@@ -112,6 +72,7 @@
                                 <span class="label-text">Dosen</span>
                             </label>
                         </div>
+
                         <div class="custom-checkbox">
                             <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf">
                             <label for="pengguna3">
@@ -119,17 +80,16 @@
                                 <span class="label-text">Staf</span>
                             </label>
                         </div>
-                    </div>
-                    <br>
+                    </div>                    
+                   
                     <div class="text-input-frame" id="listFieldContainer">
                         <label for="listField" class="label9">List Field:</label>
                         <input type="text" class="text-input14" id="listField1" name="listField" required>
                     </div>
-                    <br>
+                    
                     <button type="button" class="button15" onclick="addRow()" style="color:#fffffe">Add Row</button>
-                    <br>
-                    <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe">Delete Row</button> <!-- Added Delete Row button -->
-                    <br><br><br>
+                    <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe">Delete Row</button>
+                  
                     <div class="form-group">
                         <div class="upload-illustration-frame">
                             <div class="file-input">
@@ -172,26 +132,22 @@
                                             <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
                                         </h3>
                                         <span class="file-name"></span>
-                                        <br>
-                                        <br>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--                    <button type="submit" class="btn btn-primary" onclick="submitForm()">Tambah Template</button>-->
-                    <section class="creator-info-frame">
-                        <br>
-                        <br>
+                
+                    <div class="creator-info-frame">
                         <button type="submit" class="button15" onclick="submitForm()">
                             <div class="buat-template">Buat template</div>
                         </button>
-                    </section>
+                    </div>
                 </form>
             </div>
 
         </div>
-    </section>
+    </div>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>

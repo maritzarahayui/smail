@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Active Templates</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+<body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="daftar-template-surat">
+    <img class="ajukan-surat-item" alt="" src="/images/kiri.svg" />
+    <img class="daftar-template-surat-child" alt="" src="/images/kanan.svg"/>
+    <section class="template-frame">
+        <div class="keuangan-template-frame">
+            <div class="keuangan-template">
+                <div class="gaji-detail-frame">
+                    <div class="r-t-x-footer">
+                        <div class="template-list">
+                            <h1 class="daftar-template-surat-container">
+                                <span>
+                                    <span class="daftar">Daftar</span>
+                                    <span> Template Surat</span>
+                                </span>
+                            </h1>
+                            <div class="search-bar">
+                                <form th:action="@{/template/search}" method="get">
+                                    <div class="button1">
+                                        <img class="search-icon" alt="" src="/images/search.svg" />
+                                        <input class="ketik-kata-kunci" placeholder="Cari template berdasarkan nama..." type="text" name="namaTemplate" />
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="request-surat1">
+                <div class="keuangan-frame">
+                    <button class="button2" th:onclick="'window.location.href = \'/template/new-template\''">
+                        <img class="fluentadd-16-filled-icon" alt="" src="/images/plus.svg" />
+                        <div class="tambah-template">Tambah Template</div>
+                    </button>
+
+                    <button class="button3" th:onclick="'window.location.href = \'/template/new-requests\''">
+                        <div class="lihat-permintaan-template">
+                            Lihat Permintaan Template
+                        </div>
+                    </button>
+                </div>
+            </div>
+                <!-- <h3>Active Templates</h3> -->
+                <!-- Start of the table -->
+            <div class="t-e-m-p-container-parent">
+                <div class="agustus-label-parent">
+                    <!-- Start of the table -->
+                    <table id="dataTable" class="table table-bordered table-striped custom-table">
+                        <thead>
+                        <tr>
+                            <th class="custom-th" style="width: 10%; text-align: center; vertical-align: middle;">ID Template</th>
+                            <th class="custom-th" style="width: 40%; text-align: center; vertical-align: middle;">Nama Template</th>
+                            <th class="custom-th" style="width: 15%; text-align: center; vertical-align: middle;">Kategori</th>
+                            <th class="custom-th" style="width: 10%; text-align: center; vertical-align: middle;">Status</th>
+                            <th class="custom-th" style="width: 15%; text-align: center; vertical-align: middle;">
+                                <div style="display: block;">Tanggal</div>
+                                <div style="display: block;">Dibuat</div>
+                            </th>
+                            <th class="custom-th" style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!-- Iterate through requestTemplates -->
+                        <tr th:each="requestSurat: ${activeTemplates}" class="custom-tr">
+                            <td th:text="${requestSurat.id}" class="custom-td"></td>
+                            <td th:text="${requestSurat.namaTemplate}" style="text-align: left;" class="custom-td"></td>
+                            <td th:text="${requestSurat.kategori}" class="custom-td"></td>
+                            <td th:text="${requestSurat.isActive}" class="custom-td"></td>
+                            <td th:text="${requestSurat.tanggalDibuat}" class="custom-td"></td>
+                            <td style="display: flex; justify-content: space-between;" class="custom-td">
+                                <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!-- End of the table -->
+                </div>
+            </div>
+
+            <!-- End of the table -->
+                <br><br>
+        </div>
+    </section>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

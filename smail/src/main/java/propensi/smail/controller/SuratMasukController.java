@@ -4,40 +4,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.util.Base64;
 import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
-import org.apache.logging.log4j.util.StringBuilderFormattable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import jakarta.mail.MessagingException;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
+import propensi.smail.model.Email;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.SuratMasukService;
 
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
@@ -57,13 +51,11 @@ public class SuratMasukController {
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
         @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
-        @RequestParam("tembusan") String tembusan, Authentication auth, Model model) throws ParseException {
+        Authentication auth, Model model) throws ParseException {
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, pengirim, tembusan);
+            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, pengirim);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
-            //debug
-            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-masuk/form";
         }
     }
@@ -88,38 +80,30 @@ public class SuratMasukController {
 
     //get all surat masuk
     @GetMapping("/all")
-    public String getAllSuratMasuk(Model model, Authentication auth, 
-        @RequestParam(value = "status", required = false) String status,
-        @RequestParam(value = "tanggalDibuat", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat) {
-        List<SuratMasuk> suratMasukList;
-        if (status != null && !status.isEmpty()) {
-            switch (status) {
-                case "Diarsipkan":
-                    suratMasukList = suratMasukService.getSuratMasukByStatus(1);
-                    break;
-                case "Follow Up":
-                    suratMasukList = suratMasukService.getSuratMasukByStatus(2);
-                    break;
-                case "Disposisi":
-                    suratMasukList = suratMasukService.getSuratMasukByStatus(3);
-                    break;
-                default:
-                    suratMasukList = suratMasukService.getAllSuratMasuk();
-                    break;
-            }
+    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
+
+        List<SuratMasuk> allSuratMasuk;
+        List<SuratMasuk> suratMasukDiarsipkan;
+        List<SuratMasuk> suratMasukFollowUp;
+        List<SuratMasuk> suratMasukDisposisi;
+
+        if (search != null && !search.isEmpty()) {
+            allSuratMasuk = suratMasukService.getSuratBySearch(search);
+            suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
+            suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
+            suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
         } else {
-            suratMasukList = suratMasukService.getAllSuratMasuk();
+            allSuratMasuk = suratMasukService.getAllSuratMasuk();
+            suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
+            suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
+            suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
         }
 
-        // Filter surat masuk berdasarkan tanggal dibuat jika parameter tanggalDibuat diberikan
-        if (tanggalDibuat != null) {
-            suratMasukList = suratMasukList.stream()
-                    .filter(surat -> surat.getTanggalDibuat().equals(tanggalDibuat))
-                    .collect(Collectors.toList());
-        }
-
-        model.addAttribute("suratMasukList", suratMasukList);
-
+        model.addAttribute("allSuratMasuk", allSuratMasuk);
+        model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
+        model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
+        model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
+        
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -142,7 +126,7 @@ public class SuratMasukController {
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         byte[] pdf = suratMasuk.getFile();
-
+        
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
@@ -177,7 +161,7 @@ public class SuratMasukController {
             case 2:
                 return "Disposisi";
             case 3:
-                return "Follow Up";
+                return "Mengajukan Follow Up";
             default:
                 return "Status Tidak Diketahui";
         }
@@ -204,36 +188,12 @@ public class SuratMasukController {
         return "form-surat-masuk";
     }
 
-    @GetMapping("/daftar")
-    public String form(Model model) {
-        return "daftar-surat-masuk";
-    }
-
-    // route to semua-surat-masuk
-    @GetMapping("/daftar-arsip")
-    public String semuaSuratMasuk(Model model, Authentication auth) {
-        return "daftar-arsip-tes";
-    }
-
-    // route to detail-surat-masuk
-    @GetMapping("/detail-surat-masuk")
-    public String detailSuratMasuk(Model model, Authentication auth) {
-        return "detail-surat-masuk";
-    }
-
-    @GetMapping("/search")
-    public String searchSuratMasuk(@RequestParam Map<String, String> params, Model model, Authentication auth,
-                                @RequestParam(value = "tanggalDibuat", required = false)
-                                @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
-                                @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
-
-        // Mendapatkan nilai pencarian dari parameter "q"
-        String searchQuery = params.get("q");
-
-        // Melakukan pencarian dan filtering surat masuk berdasarkan nilai pencarian
-        List<SuratMasuk> suratMasukList = suratMasukService.searchSuratMasuk(params, tanggalDibuat, sort, searchQuery);
-        model.addAttribute("suratMasukList", suratMasukList);
-
+    // root to disposisi arsip surat dengan id tertentu
+    @GetMapping("/disposisi/{id}")
+    public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -247,9 +207,111 @@ public class SuratMasukController {
                 return "auth-failed";
             }
         }
-
-        return "daftar-surat-masuk";
+        return "disposisi";
     }
 
+    // // route to send email 
+    @GetMapping("/send/{id}")
+    public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
+        SuratMasuk file = suratMasukService.getFile(id);
+        String[] recipients = to.split(","); 
+        
+        suratMasukService.sendEmail(recipients, file.getPerihal(), "", file);
+        return "redirect:/surat-masuk/detail/" + id;
+    }
 
+    /* BRANCH ARSIP
+     * BRANCH ARSIP
+     * BRANCH ARSIP
+     */
+    // @GetMapping("/search")
+    // public String searchSuratMasuk(@RequestParam Map<String, String> params, Model model, Authentication auth,
+    //                             @RequestParam(value = "tanggalDibuat", required = false)
+    //                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
+    //                             @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
+
+    //     // Mendapatkan nilai pencarian dari parameter "q"
+    //     String searchQuery = params.get("q");
+
+    //     // Melakukan pencarian dan filtering surat masuk berdasarkan nilai pencarian
+    //     List<SuratMasuk> suratMasukList = suratMasukService.searchSuratMasuk(params, tanggalDibuat, sort, searchQuery);
+    //     model.addAttribute("suratMasukList", suratMasukList);
+
+    //     if (auth != null) {
+    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+    //         String email = oauthUser.getEmail();
+    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+    //         if (user.isPresent()) {
+    //             Pengguna pengguna = user.get();
+    //             model.addAttribute("role", penggunaService.getRole(pengguna));
+    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+    //         } else {
+    //             return "auth-failed";
+    //         }
+    //     }
+
+    //     return "daftar-surat-masuk";
+    // }
+
+    // route to follow up arsip surat 
+    @GetMapping("/follow-up/{id}")
+    public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        model.addAttribute("suratMasuk", suratMasuk);
+        // panggil listpenandatangan
+        List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
+        model.addAttribute("penandatangan", penandatangan);
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "follow-up";
+    }
+    
+    // route to follow up arsip surat
+    @PostMapping("/follow-up/{id}")
+    public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penerimaEksternal") String penerimaEksternal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
+        SuratMasuk arsipAwal = suratMasukService.getFile(id);
+        Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
+        SuratMasuk arsipFollowUp = suratMasukService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
+        model.addAttribute("suratMasuk", arsipAwal);
+        // debug
+        System.out.println("ID Penandatangan: " + idPenandatangan);
+        System.out.println("Penandatangan: " + penandatangan.getNama());
+        // debug arsip follow up
+        System.out.println("Arsip Follow Up: " + arsipFollowUp.getNomorArsip());
+        System.out.println("Kategori: " + arsipFollowUp.getKategori());
+        System.out.println("Perihal: " + arsipFollowUp.getPerihal());
+        // System.out.println("Pengirim: " + arsipFollowUp.getPengirim());
+        System.out.println("Tanggal Dibuat: " + arsipFollowUp.getTanggalDibuat());
+        System.out.println("Status: " + arsipFollowUp.getStatus());
+        System.out.println("File: " + arsipFollowUp.getFileName());
+        System.out.println("Penandatangan: " + arsipFollowUp.getPenandatangan().getNama());
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        model.addAttribute("noArsipAwal", arsipAwal.getNomorArsip());
+        return "redirect:/surat-masuk/detail/" + arsipFollowUp.getNomorArsip();
+    }
 }

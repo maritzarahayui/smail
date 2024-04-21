@@ -4,6 +4,7 @@ import lombok.*;
 import java.util.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import propensi.smail.model.user.Pengguna;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "surat_keluar")
 
 public class SuratKeluar {
-    
+
     @Id
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
@@ -25,15 +26,14 @@ public class SuratKeluar {
     @Column(name = "jenis_surat")
     private String jenisSurat;
 
-    @NotNull
-    @Column(name = "perihal", nullable = false)
-    private String perihal;
+    @Column(name = "perihal")
+    private String perihal = "Permohonan request surat";
 
     // @Column(name = "penerima")
-    // private User penerima;  // pending dl ya msh mikir 
+    // private User penerima;  // pending dl ya msh mikir
 
     @Column(name = "penerima_eksternal")
-    private String penerimaEksternal; // email
+    private String penerimaEksternal = " "; // email
 
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
@@ -43,13 +43,20 @@ public class SuratKeluar {
     @Column(name = "file", nullable = false)
     private byte[] file;
 
-    @NotNull
     @Column(name = "file_name")
-    private String fileName; // filename
+    private String fileName;
+
 
     /* RELATIONSHIPS */
-    // @ManyToOne
-    // @JoinColumn(name = "penandatangan")
-    // private Pengguna penandatangan;
+     @ManyToOne
+     @JoinColumn(name = "penandatangan")
+     private Pengguna penandatangan;
 
+    @ManyToOne
+    @JoinColumn(name = "pengaju")
+    private Pengguna pengaju;
+
+    @OneToOne
+    @JoinColumn(name = "surat_id")
+    private RequestSurat requestSurat;
 }
