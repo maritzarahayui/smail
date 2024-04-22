@@ -112,10 +112,13 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${outgoing.penandatangan.nama}"></div>
+                    <div class="content">
+                        <ul>
+                            <li th:each="pengguna : ${outgoing.penandatangan}" th:text="${pengguna.nama}"></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
 
             <br>
             <div class="frame-button" th:if="${base64PDF != null}">

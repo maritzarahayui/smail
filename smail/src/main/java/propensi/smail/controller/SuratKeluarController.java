@@ -162,11 +162,19 @@ public class SuratKeluarController {
                                     @RequestParam("file") MultipartFile file,
                                     @RequestParam("kategori") String kategori,
                                     @RequestParam("jenisSurat") String jenisSurat,
-                                    @RequestParam("penandatangan") String penandatanganId,
+                                    @RequestParam(value = "penandatangan", required = false) ArrayList<String> penandatanganIds,
                                     Model model) {
         try {
+            System.out.println("msk controller");
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
-            Pengguna pengguna = penggunaService.getPenggunaById(penandatanganId);
+
+            List<Pengguna> penandatangans = new ArrayList<>();
+            if (penandatanganIds != null) {
+                for (String penandatanganId : penandatanganIds) {
+                    Pengguna pengguna = penggunaService.getPenggunaById(penandatanganId);
+                    penandatangans.add(pengguna);
+                }
+            }
 
             SuratKeluar existingSuratKeluar = suratKeluarService.findSuratKeluarByRequestID(requestSuratId);
             if (existingSuratKeluar != null) {
@@ -174,13 +182,11 @@ public class SuratKeluarController {
                     existingSuratKeluar.setFile(file.getBytes());
                     existingSuratKeluar.setFileName(StringUtils.cleanPath(file.getOriginalFilename()));
                 }
-                if (penandatanganId != null && !penandatanganId.isEmpty()) {
-                    existingSuratKeluar.setPenandatangan(pengguna);
-                }
+                existingSuratKeluar.setPenandatangan(penandatangans);
                 suratKeluarService.update(existingSuratKeluar); // Update existing SuratKeluar
             } else {
                 // Create and store SuratKeluar
-                suratKeluarService.storeTtd(requestSurat, file, kategori, jenisSurat, pengguna);
+                suratKeluarService.storeTtd(requestSurat, file, kategori, jenisSurat, penandatangans);
             }
 
             return "redirect:/admin/request/process";
@@ -245,6 +251,7 @@ public class SuratKeluarController {
                 Pengguna pengguna = user.get();
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                model.addAttribute("user", pengguna);
             } else {
                 return "auth-failed";
             }
