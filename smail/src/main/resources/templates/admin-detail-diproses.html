@@ -153,17 +153,17 @@
                 </div>
 
                 <div class="forward-frame">
-                    <div class="label">Teruskan ke ...</div>
+                    <div class="label">Penandatangan</div>
                     <div class="tembusan">
                         <div class="tembusan-wrapper">
-                            <select class="tembusan-content" name="penandatangan">
-                                <option value="" disabled>Select Penandatangan</option>
-                                <option th:each="pengguna : ${listTembusan}"
-                                        th:value="${pengguna.id}"
-                                        th:text="${pengguna.nama}"
-                                        th:selected="${suratKeluar != null and suratKeluar.penandatangan != null and suratKeluar.penandatangan.id == pengguna.id}">
-                                </option>
-                            </select>
+                            <!-- Use checkboxes instead of a dropdown -->
+                            <div class="tembusan-content">
+                                <div th:each="pengguna : ${listTembusan}">
+                                    <input type="checkbox" name="penandatangan" th:value="${pengguna.id}" id="pengguna-${pengguna.id}">
+                                    <label for="pengguna-${pengguna.id}" th:text="${pengguna.nama}"></label>
+                                    <br>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

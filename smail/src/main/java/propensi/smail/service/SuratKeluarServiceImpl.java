@@ -44,7 +44,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     
     @Override
     @Transactional
-    public SuratKeluar storeTtd(RequestSurat requestSurat, MultipartFile file, String kategori, String jenisSurat, Pengguna penandatangan) throws IOException {
+    public SuratKeluar storeTtd(RequestSurat requestSurat, MultipartFile file, String kategori, String jenisSurat, List<Pengguna> penandatangans) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         try {
@@ -57,8 +57,17 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             suratKeluar.setTanggalDibuat(new Date());
             suratKeluar.setFileName(fileName);
             suratKeluar.setFile(file.getBytes());
-            suratKeluar.setPenandatangan(penandatangan);
+
             suratKeluar.setPengaju(requestSurat.getPengaju());
+
+            ArrayList<Pengguna> pList = new ArrayList<>();
+            suratKeluar.setPenandatangan(pList);
+
+            for (Pengguna p : penandatangans) {
+                suratKeluar.getPenandatangan().add(p);
+            }
+
+            suratKeluar.setCurrentPenandatangan(penandatangans.get(0));
 
             return suratKeluarDb.save(suratKeluar);
         } catch (IOException e) {
@@ -140,13 +149,38 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 // Set the file and file name
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
-                suratKeluar.getRequestSurat().setStatus(5);
-                suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
+
+                Pengguna current = findNextSignatory(suratKeluar);
+
+                suratKeluar.setCurrentPenandatangan(current);
+
+                if (current == null) {
+                    suratKeluar.getRequestSurat().setStatus(5);
+                    suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
+                }
+
                 suratKeluarDb.save(suratKeluar);
             }
 
         } catch (IOException e) {
             throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
+        }
+    }
+
+
+
+    private Pengguna findNextSignatory(SuratKeluar suratKeluar) {
+        List<Pengguna> penandatangans = suratKeluar.getPenandatangan();
+        Pengguna currentSignatory = suratKeluar.getCurrentPenandatangan();
+
+        int currentIndex = penandatangans.indexOf(currentSignatory);
+        int nextIndex = currentIndex + 1;
+
+        if (nextIndex < penandatangans.size()) {
+            return penandatangans.get(nextIndex);
+        } else {
+            // All signatories have signed
+            return null;
         }
     }
 

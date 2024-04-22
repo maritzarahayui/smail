@@ -106,6 +106,33 @@
                     </div>
                 </div>
 
+                <div class="row">
+                    <div class="detail-wrapper">
+                        <div class="detail">Penandatangan</div>
+                    </div>
+
+                    <div class="content-wrapper">
+                        <div class="content">
+            <span th:each="pengguna, iterStat : ${outgoing.penandatangan}"
+                  th:text="${iterStat.last ? pengguna.nama : pengguna.nama + ', '}"
+                  th:remove="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="detail-wrapper">
+                        <div class="detail">Status Tanda Tangan</div>
+                    </div>
+
+                    <div class="content-wrapper">
+                        <div class="content">
+                            <span th:if="${outgoing.currentPenandatangan != null and outgoing.currentPenandatangan.id != user.id}" th:text="'Menunggu tanda tangan pihak lain'"></span>
+                            <span th:if="${outgoing.currentPenandatangan != null and outgoing.currentPenandatangan.id == user.id}" th:text="'Menunggu tanda tangan Anda'"></span>
+                            <span th:if="${outgoing.currentPenandatangan == null}" th:text="'Selesai ditandatangani'"></span>
+                        </div>
+                    </div>
+                </div>
 
                 <br>
                 <div class="frame-button" th:if="${base64PDF != null}">
@@ -114,7 +141,7 @@
                 </div>
                 <br>
 
-                <div class="form-group" th:if="${requestSurat.status != 5}">
+                <div th:if="${requestSurat.status != 5 and outgoing.currentPenandatangan.id == user.id}" class="form-group">
                     <div class="upload-illustration-frame">
                         <div class="file-input">
                             <div class="secondary-message">secondary message</div>
@@ -162,7 +189,7 @@
                     </div>
                 </div>
 
-                <div class="text-center action-buttons" th:if="${requestSurat.status != 5}">
+                <div class="text-center action-buttons" th:if="${requestSurat.status != 5 and outgoing.currentPenandatangan.id == user.id}">
                     <button type="submit" class="button">Simpan perubahan</button>
                 </div>
 

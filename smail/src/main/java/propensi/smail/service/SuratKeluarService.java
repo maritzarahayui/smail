@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public interface SuratKeluarService {
     List<SuratKeluar> getAllSuratKeluar();
-    SuratKeluar storeTtd(RequestSurat requestSurat, MultipartFile file, String kategori, String jenisSurat, Pengguna penandatangan) throws IOException;
+    SuratKeluar storeTtd(RequestSurat requestSurat, MultipartFile file, String kategori, String jenisSurat, List<Pengguna> penandatangan) throws IOException;
     String generateId(String kategori);
     SuratKeluar getFileTtd(String id);
     void updateSuratKeluarFile(String id, MultipartFile file);
