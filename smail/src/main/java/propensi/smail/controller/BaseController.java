@@ -62,12 +62,7 @@ public class BaseController {
 
         }
         // asli:
-        // return "login";
-
-        // debug disposisi:
-        List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
-        model.addAttribute("penandatangan", penandatangan);
-        return "follow-up";
+        return "login";
     }
 
     @GetMapping("/profile")

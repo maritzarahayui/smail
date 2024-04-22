@@ -106,7 +106,7 @@
                         <div class="content" th:text="${requestSurat.pengaju.nama}"></div>
                     </div>
                 </div>
-                
+
                 <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
                     <div class="detail-wrapper">
                         <div class="detail" th:text="${fieldName.key}"></div>
@@ -189,7 +189,8 @@
                             <!-- Use checkboxes instead of a dropdown -->
                             <div class="tembusan-content">
                                 <div th:each="pengguna : ${listTembusan}">
-                                    <input type="checkbox" name="penandatangan" th:value="${pengguna.id}" id="pengguna-${pengguna.id}">
+                                    <input type="checkbox" name="penandatangan" th:value="${pengguna.id}" id="pengguna-${pengguna.id}"
+                                           th:checked="${suratKeluar.penandatangan != null and suratKeluar.penandatangan.![id].contains(pengguna.id)}">
                                     <label for="pengguna-${pengguna.id}" th:text="${pengguna.nama}"></label>
                                     <br>
                                 </div>
