@@ -96,6 +96,16 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Nama Pengaju</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.pengaju.nama}"></div>
+                </div>
+            </div>
+
             <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
                 <div class="detail-wrapper">
                     <div class="detail" th:text="${fieldName.key}"></div>
