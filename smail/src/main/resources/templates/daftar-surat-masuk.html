@@ -181,13 +181,46 @@ table.table tbody tr {
       </div>
 
       <div class="tabs-group" id="tab">
-        <a class="tab-link active" data-toggle="tab" href="#diarsipkan">Diarsipkan</a>
+        <a class="tab-link active" data-toggle="tab" href="#semua">Semua</a>
+        <a class="tab-link" data-toggle="tab" href="#diarsipkan">Diarsipkan</a>
         <a class="tab-link" data-toggle="tab" href="#followUp">Follow Up</a>
         <a class="tab-link" data-toggle="tab" href="#disposisi">Disposisi</a>
       </div>
 
       <br><br>
 
+      <!-- SEMUA -->
+      <div class="tab-pane" id="semua">
+        <table class="table table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                    <th style="width: 45%; text-align: center; vertical-align: middle;">Perihal</th>
+                    <th style="width: 15%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.isEmpty(allSuratMasuk)}">
+                    <td colspan="6" style="text-align: center;">Belum ada surat masuk</td>
+                </tr>
+                <tr th:each="suratMasuk : ${allSuratMasuk}" th:unless="${#lists.isEmpty(allSuratMasuk)}">
+                    <td th:text="${suratMasuk.nomorArsip}"></td>
+                    <td th:text="${suratMasuk.kategori}"></td>
+                    <td th:text="${suratMasuk.perihal}"></td>
+                    <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                    <td th:text="${suratMasuk.pengirim}"></td>
+                    <td style="display: flex;">
+                      <a class="detail-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                        <div class="button-text">Detail</div>
+                      </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
       <!-- DIARSIPKAN -->
       <div class="tab-pane active" id="diarsipkan">
           <table class="table table-bordered" style="width:100%">

@@ -196,6 +196,11 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     }
 
     @Override
+    public List<SuratMasuk> getSuratBySearch(String search) {
+        return suratMasukDb.findBySearch(search);
+    }
+
+    @Override
     public List<Pengguna> getAllPenandatangan() {
         List<Pengguna> listTembusan = penggunaDb.findAll().stream()
             .filter(user -> {

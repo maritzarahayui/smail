@@ -34,6 +34,7 @@ public interface SuratMasukService {
     List<SuratMasuk> getSuratMasukByStatus(int status);
 
     List<SuratMasuk> getSuratBySearchAndStatus(String search, int status);
+    List<SuratMasuk> getSuratBySearch(String search);
     // getallpenandatangan
     List<Pengguna> getAllPenandatangan();
     SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);

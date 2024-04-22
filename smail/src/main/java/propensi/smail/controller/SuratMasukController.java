@@ -82,20 +82,24 @@ public class SuratMasukController {
     @GetMapping("/all")
     public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
 
+        List<SuratMasuk> allSuratMasuk;
         List<SuratMasuk> suratMasukDiarsipkan;
         List<SuratMasuk> suratMasukFollowUp;
         List<SuratMasuk> suratMasukDisposisi;
 
         if (search != null && !search.isEmpty()) {
+            allSuratMasuk = suratMasukService.getSuratBySearch(search);
             suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
             suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
             suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
         } else {
+            allSuratMasuk = suratMasukService.getAllSuratMasuk();
             suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
             suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
             suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
         }
 
+        model.addAttribute("allSuratMasuk", allSuratMasuk);
         model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
         model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
         model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
