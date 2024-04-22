@@ -108,6 +108,20 @@
 
                 <div class="row">
                     <div class="detail-wrapper">
+                        <div class="detail">Penandatangan</div>
+                    </div>
+
+                    <div class="content-wrapper">
+                        <div class="content">
+            <span th:each="pengguna, iterStat : ${outgoing.penandatangan}"
+                  th:text="${iterStat.last ? pengguna.nama : pengguna.nama + ', '}"
+                  th:remove="tag"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="detail-wrapper">
                         <div class="detail">Status Tanda Tangan</div>
                     </div>
 

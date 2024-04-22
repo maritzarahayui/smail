@@ -113,9 +113,23 @@
 
                 <div class="content-wrapper">
                     <div class="content">
-                        <ul>
-                            <li th:each="pengguna : ${outgoing.penandatangan}" th:text="${pengguna.nama}"></li>
-                        </ul>
+            <span th:each="pengguna, iterStat : ${outgoing.penandatangan}"
+                  th:text="${iterStat.last ? pengguna.nama : pengguna.nama + ', '}"
+                  th:remove="tag"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Status Tanda Tangan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content">
+                        <span th:if="${outgoing.currentPenandatangan != null and outgoing.currentPenandatangan.id != user.id}" th:text="'Menunggu tanda tangan pihak lain'"></span>
+                        <span th:if="${outgoing.currentPenandatangan != null and outgoing.currentPenandatangan.id == user.id}" th:text="'Menunggu tanda tangan Anda'"></span>
+                        <span th:if="${outgoing.currentPenandatangan == null}" th:text="'Selesai ditandatangani'"></span>
                     </div>
                 </div>
             </div>
