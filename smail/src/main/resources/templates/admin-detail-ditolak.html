@@ -76,6 +76,26 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Keperluan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.keperluan}"></div>
+                </div>
+            </div>
+
+            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+                <div class="detail-wrapper">
+                    <div class="detail" th:text="${fieldName.key}"></div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${fieldName.value}"></div>
+                </div>
+            </div>
+
             <div class="row" th:if="${requestSurat.status == 3}">
                 <div class="detail-wrapper">
                     <div class="detail">Tanggal Penolakan</div>

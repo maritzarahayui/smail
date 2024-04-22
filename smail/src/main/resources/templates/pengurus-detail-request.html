@@ -86,6 +86,16 @@
                     </div>
                 </div>
 
+                <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+                    <div class="detail-wrapper">
+                        <div class="detail" th:text="${fieldName.key}"></div>
+                    </div>
+    
+                    <div class="content-wrapper">
+                        <div class="content" th:text="${fieldName.value}"></div>
+                    </div>
+                </div>
+
                 <div class="row" th:if="${requestSurat.status == 5}">
                     <div class="detail-wrapper">
                         <div class="detail">Tanggal Selesai</div>
