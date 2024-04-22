@@ -35,11 +35,11 @@
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Jenis Surat</div>
+                    <div class="detail">Tanggal Pengajuan</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.jenisSurat}"></div>
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
@@ -59,17 +59,54 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.bentukSurat}"></div>
+                    <div class="content">
+                        <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                            <span th:text="${bentuk}"></span>
+                            <th:block th:if="${!iterStat.last}">
+                                <span>, </span>
+                            </th:block>
+                        </th:block>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Tanggal Pengajuan</div>
+                    <div class="detail">Keperluan</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div class="content" th:text="${requestSurat.keperluan}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Kategori Surat</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.kategori}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Jenis Surat</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.jenisSurat}"></div>
+                </div>
+            </div>
+
+            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+                <div class="detail-wrapper">
+                    <div class="detail" th:text="${fieldName.key}"></div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${fieldName.value}"></div>
                 </div>
             </div>
 

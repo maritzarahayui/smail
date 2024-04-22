@@ -107,7 +107,14 @@
                                 <tr th:each="requestSurat: ${requestSurats}">
                                     <td th:text="${requestSurat.id}"></td>
                                     <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
-                                    <td th:text="${requestSurat.bentukSurat}"></td>
+                                    <td>
+                                        <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                            <span th:text="${bentuk}"></span>
+                                            <th:block th:if="${!iterStat.last}">
+                                                <span>, </span>
+                                            </th:block>
+                                        </th:block>
+                                    </td>
                                     <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
                                     <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd')}"></td>
                                     <td style="display: flex; justify-content: space-between;">
