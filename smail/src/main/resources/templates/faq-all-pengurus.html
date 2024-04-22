@@ -157,8 +157,8 @@ table.table tbody tr {
     <div class="content-container">
 
         <b class="title-container">
-            <span class="title-gradient">Frequently Asked</span>
-            <span>Question</span>
+            <span class="title-gradient">Forum</span>
+            <span>Pertanyaan</span>
         </b>
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
@@ -188,7 +188,7 @@ table.table tbody tr {
             <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
-                        <th style="width: 5%; text-align: center; vertical-align: middle;">ID</th>
+                        <th style="width: 5%; text-align: center; vertical-align: middle;">No.</th>
                         <th style="width: 80%; text-align: center; vertical-align: middle;">Pertanyaan</th>
                         <th style="width: 15%; text-align: center; vertical-align: middle;">Action</th>
                     </tr>
@@ -197,8 +197,8 @@ table.table tbody tr {
                     <tr th:if="${#lists.isEmpty(faqsDieskalasi)}">
                         <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dieskalasi</td>
                     </tr>
-                    <tr th:each="faq : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
-                        <td th:text="${faq.id}"></td>
+                    <tr th:each="faq, stat: ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
+                        <td th:text="${stat.count}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
                         <td style="justify-content: center;">
                             <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
@@ -224,8 +224,8 @@ table.table tbody tr {
                     <tr th:if="${#lists.isEmpty(faqsTerjawab)}">
                         <td colspan="3" style="text-align: center;">Belum ada FAQ yang Terjawab</td>
                     </tr>
-                    <tr th:each="faq : ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
-                        <td th:text="${faq.id}"></td>
+                    <tr th:each="faq, stat: ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
+                        <td th:text="${stat.count}"></td>
                         <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
                         <td style="justify-content: center;">
                             <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
