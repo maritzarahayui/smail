@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/detail-request-template.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
+    />
+</head>
+<body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="detail-template-diterima">
+    <img
+            class="detail-template-diterima-child"
+            alt=""
+            src="/images/kanan.svg"
+    />
+
+    <section class="language-and-formats">
+        <img
+                class="language-and-formats-child"
+                loading="lazy"
+                alt=""
+                src="/images/kiri.svg"
+        />
+
+        <div class="detail-template-text">
+            <h1 class="detail-template2">
+            <span>
+              <span class="detail1">Detail</span>
+              <span class="template"> Surat</span>
+            </span>
+            </h1>
+        </div>
+    </section>
+    <section class="i-d-and-status">
+        <div class="data-fields-group">
+            <div class="frame-parts">
+                <div class="i-d-and-types">
+                    <div class="id-surat">ID Surat</div>
+                </div>
+                <div class="jenis-surat1">
+                    <div class="ku001" th:text="${requestSurat.id}"></div>
+                </div>
+            </div>
+            <div class="frame-parts1">
+                <div class="jenis-surat-wrapper">
+                    <div class="jenis-surat2">Jenis Surat</div>
+                </div>
+                <div class="lainnya-wrapper">
+                    <!--                    Harusnya jenis surat-->
+                    <div class="lainnya" th:text="${requestSurat.kategori}"></div>
+                </div>
+            </div>
+            <div class="frame-parts3">
+                <div class="bahasa-wrapper">
+                    <div class="bahasa">Bahasa</div>
+                </div>
+                <div class="indonesia-wrapper">
+                    <div class="indonesia" th:text="${requestSurat.bahasa}"></div>
+                </div>
+            </div>
+            <div class="frame-parts4">
+                <div class="bentuk-surat-wrapper">
+                    <div class="bentuk-surat1">Bentuk Surat</div>
+                </div>
+                <div class="soft-copy-wrapper2">
+                    <div class="soft-copy5">Soft Copy</div>
+                </div>
+            </div>
+            <div class="frame-parts6">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="tanggal-pengajuan1">Tanggal Pengajuan</div>
+                </div>
+                <div class="agustus-2022-wrapper2">
+                    <div class="agustus-20225" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+            <div class="frame-parts7">
+                <div class="tanggal-selesai-wrapper">
+                    <div class="tanggal-selesai">Status</div>
+                </div>
+                <div class="agustus-2022-wrapper3">
+                    <form th:action="@{/admin/request/updateStatus}" method="post">
+                        <input type="hidden" name="requestId" th:value="${requestSurat.id}">
+                        <select class="dropdown-status" name="status">
+                            <option value="1" th:selected="${requestSurat.status == 1}">Diterima</option>
+                            <option value="3" th:selected="${requestSurat.status == 3}">Ditolak</option>
+                            <option value="4" th:selected="${requestSurat.status == 4}">Diproses</option>
+                            <option value="5" th:selected="${requestSurat.status == 5}">Selesai</option>
+                        </select>
+                        <button type="submit">Update Status</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    // Ganti jadi dropdown
+<!--    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">-->
+<!--        <div class="button31">-->
+<!--            <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">-->
+<!--                <div class="simpan-perubahan">Terima Pengajuan</div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">-->
+<!--        <div class="button31-red">-->
+<!--            <a th:href="@{/template/request/reject/{id}(id=${requestTemplate.id})}">-->
+<!--                <div class="simpan-perubahan">Tolak Pengajuan</div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
+    <section class="nomor-surat1">
+        <div class="button31">
+            <a th:href="@{'/admin/request/history'}">
+                <div class="simpan-perubahan">Daftar Request Surat</div>
+            </a>
+        </div>
+    </section>
+    <br><br><br>
+</div>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+</body>
+</html>

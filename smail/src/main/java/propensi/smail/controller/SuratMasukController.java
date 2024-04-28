@@ -1,13 +1,16 @@
 package propensi.smail.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.Base64;
+import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -46,11 +49,11 @@ public class SuratMasukController {
     PenggunaService penggunaService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("judul") String judul,  
-        @RequestParam("kategori") String kategori, @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
+        @RequestParam("perihal") String perihal, @RequestParam("pengirim") String pengirim, 
         Authentication auth, Model model) throws ParseException {
         try {
-            SuratMasuk suratMasuk = suratMasukService.store(file, judul, kategori, perihal, pengirim);
+            SuratMasuk suratMasuk = suratMasukService.store(file, kategori, perihal, pengirim);
             return "redirect:/surat-masuk/detail/" + suratMasuk.getNomorArsip();
         }catch (Exception e) {
             return "redirect:/surat-masuk/form";
@@ -77,10 +80,26 @@ public class SuratMasukController {
 
     //get all surat masuk
     @GetMapping("/all")
-    public String getAllSuratMasuk(Model model, Authentication auth) {
-        List<SuratMasuk> suratMasukList = suratMasukService.getAllSuratMasuk();
-        model.addAttribute("suratMasukList", suratMasukList);
+    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
 
+        List<SuratMasuk> suratMasukDiarsipkan;
+        List<SuratMasuk> suratMasukFollowUp;
+        List<SuratMasuk> suratMasukDisposisi;
+
+        if (search != null && !search.isEmpty()) {
+            suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
+            suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
+            suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
+        } else {
+            suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
+            suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
+            suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
+        }
+
+        model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
+        model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
+        model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
+        
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -197,6 +216,40 @@ public class SuratMasukController {
         return "redirect:/surat-masuk/detail/" + id;
     }
 
+    /* BRANCH ARSIP
+     * BRANCH ARSIP
+     * BRANCH ARSIP
+     */
+    // @GetMapping("/search")
+    // public String searchSuratMasuk(@RequestParam Map<String, String> params, Model model, Authentication auth,
+    //                             @RequestParam(value = "tanggalDibuat", required = false)
+    //                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
+    //                             @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
+
+    //     // Mendapatkan nilai pencarian dari parameter "q"
+    //     String searchQuery = params.get("q");
+
+    //     // Melakukan pencarian dan filtering surat masuk berdasarkan nilai pencarian
+    //     List<SuratMasuk> suratMasukList = suratMasukService.searchSuratMasuk(params, tanggalDibuat, sort, searchQuery);
+    //     model.addAttribute("suratMasukList", suratMasukList);
+
+    //     if (auth != null) {
+    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+    //         String email = oauthUser.getEmail();
+    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+    //         if (user.isPresent()) {
+    //             Pengguna pengguna = user.get();
+    //             model.addAttribute("role", penggunaService.getRole(pengguna));
+    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+    //         } else {
+    //             return "auth-failed";
+    //         }
+    //     }
+
+    //     return "daftar-surat-masuk";
+    // }
+
     // route to follow up arsip surat 
     @GetMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
@@ -220,7 +273,7 @@ public class SuratMasukController {
         }
         return "follow-up";
     }
-
+    
     // route to follow up arsip surat
     @PostMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penerimaEksternal") String penerimaEksternal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
@@ -228,6 +281,18 @@ public class SuratMasukController {
         Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
         SuratMasuk arsipFollowUp = suratMasukService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
         model.addAttribute("suratMasuk", arsipAwal);
+        // debug
+        System.out.println("ID Penandatangan: " + idPenandatangan);
+        System.out.println("Penandatangan: " + penandatangan.getNama());
+        // debug arsip follow up
+        System.out.println("Arsip Follow Up: " + arsipFollowUp.getNomorArsip());
+        System.out.println("Kategori: " + arsipFollowUp.getKategori());
+        System.out.println("Perihal: " + arsipFollowUp.getPerihal());
+        // System.out.println("Pengirim: " + arsipFollowUp.getPengirim());
+        System.out.println("Tanggal Dibuat: " + arsipFollowUp.getTanggalDibuat());
+        System.out.println("Status: " + arsipFollowUp.getStatus());
+        System.out.println("File: " + arsipFollowUp.getFileName());
+        System.out.println("Penandatangan: " + arsipFollowUp.getPenandatangan().getNama());
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();

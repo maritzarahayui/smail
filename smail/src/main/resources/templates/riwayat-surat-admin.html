@@ -9,7 +9,7 @@
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-    
+
     <style>
         /* Tambahkan CSS khusus di sini */
         .table thead {
@@ -43,45 +43,45 @@
                 <div class="tabs-group">
                     <button class="component-2">
                         <img
-                            class="iconoutlineexclamation-circl"
-                            alt=""
-                            src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                         />
                         <div class="tabs">Diajukan</div>
                     </button>
 
                     <div class="component-3">
                         <img
-                            class="iconoutlineexclamation-circl1"
-                            alt=""
-                            src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                         />
                         <div class="tabs1">Dibatalkan</div>
                     </div>
 
                     <div class="component-3">
                         <img
-                            class="iconoutlineexclamation-circl1"
-                            alt=""
-                            src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                         />
                         <div class="tabs1">Ditolak</div>
                     </div>
 
                     <div class="component-3">
                         <img
-                            class="iconoutlineexclamation-circl1"
-                            alt=""
-                            src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                         />
                         <div class="tabs1">Diproses</div>
                     </div>
 
                     <div class="component-3">
                         <img
-                            class="iconoutlineexclamation-circl1"
-                            alt=""
-                            src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl1"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                         />
                         <div class="tabs1">Selesai</div>
                     </div>
@@ -96,17 +96,17 @@
                     <div class="button-parent">
                         <button class="button18">
                             <img
-                                class="solarcalendar-outline-icon"
-                                alt=""
-                                src="/images/calendar.svg"
+                                    class="solarcalendar-outline-icon"
+                                    alt=""
+                                    src="/images/calendar.svg"
                             />
                             <div class="periode-20212022">Periode 2021/2022</div>
                         </button>
                         <button class="button19">
                             <img
-                                class="fluentfilter-12-regular-icon"
-                                alt=""
-                                src="/images/filter.svg"
+                                    class="fluentfilter-12-regular-icon"
+                                    alt=""
+                                    src="/images/filter.svg"
                             />
                             <div class="filters">Filters</div>
                         </button>
@@ -119,34 +119,32 @@
                     <!-- Start of the table -->
                     <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
                         <thead>
-                            <tr>
-                                <th style="width: 5%; text-align: center; vertical-align: middle;">ID Surat</th>
-                                <th style="width: 50%; text-align: center; vertical-align: middle;">Jenis Surat</th>
-                                <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
-                                <td style="width: 15%; text-align: center; vertical-align: middle;">
-                                    <div style="display: block;">Tanggal</div>
-                                    <div style="display: block;">Pengajuan</div>
-                                </td>
-                                <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
-                            </tr>
+                        <tr>
+                            <th style="width: 5%; text-align: center; vertical-align: middle;">ID Surat</th>
+                            <th style="width: 50%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                            <th style="width: 50%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                            <td style="width: 15%; text-align: center; vertical-align: middle;">
+                                <div style="display: block;">Tanggal</div>
+                                <div style="display: block;">Pengajuan</div>
+                            </td>
+                            <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
                         </thead>
                         <tbody>
                         <!-- Iterate through requestTemplates -->
-                            <tr th:each="requestSurat: ${requestSurats}">
-                                <td th:text="${requestSurat.id}"></td>
-                                <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
-                                <td th:text="${requestSurat.bentukSurat}"></td>
-                                <td th:text="${requestSurat.tanggalPengajuan}"></td>
-                                <td style="display: flex; justify-content: space-between;">
-                                    <button class="button20">
-                                        <div class="button21">Detail</div>
-                                    </button>
-
-                                    <button class="button20" style="background-color: #990012;">
-                                        <div class="button21">Batalkan</div>
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr th:each="requestSurat: ${requestSurats}">
+                            <td th:text="${requestSurat.id}"></td>
+                            <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                            <td th:text="${requestSurat.pengaju.nama}"></td>
+                            <td th:text="${requestSurat.bentukSurat}"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
+                            <td style="display: flex; justify-content: space-between;">
+                                <a th:href="@{/admin/request/{id}(id=${requestSurat.id})}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                     <!-- End of the table -->
