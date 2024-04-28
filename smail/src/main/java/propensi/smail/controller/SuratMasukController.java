@@ -28,6 +28,7 @@ import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.model.Email;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.SuratMasukDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.SuratMasukService;
 
@@ -47,6 +48,9 @@ public class SuratMasukController {
 
     @Autowired
     PenggunaService penggunaService;
+
+    @Autowired
+    private SuratMasukDb suratMasukDb;
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
@@ -285,19 +289,12 @@ public class SuratMasukController {
         Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
         SuratMasuk arsipFollowUp = suratMasukService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
         model.addAttribute("suratMasuk", arsipAwal);
-        // debug
-        System.out.println("ID Penandatangan: " + idPenandatangan);
-        System.out.println("Penandatangan: " + penandatangan.getNama());
-        // debug arsip follow up
-        System.out.println("Arsip Follow Up: " + arsipFollowUp.getNomorArsip());
-        System.out.println("Kategori: " + arsipFollowUp.getKategori());
-        System.out.println("Perihal: " + arsipFollowUp.getPerihal());
-        // System.out.println("Pengirim: " + arsipFollowUp.getPengirim());
-        System.out.println("Tanggal Dibuat: " + arsipFollowUp.getTanggalDibuat());
-        System.out.println("Status: " + arsipFollowUp.getStatus());
-        System.out.println("File: " + arsipFollowUp.getFileName());
-        System.out.println("Penandatangan: " + arsipFollowUp.getPenandatangan().getNama());
         
+
+        // set dan save penandatangan ke object surat masuk
+        arsipAwal.setPenandatangan(penandatangan);
+        suratMasukDb.save(arsipAwal);
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
