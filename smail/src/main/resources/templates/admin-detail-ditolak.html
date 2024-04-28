@@ -38,11 +38,21 @@
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Jenis Surat</div>
+                    <div class="detail">Nama Pengaju</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.jenisSurat}"></div>
+                    <div class="content" th:text="${requestSurat.pengaju.nama}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Pengajuan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
@@ -62,27 +72,14 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.bentukSurat}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
-                    <div class="detail">Tanggal Pengajuan</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
-                    <div class="detail">Nama Pengaju</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${requestSurat.pengaju.nama}"></div>
+                    <div class="content">
+                        <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                            <span th:text="${bentuk}"></span>
+                            <th:block th:if="${!iterStat.last}">
+                                <span>, </span>
+                            </th:block>
+                        </th:block>
+                    </div>
                 </div>
             </div>
 
@@ -96,23 +93,23 @@
                 </div>
             </div>
 
-            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+            <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail" th:text="${fieldName.key}"></div>
+                    <div class="detail">Kategori Surat</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${fieldName.value}"></div>
+                    <div class="content" th:text="${requestSurat.kategori}"></div>
                 </div>
             </div>
 
-            <div class="row" th:if="${requestSurat.status == 3}">
+            <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Tanggal Penolakan</div>
+                    <div class="detail">Jenis Surat</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div class="content" th:text="${requestSurat.jenisSurat}"></div>
                 </div>
             </div>
 
@@ -126,6 +123,16 @@
                 </div>
             </div>
 
+            <div class="row" th:if="${requestSurat.status == 3}">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Penolakan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+
             <div class="row" th:if="${requestSurats.status == 3}">
                 <div class="detail-wrapper">
                     <div class="detail">Alasan Penolakan</div>
@@ -135,6 +142,17 @@
                 </div>
             </div>
 
+            <h3 class="label6">Keterangan</h3>
+
+            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+                <div class="detail-wrapper">
+                    <div class="detail" th:text="${fieldName.key}"></div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${fieldName.value}"></div>
+                </div>
+            </div>
         </form>
     </div>
 </div>

@@ -35,31 +35,11 @@
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Nomor Surat</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${outgoing.nomorArsip}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
                     <div class="detail">Tanggal Pengajuan</div>
                 </div>
 
                 <div class="content-wrapper">
                     <div class="content" th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
-                    <div class="detail">Tanggal Selesai</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
@@ -120,16 +100,6 @@
                 </div>
             </div>
 
-            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
-                <div class="detail-wrapper">
-                    <div class="detail" th:text="${fieldName.key}"></div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${fieldName.value}"></div>
-                </div>
-            </div>
-
             <div class="row">
                 <div class="detail-wrapper">
                     <div class="detail">Status</div>
@@ -140,8 +110,40 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Selesai</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Nomor Surat</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${outgoing.nomorArsip}"></div>
+                </div>
+            </div>
+
+            <h3 class="label6">Keterangan</h3>
+
+            <div class="row" th:each="fieldName : ${requestSurat.listFieldData}">
+                <div class="detail-wrapper">
+                    <div class="detail" th:text="${fieldName.key}"></div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${fieldName.value}"></div>
+                </div>
+            </div>
+
             <div class="frame-button" th:if="${base64PDF != null}">
-                <h3 class="label6">File</h3>
+                <h3 class="label6">Preview Surat</h3>
                 <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
             </div>
         </div>
