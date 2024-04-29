@@ -317,6 +317,29 @@ public class SuratKeluarController {
 
         return "pengurus-ttd-request";
     }
+    // route to pengurus-ttd-arsip 
+    @GetMapping("/ttd/arsip")
+    @Transactional(readOnly = true)
+    public String pengurusTtdArsip( Model model, Authentication auth) {
+        // list surat keluar berdasarkan id penandatangan dan status
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByPenandatanganAndStatus(pengguna, 1);
+                model.addAttribute("listSuratKeluar", listSuratKeluar);
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+        return "pengurus-ttd-arsip";
+    }
+    
 
 
     /* BRANCH ARSIPPP
@@ -491,6 +514,8 @@ public class SuratKeluarController {
         }
         return "daftar-surat-keluar";
     }
+
+    // route to pengurus-ttd-arsip
 
 
 }

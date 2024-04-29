@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.user.Pengguna;
 
 import java.util.Date;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
     SuratKeluar findByRequestSurat(Optional<RequestSurat> requestSurat);
     SuratKeluar findByNomorArsipContainingIgnoreCase(String nomorArsip);
     List<SuratKeluar> findByTanggalDibuat(Date tanggalDibuat);
+    List<SuratKeluar> findByCurrentPenandatanganAndStatus(Pengguna penandatangan, int status);
+
 }

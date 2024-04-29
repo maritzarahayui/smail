@@ -8,10 +8,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.SuratKeluarDb;
+import propensi.smail.repository.SuratMasukDb;
 import propensi.smail.repository.TemplateSuratDb;
 
 import java.io.IOException;
@@ -36,6 +38,10 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Autowired
     private TemplateSuratDb templateSuratDb;
+
+    // surat masuk db
+    @Autowired
+    private SuratMasukDb suratMasukDb;
 
     @Override
     public List<SuratKeluar> getAllSuratKeluar() {
@@ -91,7 +97,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             long count = suratKeluarDb.countByKategori(kategori);
 
             String idSuffix = String.format("%05d", count + 1);
-            return "IN" + "-" + abbreviation + "-" + idSuffix;
+            return "OUT" + "-" + abbreviation + "-" + idSuffix;
         } else {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
@@ -281,4 +287,64 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             return null;
         }
     }
+
+    @Override
+    public String getStatusSuratKeluar(int status) {
+        // if 1 = Menunggu Persetujuan
+        if (status == 1) {
+            return "Menunggu Persetujuan";
+        }
+        else if (status == 2) {
+            return "Disetujui";
+        }
+        else {
+            return "Ditolak";
+        }
+    }
+
+    @Override
+    public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
+            String penerimaEksternal, Pengguna penandatangan) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            // bikin objek surat keluar
+            SuratKeluar suratKeluar = new SuratKeluar();
+                suratKeluar.setNomorArsip(generateId(arsipAwal.getKategori()));
+                suratKeluar.setFile(file.getBytes());
+                suratKeluar.setKategori(arsipAwal.getKategori());
+                suratKeluar.setPerihal(perihal);
+                suratKeluar.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                suratKeluar.setStatus(1); // 1 :proses follow up, 2: selesai, 3: ditolak
+                suratKeluar.setPenerimaEksternal(penerimaEksternal);
+                suratKeluar.setFileName(fileName);
+                suratKeluar.setCurrentPenandatangan(penandatangan);
+                suratKeluar.setArsipSurat(arsipAwal);                         
+
+                // ubah status arsip awal
+                arsipAwal.setStatus(3);
+                suratMasukDb.save(arsipAwal);
+
+                // debug print semuanya
+                System.out.println("Nomor Arsip: " + suratKeluar.getNomorArsip());
+                System.out.println("Kategori: " + suratKeluar.getKategori());
+                System.out.println("Perihal: " + suratKeluar.getPerihal());
+                System.out.println("Tanggal Dibuat: " + suratKeluar.getTanggalDibuat());
+                System.out.println("Status: " + suratKeluar.getStatus());
+                System.out.println("Penerima Eksternal: " + suratKeluar.getPenerimaEksternal());
+                System.out.println("File Name: " + suratKeluar.getFileName());
+                System.out.println("Penandatangan: " + suratKeluar.getPenandatangan());
+                System.out.println("Arsip Surat: " + suratKeluar.getArsipSurat());
+
+                return suratKeluarDb.save(suratKeluar);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + fileName, e);
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByPenandatanganAndStatus(Pengguna penandatangan, int status) {
+        return suratKeluarDb.findByCurrentPenandatanganAndStatus(penandatangan, status);
+    }
+    
 }

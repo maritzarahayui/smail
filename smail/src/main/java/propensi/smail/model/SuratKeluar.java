@@ -46,6 +46,9 @@ public class SuratKeluar {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "status")
+    private int status;
+
     @ManyToMany
     @JoinTable(
             name = "suratkeluar_pengguna",
@@ -65,4 +68,8 @@ public class SuratKeluar {
     @OneToOne
     @JoinColumn(name = "surat_id")
     private RequestSurat requestSurat;
+
+    @OneToOne
+    @JoinColumn(name = "arsip_id")
+    private SuratMasuk arsipSurat;
 }

@@ -3,6 +3,7 @@ package propensi.smail.service;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 
 import java.io.IOException;
@@ -28,4 +29,8 @@ public interface SuratKeluarService {
     List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
 
     SuratKeluar findSuratKeluarByID(String id);
+    String getStatusSuratKeluar(int status);
+    SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
+    //  belum tes
+    List<SuratKeluar> getSuratKeluarByPenandatanganAndStatus(Pengguna penandatangan, int status);
 }
