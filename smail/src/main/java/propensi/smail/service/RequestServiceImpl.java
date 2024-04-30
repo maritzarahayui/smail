@@ -44,6 +44,8 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO) {
         try {
+            System.out.println("msk service");
+
             requestSurat.setBentukSurat(requestDTO.getBentukSurat());
             requestSurat.setBahasa(requestDTO.getBahasa());
             requestSurat.setKategori(requestDTO.getKategori());

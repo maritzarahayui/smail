@@ -269,7 +269,22 @@ body {
 
 .input-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: column;
+}
+
+.input-row input[type="text"] {
+  height: 150px;
+}
+
+.input-row textarea {
+  height: 150px;
+  resize: vertical;
+  box-sizing: border-box;
+  flex: 2 1 66%;
+  border-radius: 8px;
+  border: 2px solid #3a8b5a;
+  overflow: hidden;
+  padding: 10px;
 }
 
 .input-row > input:first-child {

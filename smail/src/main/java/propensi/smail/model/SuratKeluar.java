@@ -46,11 +46,20 @@ public class SuratKeluar {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "status")
+    private int status;
 
-    /* RELATIONSHIPS */
-     @ManyToOne
-     @JoinColumn(name = "penandatangan")
-     private Pengguna penandatangan;
+    @ManyToMany
+    @JoinTable(
+            name = "suratkeluar_pengguna",
+            joinColumns = @JoinColumn(name = "surat_keluar_id"),
+            inverseJoinColumns = @JoinColumn(name = "pengguna_id")
+    )
+    private List<Pengguna> penandatangan;
+
+    @ManyToOne
+    @JoinColumn(name = "current_penandatangan")
+    private Pengguna currentPenandatangan;
 
     @ManyToOne
     @JoinColumn(name = "pengaju")
@@ -59,4 +68,8 @@ public class SuratKeluar {
     @OneToOne
     @JoinColumn(name = "surat_id")
     private RequestSurat requestSurat;
+
+    @OneToOne
+    @JoinColumn(name = "arsip_id")
+    private SuratMasuk arsipSurat;
 }

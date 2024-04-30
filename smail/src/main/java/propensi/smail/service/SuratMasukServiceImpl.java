@@ -23,9 +23,11 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.SuratKeluarDb;
 import propensi.smail.repository.SuratMasukDb;
 
 @Service
@@ -37,6 +39,9 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Autowired
     private PenggunaDb penggunaDb;
+
+    @Autowired
+    private SuratKeluarDb suratKeluarDb;
 
     @Autowired
     private PenggunaService penggunaService;
@@ -196,6 +201,11 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     }
 
     @Override
+    public List<SuratMasuk> getSuratBySearch(String search) {
+        return suratMasukDb.findBySearch(search);
+    }
+
+    @Override
     public List<Pengguna> getAllPenandatangan() {
         List<Pengguna> listTembusan = penggunaDb.findAll().stream()
             .filter(user -> {
@@ -205,42 +215,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             .collect(Collectors.toList());
         return listTembusan;
     }
+    
 
-
-    @Override
-    public SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
-            String penerimaEksternal, Pengguna penandatangan) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        try {
-            // arsipAwal.setStatus(4);
-            // suratMasukDb.save(arsipAwal);
-            SuratMasuk suratMasuk = new SuratMasuk();
-                suratMasuk.setNomorArsip(generateId(arsipAwal.getKategori()));
-                suratMasuk.setFile(file.getBytes());
-                suratMasuk.setKategori(arsipAwal.getKategori());
-                suratMasuk.setPerihal(perihal);
-                suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(3);
-                suratMasuk.setPengirim(penerimaEksternal);
-                suratMasuk.setFileName(fileName);
-                suratMasuk.setPenandatangan(penandatangan);
-
-                arsipAwal.setStatus(3);
-                suratMasukDb.save(arsipAwal);
-                
-
-                // debug print semuanya
-                System.out.println("Nomor Arsip: " + suratMasuk.getNomorArsip());
-                System.out.println("Kategori: " + suratMasuk.getKategori());
-                System.out.println("Perihal: " + suratMasuk.getPerihal());
-                System.out.println("Tanggal Dibuat: " + suratMasuk.getTanggalDibuat());
-                System.out.println("Status: " + suratMasuk.getStatus());
-                System.out.println("Pengirim: " + suratMasuk.getPengirim());
-                System.out.println("File Name: " + suratMasuk.getFileName());
-                System.out.println("Penandatangan: " + suratMasuk.getPenandatangan().getNama());
-                return suratMasukDb.save(suratMasuk);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to store file " + fileName, e);
-        }
-    }
 }

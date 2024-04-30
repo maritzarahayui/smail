@@ -119,9 +119,6 @@ public class RequestSuratController {
             return bindingResult.getAllErrors().toString();
         }
 
-        System.out.println(requestDTO.getJenisSurat() + "    PPPPPPPHAHHAHAHHAH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        System.out.println(requestDTO.getListFieldData().toString());
-
         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
         String email = oauthUser.getEmail();
         Optional<Pengguna> user = penggunaDb.findByEmail(email);
@@ -143,7 +140,8 @@ public class RequestSuratController {
             requestSurat.setPengaju(pengguna);
             requestSurat.setTanggalPengajuan(new Date());
             requestService.createRequestSurat(requestSurat, requestDTO);
-
+            List<String> bentukSurat = requestDTO.getBentukSurat();
+            requestSurat.setBentukSurat(bentukSurat);
             System.out.println("BERHASIL");
             return "redirect:/request/history";
         } catch (Exception e) {

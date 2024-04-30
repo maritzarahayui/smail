@@ -20,5 +20,12 @@ public interface SuratMasukDb extends JpaRepository<SuratMasuk, String> {
        "LOWER(s.pengirim) LIKE LOWER(CONCAT('%', :search, '%'))) AND " +
        "s.status = :status")
     List<SuratMasuk> findBySearchAndStatus(@Param("search") String search, @Param("status") int status);
+    @Query("SELECT s FROM SuratMasuk s WHERE " +
+       "(LOWER(s.nomorArsip) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+       "LOWER(s.kategori) LIKE LOWER(CONCAT('%', :search, '%')) OR " +
+       "LOWER(s.perihal) LIKE LOWER(CONCAT('%', :search, '%')) AND " +
+       "LOWER(s.pengirim) LIKE LOWER(CONCAT('%', :search, '%')))")
+    List<SuratMasuk> findBySearch(@Param("search") String search);
+    
     // List<SuratMasuk> findByNomorArsipContainingIgnoreCaseOrKategoriContainingIgnoreCaseOrPerihalContainingIgnoreCaseOrPengirimContainingIgnoreCaseAndStatus(String search, int status);
 }
