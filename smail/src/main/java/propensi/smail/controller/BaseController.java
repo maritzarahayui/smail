@@ -62,40 +62,12 @@ public class BaseController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 String role = penggunaService.getRole(pengguna);
-                String role = penggunaService.getRole(pengguna);
 
-                model.addAttribute("role", role);
                 model.addAttribute("role", role);
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
 
                 if (role.equals("Admin")) {
                     /* model.addAttribute yg dibutuhin */
-                    return "dashboard-pengurus";
-                } else if (role.equals("Pengurus")) {
-                    /* model.addAttribute yg dibutuhin */
-                    model.addAttribute("mapSuratMasukTahun", suratMasukService.getJumlahSuratMasukTahunIni());
-                    model.addAttribute("mapSuratMasukBulan", suratMasukService.getJumlahSuratMasukBulanIni());
-                    model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
-
-                    model.addAttribute("mapSuratKeluarTahun", suratKeluarService.getJumlahSuratKeluarTahunIni());
-                    model.addAttribute("mapSuratKeluarBulan", suratKeluarService.getJumlahSuratKeluarBulanIni());
-                    model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
-
-                    model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
-
-                    model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
-                    model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
-
-                    return "dashboard-pengurus";
-                } else if (role.equals("Dosen")) {
-                    /* model.addAttribute yg dibutuhin */
-                    return "dashboard-pengurus";
-                } else {
-                    /* model.addAttribute yg dibutuhin */
-                    return "dashboard-staf-mhs";
-                } 
-
-                if (role.equals("Admin")) {
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonth();
                     // System.out.println(bulan);
                     model.addAttribute("bulan", bulan.keySet().iterator().next());
@@ -160,16 +132,31 @@ public class BaseController {
                     String topRequester = requestService.getTopRequester();
                     model.addAttribute("topRequester", topRequester);
 
-                    return "dashboard-admin";
+                    return "dashboard-pengurus";
                 } else if (role.equals("Pengurus")) {
+                    /* model.addAttribute yg dibutuhin */
+                    model.addAttribute("mapSuratMasukTahun", suratMasukService.getJumlahSuratMasukTahunIni());
+                    model.addAttribute("mapSuratMasukBulan", suratMasukService.getJumlahSuratMasukBulanIni());
+                    model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
+
+                    model.addAttribute("mapSuratKeluarTahun", suratKeluarService.getJumlahSuratKeluarTahunIni());
+                    model.addAttribute("mapSuratKeluarBulan", suratKeluarService.getJumlahSuratKeluarBulanIni());
+                    model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
+
+                    model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
+
+                    model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
+                    model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
+
                     return "dashboard-pengurus";
                 } else if (role.equals("Dosen")) {
                     /* model.addAttribute yg dibutuhin */
-                    return "dashboard-admin";
+                    return "dashboard-pengurus";
                 } else {
                     /* model.addAttribute yg dibutuhin */
                     return "dashboard-staf-mhs";
-                }
+                } 
+
             } else {
                 return "auth-failed";
             }
