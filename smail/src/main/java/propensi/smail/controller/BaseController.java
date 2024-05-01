@@ -5,6 +5,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.io.IOException;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import propensi.smail.service.PenggunaService;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.SuratKeluarService;
 import propensi.smail.service.SuratMasukService;
+import propensi.smail.service.TemplateService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -43,6 +45,12 @@ public class BaseController {
     @Autowired
     FAQService faqService;
 
+    @Autowired
+    private RequestService requestService;
+
+    @Autowired
+    private TemplateService templateService;
+
     @GetMapping("/")
     public String home(Model model, Authentication auth) {
 
@@ -54,7 +62,9 @@ public class BaseController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 String role = penggunaService.getRole(pengguna);
+                String role = penggunaService.getRole(pengguna);
 
+                model.addAttribute("role", role);
                 model.addAttribute("role", role);
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
 
@@ -85,6 +95,81 @@ public class BaseController {
                     return "dashboard-staf-mhs";
                 } 
 
+                if (role.equals("Admin")) {
+                    Map<String, Long> bulan = requestService.getJumlahRequestPerMonth();
+                    // System.out.println(bulan);
+                    model.addAttribute("bulan", bulan.keySet().iterator().next());
+
+                    Map<String, Long> jumlahRequestPerMinggu = requestService.getJumlahRequestPerMinggu();
+                    // System.out.println(jumlahRequestPerMinggu);
+                    model.addAttribute("jumlahRequestPerMinggu", jumlahRequestPerMinggu);
+
+                    int submittedRequest = requestService.getAllSubmitedRequestsSurat().size();
+                    model.addAttribute("diajukan", submittedRequest);
+
+                    int rejectedRequest = requestService.getAllRejectedRequestsSurat().size();
+                    model.addAttribute("ditolak", rejectedRequest);
+
+                    int canceledRequest = requestService.getAllCanceledRequestsSurat().size();
+                    model.addAttribute("dibatalkan", canceledRequest);
+
+                    int onProcessRequest = requestService.getAllOnProcessRequestsSurat().size();
+                    model.addAttribute("diproses", onProcessRequest);
+
+                    int finishedRequest = requestService.getAllFinishedRequestsSurat().size();
+                    model.addAttribute("selesai", finishedRequest);
+
+                    long reqTemplateDiterima = templateService.getAllReqTemplate().stream()
+                            .filter(template -> template.getStatus() == 2)
+                            .count();
+
+                    long reqTemplateDitolak = templateService.getAllReqTemplate().stream()
+                            .filter(template -> template.getStatus() == 3)
+                            .count();
+
+                    model.addAttribute("reqTemplateDiterima", reqTemplateDiterima);
+                    model.addAttribute("reqTemplateDitolak", reqTemplateDitolak);
+
+                    Map<String, Long> jumlahRequestByKategori = requestService.getJumlahRequestByKategori();
+                    // System.out.println(jumlahRequestByKategori);
+                    model.addAttribute("jumlahRequestByKategori", jumlahRequestByKategori);
+
+                    Map<String, Long> activeTemplateByKategori = templateService.getActiveTemplateByKategori();
+                    // System.out.println(activeTemplateByKategori);
+                    model.addAttribute("activeTemplateByKategori", activeTemplateByKategori);
+
+                    int notAnsweredFaq = faqService.getAllNotAnsweredFaq().size();
+                    model.addAttribute("notAnsweredFaq", notAnsweredFaq);
+
+                    int dieskalasiFaq = faqService.getAllEskalasiFaq().size();
+                    model.addAttribute("dieskalasiFaq", dieskalasiFaq);
+
+                    int answeredFaq = faqService.getAllAnsweredFaq().size();
+                    model.addAttribute("answeredFaq", answeredFaq);
+
+                    int deletedFaq = faqService.getAllDeletedFaq().size();
+                    model.addAttribute("deletedFaq", deletedFaq);
+
+                    List<String> allRoles = penggunaService.getAllRoles();
+                    model.addAttribute("allRoles", allRoles);
+
+                    Map<String, Long> jumlahRequestByRole = requestService.getJumlahRequestByRole();
+                    // System.out.println(jumlahRequestByRole);
+                    model.addAttribute("jumlahRequestByRole", jumlahRequestByRole);
+
+                    String topRequester = requestService.getTopRequester();
+                    model.addAttribute("topRequester", topRequester);
+
+                    return "dashboard-admin";
+                } else if (role.equals("Pengurus")) {
+                    return "dashboard-pengurus";
+                } else if (role.equals("Dosen")) {
+                    /* model.addAttribute yg dibutuhin */
+                    return "dashboard-admin";
+                } else {
+                    /* model.addAttribute yg dibutuhin */
+                    return "dashboard-staf-mhs";
+                }
             } else {
                 return "auth-failed";
             }
@@ -158,7 +243,7 @@ public class BaseController {
             Optional<Pengguna> user = penggunaDb.findByEmail(email);
 
             if (user.isPresent()) {
-                return "home";
+                return "login";
             } else {
                 return "auth-failed";
             }

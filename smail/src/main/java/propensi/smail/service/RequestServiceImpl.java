@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -32,6 +33,9 @@ public class RequestServiceImpl implements RequestService {
 
     @Autowired
     TemplateService templateService;
+
+    @Autowired
+    PenggunaService penggunaService;
 
     @Override
     public void saveOrUpdate(RequestSurat requestSurat) {
@@ -89,9 +93,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestSurat> getAllOnProcessRequestsSurat() {
-
         return requestSuratDb.findByStatus(4);
-
     }
 
     @Override
@@ -428,5 +430,100 @@ public class RequestServiceImpl implements RequestService {
         return mapPerBulan;        
     }
 
+
+    @Override
+    public Map<String, Long> getJumlahRequestPerMinggu() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+    
+        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
+    
+        for (RequestSurat requestSurat : allRequestSurat) {
+            int weekOfMonth = getWeekOfMonth(requestSurat.getTanggalPengajuan());
+            String key = "Minggu ke-" + weekOfMonth;
+            
+            jumlahRequestPerMinggu.put(key, jumlahRequestPerMinggu.getOrDefault(key, 0L) + 1);
+        }
+
+        // Sort map berdasarkan kunci (minggu)
+        List<Map.Entry<String, Long>> sortedList = new ArrayList<>(jumlahRequestPerMinggu.entrySet());
+        Collections.sort(sortedList, Comparator.comparing(Map.Entry::getKey));
+    
+        // Buat map hasil yang sudah terurut
+        Map<String, Long> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Long> entry : sortedList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+    
+        return sortedMap;
+        // return jumlahRequestPerMinggu;
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestPerMonth() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+    
+        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
+    
+        for (RequestSurat requestSurat : allRequestSurat) {
+            String monthName = getMonthName(requestSurat.getTanggalPengajuan().getMonth() + 1); // Bulan dimulai dari 0
+            
+            jumlahRequestPerMinggu.put(monthName, jumlahRequestPerMinggu.getOrDefault(monthName, 0L) + 1);
+        }
+    
+        return jumlahRequestPerMinggu;
+    }
+
+    // Method untuk mendapatkan nama bulan dari nomor bulan
+    private String getMonthName(int monthNumber) {
+        String[] months = {
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        };
+        return months[monthNumber - 1]; // Kurangi 1 karena array dimulai dari indeks 0
+    }
+
+    // Method untuk mendapatkan minggu dalam bulan dari tanggal
+    private int getWeekOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_MONTH);
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestByKategori() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+    
+        Map<String, Long> jumlahRequestByKategori = new HashMap<>();
+    
+        for (RequestSurat requestSurat : allRequestSurat) {
+            String kategori = requestSurat.getKategori();
+            
+            jumlahRequestByKategori.put(kategori, jumlahRequestByKategori.getOrDefault(kategori, 0L) + 1);
+        }
+    
+        return jumlahRequestByKategori;
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestByRole() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+    
+        Map<String, Long> jumlahRequestByRole = new HashMap<>();
+    
+        for (RequestSurat requestSurat : allRequestSurat) {
+            Pengguna pengguna = requestSurat.getPengaju();
+            String role = penggunaService.getRole(pengguna);
+            
+            jumlahRequestByRole.put(role, jumlahRequestByRole.getOrDefault(role, 0L) + 1);
+        }
+    
+        return jumlahRequestByRole;
+    }
+
+    @Override
+    public String getTopRequester() {
+        return requestSuratDb.findTopRequester();
+    }
+    
 }
 

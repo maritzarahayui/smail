@@ -1,0 +1,72 @@
+.dashboard {
+    width: 100%;
+    position: relative;
+    background-color: #fffffe;
+    text-align: center;
+    font-size: 16px;
+    color: #253237;
+    font-family: Rubik;
+}
+
+canvas {
+    width: 700px;
+    height: 500px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.label {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 32px;
+    color: #163c3f;
+}
+
+.content {
+    flex-direction: column;
+    gap: 20px 0;
+    padding-bottom: 20px;
+}
+
+.cont {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.txtinput{
+    position: relative;
+}
+
+.card {
+    height: auto;
+    width: fit-content;
+    min-width: 200px;
+    background: linear-gradient(
+        180deg,
+        #bce8a4,
+        #abdfa7 28.5%,
+        #80c9ae 66.5%,
+        #5cb7b3
+    );
+    margin-right: 20px;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #253237;
+    font-weight: bold;
+    font-size: 24;
+}
+
+.card-text {
+    font-size: 3rem;
+    color: #253237;
+    font-size: 64;
+}

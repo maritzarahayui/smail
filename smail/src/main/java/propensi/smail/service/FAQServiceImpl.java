@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import propensi.smail.model.FAQ;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.repository.FAQDb;
 
 @Service
@@ -68,4 +69,23 @@ public class FAQServiceImpl implements FAQService {
         return faqDb.findByPertanyaanContainingIgnoreCaseAndStatus(search, status) ;
     }
     
+    @Override
+    public List<FAQ> getAllNotAnsweredFaq() {
+        return faqDb.findByStatus(0);
+    }
+
+    @Override
+    public List<FAQ> getAllEskalasiFaq() {
+        return faqDb.findByStatus(1);
+    }
+
+    @Override
+    public List<FAQ> getAllAnsweredFaq() {
+        return faqDb.findByStatus(2);
+    }
+
+    @Override
+    public List<FAQ> getAllDeletedFaq() {
+        return faqDb.findByStatus(3);
+    }
 }

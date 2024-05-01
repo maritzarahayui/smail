@@ -48,4 +48,9 @@ public class PenggunaServiceImpl implements PenggunaService {
         Pengguna user = existUser.orElseThrow(() -> new EntityNotFoundException("Pengguna tidak ditemukan"));
         return user;
     }
+
+    @Override
+    public List<String> getAllRoles() {
+        return Arrays.asList("Admin", "Pengurus", "Dosen", "Staf", "Mahasiswa");
+    }
 }

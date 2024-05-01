@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.repository.RequestTemplateDb;
@@ -192,6 +194,20 @@ public class TemplateServiceImpl implements TemplateService {
         }
     }
 
-
+    @Override
+    @Transactional
+    public Map<String, Long> getActiveTemplateByKategori() {
+        List<TemplateSurat> allActiveTemplate = templateSuratDb.findByIsActiveTrue();
+    
+        Map<String, Long> activeTemplateByKategori = new HashMap<>();
+    
+        for (TemplateSurat templateSurat : allActiveTemplate) {
+            String kategori = templateSurat.getKategori();
+            
+            activeTemplateByKategori.put(kategori, activeTemplateByKategori.getOrDefault(kategori, 0L) + 1);
+        }
+    
+        return activeTemplateByKategori;
+    }
 
 }

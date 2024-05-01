@@ -54,4 +54,6 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
 
     @Query("SELECT r FROM RequestSurat r WHERE EXTRACT(YEAR FROM r.tanggalPengajuan) = :year AND EXTRACT(MONTH FROM r.tanggalPengajuan) = :month")
     List<RequestSurat> findByTanggalPengajuanMonthly(Integer month, Integer year);
+    @Query("SELECT r.pengaju.nama FROM RequestSurat r GROUP BY r.pengaju.id, r.pengaju.nama ORDER BY COUNT(r) DESC")
+    String findTopRequester();
 }

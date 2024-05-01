@@ -61,5 +61,11 @@ public interface RequestService {
     Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
     Map<String, Integer> getPerformaRequestSurat();
 
+
+    Map<String, Long> getJumlahRequestPerMinggu();
+    Map<String, Long> getJumlahRequestPerMonth();
+    Map<String, Long> getJumlahRequestByKategori();
+    Map<String, Long> getJumlahRequestByRole();
+    String getTopRequester();
 }
 
