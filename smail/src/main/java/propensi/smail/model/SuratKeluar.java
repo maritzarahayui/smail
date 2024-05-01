@@ -46,8 +46,8 @@ public class SuratKeluar {
     @Column(name = "file_name")
     private String fileName;
 
-    @Column(name = "status")
-    private int status;
+    @Column(name = "isSigned")
+    private Boolean isSigned;
 
     @ManyToMany
     @JoinTable(

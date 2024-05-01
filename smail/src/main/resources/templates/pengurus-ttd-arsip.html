@@ -97,15 +97,6 @@
                     >
                       Penerima Eksternal
                     </th>
-                    <th
-                      style="
-                        width: 10%;
-                        text-align: center;
-                        vertical-align: middle;
-                      "
-                    >
-                      Status
-                    </th>
                     <td
                       style="
                         width: 15%;
@@ -137,9 +128,6 @@
                     ></td>
                     <td>
                       <span th:text="${suratkeluar.penerimaEksternal}"></span>
-                    </td>
-                    <td>
-                      <span th:text="${suratkeluar.status}"></span>
                     </td>
                     <td
                       th:text="${#dates.format(suratkeluar.tanggalDibuat, 'yyyy-MM-dd HH:mm')}"

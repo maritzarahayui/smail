@@ -329,7 +329,7 @@ public class SuratKeluarController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
-                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByPenandatanganAndStatus(pengguna, 1);
+                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByPenandatanganAndIsSigned(pengguna, false);
                 model.addAttribute("listSuratKeluar", listSuratKeluar);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
@@ -352,7 +352,7 @@ public class SuratKeluarController {
     @GetMapping("/surat-keluar/all")
     public String getAllSuratKeluar(Model model, Authentication auth,
         @RequestParam(value = "tanggalDibuat", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat) {
-        List<SuratKeluar> suratKeluarList = suratKeluarService.getAllSuratKeluar();
+        List<SuratKeluar> suratKeluarList = suratKeluarService.getSuratKeluarByIsSigned(true);
         
         // Filter surat masuk berdasarkan tanggal dibuat jika parameter tanggalDibuat diberikan
         if (tanggalDibuat != null) {

@@ -29,8 +29,9 @@ public interface SuratKeluarService {
     List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
 
     SuratKeluar findSuratKeluarByID(String id);
-    String getStatusSuratKeluar(int status);
     SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
     //  belum tes
-    List<SuratKeluar> getSuratKeluarByPenandatanganAndStatus(Pengguna penandatangan, int status);
+    List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
+    List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned);
+    
 }

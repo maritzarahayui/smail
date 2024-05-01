@@ -17,6 +17,6 @@ public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
     SuratKeluar findByRequestSurat(Optional<RequestSurat> requestSurat);
     SuratKeluar findByNomorArsipContainingIgnoreCase(String nomorArsip);
     List<SuratKeluar> findByTanggalDibuat(Date tanggalDibuat);
-    List<SuratKeluar> findByCurrentPenandatanganAndStatus(Pengguna penandatangan, int status);
-
+    List<SuratKeluar> findByCurrentPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
+    List<SuratKeluar> findByIsSigned(Boolean isSigned);
 }

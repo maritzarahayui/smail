@@ -163,6 +163,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 if (current == null) {
                     suratKeluar.getRequestSurat().setStatus(5);
                     suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
+                    suratKeluar.setIsSigned(true);
                 }
 
                 suratKeluarDb.save(suratKeluar);
@@ -289,20 +290,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
-    public String getStatusSuratKeluar(int status) {
-        // if 1 = Menunggu Persetujuan
-        if (status == 1) {
-            return "Menunggu Persetujuan";
-        }
-        else if (status == 2) {
-            return "Disetujui";
-        }
-        else {
-            return "Ditolak";
-        }
-    }
-
-    @Override
     public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
             String penerimaEksternal, Pengguna penandatangan) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -314,7 +301,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setKategori(arsipAwal.getKategori());
                 suratKeluar.setPerihal(perihal);
                 suratKeluar.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratKeluar.setStatus(1); // 1 :proses follow up, 2: selesai, 3: ditolak
+                suratKeluar.setIsSigned(false);
                 suratKeluar.setPenerimaEksternal(penerimaEksternal);
                 suratKeluar.setFileName(fileName);
                 suratKeluar.setCurrentPenandatangan(penandatangan);
@@ -329,7 +316,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 System.out.println("Kategori: " + suratKeluar.getKategori());
                 System.out.println("Perihal: " + suratKeluar.getPerihal());
                 System.out.println("Tanggal Dibuat: " + suratKeluar.getTanggalDibuat());
-                System.out.println("Status: " + suratKeluar.getStatus());
+                System.out.println("Status: " + suratKeluar.getIsSigned());
                 System.out.println("Penerima Eksternal: " + suratKeluar.getPenerimaEksternal());
                 System.out.println("File Name: " + suratKeluar.getFileName());
                 System.out.println("Penandatangan: " + suratKeluar.getPenandatangan());
@@ -343,8 +330,13 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
-    public List<SuratKeluar> getSuratKeluarByPenandatanganAndStatus(Pengguna penandatangan, int status) {
-        return suratKeluarDb.findByCurrentPenandatanganAndStatus(penandatangan, status);
+    public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+        return suratKeluarDb.findByCurrentPenandatanganAndIsSigned(penandatangan, isSigned);
     }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned) {
+        return suratKeluarDb.findByIsSigned(isSigned);
+    } 
     
 }
