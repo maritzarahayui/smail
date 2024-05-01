@@ -29,9 +29,9 @@ public class BaseController {
     
     @Autowired
     PenggunaDb penggunaDb;
-    // hapus
+
     @Autowired
-    private SuratMasukService suratMasukService;
+    SuratMasukService suratMasukService;
 
     @Autowired
     PenggunaService penggunaService;
@@ -46,10 +46,7 @@ public class BaseController {
     FAQService faqService;
 
     @Autowired
-    private RequestService requestService;
-
-    @Autowired
-    private TemplateService templateService;
+    TemplateService templateService;
 
     @GetMapping("/")
     public String home(Model model, Authentication auth) {
@@ -92,12 +89,10 @@ public class BaseController {
                     model.addAttribute("selesai", finishedRequest);
 
                     long reqTemplateDiterima = templateService.getAllReqTemplate().stream()
-                            .filter(template -> template.getStatus() == 2)
-                            .count();
+                            .filter(template -> template.getStatus() == 2).count();
 
                     long reqTemplateDitolak = templateService.getAllReqTemplate().stream()
-                            .filter(template -> template.getStatus() == 3)
-                            .count();
+                            .filter(template -> template.getStatus() == 3).count();
 
                     model.addAttribute("reqTemplateDiterima", reqTemplateDiterima);
                     model.addAttribute("reqTemplateDitolak", reqTemplateDitolak);
@@ -132,7 +127,7 @@ public class BaseController {
                     String topRequester = requestService.getTopRequester();
                     model.addAttribute("topRequester", topRequester);
 
-                    return "dashboard-pengurus";
+                    return "dashboard-admin";
                 } else if (role.equals("Pengurus")) {
                     /* model.addAttribute yg dibutuhin */
                     model.addAttribute("mapSuratMasukTahun", suratMasukService.getJumlahSuratMasukTahunIni());
@@ -151,7 +146,7 @@ public class BaseController {
                     return "dashboard-pengurus";
                 } else if (role.equals("Dosen")) {
                     /* model.addAttribute yg dibutuhin */
-                    return "dashboard-pengurus";
+                    return "dashboard-dosen";
                 } else {
                     /* model.addAttribute yg dibutuhin */
                     return "dashboard-staf-mhs";
@@ -163,36 +158,6 @@ public class BaseController {
         }
         return "login";
     }
-
-    // @GetMapping("/")
-    // public String home(Model model, Authentication auth) {
-
-    //     if (auth != null) {
-    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-    //         String email = oauthUser.getEmail();
-    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-    //         if (user.isPresent()) {
-    //             Pengguna pengguna = user.get();
-    //             model.addAttribute("nama", pengguna.getNama());
-    //             model.addAttribute("email", email);
-    //             model.addAttribute("email_pengguna", pengguna.getEmail());
-    //             model.addAttribute("id", pengguna.getId());
-
-    //             model.addAttribute("role", penggunaService.getRole(pengguna));
-    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-
-    //             model.addAttribute("faqsTerjawab", faqService.getFaqsByStatus(2));
-
-    //             return "home";
-    //         } else {
-    //             return "auth-failed";
-    //         }
-
-    //     }
-    //     // asli:
-    //     return "login";
-    // }
 
     @GetMapping("/profile")
     public String profile(Model model, Authentication auth) {
