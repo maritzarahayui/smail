@@ -23,6 +23,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
+import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
@@ -101,7 +102,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Override
     public List<SuratMasuk> getAllSuratMasuk() {
         return suratMasukDb.findAll();
-
     }
 
     @Override

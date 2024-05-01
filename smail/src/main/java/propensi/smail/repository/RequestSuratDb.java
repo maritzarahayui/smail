@@ -51,4 +51,6 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     "r.status = :status AND r.pengaju.id = :pengajuId")
     List<RequestSurat> findBySearchAndStatusAndPengajuId(@Param("search") String search, @Param("status") int status, @Param("pengajuId") String pengajuId);
 
+    @Query("SELECT r.pengaju.nama FROM RequestSurat r GROUP BY r.pengaju.id, r.pengaju.nama ORDER BY COUNT(r) DESC")
+    String findTopRequester();
 }

@@ -8,6 +8,7 @@ import propensi.smail.model.TemplateSurat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public interface TemplateService {
@@ -38,5 +39,7 @@ public interface TemplateService {
     RequestTemplate terimaRequest(String requestId);
 
     RequestTemplate tolakRequest(String requestId);
+
+    Map<String, Long> getActiveTemplateByKategori();
 }
 
