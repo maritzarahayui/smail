@@ -38,4 +38,12 @@ public interface SuratMasukService {
     // getallpenandatangan
     List<Pengguna> getAllPenandatangan();
     SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
+
+    /* DASHBOARD */
+    Map<String, Integer> getJumlahSuratMasukPerStatus();
+    Map<String, Long> getJumlahSuratMasukPerKategori();
+    Map<String, Integer> getJumlahSuratMasukTahunIni();
+    Map<String, Integer> getJumlahSuratMasukBulanIni();
+    Map<String, Integer> getJumlahSuratMasukMingguIni();
+
 }

@@ -1,14 +1,22 @@
 package propensi.smail.service;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,6 +31,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
@@ -245,5 +254,109 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         } catch (IOException e) {
             throw new RuntimeException("Failed to store file " + fileName, e);
         }
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratMasukPerStatus() {
+        Map<String, Integer> mapSuratMasukStatus = new HashMap<>();
+
+        mapSuratMasukStatus.put("Diarsipkan", getSuratMasukByStatus(1).size());
+        mapSuratMasukStatus.put("Disposisi", getSuratMasukByStatus(2).size());
+        mapSuratMasukStatus.put("Follow-Up", getSuratMasukByStatus(3).size());
+
+        return mapSuratMasukStatus;
+    }
+
+    @Override
+    public Map<String, Long> getJumlahSuratMasukPerKategori() {
+        Map<String, Long> mapSuratMasukKategori = new HashMap<>();
+
+        mapSuratMasukKategori.put("Legal", suratMasukDb.countByKategori("Legal"));
+        mapSuratMasukKategori.put("SDM", suratMasukDb.countByKategori("SDM"));
+        mapSuratMasukKategori.put("Keuangan", suratMasukDb.countByKategori("Keuangan"));
+        mapSuratMasukKategori.put("Sarana", suratMasukDb.countByKategori("Sarana"));
+        mapSuratMasukKategori.put("Kemahasiswaan", suratMasukDb.countByKategori("Kemahasiswaan"));
+        mapSuratMasukKategori.put("Lainnya", suratMasukDb.countByKategori("Lainnya"));
+
+        System.out.println(mapSuratMasukKategori.toString());
+        return mapSuratMasukKategori;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratMasukTahunIni() {
+        LocalDate now = LocalDate.now();
+        Date firstDayOfYear = Date.from(now.with(TemporalAdjusters.firstDayOfYear()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfYear = Date.from(now.with(TemporalAdjusters.lastDayOfYear()).atTime(23, 59, 59, 999).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratMasuk> allSuratMasukThisYear = suratMasukDb.findByTanggalDibuatBetween(firstDayOfYear, lastDayOfYear);
+        Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
+
+        String[] indonesianMonths = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        for (String bulan : indonesianMonths) {
+            mapPerBulan.put(bulan, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        allSuratMasukThisYear.forEach(surat -> {
+            calendar.setTime(surat.getTanggalDibuat());
+            mapPerBulan.merge(indonesianMonths[calendar.get(Calendar.MONTH)], 1, Integer::sum);
+        });
+
+        return mapPerBulan;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratMasukBulanIni() {
+        LocalDate now = LocalDate.now();
+        Date firstDayOfMonth = Date.from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfMonth = Date.from(now.with(TemporalAdjusters.lastDayOfMonth()).atTime(23, 59, 59, 999).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratMasuk> allSuratMasukThisMonth = suratMasukDb.findByTanggalDibuatBetween(firstDayOfMonth, lastDayOfMonth);
+        Map<String, Integer> mapPerMinggu = new LinkedHashMap<String, Integer>();
+        
+        int totalWeeks = now.with(TemporalAdjusters.lastDayOfMonth()).get(WeekFields.of(Locale.getDefault()).weekOfMonth());
+        for (int i = 1; i <= totalWeeks; i++) {
+            mapPerMinggu.put("Minggu ke-" + i, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        for (SuratMasuk surat : allSuratMasukThisMonth) {
+            calendar.setTime(surat.getTanggalDibuat());
+            int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+            mapPerMinggu.merge("Minggu ke-" + weekOfMonth, 1, Integer::sum);
+        }
+
+        return mapPerMinggu;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratMasukMingguIni() {
+        LocalDate now = LocalDate.now();
+        LocalDate firstDayOfWeekLocal = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate lastDayOfWeekLocal = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        Date firstDayOfWeek = Date.from(firstDayOfWeekLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfWeek = Date.from(lastDayOfWeekLocal.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratMasuk> allSuratMasukThisWeek = suratMasukDb.findByTanggalDibuatBetween(firstDayOfWeek, lastDayOfWeek);
+        Map<String, Integer> mapPerHari = new LinkedHashMap<String, Integer>();
+        
+        String[] indonesianWeek = new String[] {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
+        for (String day : indonesianWeek) {
+            mapPerHari.put(day, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        allSuratMasukThisWeek.forEach(surat -> {
+            calendar.setTime(surat.getTanggalDibuat());
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == 1) {
+                mapPerHari.merge(indonesianWeek[6], 1, Integer::sum);
+            } else {
+                mapPerHari.merge(indonesianWeek[dayOfWeek-2], 1, Integer::sum);
+            }
+        });
+
+        return mapPerHari;
     }
 }

@@ -28,4 +28,12 @@ public interface SuratKeluarService {
     List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
 
     SuratKeluar findSuratKeluarByID(String id);
+
+    /* DASHBOARD */
+    Map<String, Long> getJumlahSuratKeluarPerKategori();
+    Map<String, Integer> getJumlahSuratKeluarTahunIni();
+    Map<String, Integer> getJumlahSuratKeluarBulanIni();
+    Map<String, Integer> getJumlahSuratKeluarMingguIni();
+
+
 }

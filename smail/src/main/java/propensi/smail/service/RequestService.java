@@ -55,5 +55,11 @@ public interface RequestService {
     List<String> getAllJenisByKategori(String Kategori);
 
     List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju);
+
+    /* DASHBOARD */
+    Integer countDurasi(RequestSurat requestSurat);
+    Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
+    Map<String, Integer> getPerformaRequestSurat();
+
 }
 

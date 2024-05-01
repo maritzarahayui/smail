@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+</head>
+
+<style>
+    canvas {
+        width: 90%;
+        padding: 60px;
+    }
+</style>
+
+<body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="content-container">
+        <b class="title-container">
+            <span class="title-gradient">Dashboard</span>
+        </b>  
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+        <br>
+        <canvas id="barChartSuratMasukKeluar"></canvas>
+        <canvas id="lineChartPerformaSurat"></canvas>
+        <div class="row">
+            <div class="col">
+                <canvas id="pieChartSuratMasuk"></canvas>
+            </div>
+            <div class="col">
+                <canvas id="pieChartSuratKeluar"></canvas>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <!-- BAR CHART SURAT MASUK KELUAR -->
+    <script th:inline="javascript">
+        var mapSuratMasuk = [[${mapSuratMasukMinggu}]];
+        var labels = Object.keys(mapSuratMasuk);
+        var dataSuratMasuk = labels.map(function(key) {
+            return mapSuratMasuk[key];
+        });
+
+        var mapSuratKeluar = [[${mapSuratKeluarMinggu}]];
+        var labels = Object.keys(mapSuratKeluar);
+        var dataSuratKeluar = labels.map(function(key) {
+            return mapSuratKeluar[key];
+        });
+
+        const barChartSuratMasukKeluar = document.getElementById('barChartSuratMasukKeluar');
+    
+        new Chart(barChartSuratMasukKeluar, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Surat Masuk',
+                        data: dataSuratMasuk
+                    },
+                    {
+                        label: 'Surat Keluar',
+                        data: dataSuratKeluar
+                    }
+                ]
+            }, 
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Jumlah Surat Masuk dan Keluar'
+                    }
+                }
+            }
+        });
+    </script>
+
+    <!-- LINE CHART PERFORMA SURAT - KATEGORI -->
+    <script th:inline="javascript">
+        var mapPerformaSurat = [[${performaRequestSurat}]];
+        var labels = Object.keys(mapPerformaSurat);
+        var chartData = labels.map(function(key) {
+            return mapPerformaSurat[key];
+        });
+
+        const lineChartPerformaSurat = document.getElementById('lineChartPerformaSurat');
+    
+        new Chart(lineChartPerformaSurat, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah',
+                    data: chartData
+                }]
+            }, 
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Jumlah Surat Keluar per Kategori'
+                }
+                }
+            }
+        });
+
+    </script>
+
+    <!-- PIE CHART SURAT MASUK - KATEGORI -->
+    <script th:inline="javascript">
+        var mapSuratMasukKategori = [[${mapSuratMasukKategori}]];
+        var labels = Object.keys(mapSuratMasukKategori);
+        var chartData = labels.map(function(key) {
+            return mapSuratMasukKategori[key];
+        });
+
+        const pieChartSuratMasuk = document.getElementById('pieChartSuratMasuk');
+    
+        new Chart(pieChartSuratMasuk, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah',
+                    data: chartData
+                }]
+            }, 
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Jumlah Surat Masuk per Kategori'
+                }
+                }
+            }
+        });
+
+    </script>
+
+    <!-- PIE CHART SURAT KELUAR - KATEGORI -->
+    <script th:inline="javascript">
+        var mapSuratKeluarKategori = [[${mapSuratKeluarKategori}]];
+        var labels = Object.keys(mapSuratKeluarKategori);
+        var chartData = labels.map(function(key) {
+            return mapSuratKeluarKategori[key];
+        });
+
+        const pieChartSuratKeluar = document.getElementById('pieChartSuratKeluar');
+    
+        new Chart(pieChartSuratKeluar, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Jumlah',
+                    data: chartData
+                }]
+            }, 
+            options: {
+                responsive: true,
+                plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Jumlah Surat Keluar per Kategori'
+                }
+                }
+            }
+        });
+
+    </script>
+
+
+
+
+</body>
+
+</html>

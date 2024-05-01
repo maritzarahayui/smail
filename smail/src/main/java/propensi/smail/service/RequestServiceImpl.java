@@ -6,18 +6,15 @@ import org.springframework.stereotype.Service;
 import propensi.smail.model.*;
 import propensi.smail.repository.*;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.repository.RequestTemplateDb;
 
 @Service
 public class RequestServiceImpl implements RequestService {
@@ -371,5 +368,65 @@ public class RequestServiceImpl implements RequestService {
     public List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju) {
         return requestSuratDb.findBySearchAndStatusAndPengajuId(search, status, pengaju);
     }
+
+
+    /* DASHBOARD */
+    @Override
+    public Integer countDurasi(RequestSurat requestSurat) {
+        long tanggalPengajuan = requestSurat.getTanggalPengajuan().getTime();        
+        long tanggalSelesai = requestSurat.getTanggalSelesai().getTime();
+
+        long durationInMillis = tanggalSelesai - tanggalPengajuan;
+        long durationInDays = durationInMillis / (1000 * 60 * 60 * 24);
+
+        // Print the duration
+        System.out.println("awal: " + requestSurat.getTanggalPengajuan());
+        System.out.println("akhir " + requestSurat.getTanggalSelesai());
+        System.out.println("Duration in days: " + durationInDays);
+
+        return ((int)durationInDays);
+    }
+
+    @Override
+    public Integer countAveragePerforma(List<RequestSurat> listRequestSurat) {
+        int total = 0;
+        int counterRequest = 0;
+
+        for (RequestSurat request : listRequestSurat) {
+            if (request.getTanggalSelesai() != null) {
+                total += countDurasi(request);
+                counterRequest++;
+            }
+        }
+
+        System.out.println(listRequestSurat.toString());
+
+        return counterRequest == 0? 0 : (int) Math.ceil(total/counterRequest);
+    }
+
+    @Override
+    public Map<String, Integer> getPerformaRequestSurat() {
+        LocalDate now = LocalDate.now();
+        Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
+        String[] indonesianMonths = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        
+        int value = 0;
+        int counter = 0;
+        List<RequestSurat> allRequestSuratMonthly;
+
+        for (String bulan : indonesianMonths) {
+            counter++;
+            allRequestSuratMonthly = requestSuratDb.findByTanggalPengajuanMonthly(counter, now.getYear());
+
+            System.out.println("WOIIIII MONTHLY" + counter + now.getYear());
+            System.out.println("WOIIIII MONTHLY" + allRequestSuratMonthly.toString());
+            value = countAveragePerforma(allRequestSuratMonthly);
+            mapPerBulan.put(bulan, value);
+        }
+
+        System.out.println("MAPPPPP PER BULAN" + mapPerBulan.toString());
+        return mapPerBulan;        
+    }
+
 }
 
