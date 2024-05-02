@@ -69,12 +69,12 @@
 
             <div class="row align-items-center">
                 <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Waktu</div>
-                    <canvas id="barChartSuratMasukKeluar" style="padding-right: 20px; height: 300px; width: 600px;"></canvas>
+                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Kategori</div>
+                    <canvas id="barChartSuratMasukKeluarKategori" style="padding-right: 20px; height: 300px; width: 600px;"></canvas>
                 </div>
                 <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Kategori</div>
-                    <canvas id="barChartSuratMasukKeluarKategori" style="height: 300px; width: 600px;"></canvas>
+                    <div class="label p-1" style="text-align: center;">Rata-Rata Durasi Pemrosesan Request</div>
+                    <canvas id="lineChartPerformaSurat" style="height: 300px; width: 600px;"></canvas>
                 </div>
             </div>
 
@@ -82,8 +82,16 @@
 
             <div class="row align-items-center">
                 <div class="col-8">
-                    <div class="label p-1" style="text-align: center;">Rata-Rata Durasi Pemrosesan Request</div>
-                    <canvas id="lineChartPerformaSurat" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="label p-1" style="text-align: start;">Jumlah Surat Masuk - Keluar per Waktu</div>
+                        <div>
+                            <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
+                            <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
+                            <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
+                        </div>
+                    </div>
+                    
+                    <canvas id="barChartSuratMasukKeluar" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
                 </div>
                 <div class="col-4">
                     <div class="row-cols-1">
@@ -111,13 +119,92 @@
 
     <!-- BAR CHART SURAT MASUK KELUAR PER WAKTU -->
     <script th:inline="javascript">
-        var mapSuratMasuk = [[${mapSuratMasukTahun}]];
+        let barChartSuratMasukKeluar;
+        var mapSuratMasukTahun = [[${mapSuratMasukTahun}]];
+        var mapSuratMasukBulan = [[${mapSuratMasukBulan}]];
+        var mapSuratMasukMinggu = [[${mapSuratMasukMinggu}]];
+        var mapSuratKeluarTahun = [[${mapSuratKeluarTahun}]];
+        var mapSuratKeluarBulan = [[${mapSuratKeluarBulan}]];
+        var mapSuratKeluarMinggu = [[${mapSuratKeluarMinggu}]];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('barChartSuratMasukKeluar');
+    
+            barChartSuratMasukKeluar = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Surat Masuk',
+                            data: [],
+                            backgroundColor: '#459a7d',
+                        },
+                        {
+                            label: 'Surat Keluar',
+                            data: [],
+                            backgroundColor: '#b1cdb8',
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: { beginAtZero: true }
+                    },
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' }
+                    }
+                }
+            });
+    
+            updateChartData(mapSuratMasukMinggu, mapSuratKeluarMinggu, barChartSuratMasukKeluar);
+
+            document.querySelectorAll('.buttonWaktu').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.buttonWaktu').forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+    
+                    let mapSuratMasuk, mapSuratKeluar;
+                    switch (this.id) {
+                        case 'tahunIni':
+                            mapSuratMasuk = mapSuratMasukTahun;
+                            mapSuratKeluar = mapSuratKeluarTahun;
+                            break;
+                        case 'bulanIni':
+                            mapSuratMasuk = mapSuratMasukBulan;
+                            mapSuratKeluar = mapSuratKeluarBulan;
+                            break;
+                        case 'mingguIni':
+                            mapSuratMasuk = mapSuratMasukMinggu;
+                            mapSuratKeluar = mapSuratKeluarMinggu;
+                            break;
+                    }
+
+                    updateChartData(mapSuratMasuk, mapSuratKeluar, barChartSuratMasukKeluar);
+                });
+            });
+        });
+    
+        function updateChartData(mapSuratMasuk, mapSuratKeluar, chart) {
+            var labels = Object.keys(mapSuratMasuk);
+            var dataSuratMasuk = labels.map(key => mapSuratMasuk[key]);
+            var dataSuratKeluar = labels.map(key => mapSuratKeluar[key]);
+    
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = dataSuratMasuk;
+            chart.data.datasets[1].data = dataSuratKeluar;
+            chart.update();
+        }
+
+    </script>
+        var mapSuratMasuk = [[${mapSuratMasukMinggu}]];
         var labels = Object.keys(mapSuratMasuk);
         var dataSuratMasuk = labels.map(function(key) {
             return mapSuratMasuk[key];
         });
 
-        var mapSuratKeluar = [[${mapSuratKeluarTahun}]];
+        var mapSuratKeluar = [[${mapSuratKeluarMinggu}]];
         var labels = Object.keys(mapSuratKeluar);
         var dataSuratKeluar = labels.map(function(key) {
             return mapSuratKeluar[key];
@@ -157,7 +244,7 @@
                 }
             }
         });
-    </script>
+    </script> -->
 
      <!-- BAR CHART SURAT MASUK KELUAR KATEGORI -->
      <script th:inline="javascript">

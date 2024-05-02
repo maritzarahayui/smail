@@ -79,3 +79,25 @@ canvas {
     color: #253237;
     font-size: 64;
 }
+
+.buttonWaktu {
+    cursor: pointer;
+    border: 2px solid var(--green-green-1);
+    margin: auto;
+    background-color: var(--white-white-1);
+    height: 25px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color: var(--green-green-1);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.buttonWaktu.active {
+    border: 0;
+    background-color: var(--green-green-1); /* Active background */
+    color: var(--white-white-1); /* Active text color */
+}
