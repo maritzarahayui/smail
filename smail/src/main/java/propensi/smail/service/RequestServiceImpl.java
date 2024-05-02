@@ -473,6 +473,27 @@ public class RequestServiceImpl implements RequestService {
         return jumlahRequestPerMinggu;
     }
 
+    @Override
+    public Map<String, Long> getJumlahRequestPerYear() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+    
+        Map<String, Long> jumlahRequestPerMonth = new HashMap<>();
+    
+        int tahunSaatIni = LocalDate.now().getYear();
+        
+        for (RequestSurat requestSurat : allRequestSurat) {
+            int year = requestSurat.getTanggalPengajuan().getYear() + 1900;
+            
+            if (year == tahunSaatIni) {
+                jumlahRequestPerMonth.put(String.valueOf(year), jumlahRequestPerMonth.getOrDefault(String.valueOf(tahunSaatIni), 0L) + 1);
+            } else {
+                jumlahRequestPerMonth.put(String.valueOf(year), 1L);
+            }
+        }
+        
+        return jumlahRequestPerMonth;
+    }
+
     // Method untuk mendapatkan nama bulan dari nomor bulan
     private String getMonthName(int monthNumber) {
         String[] months = {

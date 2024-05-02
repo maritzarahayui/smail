@@ -68,10 +68,16 @@ public class BaseController {
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonth();
                     // System.out.println(bulan);
                     model.addAttribute("bulan", bulan.keySet().iterator().next());
+                    model.addAttribute("jumlahRequestPerBulan", bulan);
+                    
+                    Map<String, Long> tahun = requestService.getJumlahRequestPerYear();
+                    model.addAttribute("tahun", tahun.keySet().iterator().next());
 
                     Map<String, Long> jumlahRequestPerMinggu = requestService.getJumlahRequestPerMinggu();
                     // System.out.println(jumlahRequestPerMinggu);
                     model.addAttribute("jumlahRequestPerMinggu", jumlahRequestPerMinggu);
+
+                    model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
 
                     int submittedRequest = requestService.getAllSubmitedRequestsSurat().size();
                     model.addAttribute("diajukan", submittedRequest);
@@ -127,6 +133,12 @@ public class BaseController {
                     String topRequester = requestService.getTopRequester();
                     model.addAttribute("topRequester", topRequester);
 
+                    model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
+
+                    model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
+
+                    model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
+                    
                     return "dashboard-admin";
                 } else if (role.equals("Pengurus")) {
                     /* model.addAttribute yg dibutuhin */

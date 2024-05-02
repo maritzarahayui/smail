@@ -28,121 +28,20 @@
 
         <div class="cont">
             <div class="content">
-                <div class="label" th:text="'Statistik Jumlah Request Surat Bulan ' + ${bulan}"></div>
+                <div class="label" th:text="'Top Requester'"></div>
 
                 <div class="txtinput">
-                    <canvas id="myChart"></canvas>
-
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
-                        console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
-                    
-                        function getWeekLabel(weekNumber) {
-                            return "Minggu ke-" + weekNumber;
-                        }
-                    
-                        var labels = [];
-                        var data = [];
-                    
-                        var maxWeek = Object.keys(jumlahRequestPerMinggu).reduce(function(a, b) {
-                            return Math.max(a, parseInt(b.split("-")[1]));
-                        }, 0);
-                    
-                        for (var i = 1; i <= maxWeek; i++) {
-                            var weekLabel = getWeekLabel(i);
-                            labels.push(weekLabel);
-                    
-                            if (jumlahRequestPerMinggu.hasOwnProperty(weekLabel)) {
-                                data.push(jumlahRequestPerMinggu[weekLabel]);
-                            } else {
-                                data.push(0);
-                            }
-                        }
-                    
-                        var dataChart = {
-                            labels: labels,
-                            datasets: [{
-                                label: "",
-                                data: data,
-                                backgroundColor: '#0f7454',
-                                borderColor: '#253237',
-                                borderWidth: 1
-                            }]
-                        };
-                    
-                        const config = {
-                            type: 'line',
-                            data: dataChart,
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: false,
-                                        ticks: {
-                                            callback: function(value, index, values) {
-                                                return value;
-                                            }
-                                        }
-                                    },
-                                    x: {
-                                        grid: {
-                                            display: false
-                                        }
-                                    }
-                                }
-                            }
-                        };
-                    
-                        var myChart = new Chart(
-                            document.getElementById('myChart'),
-                            config
-                        );
-                        /*]]>*/
-                    </script>
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="label" th:text="'Performa Rata-rata Waktu Pemrosesan Surat'"></div>
-
-                <div class="txtinput">
-                    <canvas id="myBarChart"></canvas>
-
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        // var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
-                        // console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
-                    
-                        // Data contoh untuk grafik batang
-                        var data = {
-                            labels: ["Minggu 1", "Minggu 2", "Minggu 3", "Minggu 4", "Minggu 5"],
-                            datasets: [{
-                                label: "",
-                                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1,
-                                data: [10, 15, 12, 18, 20]
-                            }]
-                        };
-                    
-                        var contentChart = {
-                            type: 'bar',
-                            data: data,
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
-                                }
-                            }
-                        };
-                    
-                        var myBarChart = new Chart(
-                            document.getElementById('myBarChart'),
-                            contentChart
-                        );
-                        /*]]>*/
-                    </script>
+                    <div class="container" style="margin: 0 auto;">
+                        <div class="row-cols-1">
+                            <div class="col">
+                                <div class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h4 class="card-text" th:text="${topRequester}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -201,160 +100,376 @@
                 </div>
             </div>
 
-            <div class="content">
-                <div class="label" th:text="'Overview Request Template Berdasarkan Status'"></div>
+            <div class="content1">
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="myChart2"></canvas>
 
-                <div class="txtinput">
-                    <canvas id="myPieChart"></canvas>
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            var jumlahRequestPerBulan = /*[[${jumlahRequestPerBulan}]]*/ {};
+                            console.log("Data jumlah request per bulan:", jumlahRequestPerBulan);
 
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var reqTemplateDiterima = /*[[${reqTemplateDiterima}]]*/ 0;
-                        var reqTemplateDitolak = /*[[${reqTemplateDitolak}]]*/ 0;
+                            var tahun = /*[[${tahun}]]*/;
+
+                            function getMonthName(monthNumber) {
+                                var months = [
+                                    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                                    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                                ];
+                                return months[monthNumber - 1];
+                            }
+
+                            var allMonths = [
+                                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                            ];
+
+                            var labels = [];
+                            var data = [];
+
+                            allMonths.forEach(function(month, index) {
+                                labels.push(month);
+                                data.push(jumlahRequestPerBulan[month] || 0);
+                            });
+
+                            var dataChart = {
+                                labels: labels,
+                                datasets: [{
+                                    label: `Statistik Jumlah Request Surat Tahun ${tahun}`,
+                                    data: data,
+                                    backgroundColor: '#0f7454',
+                                    borderColor: '#253237',
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            const configChart = {
+                                type: 'line',
+                                data: dataChart,
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: false,
+                                            ticks: {
+                                                callback: function(value, index, values) {
+                                                    return value;
+                                                }
+                                            }
+                                        },
+                                        x: {
+                                            grid: {
+                                                display: false
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+
+                            var myChart = new Chart(
+                                document.getElementById('myChart2'),
+                                configChart
+                            );
+                            /*]]>*/
+                        </script>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="myChart"></canvas>
+
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
+                            console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
+
+                            var bulan = /*[[${bulan}]]*/;
+
+                            function getWeekLabel(weekNumber) {
+                                return "Minggu ke-" + weekNumber;
+                            }
+                        
+                            var labels = [];
+                            var data = [];
+                        
+                            var maxWeek = Object.keys(jumlahRequestPerMinggu).reduce(function(a, b) {
+                                return Math.max(a, parseInt(b.split("-")[1]));
+                            }, 0);
+                        
+                            for (var i = 1; i <= maxWeek; i++) {
+                                var weekLabel = getWeekLabel(i);
+                                labels.push(weekLabel);
+                        
+                                if (jumlahRequestPerMinggu.hasOwnProperty(weekLabel)) {
+                                    data.push(jumlahRequestPerMinggu[weekLabel]);
+                                } else {
+                                    data.push(0);
+                                }
+                            }
+                        
+                            var dataChart = {
+                                labels: labels,
+                                datasets: [{
+                                    label: `Statistik Jumlah Request Surat Bulan ${bulan}`,
+                                    data: data,
+                                    backgroundColor: '#0f7454',
+                                    borderColor: '#253237',
+                                    borderWidth: 1
+                                }]
+                            };
+                        
+                            const config = {
+                                type: 'line',
+                                data: dataChart,
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: false,
+                                            ticks: {
+                                                callback: function(value, index, values) {
+                                                    return value;
+                                                }
+                                            }
+                                        },
+                                        x: {
+                                            grid: {
+                                                display: false
+                                            }
+                                        }
+                                    }
+                                }
+                            };
+                        
+                            var myChart = new Chart(
+                                document.getElementById('myChart'),
+                                config
+                            );
+                            /*]]>*/
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content1">
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="lineChartPerformaSurat"></canvas>
+
+                        <script th:inline="javascript">
+                            var mapPerformaSurat = [[${performaRequestSurat}]];
+                            var labels = Object.keys(mapPerformaSurat);
+                            var chartData = labels.map(function(key) {
+                                return mapPerformaSurat[key];
+                            });
                     
-                        var data = {
-                            labels: ['Diterima', 'Ditolak'],
-                            datasets: [{
-                                label: 'Status',
-                                data: [reqTemplateDiterima, reqTemplateDitolak],
-                                backgroundColor: [
-                                    '#459a7d', // Warna untuk Diterima
-                                    '#b1cdb8'   // Warna untuk Ditolak
-                                ],
-                                borderWidth: 1
-                            }]
-                        };
-                    
-                        const contentPie = {
-                            type: 'pie',
-                            data: data,
-                            options: {
-                                plugins: {
+                            const lineChartPerformaSurat = document.getElementById('lineChartPerformaSurat');
+                        
+                            new Chart(lineChartPerformaSurat, {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Statistik Performa Request Surat',
+                                        data: chartData,
+                                        backgroundColor: '#0f7454',
+                                        borderColor: '#253237',
+                                        borderWidth: 1
+                                    }]
+                                }, 
+                                options: {
+                                    responsive: true,
+                                    plugins: {
                                     legend: {
-                                        position: 'bottom'
+                                        position: 'top',
                                     }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }
-                        };
+                                    }
+                                }
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="myDonut"></canvas>
                     
-                        var myPieChart = new Chart(
-                            document.getElementById('myPieChart'),
-                            contentPie
-                        );
-                        /*]]>*/
-                    </script>
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            var allRoles = /*[[${allRoles}]]*/ [];
+                            var jumlahRequestByRole = /*[[${jumlahRequestByRole}]]*/ {};
+
+                            allRoles.forEach(function(role) {
+                                if (!jumlahRequestByRole.hasOwnProperty(role)) {
+                                    jumlahRequestByRole[role] = 0;
+                                }
+                            });
+                            
+                            var labels = Object.keys(jumlahRequestByRole);
+                            var data = Object.values(jumlahRequestByRole);
+                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237'];
+                            
+                            var donutData = {
+                                labels: labels,
+                                datasets: [{
+                                    label: '',
+                                    data: data,
+                                    backgroundColor: backgroundColors.slice(0, labels.length),
+                                    borderWidth: 1
+                                }]
+                            };
+
+                            const donutContent = {
+                                type: 'doughnut',
+                                data: donutData,
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom'
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Statistik Request Surat Berdasarkan Role'
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: '50%'
+                                }
+                            };
+
+                            var myDonut = new Chart(
+                                document.getElementById('myDonut'),
+                                donutContent
+                            );
+                            /*]]>*/
+                        </script>                
+                    </div>
                 </div>
             </div>
 
-            <div class="content">
-                <div class="label" th:text="'Overview Request Surat Berdasarkan Kategori'"></div>
+            <div class="content1">
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="myPieChart"></canvas>
 
-                <div class="txtinput">
-                    <canvas id="myBarKategoriReq"></canvas>
-
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var jumlahRequestByKategori = /*[[${jumlahRequestByKategori}]]*/ {};
-                        console.log("Data jumlah request per kategori:", jumlahRequestByKategori);
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            var reqTemplateDiterima = /*[[${reqTemplateDiterima}]]*/ 0;
+                            var reqTemplateDitolak = /*[[${reqTemplateDitolak}]]*/ 0;
                         
-                        var allCategories = ["Legal", "SDM", "Keuangan", "Sarana", "Kemahasiswaan"];
-                        var data = [];
+                            var data = {
+                                labels: ['Diterima', 'Ditolak'],
+                                datasets: [{
+                                    label: 'Status',
+                                    data: [reqTemplateDiterima, reqTemplateDitolak],
+                                    backgroundColor: [
+                                        '#459a7d', // Warna untuk Diterima
+                                        '#b1cdb8'   // Warna untuk Ditolak
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            };
                         
-                        allCategories.forEach(function(category) {
-                            if (jumlahRequestByKategori.hasOwnProperty(category)) {
-                                data.push(jumlahRequestByKategori[category]);
-                            } else {
-                                data.push(0);
-                            }
-                        });
-
-                        var dataChart = {
-                            labels: allCategories,
-                            datasets: [{
-                                label: "",
-                                backgroundColor: '#459a7d',
-                                borderColor: '#0f7454',
-                                borderWidth: 1,
-                                data: data
-                            }]
-                        };
-                        
-                        var barConfig = {
-                            type: 'bar',
-                            data: dataChart,
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
+                            const contentPie = {
+                                type: 'pie',
+                                data: data,
+                                options: {
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom'
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Overview Request Template Berdasarkan Status'
+                                        }
                                     }
                                 }
-                            }
-                        };
+                            };
                         
-                        var myBarKategoriReq = new Chart(
-                            document.getElementById('myBarKategoriReq'),
-                            barConfig
-                        );
-                        /*]]>*/
-                    </script>
+                            var myPieChart = new Chart(
+                                document.getElementById('myPieChart'),
+                                contentPie
+                            );
+                            /*]]>*/
+                        </script>
+                    </div>
                 </div>
-            </div>
 
-            <div class="content">
-                <div class="label" th:text="'Statistik Jumlah Template Berdasarkan Kategori'"></div>
-
-                <div class="txtinput">
-                    <canvas id="myBarKategoriTemp"></canvas>
-
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var activeTemplateByKategori = /*[[${activeTemplateByKategori}]]*/ {};
-                        console.log("Data jumlah template active per kategori:", activeTemplateByKategori);
-                        
-                        var allCategories = ["Legal", "SDM", "Keuangan", "Sarana", "Kemahasiswaan"];
-                        var data = [];
-                        
-                        allCategories.forEach(function(category) {
-                            if (activeTemplateByKategori.hasOwnProperty(category)) {
-                                data.push(activeTemplateByKategori[category]);
-                            } else {
-                                data.push(0);
-                            }
-                        });
-
-                        var dataChart = {
-                            labels: allCategories,
-                            datasets: [{
-                                label: "",
-                                backgroundColor: '#459a7d',
-                                borderColor: '#0f7454',
-                                borderWidth: 1,
-                                data: data
-                            }]
-                        };
-                        
-                        var barConfig = {
-                            type: 'bar',
-                            data: dataChart,
-                            options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="myCombinedBarChart"></canvas>
+                
+                        <script th:inline="javascript">
+                            /*<![CDATA[*/
+                            var jumlahRequestByKategori = /*[[${jumlahRequestByKategori}]]*/ {};
+                            var activeTemplateByKategori = /*[[${activeTemplateByKategori}]]*/ {};
+                            
+                            var allCategories = ["Legal", "SDM", "Keuangan", "Sarana", "Kemahasiswaan"];
+                            
+                            var requestData = [];
+                            var templateData = [];
+                            
+                            allCategories.forEach(function(category) {
+                                requestData.push(jumlahRequestByKategori.hasOwnProperty(category) ? jumlahRequestByKategori[category] : 0);
+                                templateData.push(activeTemplateByKategori.hasOwnProperty(category) ? activeTemplateByKategori[category] : 0);
+                            });
+                
+                            var dataChart = {
+                                labels: allCategories,
+                                datasets: [{
+                                    label: "Jumlah Request Surat",
+                                    backgroundColor: '#459a7d',
+                                    borderColor: '#0f7454',
+                                    borderWidth: 1,
+                                    data: requestData
+                                }, {
+                                    label: "Jumlah Template Active",
+                                    backgroundColor: '#b1cdb8',
+                                    borderColor: '#253237',
+                                    borderWidth: 1,
+                                    data: templateData
+                                }]
+                            };
+                            
+                            var barConfig = {
+                                type: 'bar',
+                                data: dataChart,
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    },
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Overview Request Surat & Template Berdasarkan Kategori'
+                                        }
                                     }
                                 }
-                            }
-                        };
-                        
-                        var myBarKategoriTemp = new Chart(
-                            document.getElementById('myBarKategoriTemp'),
-                            barConfig
-                        );
-                        /*]]>*/
-                    </script>
+                            };
+                            
+                            var myCombinedBarChart = new Chart(
+                                document.getElementById('myCombinedBarChart'),
+                                barConfig
+                            );
+                            /*]]>*/
+                        </script>
+                    </div>
                 </div>
-            </div>
+            </div>            
 
             <div class="content">
                 <div class="label" th:text="'Statistik Jumlah Pertanyaan Yang Masuk Berdasarkan Status'"></div>
@@ -402,132 +517,107 @@
                 </div>
             </div>
 
-            <div class="content">
-                <div class="label" th:text="'Overview Surat Masuk Berdasarkan Status'"></div>
-
-                <div class="txtinput">
-                    <canvas id="myPie"></canvas>
+            <div class="content1">
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="barChartSuratMasukKeluar"></canvas>
+                        
+                        <script th:inline="javascript">
+                            var mapSuratMasuk = [[${mapSuratMasukMinggu}]];
+                            var labels = Object.keys(mapSuratMasuk);
+                            var dataSuratMasuk = labels.map(function(key) {
+                                return mapSuratMasuk[key];
+                            });
                     
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var reqTemplateDiterima = /*[[${reqTemplateDiterima}]]*/ 0;
-                        var reqTemplateDitolak = /*[[${reqTemplateDitolak}]]*/ 0;
+                            var mapSuratKeluar = [[${mapSuratKeluarMinggu}]];
+                            var labels = Object.keys(mapSuratKeluar);
+                            var dataSuratKeluar = labels.map(function(key) {
+                                return mapSuratKeluar[key];
+                            });
                     
-                        var data = {
-                            labels: ['Diterima', 'Ditolak'],
-                            datasets: [{
-                                label: 'Status',
-                                data: [reqTemplateDiterima, reqTemplateDitolak],
-                                backgroundColor: [
-                                    '#459a7d', // Warna untuk Diterima
-                                    '#b1cdb8'   // Warna untuk Ditolak
-                                ],
-                                borderWidth: 1
-                            }]
-                        };
-                    
-                        const pieContent = {
-                            type: 'pie',
-                            data: data,
-                            options: {
-                                plugins: {
-                                    legend: {
-                                        position: 'bottom'
+                            const barChartSuratMasukKeluar = document.getElementById('barChartSuratMasukKeluar');
+                        
+                            new Chart(barChartSuratMasukKeluar, {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: "Surat Masuk",
+                                        backgroundColor: '#459a7d',
+                                        borderColor: '#0f7454',
+                                        borderWidth: 1,
+                                        data: dataSuratMasuk
+                                    }, {
+                                        label: "Surat Keluar",
+                                        backgroundColor: '#b1cdb8',
+                                        borderColor: '#253237',
+                                        borderWidth: 1,
+                                        data: dataSuratKeluar
+                                    }]
+                                }, 
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    },
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Jumlah Surat Masuk dan Keluar'
+                                        }
                                     }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }
-                        };
-                    
-                        var myPie = new Chart(
-                            document.getElementById('myPie'),
-                            pieContent
-                        );
-                        /*]]>*/
-                    </script>
-                
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="label" th:text="'Statistik Jumlah Surat Keluar Berdasarkan Kategori'"></div>
-
-                <div class="txtinput">
-        
-                </div>
-            </div>
-
-            <div class="content">
-                <div class="label" th:text="'Top Requester'"></div>
-
-                <div class="txtinput">
-                    <div class="container" style="margin: 0 auto;">
-                        <div class="row-cols-1">
-                            <div class="col">
-                                <div class="card" style="min-width: 50%;">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h4 class="card-text" th:text="${topRequester}" style="font-size: 24px;"></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                }
+                            });
+                        </script>
                     </div>
                 </div>
-            </div>
 
-            <div class="content">
-                <div class="label" th:text="'Statistik Jumlah Request Surat Berdasarkan Role'"></div>
-
-                <div class="txtinput">
-                    <canvas id="myDonut"></canvas>
-                
-                    <script th:inline="javascript">
-                        /*<![CDATA[*/
-                        var allRoles = /*[[${allRoles}]]*/ [];
-                        var jumlahRequestByRole = /*[[${jumlahRequestByRole}]]*/ {};
-
-                        allRoles.forEach(function(role) {
-                            if (!jumlahRequestByRole.hasOwnProperty(role)) {
-                                jumlahRequestByRole[role] = 0;
-                            }
-                        });
+                <div class="content">
+                    <div class="txtinput">
+                        <canvas id="pieChartSuratMasuk"></canvas>
                         
-                        var labels = Object.keys(jumlahRequestByRole);
-                        var data = Object.values(jumlahRequestByRole);
-                        var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237'];
+                        <script th:inline="javascript">
+                            var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/;
+                            var labels = Object.keys(mapSuratMasukKategori);
+                            var chartData = Object.values(mapSuratMasukKategori);
+                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
                         
-                        var donutData = {
-                            labels: labels,
-                            datasets: [{
-                                label: '',
-                                data: data,
-                                backgroundColor: backgroundColors.slice(0, labels.length),
-                                borderWidth: 1
-                            }]
-                        };
-
-                        const donutContent = {
-                            type: 'doughnut',
-                            data: donutData,
-                            options: {
-                                plugins: {
-                                    legend: {
-                                        position: 'bottom'
-                                    }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                cutout: '50%'
-                            }
-                        };
-
-                        var myDonut = new Chart(
-                            document.getElementById('myDonut'),
-                            donutContent
-                        );
-                        /*]]>*/
-                    </script>                
+                            const pieChartSuratMasuk = document.getElementById('pieChartSuratMasuk');
+                            
+                            new Chart(pieChartSuratMasuk, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Jumlah',
+                                        data: chartData,
+                                        backgroundColor: backgroundColors.slice(0, labels.length),
+                                        borderWidth: 1
+                                    }]
+                                }, 
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Jumlah Surat Masuk Berdasarkan Kategori'
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: '50%'
+                                }
+                            });
+                        </script>
+                    </div>
                 </div>
             </div>
         </div>
