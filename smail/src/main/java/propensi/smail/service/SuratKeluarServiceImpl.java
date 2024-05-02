@@ -315,7 +315,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         List<SuratKeluar> allSuratKeluarThisYear = suratKeluarDb.findByTanggalDibuatBetween(firstDayOfYear, lastDayOfYear);
         Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
 
-        String[] indonesianMonths = new String[] {"Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"};
+        String[] indonesianMonths = new String[] {"Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"};
         for (String bulan : indonesianMonths) {
             mapPerBulan.put(bulan, 0);
         }

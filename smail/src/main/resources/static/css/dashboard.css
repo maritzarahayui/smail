@@ -9,8 +9,8 @@
 }
 
 canvas {
-    width: 700px;
-    height: 500px;
+    width: 800px;
+    height: 700px;
     position: relative;
     margin: 0 auto;
 }
@@ -19,7 +19,7 @@ canvas {
     padding-top: 20px;
     padding-bottom: 20px;
     font-weight: bold;
-    font-size: 32px;
+    font-size: 18px;
     color: #163c3f;
 }
 
@@ -42,7 +42,7 @@ canvas {
 
 .card {
     height: auto;
-    width: fit-content;
+    width: auto;
     min-width: 200px;
     background: linear-gradient(
         180deg,
@@ -51,7 +51,8 @@ canvas {
         #80c9ae 66.5%,
         #5cb7b3
     );
-    margin-right: 20px;
+    margin: 20px;
+    border: none;
 }
 
 .card:last-child {

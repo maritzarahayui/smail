@@ -143,6 +143,12 @@ public class BaseController {
                     model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
                     model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
 
+                    model.addAttribute("totalSuratKeluar", suratKeluarService.getAllSuratKeluar().size());
+                    model.addAttribute("totalSuratMasuk", suratMasukService.getAllSuratMasuk().size());
+                    model.addAttribute("totalForumEsk", faqService.getFaqsByStatus(1).size());
+                    model.addAttribute("totalTtd", faqService.getFaqsByStatus(1).size());
+
+
                     return "dashboard-pengurus";
                 } else if (role.equals("Dosen")) {
                     /* model.addAttribute yg dibutuhin */
