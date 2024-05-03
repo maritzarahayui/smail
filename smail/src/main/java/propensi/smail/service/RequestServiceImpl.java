@@ -430,68 +430,76 @@ public class RequestServiceImpl implements RequestService {
         return mapPerBulan;        
     }
 
-
     @Override
     public Map<String, Long> getJumlahRequestPerMinggu() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
     
         Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
-    
-        for (RequestSurat requestSurat : allRequestSurat) {
-            int weekOfMonth = getWeekOfMonth(requestSurat.getTanggalPengajuan());
-            String key = "Minggu ke-" + weekOfMonth;
-            
-            jumlahRequestPerMinggu.put(key, jumlahRequestPerMinggu.getOrDefault(key, 0L) + 1);
+
+        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
+            jumlahRequestPerMinggu.put("", 0L);
+        } else {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                int weekOfMonth = getWeekOfMonth(requestSurat.getTanggalPengajuan());
+                String key = "Minggu ke-" + weekOfMonth;
+
+                jumlahRequestPerMinggu.put(key, jumlahRequestPerMinggu.getOrDefault(key, 0L) + 1);
+            }
         }
 
-        // Sort map berdasarkan kunci (minggu)
         List<Map.Entry<String, Long>> sortedList = new ArrayList<>(jumlahRequestPerMinggu.entrySet());
         Collections.sort(sortedList, Comparator.comparing(Map.Entry::getKey));
-    
-        // Buat map hasil yang sudah terurut
+
         Map<String, Long> sortedMap = new LinkedHashMap<>();
         for (Map.Entry<String, Long> entry : sortedList) {
             sortedMap.put(entry.getKey(), entry.getValue());
         }
     
         return sortedMap;
-        // return jumlahRequestPerMinggu;
     }
 
     @Override
     public Map<String, Long> getJumlahRequestPerMonth() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
     
-        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
-    
-        for (RequestSurat requestSurat : allRequestSurat) {
-            String monthName = getMonthName(requestSurat.getTanggalPengajuan().getMonth() + 1); // Bulan dimulai dari 0
-            
-            jumlahRequestPerMinggu.put(monthName, jumlahRequestPerMinggu.getOrDefault(monthName, 0L) + 1);
+        Map<String, Long> jumlahRequestPerMonth = new HashMap<>();
+
+        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
+            jumlahRequestPerMonth.put("", 0L);
+        } else {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                String monthName = getMonthName(requestSurat.getTanggalPengajuan().getMonth() + 1); // Bulan dimulai dari 0
+
+                jumlahRequestPerMonth.put(monthName, jumlahRequestPerMonth.getOrDefault(monthName, 0L) + 1);
+            }
         }
     
-        return jumlahRequestPerMinggu;
+        return jumlahRequestPerMonth;
     }
 
     @Override
     public Map<String, Long> getJumlahRequestPerYear() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
     
-        Map<String, Long> jumlahRequestPerMonth = new HashMap<>();
+        Map<String, Long> jumlahRequestPerYear = new HashMap<>();
     
         int tahunSaatIni = LocalDate.now().getYear();
-        
-        for (RequestSurat requestSurat : allRequestSurat) {
-            int year = requestSurat.getTanggalPengajuan().getYear() + 1900;
-            
-            if (year == tahunSaatIni) {
-                jumlahRequestPerMonth.put(String.valueOf(year), jumlahRequestPerMonth.getOrDefault(String.valueOf(tahunSaatIni), 0L) + 1);
-            } else {
-                jumlahRequestPerMonth.put(String.valueOf(year), 1L);
+
+        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
+            jumlahRequestPerYear.put("", 0L);
+        } else {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                int year = requestSurat.getTanggalPengajuan().getYear() + 1900;
+
+                if (year == tahunSaatIni) {
+                    jumlahRequestPerYear.put(String.valueOf(year), jumlahRequestPerYear.getOrDefault(String.valueOf(tahunSaatIni), 0L) + 1);
+                } else {
+                    jumlahRequestPerYear.put(String.valueOf(year), 1L);
+                }
             }
         }
         
-        return jumlahRequestPerMonth;
+        return jumlahRequestPerYear;
     }
 
     // Method untuk mendapatkan nama bulan dari nomor bulan
@@ -513,13 +521,17 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public Map<String, Long> getJumlahRequestByKategori() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
-    
+
         Map<String, Long> jumlahRequestByKategori = new HashMap<>();
-    
-        for (RequestSurat requestSurat : allRequestSurat) {
-            String kategori = requestSurat.getKategori();
-            
-            jumlahRequestByKategori.put(kategori, jumlahRequestByKategori.getOrDefault(kategori, 0L) + 1);
+
+        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
+            jumlahRequestByKategori.put("", 0L);
+        } else {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                String kategori = requestSurat.getKategori();
+
+                jumlahRequestByKategori.put(kategori, jumlahRequestByKategori.getOrDefault(kategori, 0L) + 1);
+            }
         }
     
         return jumlahRequestByKategori;
@@ -530,12 +542,16 @@ public class RequestServiceImpl implements RequestService {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
     
         Map<String, Long> jumlahRequestByRole = new HashMap<>();
-    
-        for (RequestSurat requestSurat : allRequestSurat) {
-            Pengguna pengguna = requestSurat.getPengaju();
-            String role = penggunaService.getRole(pengguna);
-            
-            jumlahRequestByRole.put(role, jumlahRequestByRole.getOrDefault(role, 0L) + 1);
+
+        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
+            jumlahRequestByRole.put("", 0L);
+        } else {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                Pengguna pengguna = requestSurat.getPengaju();
+                String role = penggunaService.getRole(pengguna);
+
+                jumlahRequestByRole.put(role, jumlahRequestByRole.getOrDefault(role, 0L) + 1);
+            }
         }
     
         return jumlahRequestByRole;
