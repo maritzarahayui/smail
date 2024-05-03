@@ -32,6 +32,11 @@ public interface SuratKeluarService {
     SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
     //  belum tes
     List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
+    // get surat keluar by currentpenandatangan only
+    List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan);
+
     List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned);
+    SuratKeluar getSuratKeluarByNomorArsip(String nomorArsip);
+    void updateFollowUpFile(String id, MultipartFile file);
     
 }

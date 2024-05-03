@@ -61,7 +61,9 @@ public class BaseController {
             }
 
         }
-        return "login";
+        // debug:
+        // return "login";
+        return "pengurus-detail-followup";
     }
 
     @GetMapping("/profile")
@@ -86,8 +88,9 @@ public class BaseController {
             }
 
         }
-
         return "profile";
+        
+
     }
 
     @GetMapping("/login")

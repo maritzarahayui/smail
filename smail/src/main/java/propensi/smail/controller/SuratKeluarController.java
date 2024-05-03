@@ -19,6 +19,7 @@ import propensi.smail.dto.RequestAndFieldDataDTO;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
@@ -329,7 +330,7 @@ public class SuratKeluarController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
-                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByPenandatanganAndIsSigned(pengguna, false);
+                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
                 model.addAttribute("listSuratKeluar", listSuratKeluar);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
@@ -515,7 +516,66 @@ public class SuratKeluarController {
         return "daftar-surat-keluar";
     }
 
-    // route to pengurus-ttd-arsip
+    // route to pengurus-ttd-follup
+    @GetMapping("/ttd/followup/{id}")
+    public String detailTtdFollowUp(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
+        
+        // get surat keluar by nomor arsip
+        SuratKeluar suratKeluar = suratKeluarService.getSuratKeluarByNomorArsip(id);
+        byte[] pdf = suratKeluar.getFile();
+
+
+        model.addAttribute("suratKeluar", suratKeluar);
+
+        System.out.println("ID: " + id);
+        System.out.println("Surat Keluar: " + suratKeluar);
+
+        // Mengonversi konten PDF ke Base64
+        String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+        model.addAttribute("base64PDF", base64PDF);
+        model.addAttribute("suratKeluar", suratKeluar);
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                model.addAttribute("user", pengguna);
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        return "pengurus-detail-followup"; 
+    }
+
+    @PostMapping("/ttd/followup/{id}")
+    public String updateTtdFollowUp(@PathVariable("id") String id,
+                                 @RequestParam("file") MultipartFile file,
+                                 Model model, Authentication auth) {
+        String message = "";
+
+        try {
+            System.out.println("masukkkkkkkkkk");
+            // Update the SuratKeluar file
+            suratKeluarService.updateFollowUpFile(id, file);
+            message = "PDF updated successfully";
+            System.out.println(message);
+            model.addAttribute("message", message);
+            return "redirect:/ttd/followup/{id}";
+        } catch (Exception e) {
+            message = "Failed to update the template: " + e.getMessage();
+            System.out.println(message);
+            model.addAttribute("errorMessage", message);
+            return "redirect:/ttd/followup/{id}";
+        }
+    }
+
 
 
 }

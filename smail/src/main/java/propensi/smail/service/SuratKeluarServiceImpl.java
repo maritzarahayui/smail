@@ -216,6 +216,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
+    @Transactional
     public Stream<SuratKeluar> getAllFiles() {
         return suratKeluarDb.findAll().stream();
     }
@@ -311,17 +312,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 arsipAwal.setStatus(3);
                 suratMasukDb.save(arsipAwal);
 
-                // debug print semuanya
-                System.out.println("Nomor Arsip: " + suratKeluar.getNomorArsip());
-                System.out.println("Kategori: " + suratKeluar.getKategori());
-                System.out.println("Perihal: " + suratKeluar.getPerihal());
-                System.out.println("Tanggal Dibuat: " + suratKeluar.getTanggalDibuat());
-                System.out.println("Status: " + suratKeluar.getIsSigned());
-                System.out.println("Penerima Eksternal: " + suratKeluar.getPenerimaEksternal());
-                System.out.println("File Name: " + suratKeluar.getFileName());
-                System.out.println("Penandatangan: " + suratKeluar.getPenandatangan());
-                System.out.println("Arsip Surat: " + suratKeluar.getArsipSurat());
-
                 return suratKeluarDb.save(suratKeluar);
 
         } catch (IOException e) {
@@ -337,6 +327,43 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Override
     public List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned) {
         return suratKeluarDb.findByIsSigned(isSigned);
+    }
+
+    @Override
+    @Transactional 
+    public SuratKeluar getSuratKeluarByNomorArsip(String nomorArsip) {
+        return suratKeluarDb.findByNomorArsip(nomorArsip);
     } 
+
+    @Override
+    @Transactional 
+    public void updateFollowUpFile(String id, MultipartFile file) {
+        // Retrieve the SuratKeluar object by suratKeluar nomorArsip
+        SuratKeluar suratKeluar = suratKeluarDb.findByNomorArsip(id);
+
+        try {
+            System.out.println("masuk serv");
+
+            // Check if a new file is uploaded
+            if (file != null && !file.isEmpty()) {
+                // Convert the file to byte array
+                byte[] fileBytes = file.getBytes();
+
+                // Set the file and file name
+                suratKeluar.setFile(fileBytes);
+                suratKeluar.setFileName(file.getOriginalFilename());
+                suratKeluar.setIsSigned(true);
+                suratKeluarDb.save(suratKeluar);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan) {
+        return suratKeluarDb.findByCurrentPenandatangan(penandatangan);
+    }
     
 }
