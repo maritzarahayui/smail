@@ -6,6 +6,7 @@
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" href="/css/global-final.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
@@ -75,7 +76,7 @@
 
   <body>
     <div class="homepage">
-      <section class="frame-a">
+      <div class="frame-a">
         <nav class="navbar">
           <div class="wrapper-group-7-parent">
             <div class="wrapper-group-7">
@@ -129,34 +130,23 @@
             </div>
           </div>
         </div>
-      </section>
-      <section class="first-vector-frame">
-        <img
-          class="vector-node-icon"
-          loading="lazy"
-          alt=""
-          src="/images/white-hill.svg"
-        />
+      </div>
 
-        <div class="sekilas-info-frame">
-          <div class="about-s-m-a-i-l-system">
-            <b class="sekilas-mengenai-smail-container">
-              <span class="sekilas-mengenai-smail-container1">
-                <span class="sekilas"></span>
-              </span>
-            </b>
-          </div>
-        </div>
-      </section>
+      <br><br><br>
+
+      <div class="first-vector-frame">
+        <img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
+        <div class="sekilas-info-frame"></div>
+      </div>
 
       <div class="content-container">
 
         <b class="title-container" style="margin: 0;">
             <span class="title-gradient">Forum</span>
-            <span>Question</span>
+            <span>Pertanyaan</span>
         </b>
         
-        <br><br>
+        <br><br><br>
 
         <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
             <div class="accordion">
@@ -167,7 +157,7 @@
             <br>
         </div>
 
-        <br><br><br><br><br>
+        <br><br><br><br>
 
       </div>
 

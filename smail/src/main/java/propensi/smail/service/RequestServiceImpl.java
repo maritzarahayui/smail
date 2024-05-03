@@ -3,6 +3,8 @@ package propensi.smail.service;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import jakarta.transaction.Transactional;
 import propensi.smail.model.*;
 import propensi.smail.repository.*;
 
@@ -18,6 +20,7 @@ import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
 
 @Service
+@Transactional
 public class RequestServiceImpl implements RequestService {
     @Autowired
     private RequestSuratDb requestSuratDb;
@@ -502,22 +505,6 @@ public class RequestServiceImpl implements RequestService {
         return jumlahRequestPerYear;
     }
 
-    // Method untuk mendapatkan nama bulan dari nomor bulan
-    private String getMonthName(int monthNumber) {
-        String[] months = {
-            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-        };
-        return months[monthNumber - 1]; // Kurangi 1 karena array dimulai dari indeks 0
-    }
-
-    // Method untuk mendapatkan minggu dalam bulan dari tanggal
-    private int getWeekOfMonth(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar.get(Calendar.WEEK_OF_MONTH);
-    }
-
     @Override
     public Map<String, Long> getJumlahRequestByKategori() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
@@ -562,5 +549,112 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratDb.findTopRequester();
     }
     
+
+    // EMI SPRINT 3
+    @Override
+    public Map<String, Long> getJumlahRequestPerMingguByUser(Pengguna pengguna) {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findByPengaju(pengguna);
+        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
+
+        for (RequestSurat requestSurat : allRequestSurat) {
+            int weekOfMonth = getWeekOfMonth(requestSurat.getTanggalPengajuan());
+            String key = "Minggu ke-" + weekOfMonth;
+            jumlahRequestPerMinggu.put(key, jumlahRequestPerMinggu.getOrDefault(key, 0L) + 1);
+        }
+        // Sort map berdasarkan kunci (minggu)
+        List<Map.Entry<String, Long>> sortedList = new ArrayList<>(jumlahRequestPerMinggu.entrySet());
+        Collections.sort(sortedList, Comparator.comparing(Map.Entry::getKey));
+    
+        // Buat map hasil yang sudah terurut
+        Map<String, Long> sortedMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Long> entry : sortedList) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedMap;
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna) {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findByPengaju(pengguna);
+        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
+        for (RequestSurat requestSurat : allRequestSurat) {
+            String monthName = getMonthName(requestSurat.getTanggalPengajuan().getMonth() + 1); // Bulan dimulai dari 0
+            jumlahRequestPerMinggu.put(monthName, jumlahRequestPerMinggu.getOrDefault(monthName, 0L) + 1);
+        }
+        return jumlahRequestPerMinggu;
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestPerYearByUser(Pengguna pengguna) {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findByPengaju(pengguna);
+        Map<String, Long> jumlahRequestPerMonth = new HashMap<>();
+        int tahunSaatIni = LocalDate.now().getYear();
+        
+        for (RequestSurat requestSurat : allRequestSurat) {
+            int year = requestSurat.getTanggalPengajuan().getYear() + 1900;
+            if (year == tahunSaatIni) {
+                jumlahRequestPerMonth.put(String.valueOf(year), jumlahRequestPerMonth.getOrDefault(String.valueOf(tahunSaatIni), 0L) + 1);
+            } else {
+                jumlahRequestPerMonth.put(String.valueOf(year), 1L);
+            }
+        }
+        return jumlahRequestPerMonth;
+    }
+    
+    private String getMonthName(int monthNumber) {
+        String[] months = {
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        };
+        return months[monthNumber - 1]; // Kurangi 1 karena array dimulai dari indeks 0
+    }
+
+    // Method untuk mendapatkan minggu dalam bulan dari tanggal
+    private int getWeekOfMonth(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        return calendar.get(Calendar.WEEK_OF_MONTH);
+    }
+
+    @Override
+    public Map<String, Long> getJumlahRequestByStatus(Pengguna pengguna) {
+        Map<String, Long> jumlahRequestByStatus = new HashMap<>();
+        jumlahRequestByStatus.put("Diajukan", requestSuratDb.countByPengajuAndStatus(pengguna, 1));
+        jumlahRequestByStatus.put("Dibatalkan", requestSuratDb.countByPengajuAndStatus(pengguna, 2));
+        jumlahRequestByStatus.put("Ditolak", requestSuratDb.countByPengajuAndStatus(pengguna, 3));
+        jumlahRequestByStatus.put("Diproses", requestSuratDb.countByPengajuAndStatus(pengguna, 4));
+        jumlahRequestByStatus.put("Selesai", requestSuratDb.countByPengajuAndStatus(pengguna, 5));
+        return jumlahRequestByStatus;
+    }
+
+    // @Override
+    // public long countRequestsSignedByDosen() {
+    //     return requestSuratDb.countRequestByStatusAndRole(5, Dosen.class);
+    // }
+
+    @Override
+    public Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna) {
+        Map<String, Long> countByCategory = new HashMap<>();
+        List<RequestSurat> requests = requestSuratDb.findByPengaju(pengguna);
+
+        for (RequestSurat request : requests) {
+            String kategori = request.getKategori();
+            countByCategory.put(kategori, countByCategory.getOrDefault(kategori, 0L) + 1);
+        }
+        return countByCategory;
+    }
+
+    @Override
+    public Map<String, Long> getCountOfRequestByJenis(Pengguna pengguna) {
+        Map<String, Long> countByJenis = new HashMap<>();
+        List<RequestSurat> requests = requestSuratDb.findByPengaju(pengguna);
+
+        for (RequestSurat request : requests) {
+            String jenis = request.getJenisSurat();
+            countByJenis.put(jenis, countByJenis.getOrDefault(jenis, 0L) + 1);
+        }
+        return countByJenis;
+    }
 }
+
 

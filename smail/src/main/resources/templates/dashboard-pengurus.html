@@ -198,53 +198,6 @@
         }
 
     </script>
-        var mapSuratMasuk = [[${mapSuratMasukMinggu}]];
-        var labels = Object.keys(mapSuratMasuk);
-        var dataSuratMasuk = labels.map(function(key) {
-            return mapSuratMasuk[key];
-        });
-
-        var mapSuratKeluar = [[${mapSuratKeluarMinggu}]];
-        var labels = Object.keys(mapSuratKeluar);
-        var dataSuratKeluar = labels.map(function(key) {
-            return mapSuratKeluar[key];
-        });
-
-        const barChartSuratMasukKeluar = document.getElementById('barChartSuratMasukKeluar');
-    
-        new Chart(barChartSuratMasukKeluar, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Surat Masuk',
-                        data: dataSuratMasuk,
-                        backgroundColor: '#459a7d',
-
-                    },
-                    {
-                        label: 'Surat Keluar',
-                        data: dataSuratKeluar,
-                        backgroundColor: '#b1cdb8',
-                    }
-                ]
-            }, 
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                }
-            }
-        });
-    </script> -->
 
      <!-- BAR CHART SURAT MASUK KELUAR KATEGORI -->
      <script th:inline="javascript">

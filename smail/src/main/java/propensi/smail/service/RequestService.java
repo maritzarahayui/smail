@@ -66,5 +66,18 @@ public interface RequestService {
     Map<String, Long> getJumlahRequestByKategori();
     Map<String, Long> getJumlahRequestByRole();
     String getTopRequester();
+
+    //  EMIIIIIIIIIII ////
+    Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);
+    Map<String, Long> getJumlahRequestPerMingguByUser(Pengguna pengguna);
+    Map<String, Long> getJumlahRequestPerYearByUser(Pengguna pengguna);
+
+    Map<String, Long> getJumlahRequestByStatus(Pengguna pengguna); //ok
+    Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna); // ok //dosen & staf
+    Map<String, Long> getCountOfRequestByJenis(Pengguna pengguna); //ok // mahasiswa
+
+    // long countRequestsSignedByDosen();
+    
+    
 }
 

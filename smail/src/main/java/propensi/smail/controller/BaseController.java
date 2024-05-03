@@ -4,6 +4,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import propensi.smail.model.FAQ;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.service.FAQService;
@@ -132,17 +135,147 @@ public class BaseController {
                     return "dashboard-pengurus";
                     
                 } else if (role.equals("Dosen")) {
-                    /* model.addAttribute yg dibutuhin */
-                    return "dashboard-admin";
-                } else {
-                    /* model.addAttribute yg dibutuhin */
-                    return "dashboard-staf-mhs";
-                } 
+                    // Jumlah request surat (bulan, tahun)
+                    Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
+                    if (bulan.isEmpty()) {
+                        model.addAttribute("bulan", "");
+                    } else {
+                        model.addAttribute("bulan", bulan.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerBulan", bulan);
 
+                    Map<String, Long> tahun = requestService.getJumlahRequestPerYearByUser(pengguna);
+                    if (tahun.isEmpty()) {
+                        model.addAttribute("tahun", "");
+                    } else {
+                        model.addAttribute("tahun", tahun.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerTahun", tahun);
+
+                    Map<String, Long> minggu = requestService.getJumlahRequestPerMingguByUser(pengguna);
+                    if (minggu.isEmpty()) {
+                        model.addAttribute("minggu", "");
+                    } else {
+                        model.addAttribute("minggu", minggu.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerMinggu", minggu);
+
+                    // Statistik jumlah req tiap status (OK)
+                    Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
+                    model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
+                    model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
+                    model.addAttribute("ditolak", jumlahRequestByStatus.getOrDefault("Ditolak", 0L));
+                    model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
+                    model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
+
+                    // Statistik jumlah pertanyaan terjawab
+                    Map<String, Long> statistikTerjawab = faqService.getCountOfAnsweredQuestions(pengguna);
+                    model.addAttribute("answeredFAQs", statistikTerjawab.getOrDefault("Terjawab", 0L));
+
+                    // Statistik jumlah req by kategori
+                    Map<String, Long> requestByCategory = requestService.getCountOfRequestByCategory(pengguna);
+                    model.addAttribute("requestByCategory", requestByCategory);
+                
+                    return "dashboard-dosen";
+
+                } else if (role.equals("Staf")) {
+                    // Jumlah request surat (bulan, tahun)
+                    Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
+                    System.out.println(bulan);
+                    if (bulan.isEmpty()) {
+                        model.addAttribute("bulan", "");
+                    } else {
+                        model.addAttribute("bulan", bulan.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerBulan", bulan);
+
+                    Map<String, Long> tahun = requestService.getJumlahRequestPerYearByUser(pengguna);
+                    if (tahun.isEmpty()) {
+                        model.addAttribute("tahun", "");
+                    } else {
+                        model.addAttribute("tahun", tahun.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerTahun", tahun);
+
+                    Map<String, Long> minggu = requestService.getJumlahRequestPerMingguByUser(pengguna);
+                    if (minggu.isEmpty()) {
+                        model.addAttribute("minggu", "");
+                    } else {
+                        model.addAttribute("minggu", minggu.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerMinggu", minggu);
+
+                    // Statistik jumlah req tiap status
+                    Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
+                    model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
+                    model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
+                    model.addAttribute("ditolak", jumlahRequestByStatus.getOrDefault("Ditolak", 0L));
+                    model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
+                    model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
+
+                    // Statistik jumlah pertanyaan terjawab
+                    Map<String, Long> statistikTerjawabStaf = faqService.getCountOfAnsweredQuestions(pengguna);
+                    model.addAttribute("answeredFAQs", statistikTerjawabStaf.getOrDefault("Terjawab", 0L));
+
+                    // Statistik jumlah req by kategori
+                    Map<String, Long> requestByCategory = requestService.getCountOfRequestByCategory(pengguna);
+                    model.addAttribute("requestByCategory", requestByCategory);
+
+                    return "dashboard-staf";
+
+                } else if (role.equals("Mahasiswa")){
+                    // Jumlah request surat (bulan, tahun)
+                    Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
+                    System.out.println(bulan);
+                    if (bulan.isEmpty()) {
+                        model.addAttribute("bulan", "");
+                    } else {
+                        model.addAttribute("bulan", bulan.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerBulan", bulan);
+
+                    Map<String, Long> tahun = requestService.getJumlahRequestPerYearByUser(pengguna);
+                    if (tahun.isEmpty()) {
+                        model.addAttribute("tahun", "");
+                    } else {
+                        model.addAttribute("tahun", tahun.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerTahun", tahun);
+
+                    Map<String, Long> minggu = requestService.getJumlahRequestPerMingguByUser(pengguna);
+                    if (minggu.isEmpty()) {
+                        model.addAttribute("minggu", "");
+                    } else {
+                        model.addAttribute("minggu", minggu.keySet().iterator().next());
+                    }
+                    model.addAttribute("jumlahRequestPerMinggu", minggu);
+
+                    // Statistik jumlah req tiap status
+                     Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
+                    model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
+                    model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
+                    model.addAttribute("ditolak", jumlahRequestByStatus.getOrDefault("Ditolak", 0L));
+                    model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
+                    model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
+
+                    // Statistik jumlah pertanyaan terjawab
+                    Map<String, Long> statistikTerjawabMahasiswa = faqService.getCountOfAnsweredQuestions(pengguna);
+                    model.addAttribute("answeredFAQs", statistikTerjawabMahasiswa.getOrDefault("Terjawab", 0L));
+
+                    // Statistik jumlah req by jenis
+                    Map<String, Long> requestByJenis = requestService.getCountOfRequestByJenis(pengguna);
+                    model.addAttribute("requestByJenis", requestByJenis);
+
+                    return "dashboard-mhs";
+                } 
             } else {
                 return "auth-failed";
             }
         }
+
+        List<FAQ> faqsTerjawab = faqService.getFaqsByStatus(2);
+        model.addAttribute("faqsTerjawab", faqsTerjawab);
+
         return "login";
     }
 
@@ -173,7 +306,10 @@ public class BaseController {
     }
 
     @GetMapping("/login")
-    public String login(Authentication auth) {
+    public String login(Authentication auth, Model model) {
+
+        List<FAQ> faqsTerjawab = faqService.getFaqsByStatus(2);
+        model.addAttribute("faqsTerjawab", faqsTerjawab);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -195,5 +331,4 @@ public class BaseController {
         return "auth-failed";
     }
 
-    
 }

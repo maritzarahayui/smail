@@ -343,7 +343,6 @@
       #5cb7b3
     );
     overflow: hidden;
-    gap: 58px 0;
     letter-spacing: normal;
   }
   @media screen and (max-width: 1200px) {

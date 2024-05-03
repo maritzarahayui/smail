@@ -1,12 +1,18 @@
 package propensi.smail.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import propensi.smail.model.FAQ;
 import propensi.smail.model.RequestSurat;
+import propensi.smail.model.user.Dosen;
+import propensi.smail.model.user.Mahasiswa;
+import propensi.smail.model.user.Pengguna;
+import propensi.smail.model.user.Staf;
 import propensi.smail.repository.FAQDb;
 
 @Service
@@ -16,7 +22,8 @@ public class FAQServiceImpl implements FAQService {
     private FAQDb faqDb;
 
     @Override
-    public void createFAQ(FAQ faq) {
+    public void createFAQ(FAQ faq, Pengguna sender) {
+        faq.setPengaju(sender);
         faq.setStatus(0);
         faqDb.save(faq);
     }
@@ -68,7 +75,7 @@ public class FAQServiceImpl implements FAQService {
     public List<FAQ> getFaqsByStatusAndSearch(String search, int status) {
         return faqDb.findByPertanyaanContainingIgnoreCaseAndStatus(search, status) ;
     }
-    
+
     @Override
     public List<FAQ> getAllNotAnsweredFaq() {
         return faqDb.findByStatus(0);
@@ -87,5 +94,13 @@ public class FAQServiceImpl implements FAQService {
     @Override
     public List<FAQ> getAllDeletedFaq() {
         return faqDb.findByStatus(3);
+    }
+    @Override
+    public Map<String, Long> getCountOfAnsweredQuestions(Pengguna pengaju) {
+        Map<String, Long> terjawab = new HashMap<>();
+        long jumlahTerjawab = faqDb.countFAQByPengajuAndStatus(pengaju, 2);
+        terjawab.put("Terjawab", jumlahTerjawab);
+        System.out.println("Jumlah pertanyaan terjawab untuk role " + pengaju + ": " + jumlahTerjawab);
+        return terjawab;
     }
 }

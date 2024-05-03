@@ -1,6 +1,8 @@
 package propensi.smail.model;
 
 import lombok.*;
+import propensi.smail.model.user.Pengguna;
+
 import java.util.Date;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -37,4 +39,8 @@ public class FAQ {
     @Column(name = "tanggal_post")
     private Date tanggalPost;
 
+    /* RELATIONSHIPS */
+    @ManyToOne
+    @JoinColumn(name = "pengaju")
+    private Pengguna pengaju; 
 }

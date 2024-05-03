@@ -16,7 +16,6 @@ import propensi.smail.model.RequestSurat;
 @Repository
 public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     // long countByPengajuRole(Role role);
-    // List<RequestSurat> findByPengaju(Pengguna pengaju);
     @Query("SELECT COUNT(rs) FROM RequestSurat rs WHERE rs.pengaju.id IN (SELECT d.id FROM Dosen d)")
     long countRequestByDosen();
 
@@ -51,9 +50,16 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     "LOWER(r.id) LIKE LOWER(CONCAT('%', :search, '%'))) AND " + 
     "r.status = :status AND r.pengaju.id = :pengajuId")
     List<RequestSurat> findBySearchAndStatusAndPengajuId(@Param("search") String search, @Param("status") int status, @Param("pengajuId") String pengajuId);
-
+    
     @Query("SELECT r FROM RequestSurat r WHERE EXTRACT(YEAR FROM r.tanggalPengajuan) = :year AND EXTRACT(MONTH FROM r.tanggalPengajuan) = :month")
     List<RequestSurat> findByTanggalPengajuanMonthly(Integer month, Integer year);
-    @Query("SELECT r.pengaju.nama FROM RequestSurat r GROUP BY r.pengaju.id, r.pengaju.nama ORDER BY COUNT(r) DESC")
+    @Query("SELECT r.pengaju.nama FROM RequestSurat r GROUP BY r.pengaju.id, r.pengaju.nama ORDER BY COUNT(r) DESC LIMIT 1")
     String findTopRequester();
+    // emi sprint 3
+    List<RequestSurat> findByPengaju(Pengguna pengaju);
+    long countByPengajuAndStatus(Pengguna pengaju, int status);
+    List<String> findDistinctKategoriByPengaju(Pengguna pengaju);
+    long countByKategoriAndPengaju(String kategori, Pengguna pengaju);
+    List<String> findDistinctJenisByPengaju(Pengguna pengaju);
+    long countByJenisSuratAndPengaju(String jenis, Pengguna pengaju);
 }

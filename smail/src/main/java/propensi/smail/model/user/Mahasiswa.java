@@ -16,15 +16,15 @@ import jakarta.persistence.*;
 public class Mahasiswa extends Pengguna {
 
     // @NotNull
-    @Column(name = "jurusan", nullable = false)
+    @Column(name = "jurusan")
     private String jurusan;
 
     // @NotNull
-    @Column(name = "semester", nullable = false)
+    @Column(name = "semester")
     private String semester;
 
     // @NotNull
-    @Column(name = "ipk", nullable = false)
+    @Column(name = "ipk")
     private float ipk;
     
 }
