@@ -64,81 +64,50 @@ public class BaseController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
 
                 if (role.equals("Admin")) {
-                    /* model.addAttribute yg dibutuhin */
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonth();
-                    // System.out.println(bulan);
-                    model.addAttribute("bulan", bulan.keySet().iterator().next());
-                    model.addAttribute("jumlahRequestPerBulan", bulan);
-                    
+                    if (!bulan.isEmpty()) {
+                        model.addAttribute("bulan", bulan.keySet().iterator().next());
+                        model.addAttribute("jumlahRequestPerBulan", bulan);
+                    } else {
+                        model.addAttribute("bulan", "");
+                    }
+
                     Map<String, Long> tahun = requestService.getJumlahRequestPerYear();
-                    model.addAttribute("tahun", tahun.keySet().iterator().next());
+                    if (!tahun.isEmpty()) {
+                        model.addAttribute("tahun", tahun.keySet().iterator().next());
+                    } else {
+                        model.addAttribute("tahun", "");
+                    }
 
-                    Map<String, Long> jumlahRequestPerMinggu = requestService.getJumlahRequestPerMinggu();
-                    // System.out.println(jumlahRequestPerMinggu);
-                    model.addAttribute("jumlahRequestPerMinggu", jumlahRequestPerMinggu);
-
+                    model.addAttribute("jumlahRequestPerMinggu", requestService.getJumlahRequestPerMinggu());
                     model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
+                    model.addAttribute("diajukan", requestService.getAllSubmitedRequestsSurat().size());
+                    model.addAttribute("ditolak", requestService.getAllRejectedRequestsSurat().size());
+                    model.addAttribute("dibatalkan", requestService.getAllCanceledRequestsSurat().size());
+                    model.addAttribute("diproses", requestService.getAllOnProcessRequestsSurat().size());
+                    model.addAttribute("selesai", requestService.getAllFinishedRequestsSurat().size());
+                    model.addAttribute("jumlahRequestByKategori", requestService.getJumlahRequestByKategori());
+                    model.addAttribute("jumlahRequestByRole", requestService.getJumlahRequestByRole());
+                    model.addAttribute("topRequester", requestService.getTopRequester());
 
-                    int submittedRequest = requestService.getAllSubmitedRequestsSurat().size();
-                    model.addAttribute("diajukan", submittedRequest);
+                    model.addAttribute("reqTemplateDiterima", templateService.getAllReqTemplate().stream()
+                            .filter(template -> template.getStatus() == 2).count());
+                    model.addAttribute("reqTemplateDitolak", templateService.getAllReqTemplate().stream()
+                            .filter(template -> template.getStatus() == 3).count());
+                    model.addAttribute("activeTemplateByKategori", templateService.getActiveTemplateByKategori());
 
-                    int rejectedRequest = requestService.getAllRejectedRequestsSurat().size();
-                    model.addAttribute("ditolak", rejectedRequest);
+                    model.addAttribute("notAnsweredFaq", faqService.getAllNotAnsweredFaq().size());
+                    model.addAttribute("dieskalasiFaq", faqService.getAllEskalasiFaq().size());
+                    model.addAttribute("answeredFaq", faqService.getAllAnsweredFaq().size());
+                    model.addAttribute("deletedFaq", faqService.getAllDeletedFaq().size());
 
-                    int canceledRequest = requestService.getAllCanceledRequestsSurat().size();
-                    model.addAttribute("dibatalkan", canceledRequest);
+                    model.addAttribute("allRoles", penggunaService.getAllRoles());
 
-                    int onProcessRequest = requestService.getAllOnProcessRequestsSurat().size();
-                    model.addAttribute("diproses", onProcessRequest);
-
-                    int finishedRequest = requestService.getAllFinishedRequestsSurat().size();
-                    model.addAttribute("selesai", finishedRequest);
-
-                    long reqTemplateDiterima = templateService.getAllReqTemplate().stream()
-                            .filter(template -> template.getStatus() == 2).count();
-
-                    long reqTemplateDitolak = templateService.getAllReqTemplate().stream()
-                            .filter(template -> template.getStatus() == 3).count();
-
-                    model.addAttribute("reqTemplateDiterima", reqTemplateDiterima);
-                    model.addAttribute("reqTemplateDitolak", reqTemplateDitolak);
-
-                    Map<String, Long> jumlahRequestByKategori = requestService.getJumlahRequestByKategori();
-                    // System.out.println(jumlahRequestByKategori);
-                    model.addAttribute("jumlahRequestByKategori", jumlahRequestByKategori);
-
-                    Map<String, Long> activeTemplateByKategori = templateService.getActiveTemplateByKategori();
-                    // System.out.println(activeTemplateByKategori);
-                    model.addAttribute("activeTemplateByKategori", activeTemplateByKategori);
-
-                    int notAnsweredFaq = faqService.getAllNotAnsweredFaq().size();
-                    model.addAttribute("notAnsweredFaq", notAnsweredFaq);
-
-                    int dieskalasiFaq = faqService.getAllEskalasiFaq().size();
-                    model.addAttribute("dieskalasiFaq", dieskalasiFaq);
-
-                    int answeredFaq = faqService.getAllAnsweredFaq().size();
-                    model.addAttribute("answeredFaq", answeredFaq);
-
-                    int deletedFaq = faqService.getAllDeletedFaq().size();
-                    model.addAttribute("deletedFaq", deletedFaq);
-
-                    List<String> allRoles = penggunaService.getAllRoles();
-                    model.addAttribute("allRoles", allRoles);
-
-                    Map<String, Long> jumlahRequestByRole = requestService.getJumlahRequestByRole();
-                    // System.out.println(jumlahRequestByRole);
-                    model.addAttribute("jumlahRequestByRole", jumlahRequestByRole);
-
-                    String topRequester = requestService.getTopRequester();
-                    model.addAttribute("topRequester", topRequester);
-
+                    model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
                     model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
 
                     model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
 
-                    model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
-                    
                     return "dashboard-admin";
                 } else if (role.equals("Pengurus")) {
                     /* model.addAttribute yg dibutuhin */
@@ -158,7 +127,7 @@ public class BaseController {
                     return "dashboard-pengurus";
                 } else if (role.equals("Dosen")) {
                     /* model.addAttribute yg dibutuhin */
-                    return "dashboard-dosen";
+                    return "dashboard-admin";
                 } else {
                     /* model.addAttribute yg dibutuhin */
                     return "dashboard-staf-mhs";
