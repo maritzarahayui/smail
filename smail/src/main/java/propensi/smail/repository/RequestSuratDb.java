@@ -15,7 +15,6 @@ import propensi.smail.model.RequestSurat;
 @Repository
 public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     // long countByPengajuRole(Role role);
-    // List<RequestSurat> findByPengaju(Pengguna pengaju);
     @Query("SELECT COUNT(rs) FROM RequestSurat rs WHERE rs.pengaju.id IN (SELECT d.id FROM Dosen d)")
     long countRequestByDosen();
 
@@ -50,5 +49,12 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     "LOWER(r.id) LIKE LOWER(CONCAT('%', :search, '%'))) AND " + 
     "r.status = :status AND r.pengaju.id = :pengajuId")
     List<RequestSurat> findBySearchAndStatusAndPengajuId(@Param("search") String search, @Param("status") int status, @Param("pengajuId") String pengajuId);
-
+    
+    // emi sprint 3
+    List<RequestSurat> findByPengaju(Pengguna pengaju);
+    long countByPengajuAndStatus(Pengguna pengaju, int status);
+    List<String> findDistinctKategoriByPengaju(Pengguna pengaju);
+    long countByKategoriAndPengaju(String kategori, Pengguna pengaju);
+    List<String> findDistinctJenisByPengaju(Pengguna pengaju);
+    long countByJenisSuratAndPengaju(String jenis, Pengguna pengaju);
 }

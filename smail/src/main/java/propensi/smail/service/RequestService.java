@@ -55,5 +55,18 @@ public interface RequestService {
     List<String> getAllJenisByKategori(String Kategori);
 
     List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju);
+
+    //  EMIIIIIIIIIII ////
+    Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);
+    Map<String, Long> getJumlahRequestPerMingguByUser(Pengguna pengguna);
+    Map<String, Long> getJumlahRequestPerYearByUser(Pengguna pengguna);
+
+    Map<String, Long> getJumlahRequestByStatus(Pengguna pengguna); //ok
+    Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna); // ok //dosen & staf
+    Map<String, Long> getCountOfRequestByJenis(Pengguna pengguna); //ok // mahasiswa
+
+    // long countRequestsSignedByDosen();
+    
+    
 }
 

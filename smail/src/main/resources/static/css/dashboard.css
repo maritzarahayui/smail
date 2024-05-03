@@ -1,0 +1,103 @@
+.dashboard {
+    width: 100%;
+    position: relative;
+    background-color: #fffffe;
+    text-align: center;
+    font-size: 16px;
+    color: #253237;
+    font-family: Rubik;
+}
+
+canvas {
+    width: 500px;
+    height: 250px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.label {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #163c3f;
+}
+
+.content {
+    flex-direction: column;
+    gap: 20px 0;
+    padding-bottom: 20px;
+}
+
+.content1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 40px;
+}
+
+.cont {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.txtinput{
+    position: relative;
+}
+
+.card {
+    height: auto;
+    width: auto;
+    min-width: 200px;
+    background: linear-gradient(
+        180deg,
+        #bce8a4,
+        #abdfa7 28.5%,
+        #80c9ae 66.5%,
+        #5cb7b3
+    );
+    margin: 20px;
+    border: none;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #253237;
+    font-weight: bold;
+    font-size: 24;
+}
+
+.card-text {
+    font-size: 3rem;
+    color: #253237;
+    font-size: 64;
+}
+
+.buttonWaktu {
+    cursor: pointer;
+    border: 2px solid var(--green-green-1);
+    margin: auto;
+    background-color: var(--white-white-1);
+    height: 25px;
+    width: 94px;
+    border-radius: var(--br-xs);
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color: var(--green-green-1);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.buttonWaktu.active {
+    border: 0;
+    background-color: var(--green-green-1); /* Active background */
+    color: var(--white-white-1); /* Active text color */
+}

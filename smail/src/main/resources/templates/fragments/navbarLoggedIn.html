@@ -36,7 +36,7 @@
                     <li th:if="${role == 'Pengurus' or role == 'Dosen'}">
                         <a th:href="@{/ttd/request}">Tanda Tangan</a>
                     </li>
-                    <li th:if="${role == 'Dosen' or role == 'Staf'}">
+                    <li th:if="${role == 'Dosen' or role == 'Staf' or role == 'Mahasiswa'}">
                         <a th:href="@{/request}">Ajukan Surat</a>
                     </li>
 
