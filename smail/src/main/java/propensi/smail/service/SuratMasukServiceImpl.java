@@ -31,11 +31,13 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.SuratKeluarDb;
 import propensi.smail.repository.SuratMasukDb;
 
 @Service
@@ -47,6 +49,9 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Autowired
     private PenggunaDb penggunaDb;
+
+    @Autowired
+    private SuratKeluarDb suratKeluarDb;
 
     @Autowired
     private PenggunaService penggunaService;
@@ -61,7 +66,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(1);
+                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -86,7 +91,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(1);
+                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -96,7 +101,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         }
     }
         
-
     @Override
     public SuratMasuk getFile(String id) {
         return suratMasukDb.findById(id).get();
@@ -141,7 +145,8 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Async
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
         // ubah status dan tembusan objek surat masuk
-        suratMasuk.setStatus(2);
+        // suratMasuk.setStatus(2);
+        suratMasuk.setIsDisposisi(true);
         suratMasuk.setTembusan(to);
         suratMasukDb.save(suratMasuk);
         
@@ -195,16 +200,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     }
 
     @Override
-    public List<SuratMasuk> getSuratMasukByStatus(int status) {
-        return suratMasukDb.findByStatus(status);
-    }
-
-    @Override
-    public List<SuratMasuk> getSuratBySearchAndStatus(String search, int status) {
-        return suratMasukDb.findBySearchAndStatus(search, status);
-    }
-
-    @Override
     public List<SuratMasuk> getSuratBySearch(String search) {
         return suratMasukDb.findBySearch(search);
     }
@@ -214,59 +209,32 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         List<Pengguna> listTembusan = penggunaDb.findAll().stream()
             .filter(user -> {
                 String role = penggunaService.getRole(user);
-                return role.equals("Dosen") || role.equals("Pengurus");
+                return role.equals("Pengurus");
             })
             .collect(Collectors.toList());
         return listTembusan;
     }
 
-
     @Override
-    public SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
-            String penerimaEksternal, Pengguna penandatangan) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        try {
-            SuratMasuk suratMasuk = new SuratMasuk();
-                suratMasuk.setNomorArsip(generateId(arsipAwal.getKategori()));
-                suratMasuk.setFile(file.getBytes());
-                suratMasuk.setKategori(arsipAwal.getKategori());
-                suratMasuk.setPerihal(perihal);
-                suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(3);
-                suratMasuk.setPengirim(penerimaEksternal);
-                suratMasuk.setFileName(fileName);
-                suratMasuk.setPenandatangan(penandatangan);
-
-                arsipAwal.setStatus(3);
-                suratMasukDb.save(arsipAwal);
-                
-
-                // debug print semuanya
-                System.out.println("Nomor Arsip: " + suratMasuk.getNomorArsip());
-                System.out.println("Kategori: " + suratMasuk.getKategori());
-                System.out.println("Perihal: " + suratMasuk.getPerihal());
-                System.out.println("Tanggal Dibuat: " + suratMasuk.getTanggalDibuat());
-                System.out.println("Status: " + suratMasuk.getStatus());
-                System.out.println("Pengirim: " + suratMasuk.getPengirim());
-                System.out.println("File Name: " + suratMasuk.getFileName());
-                System.out.println("Penandatangan: " + suratMasuk.getPenandatangan().getNama());
-                return suratMasukDb.save(suratMasuk);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to store file " + fileName, e);
-        }
+    public List<SuratMasuk> getSuratMasukBySearchIsDisposisi(String search) {
+        return suratMasukDb.findBySearchAndIsDisposisi(search);
     }
 
     @Override
-    public Map<String, Integer> getJumlahSuratMasukPerStatus() {
-        Map<String, Integer> mapSuratMasukStatus = new HashMap<>();
-
-        mapSuratMasukStatus.put("Diarsipkan", getSuratMasukByStatus(1).size());
-        mapSuratMasukStatus.put("Disposisi", getSuratMasukByStatus(2).size());
-        mapSuratMasukStatus.put("Follow-Up", getSuratMasukByStatus(3).size());
-
-        return mapSuratMasukStatus;
+    public List<SuratMasuk> getSuratMasukBySearchIsFollowUp(String search) {
+        return suratMasukDb.findBySearchAndIsFollowUp(search);
     }
 
+    @Override
+    public List<SuratMasuk> getSuratMasukIsDisposisi() {
+        return suratMasukDb.findByIsDisposisiTrue();
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukIsFollowUp() {
+        return suratMasukDb.findByIsFollowUpTrue();
+    }
+    
     @Override
     public Map<String, Long> getJumlahSuratMasukPerKategori() {
         Map<String, Long> mapSuratMasukKategori = new HashMap<>();
@@ -359,4 +327,5 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
         return mapPerHari;
     }
+
 }

@@ -8,10 +8,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.SuratKeluarDb;
+import propensi.smail.repository.SuratMasukDb;
 import propensi.smail.repository.TemplateSuratDb;
 
 import java.io.IOException;
@@ -45,6 +47,10 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Autowired
     private TemplateSuratDb templateSuratDb;
+
+    // surat masuk db
+    @Autowired
+    private SuratMasukDb suratMasukDb;
 
     @Override
     public List<SuratKeluar> getAllSuratKeluar() {
@@ -100,7 +106,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             long count = suratKeluarDb.countByKategori(kategori);
 
             String idSuffix = String.format("%05d", count + 1);
-            return "IN" + "-" + abbreviation + "-" + idSuffix;
+            return "OUT" + "-" + abbreviation + "-" + idSuffix;
         } else {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
@@ -166,6 +172,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 if (current == null) {
                     suratKeluar.getRequestSurat().setStatus(5);
                     suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
+                    suratKeluar.setIsSigned(true);
                 }
 
                 suratKeluarDb.save(suratKeluar);
@@ -218,6 +225,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
+    @Transactional
     public Stream<SuratKeluar> getAllFiles() {
         return suratKeluarDb.findAll().stream();
     }
@@ -290,6 +298,86 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             return null;
         }
     }
+
+    @Override
+    public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
+            String penerimaEksternal, Pengguna penandatangan) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            // bikin objek surat keluar
+            SuratKeluar suratKeluar = new SuratKeluar();
+                suratKeluar.setNomorArsip(generateId(arsipAwal.getKategori()));
+                suratKeluar.setFile(file.getBytes());
+                suratKeluar.setKategori(arsipAwal.getKategori());
+                suratKeluar.setPerihal(perihal);
+                suratKeluar.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                suratKeluar.setIsSigned(false);
+                suratKeluar.setPenerimaEksternal(penerimaEksternal);
+                suratKeluar.setFileName(fileName);
+                suratKeluar.setCurrentPenandatangan(penandatangan);
+                suratKeluar.setArsipSurat(arsipAwal.getNomorArsip());
+                suratKeluarDb.save(suratKeluar);
+
+                // ubah status arsip awal
+                // arsipAwal.setStatus(3);
+                arsipAwal.setIsFollowUp(true);
+                arsipAwal.setSuratFollowUp(suratKeluar);
+                suratMasukDb.save(arsipAwal);
+
+                return suratKeluarDb.save(suratKeluar);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + fileName, e);
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+        return suratKeluarDb.findByCurrentPenandatanganAndIsSigned(penandatangan, isSigned);
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned) {
+        return suratKeluarDb.findByIsSigned(isSigned);
+    }
+
+    @Override
+    @Transactional 
+    public SuratKeluar getSuratKeluarByNomorArsip(String nomorArsip) {
+        return suratKeluarDb.findByNomorArsip(nomorArsip);
+    } 
+
+    @Override
+    @Transactional 
+    public void updateFollowUpFile(String id, MultipartFile file) {
+        // Retrieve the SuratKeluar object by suratKeluar nomorArsip
+        SuratKeluar suratKeluar = suratKeluarDb.findByNomorArsip(id);
+
+        try {
+            System.out.println("masuk serv");
+
+            // Check if a new file is uploaded
+            if (file != null && !file.isEmpty()) {
+                // Convert the file to byte array
+                byte[] fileBytes = file.getBytes();
+
+                // Set the file and file name
+                suratKeluar.setFile(fileBytes);
+                suratKeluar.setFileName(file.getOriginalFilename());
+                suratKeluar.setIsSigned(true);
+                suratKeluarDb.save(suratKeluar);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan) {
+        return suratKeluarDb.findByCurrentPenandatanganOrderByIsSignedAscTanggalDibuatDesc(penandatangan);
+    }
+    
 
     @Override
     public Map<String, Long> getJumlahSuratKeluarPerKategori() {

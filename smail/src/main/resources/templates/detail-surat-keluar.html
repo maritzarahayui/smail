@@ -45,7 +45,7 @@
       <main class="details-frame">
         <form class="i-d-surat-jenis-nomor-pengirim">
           <!-- Detail display content -->
-          <div class="i-d-surat-holder">
+          <div>
             <!-- perihal -->
             <div class="frame-i-d-details1">
               <div class="jenis-surat-container">
@@ -62,6 +62,25 @@
               </div>
               <div class="follow-up-button">
                 <div class="ku0011" th:text="${suratKeluar.nomorArsip}"></div>
+              </div>
+            </div>
+            <!-- Surat masuk terkait -->
+            <div
+              class="frame-i-d-details"
+              th:if="${suratKeluar.arsipSurat != null}"
+            >
+              <div class="i-d-label-surat">
+                <div class="id-surat1">Surat Masuk Terkait</div>
+              </div>
+              <div class="keuangan-container">
+                <a class="keuangan2"
+                  th:href="@{'/surat-masuk/detail/' + ${suratKeluar.arsipSurat}}"
+                >
+                  <div
+                    class="ku0011"
+                    th:text="${suratKeluar.arsipSurat}"
+                  ></div>
+                </a>
               </div>
             </div>
             <!-- tanggal -->
@@ -86,23 +105,50 @@
               </div>
             </div>
             <!-- jenis surat -->
-            <div class="frame-i-d-details1" th:if="${suratKeluar.jenisSurat != null}">
-                <div class="jenis-surat-container">
-                  <div class="jenis-surat1">Jenis Surat</div>
-                </div>
-                <div class="keuangan-container">
-                  <div class="keuangan2" name="jenis_surat" th:text="${suratKeluar.jenisSurat}"></div>
-                </div>
+            <div
+              class="frame-i-d-details1"
+              th:if="${suratKeluar.jenisSurat != null}"
+            >
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">Jenis Surat</div>
               </div>
-              <div class="frame-i-d-details1" th:if="${suratKeluar.penerimaEksternal != ' '}">
-                <div class="jenis-surat-container">
-                  <div class="jenis-surat1">Penerima</div>
-                </div>
-                <div class="keuangan-container">
-                  <div class="keuangan2" name="penerima_eksternal" th:text="${suratKeluar.penerimaEksternal}"></div>
-                </div>
+              <div class="keuangan-container">
+                <div
+                  class="keuangan2"
+                  name="jenis_surat"
+                  th:text="${suratKeluar.jenisSurat}"
+                ></div>
               </div>
-            
+            </div>
+            <!-- penerima eksternal -->
+            <div
+              class="frame-i-d-details1"
+              th:if="${suratKeluar.penerimaEksternal != ' '}"
+            >
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">Penerima Eksternal</div>
+              </div>
+              <div class="keuangan-container">
+                <div
+                  class="keuangan2"
+                  name="penerima_eksternal"
+                  th:text="${suratKeluar.penerimaEksternal}"
+                ></div>
+              </div>
+            </div>
+            <!-- pengaju -->
+            <div
+              class="frame-i-d-details1"
+              th:if="${suratKeluar.pengaju != null}"
+            >
+              <div class="jenis-surat-container">
+                <div class="jenis-surat1">Pengaju</div>
+              </div>
+              <div class="keuangan-container">
+                <div class="keuangan2" th:text="${suratKeluar.pengaju.nama}"></div>
+              </div>
+            </div>
+
             <!-- filename -->
             <div class="frame-i-d-details6">
               <div class="tanggal-surat-masuk-container">
@@ -117,18 +163,45 @@
             </div>
           </div>
 
+          <div th:if="${suratKeluar.currentPenandatangan != null}">
+            <div style="margin-bottom: 30px">
+              <h3 class="label6">Tanda Tangan</h3>
+            </div>
+
+            <!-- ttd -->
+            <div>
+              <div class="frame-i-d-details1">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">penandatangan</div>
+                </div>
+                <div class="keuangan-container">
+                  <div
+                    class="keuangan2"
+                    th:text="${suratKeluar.currentPenandatangan.nama}"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <!-- statusttd -->
+            <div>
+              <div class="frame-i-d-details1">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">Status Tanda Tangan</div>
+                </div>
+                <div class="keuangan-container">
+                  <div
+                    class="keuangan2"
+                    th:text="${suratKeluar.isSigned ? 'Selesai ditandatangani' : 'Perlu tanda tangan'}"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Footer with Download Button -->
           <div class="footer-frame">
-            <div class="copyright-frame1">
-              <h1 class="label1">Preview Surat</h1>
-              <a class="button4" th:href="@{'/surat-keluar/download/' + ${suratKeluar.nomorArsip}}">
-                <img
-                  class="octicondownload-16"
-                  alt=""
-                  src="\images\download-icon.svg"
-                />
-                <div class="download-surat">Download surat</div>
-              </a>
+            <div style="margin-bottom: 30px">
+              <h3 class="label6">Preview Surat</h3>
             </div>
             <!-- Embed PDF using Base64 content -->
             <embed

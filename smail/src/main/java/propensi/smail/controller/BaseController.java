@@ -318,8 +318,9 @@ public class BaseController {
             }
 
         }
-
         return "profile";
+        
+
     }
 
     @GetMapping("/login")

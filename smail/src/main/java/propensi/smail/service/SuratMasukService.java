@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 
@@ -22,7 +23,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 public interface SuratMasukService {
-    SuratMasuk storeJudul(MultipartFile file, String kategori, String perihal, String pengirim, String judul);
+    SuratMasuk storeJudul(MultipartFile file, String kategori, String perihal, String pengirim, String judul); //gak kepake kyknya
     SuratMasuk getFile(String id);
     Stream<SuratMasuk> getAllFiles();
     List<SuratMasuk> getAllSuratMasuk();
@@ -31,16 +32,15 @@ public interface SuratMasukService {
 
     SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim);
     List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
-    List<SuratMasuk> getSuratMasukByStatus(int status);
-
-    List<SuratMasuk> getSuratBySearchAndStatus(String search, int status);
     List<SuratMasuk> getSuratBySearch(String search);
-    // getallpenandatangan
     List<Pengguna> getAllPenandatangan();
-    SuratMasuk storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
+
+    List<SuratMasuk> getSuratMasukBySearchIsDisposisi(String search);
+    List<SuratMasuk> getSuratMasukBySearchIsFollowUp(String search);
+    List<SuratMasuk> getSuratMasukIsDisposisi();
+    List<SuratMasuk> getSuratMasukIsFollowUp();
 
     /* DASHBOARD */
-    Map<String, Integer> getJumlahSuratMasukPerStatus();
     Map<String, Long> getJumlahSuratMasukPerKategori();
     Map<String, Integer> getJumlahSuratMasukTahunIni();
     Map<String, Integer> getJumlahSuratMasukBulanIni();
