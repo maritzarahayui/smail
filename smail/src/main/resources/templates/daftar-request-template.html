@@ -4,28 +4,145 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/css/add-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
-    <link rel="stylesheet" href="/css/daftar-request-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-    <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
-    />
 
     <style>
-        /* Tambahkan CSS khusus di sini */
-        .table thead {
-            background-color: var(--green-green-2);
-            color: #fff; /* Warna teks putih pada kepala tabel */
-            text-align: center; /* Membuat teks di kepala tabel menjadi ditengah */
-        }
-        .table tbody td {
-            text-align: center; /* Membuat teks di baris tabel menjadi ditengah */
-        }
+
+.tabs-group {
+    width: 80%;
+    height: 56px;
+    margin: 20px auto 0;
+    display: flex;
+    box-sizing: border-box;
+    border-radius: var(--br-31xl);
+    border: 4px solid var(--green-green-3);
+    background-color: var(--green-green-5);
+    font-weight: 600;
+}
+
+.tabs-group .tab-link {
+    flex: 1;
+    gap: 0 8px;
+    width: auto;
+    height: 100%;
+    display: flex;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-white-1);
+    padding: var(--padding-3xs) var(--padding-13xl);
+}
+
+.tab-link:hover {
+    color: var(--white-white-1);
+    text-decoration: none;
+}
+
+.tabs-group .tab-link.active {
+    background-color: var(--green-green-1);
+    border-radius: var(--br-31xl);
+    color: var(--white-white-1);
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.tabs-group .tab-link.active {
+    color: var(--white-white-1);
+    text-decoration: none;
+}
+
+.tab-pane {
+    max-width: 80%;
+    display: none;
+}
+
+.tab-pane.active {
+    max-width: 80%;
+    display: flex;
+    margin: 20px auto 0;
+}
+
+/* Tabel */
+.table thead {
+  background-color: var(--green-green-2);
+  color: #fff;
+  text-align: center;
+}
+
+.table tbody td {
+  text-align: center;
+}
+
+table.table tbody tr {
+  background-color: #ffffff;
+}
+
+.table-button {
+    color: var(--white-white-1);
+    display: flex;
+    margin-inline: 3px;
+    flex-direction: row;
+    padding: var(--padding-5xs);
+    border-radius: var(--br-xs);
+    justify-content: center;
+}
+
+.table-button:hover {
+    color: var(--white-white-1);
+    background-color: var(--green-green-2);
+    text-decoration: none;
+}
+
+
+      .button {
+        background-color: #3a8b5a;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        display: flex; /* Menggunakan flexbox */
+        align-items: center; /* Pusatkan item di dalam tombol secara vertikal */
+        justify-content: center; /* Pusatkan item di dalam tombol secara horizontal */
+        transition: background-color 0.3s;
+        width: 200px; /* Lebar tombol */
+        text-align: center; /* Pusatkan teks di dalam tombol */
+      }
+
+      .detail-button {
+        width: 94px;
+        height: 40px;
+        padding-left: 24px;
+        padding-right: 24px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        background: #0F7454;
+        border-radius: 12px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        display: inline-flex;
+        text-align: center;
+        color: #FFFFFE;
+        font-size: 16px;
+        font-family: Rubik;
+        font-weight: 600;
+        word-wrap: break-word;
+        text-decoration: none; /* Remove underline */
+      }
+
+      .search-wrapper {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px; /* Atur margin sesuai kebutuhan */
+      }
     </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </head>
 
@@ -34,96 +151,200 @@
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="permintaan-template">
-    <div class="periode-button">
-        <img
-                class="periode-button-child"
-                loading="lazy"
-                alt=""
-                src="/images/kiri.svg"
-        />
 
-        <div class="i-d-template-frame">
-            <h1 class="permintaan-template-baru-container">
-                <span class="permintaan">Permintaan</span>
-                <span> Template Baru</span>
-            </h1>
+    <b class="pengajuan-permohonan-surat-container">
+        <span class="pengajuan">Daftar</span>
+        <span>Permintaan Template</span>
+    </b>
+
+    <nav th:replace="~{fragments/asset :: asset}"></nav>
+
+    <div class="content-wrapper" style="margin-inline: 10px;">
+
+        <div class="search-wrapper">
+            <form th:action="@{/template/new-requests}" method="get" id="searchForm">
+                <div class="button17">
+                    <img class="search-icon1" alt="" src="/images/search.svg" />
+                    <input class="keuangan3" placeholder="Cari..." type="text" name="keyword" id="searchInput" />
+                </div>
+            </form>
         </div>
-    <img
-            class="permintaan-template-child"
-            alt=""
-            src="/images/kanan.svg"
-    />    
+
+        <div class="tabs-group" id="tab">
+            <a class="tab-link active" data-toggle="tab" href="#semua">Semua</a>
+            <a class="tab-link" data-toggle="tab" href="#diajukan">Diajukan</a>
+            <a class="tab-link" data-toggle="tab" href="#diterima">Diterima</a>
+            <a class="tab-link" data-toggle="tab" href="#ditolak">Ditolak</a>
+        </div>
+
+        <br><br>
+
+        <!-- SEMUA -->
+        <div class="tab-pane" id="semua">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(requestTemplates)}">
+                    <td colspan="6" style="text-align: center;">Belum ada permintaan template</td>
+                </tr>
+                <tr th:each="requestTemplate : ${requestTemplates}" th:unless="${#lists.isEmpty(requestTemplates)}">
+                    <td th:text="${requestTemplate.id}"></td>
+                    <td th:text="${requestTemplate.kategori}"></td>
+                    <td th:text="${requestTemplate.pengaju.nama}"></td>
+                    <td th:text="${requestTemplate.bahasa}"></td>
+                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                    <td style="display: flex; justify-content: space-between;">
+                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                            <div class="button21">Detail</div>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DIAJUKAN -->
+        <div class="tab-pane" id="diajukan">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(requestedRequests)}">
+                    <td colspan="6" style="text-align: center;">Belum ada permintaan template</td>
+                </tr>
+                <tr th:each="requestTemplate : ${requestedRequests}" th:unless="${#lists.isEmpty(requestedRequests)}">
+                    <td th:text="${requestTemplate.id}"></td>
+                    <td th:text="${requestTemplate.kategori}"></td>
+                    <td th:text="${requestTemplate.pengaju.nama}"></td>
+                    <td th:text="${requestTemplate.bahasa}"></td>
+                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                    <td style="display: flex; justify-content: space-between;">
+                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                            <div class="button21">Detail</div>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DITERIMA -->
+        <div class="tab-pane" id="diterima">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(acceptedRequests)}">
+                    <td colspan="6" style="text-align: center;">Belum ada permintaan template yang diterima</td>
+                </tr>
+                <tr th:each="requestTemplate : ${acceptedRequests}" th:unless="${#lists.isEmpty(acceptedRequests)}">
+                    <td th:text="${requestTemplate.id}"></td>
+                    <td th:text="${requestTemplate.kategori}"></td>
+                    <td th:text="${requestTemplate.pengaju.nama}"></td>
+                    <td th:text="${requestTemplate.bahasa}"></td>
+                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                    <td style="display: flex; justify-content: space-between;">
+                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                            <div class="button21">Detail</div>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-pane" id="ditolak">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                <tr>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(rejectedRequests)}">
+                    <td colspan="6" style="text-align: center;">Belum ada permintaan template yang ditolak</td>
+                </tr>
+                <tr th:each="requestTemplate : ${rejectedRequests}" th:unless="${#lists.isEmpty(rejectedRequests)}">
+                    <td th:text="${requestTemplate.id}"></td>
+                    <td th:text="${requestTemplate.kategori}"></td>
+                    <td th:text="${requestTemplate.pengaju.nama}"></td>
+                    <td th:text="${requestTemplate.bahasa}"></td>
+                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                    <td style="display: flex; justify-content: space-between;">
+                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                            <div class="button21">Detail</div>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
     </div>
-
-    <section class="bentuk-surat-text">
-        <div class="tabs-container">
-            <div class="tabs-group-parent">
-                <div class="tabs-group">
-                    <button class="component-2">
-                        <img
-                                class="iconoutlineexclamation-circl"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                        />
-                        <div class="tabs">All</div>
-                    </button>
-                    <div class="component-3">
-                        <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                        />
-                        <div class="tabs1"></div>
-                    </div>
-                </div>
-                <div class="search-button">
-                    <div class="button17">
-                        <img class="search-icon1" alt="" src="/images/search.svg" />
-                        <input class="keuangan3" placeholder="Keuangan" type="text" />
-                    </div>
-                </div>
-            </div>
-            <div class="t-e-m-p-container-parent">
-                <div class="agustus-label-parent">
-                    <!-- Start of the table -->
-                    <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>ID Template</th>
-                            <th>Kategori</th>
-                            <th>Nama Pengaju</th>
-                            <th>Bahasa</th>
-                            <th>Tanggal Pengajuan</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <!-- Iterate through requestTemplates -->
-                        <tr th:each="requestTemplate : ${requestTemplates}">
-                            <td th:text="${requestTemplate.id}"></td>
-                            <td th:text="${requestTemplate.kategori}"></td>
-                            <td th:text="${requestTemplate.pengaju.nama}"></td>
-                            <td th:text="${requestTemplate.bahasa}"></td>
-                            <td th:text="${requestTemplate.tanggalPengajuan}"></td>
-                            <td>
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}">
-                                    <button class="button20">
-                                        <div class="button21">Detail</div>
-                                    </button>
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!-- End of the table -->
-                </div>
-            </div>
-        </div>
-    </section>
 
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+        // Simulate click event on #semua tab link
+        document.querySelector('#tab .tab-link[href="#semua"]').click();
+    });
+
+  document.querySelectorAll('#tab .tab-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+          e.preventDefault();
+          let currentActive = document.querySelector('#tab .tab-link.active');
+          let currentActivePane = document.querySelector('.tab-pane.active');
+
+          if (currentActive) {
+              currentActive.classList.remove('active');
+              currentActivePane.classList.remove('active');
+              currentActivePane.classList.remove('show');
+          }
+
+          let newActivePaneId = this.getAttribute('href');
+          let newActivePane = document.querySelector(newActivePaneId);
+
+          this.classList.add('active');
+          newActivePane.classList.add('active');
+          newActivePane.classList.add('show');
+      });
+  });
+
+</script>
 
 </body>
 </html>

@@ -1,18 +1,27 @@
 package propensi.smail.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import propensi.smail.model.RequestSurat;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.repository.TemplateSuratDb;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -79,6 +88,40 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public List<RequestTemplate> getAllRequestedReq() {return requestTemplateDb.findByStatus(1);}
+
+    @Override
+    public List<RequestTemplate> getAllAcceptedReq() {return requestTemplateDb.findByStatus(2);}
+
+    @Override
+    public List<RequestTemplate> getAllRejectedReq() {return requestTemplateDb.findByStatus(3);}
+
+    @Override
+    public List<RequestTemplate> searchRequests(String keyword, int status) {
+
+        List<RequestTemplate> requestList = requestTemplateDb.findByKeyword(keyword);
+        List<RequestTemplate> resultReq = new ArrayList<>();
+
+        for (RequestTemplate rt : requestList) {
+            if (status == 1) {
+                if (rt.getStatus() == 1) {
+                    resultReq.add(rt);
+                }
+            } if (status == 2) {
+                if (rt.getStatus() == 2) {
+                    resultReq.add(rt);
+                }
+            } if (status == 3) {
+                if (rt.getStatus() == 3) {
+                    resultReq.add(rt);
+                }
+            }
+        }
+
+        return resultReq;
+    }
+
+    @Override
     public String generateIdByKategori(String kategori) {
         Map<String, String> kategoriMap = Map.of(
                 "LEGAL", "LGL",
@@ -128,6 +171,16 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public RequestTemplate updateRequest(String requestId) {
+        RequestTemplate reqTemplate = requestTemplateDb.findById(requestId).orElse(null);
+        if (reqTemplate != null) {
+            return requestTemplateDb.save(reqTemplate);
+        } else {
+            return null; // Or throw an exception indicating the template cannot be found
+        }
+    }
+
+    @Override
     public RequestTemplate terimaRequest(String requestId) {
         RequestTemplate reqTemplate = requestTemplateDb.findById(requestId).orElse(null);
         if (reqTemplate != null) {
@@ -160,6 +213,11 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public TemplateSurat findById(String id) {
         return templateSuratDb.findById(id).get();
+    }
+
+    @Override
+    public RequestTemplate findRequest(String id) {
+        return requestTemplateDb.findById(id).get();
     }
 
     @Override
@@ -208,6 +266,40 @@ public class TemplateServiceImpl implements TemplateService {
         }
     
         return activeTemplateByKategori;
+    }    @Autowired
+    private JavaMailSender mailSender;
+
+    @Async
+    public void sendEmailRejection(String to, String subject, String body, RequestTemplate requestTemplate) throws MessagingException, IOException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        Date tanggalDibuat = requestTemplate.getTanggalPengajuan();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
+
+
+        body = String.format("Yth Bapak/Ibu %s,\n\n" // Include the name of the requester
+                        + "Terima kasih atas permintaan yang telah diajukan kepada kami pada tanggal %s untuk keperluan: %s.\n\n" // Include the date of the request and purpose
+                        + "Berdasarkan peninjauan admin, kami tidak dapat melanjutkan permintaan template surat dengan ID %s karena alasan berikut:\n\n" // Include the ID
+                        + "- %s\n\n" // Include the rejection reason
+                        + "Mohon untuk dapat melakukan evaluasi berdasarkan informasi tersebut sebelum mengajukan permintaan baru. Untuk melakukan pengajuan permintaan baru atau pertanyaan terkait pengajuan, silakan kunjungi SMAIL Institut Tazkia melalui tautan berikut: https://smail-rtx.up.railway.app/. Terima kasih atas pengertiannya.\n\n"
+                        + "Salam,\n"
+                        + "Yayasan Tazkia\n"
+                        + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
+                requestTemplate.getPengaju().getNama(), // Retrieves the name from requestTemplate
+                dateFormat.format(tanggalDibuat), // Retrieves the date of the request from requestTemplate
+                requestTemplate.getKeperluan(), // Retrieves the purpose of the request from requestTemplate
+                requestTemplate.getId(), // Retrieves the ID from requestTemplate
+                requestTemplate.getAlasanPenolakan()); // Retrieves the rejection reason from requestTemplate
+
+        helper.setTo(to);
+        helper.setSubject("[DITOLAK] Permintaan Template Surat dengan ID " + requestTemplate.getId());
+        helper.setText(body, false);
+        helper.setFrom("instituttazkia.adm@gmail.com");
+
+        mailSender.send(message);
     }
+
+
 
 }

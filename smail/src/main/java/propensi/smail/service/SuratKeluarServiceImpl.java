@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,9 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     // surat masuk db
     @Autowired
     private SuratMasukDb suratMasukDb;
+
+    @Autowired
+    private RequestService requestService;
 
     @Override
     public List<SuratKeluar> getAllSuratKeluar() {
@@ -152,6 +156,8 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
         SuratKeluar suratKeluar = suratKeluarDb.findByRequestSurat(requestSurat);
 
+        RequestSurat rs = requestSuratDb.findById(id).get();
+
         try {
             System.out.println("masuk serv");
 
@@ -172,12 +178,16 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                     suratKeluar.getRequestSurat().setStatus(5);
                     suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
                     suratKeluar.setIsSigned(true);
+                    suratKeluarDb.save(suratKeluar);
+
+                    requestService.sendEmailFinished(rs.getPengaju().getEmail(), "", "", rs, suratKeluar);
+
                 }
 
                 suratKeluarDb.save(suratKeluar);
             }
 
-        } catch (IOException e) {
+        } catch (IOException | MessagingException e) {
             throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
         }
     }

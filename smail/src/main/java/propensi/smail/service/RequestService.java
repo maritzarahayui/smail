@@ -1,9 +1,12 @@
 package propensi.smail.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.mail.MessagingException;
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
 import propensi.smail.model.RequestSurat;
@@ -41,6 +44,8 @@ public interface RequestService {
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);
     Map<Integer, String> listBentukSurat();
     Map<Integer, String> listBahasa();
+    void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
+    void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
     // List<String> getJenisSuratForKategori(String kategori);
     // List<RequestSurat> getRequestsByUser(Pengguna pengguna);
 

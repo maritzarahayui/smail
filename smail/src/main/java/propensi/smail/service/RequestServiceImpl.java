@@ -1,13 +1,21 @@
 package propensi.smail.service;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.util.ByteArrayDataSource;
 import org.apache.coyote.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import propensi.smail.model.*;
 import propensi.smail.repository.*;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
@@ -40,6 +48,78 @@ public class RequestServiceImpl implements RequestService {
 
     @Autowired
     PenggunaService penggunaService;
+
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Async
+    public void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        Date tanggalDibuat = requestSurat.getTanggalPengajuan();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy", new Locale("id", "ID"));
+
+         body = String.format("Yth Bapak/Ibu %s,\n\n" // Include the name of the requester
+                        + "Terima kasih atas permintaan surat dengan jenis %s (%s) yang telah diajukan kepada kami pada tanggal %s untuk keperluan: %s.\n\n" // Include the date of the request and purpose
+                        + "Berdasarkan peninjauan admin, kami tidak dapat melanjutkan permintaan surat dengan ID %s karena alasan berikut:\n\n" // Include the ID
+                        + "- %s\n\n" // Include the rejection reason
+                        + "Mohon untuk dapat melakukan evaluasi berdasarkan informasi tersebut sebelum mengajukan permintaan baru. Untuk melakukan pengajuan permintaan baru atau pertanyaan terkait pengajuan, silakan kunjungi SMAIL Institut Tazkia melalui tautan berikut: https://smail-rtx.up.railway.app/. Terima kasih atas pengertiannya.\n\n"
+                        + "Salam,\n"
+                        + "Yayasan Tazkia\n"
+                        + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
+                requestSurat.getPengaju().getNama(), // Retrieves the name from requestTemplate
+                requestSurat.getJenisSurat(), // Retrieves the type of the request from requestTemplate
+                 requestSurat.getKategori(),
+                dateFormat.format(tanggalDibuat), // Retrieves the date of the request from requestTemplate
+                requestSurat.getKeperluan(), // Retrieves the purpose of the request from requestTemplate
+                requestSurat.getId(), // Retrieves the ID from requestTemplate
+                requestSurat.getAlasanPenolakan()); // Retrieves the rejection reason from requestTemplate
+
+        helper.setTo(to);
+        helper.setSubject("[DITOLAK] Permintaan Surat dengan ID " + requestSurat.getId());
+        helper.setText(body, false);
+        helper.setFrom("instituttazkia.adm@gmail.com");
+
+        mailSender.send(message);
+    }
+
+    @Async
+    public void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String tanggalDibuat = dateFormat.format(suratKeluar.getTanggalDibuat());
+        body = String.format("Yth Bapak/Ibu %s,\n\n"
+                        + "Kami dengan ini memberitahukan bahwa permintaan surat dengan ID %s telah selesai diproses dan dapat diunduh.\n\n"
+                        + "Berikut adalah detail mengenai surat tersebut:\n\n"
+                        + "Nomor Surat  : %s\n"
+                        + "Jenis Surat   : %s\n"
+                        + "Kategori       : %s\n"
+                        + "Bahasa        : %s\n"
+                        + "Keperluan     : %s\n\n"
+                        + "Anda dapat mengunduh surat tersebut melalui file yang terlampir. "
+                        + "Jika Anda melakukan permintaan untuk surat hardcopy, Anda dapat mengambil surat Anda di Ruang Sekretariat Institut Tazkia di jam kerja. Untuk informasi lebih lanjut, Anda dapat mengakses surat pada SMAIL Institut Tazkia melalui tautan berikut: https://smail-rtx.up.railway.app/.\n\n\n"
+                        + "Salam,\n"
+                        + "Yayasan Tazkia\n"
+                        + "Jl. Ir. H. Djuanda No. 78, Bogor, Jawa Barat 16122\n",
+                requestSurat.getPengaju().getNama(),
+                requestSurat.getId(), // Retrieves the ID of the request from suratMasuk
+                suratKeluar.getNomorArsip(),
+                requestSurat.getJenisSurat(), // Retrieves the type of the request from suratMasuk
+                requestSurat.getKategori(), // Retrieves the category of the request from suratMasuk
+                requestSurat.getBahasa(), // Retrieves the language of the request from suratMasuk
+                requestSurat.getKeperluan()); // Retrieves the purpose of the request from suratMasuk
+
+        helper.setTo(to);
+        helper.setSubject("[SELESAI] Permintaan Surat dengan ID " + requestSurat.getId());
+        helper.setText(body, false);
+        helper.setFrom("instituttazkia.adm@gmail.com");
+        helper.addAttachment(suratKeluar.getFileName(), new ByteArrayDataSource(suratKeluar.getFile(), "application/pdf")); // Specify the content type for the attachment
+
+        mailSender.send(message);
+    }
 
     @Override
     public void saveOrUpdate(RequestSurat requestSurat) {
@@ -363,6 +443,7 @@ public class RequestServiceImpl implements RequestService {
         kategori.put(5, "KEMAHASISWAAN");
         return kategori;
     }
+
 
     // ------PREVIEW-----
     @Override
