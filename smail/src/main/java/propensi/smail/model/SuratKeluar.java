@@ -69,7 +69,6 @@ public class SuratKeluar {
     @JoinColumn(name = "surat_id")
     private RequestSurat requestSurat;
 
-    @OneToOne
-    @JoinColumn(name = "arsip_id")
-    private SuratMasuk arsipSurat;
+    @Column(name = "arsip_id")
+    private String arsipSurat;
 }

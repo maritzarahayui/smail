@@ -306,7 +306,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setPenerimaEksternal(penerimaEksternal);
                 suratKeluar.setFileName(fileName);
                 suratKeluar.setCurrentPenandatangan(penandatangan);
-                suratKeluar.setArsipSurat(arsipAwal);
+                suratKeluar.setArsipSurat(arsipAwal.getNomorArsip());
                 suratKeluarDb.save(suratKeluar);
 
                 // ubah status arsip awal
