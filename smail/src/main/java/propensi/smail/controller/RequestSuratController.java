@@ -884,7 +884,6 @@ public class RequestSuratController {
         statusMap.put(1, "Diajukan");
         statusMap.put(3, "Ditolak");
         statusMap.put(4, "Diproses");
-        statusMap.put(5, "Selesai");
 
         model.addAttribute("statusMap", statusMap);
 
@@ -966,9 +965,6 @@ public class RequestSuratController {
                 break;
             case 4:
                 redirectUrl = "/admin/request/process";
-                break;
-            case 5:
-                redirectUrl = "/admin/request/finished";
                 break;
             default:
         }

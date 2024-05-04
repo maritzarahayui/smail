@@ -38,5 +38,13 @@ public interface TemplateService {
     RequestTemplate terimaRequest(String requestId);
 
     RequestTemplate tolakRequest(String requestId);
+
+    List<RequestTemplate> getAllRejectedReq();
+
+    List<RequestTemplate> getAllAcceptedReq();
+
+    List<RequestTemplate> getAllRequestedReq();
+
+    RequestTemplate updateRequest(String requestId);
 }
 

@@ -77,6 +77,15 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public List<RequestTemplate> getAllRequestedReq() {return requestTemplateDb.findByStatus(1);}
+
+    @Override
+    public List<RequestTemplate> getAllAcceptedReq() {return requestTemplateDb.findByStatus(2);}
+
+    @Override
+    public List<RequestTemplate> getAllRejectedReq() {return requestTemplateDb.findByStatus(3);}
+
+    @Override
     public String generateIdByKategori(String kategori) {
         Map<String, String> kategoriMap = Map.of(
                 "LEGAL", "LGL",
@@ -120,6 +129,16 @@ public class TemplateServiceImpl implements TemplateService {
             } else {
                 throw new IllegalStateException("Template is already deleted.");
             }
+        } else {
+            return null; // Or throw an exception indicating the template cannot be found
+        }
+    }
+
+    @Override
+    public RequestTemplate updateRequest(String requestId) {
+        RequestTemplate reqTemplate = requestTemplateDb.findById(requestId).orElse(null);
+        if (reqTemplate != null) {
+            return requestTemplateDb.save(reqTemplate);
         } else {
             return null; // Or throw an exception indicating the template cannot be found
         }

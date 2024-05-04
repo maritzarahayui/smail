@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
@@ -41,8 +42,16 @@ public class TemplateFEController {
 
     @GetMapping("/new-requests")
     public String showTemplateRequests(Model model, Authentication auth) {
-        List<RequestTemplate> requestTemplates = templateSuratService.getAllReqTemplate();
-        model.addAttribute("requestTemplates", requestTemplates);
+        List<RequestTemplate> allRequestTemplates = templateSuratService.getAllReqTemplate();
+        List<RequestTemplate> acceptedRequestTemplates = templateSuratService.getAllAcceptedReq();
+        List<RequestTemplate> rejectedRequestTemplates = templateSuratService.getAllRejectedReq();
+        List<RequestTemplate> requestedRequestTemplates = templateSuratService.getAllRequestedReq();
+
+        model.addAttribute("requestTemplates", allRequestTemplates);
+        model.addAttribute("requestedRequests", requestedRequestTemplates);
+        model.addAttribute("acceptedRequests", acceptedRequestTemplates);
+        model.addAttribute("rejectedRequests", rejectedRequestTemplates);
+
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -63,7 +72,7 @@ public class TemplateFEController {
 
     @GetMapping("/request/detail/{id}")
     public String showDetailTemplateRequests(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestTemplate file = templateSuratService.getRequest(id);
+        RequestTemplate requestTemplate = templateSuratService.getRequest(id);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -79,7 +88,13 @@ public class TemplateFEController {
             }
         }
 
-        model.addAttribute("requestTemplate", file); // Add the template object to the model
+        Map<Integer, String> statusMap = new HashMap<>();
+        statusMap.put(2, "Diterima");
+        statusMap.put(3, "Ditolak");
+
+        model.addAttribute("statusMap", statusMap);
+
+        model.addAttribute("requestTemplate", requestTemplate); // Add the template object to the model
         return "detail-request-template"; // Return the PDF preview Thymeleaf template
     }
 
@@ -216,6 +231,37 @@ public class TemplateFEController {
             model.addAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/template/active-templates"; // Redirect to the list of active templates
+    }
+
+    @PostMapping("/request/detail/{id}/updateStatus")
+    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
+                               Model model, Authentication auth) {
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        RequestTemplate requestTemplate = templateSuratService.getRequest(id);
+        requestTemplate.setStatus(status);
+
+        if (status == 3) {
+            requestTemplate.setAlasanPenolakan(alasanPenolakan);
+        } else {
+            requestTemplate.setAlasanPenolakan(null);
+        }
+
+        templateSuratService.updateRequest(requestTemplate.getId());
+
+        return "redirect:/template/request/detail/{id}";
     }
 
         @GetMapping("/request/acc/{id}")
