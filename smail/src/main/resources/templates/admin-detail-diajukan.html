@@ -144,7 +144,7 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <input type="text" class="content" th:field="${requestSurats.alasanPenolakan}" />
+                        <textarea class="content" th:field="${requestSurats.alasanPenolakan}" style="width: 100%; height: 43px;"></textarea>
                     </div>
 
                 </div>
@@ -180,13 +180,18 @@
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
     <script th:inline="javascript">
+
     function toggleReasonField(select) {
         var selectedValue = select.value;
         var reasonField = document.getElementById("reasonField");
+        var alasanPenolakan = document.getElementById("alasanPenolakan");
+
         if (selectedValue === '3') {
             reasonField.style.display = "block";
+            alasanPenolakan.required = true; // Set required attribute
         } else {
             reasonField.style.display = "none";
+            alasanPenolakan.required = false; // Remove required attribute
         }
     }
     </script>

@@ -51,6 +51,8 @@ public interface TemplateService {
 
     RequestTemplate findRequest(String id);
 
+    List<RequestTemplate> searchRequests(String keyword, int status);
+
     void sendEmailRejection(String to, String subject, String body, RequestTemplate requestTemplate) throws MessagingException, IOException;
 }
 

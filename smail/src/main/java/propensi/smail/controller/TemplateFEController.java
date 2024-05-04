@@ -48,17 +48,28 @@ public class TemplateFEController {
     PenggunaService penggunaService;
 
     @GetMapping("/new-requests")
-    public String showTemplateRequests(Model model, Authentication auth) {
-        List<RequestTemplate> allRequestTemplates = templateSuratService.getAllReqTemplate();
-        List<RequestTemplate> acceptedRequestTemplates = templateSuratService.getAllAcceptedReq();
-        List<RequestTemplate> rejectedRequestTemplates = templateSuratService.getAllRejectedReq();
-        List<RequestTemplate> requestedRequestTemplates = templateSuratService.getAllRequestedReq();
+    public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestTemplate> allRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> acceptedRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> rejectedRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> requestedRequestTemplates = new ArrayList<>();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            allRequestTemplates = requestTemplateDb.findByKeyword(keyword);
+            acceptedRequestTemplates = templateSuratService.searchRequests(keyword, 2);
+            rejectedRequestTemplates = templateSuratService.searchRequests(keyword, 3);
+            requestedRequestTemplates = templateSuratService.searchRequests(keyword, 1);
+        } else {
+            allRequestTemplates = templateSuratService.getAllReqTemplate();
+            acceptedRequestTemplates = templateSuratService.getAllAcceptedReq();
+            rejectedRequestTemplates = templateSuratService.getAllRejectedReq();
+            requestedRequestTemplates = templateSuratService.getAllRequestedReq();
+        }
 
         model.addAttribute("requestTemplates", allRequestTemplates);
         model.addAttribute("requestedRequests", requestedRequestTemplates);
         model.addAttribute("acceptedRequests", acceptedRequestTemplates);
         model.addAttribute("rejectedRequests", rejectedRequestTemplates);
-
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -77,7 +88,7 @@ public class TemplateFEController {
         return "daftar-request-template";
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @GetMapping("/request/detail/{id}")
     public String showDetailTemplateRequests(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestTemplate requestTemplate = templateSuratService.getRequest(id);

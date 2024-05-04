@@ -160,11 +160,12 @@ table.table tbody tr {
     <nav th:replace="~{fragments/asset :: asset}"></nav>
 
     <div class="content-wrapper" style="margin-inline: 10px;">
+
         <div class="search-wrapper">
-            <form action="/surat-masuk/all" method="get" id="searchForm">
+            <form th:action="@{/template/new-requests}" method="get" id="searchForm">
                 <div class="button17">
                     <img class="search-icon1" alt="" src="/images/search.svg" />
-                    <input class="keuangan3" placeholder="Cari..." type="text" name="search" id="searchInput" />
+                    <input class="keuangan3" placeholder="Cari..." type="text" name="keyword" id="searchInput" />
                 </div>
             </form>
         </div>

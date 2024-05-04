@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
@@ -92,6 +93,31 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public List<RequestTemplate> getAllRejectedReq() {return requestTemplateDb.findByStatus(3);}
+
+    @Override
+    public List<RequestTemplate> searchRequests(String keyword, int status) {
+
+        List<RequestTemplate> requestList = requestTemplateDb.findByKeyword(keyword);
+        List<RequestTemplate> resultReq = new ArrayList<>();
+
+        for (RequestTemplate rt : requestList) {
+            if (status == 1) {
+                if (rt.getStatus() == 1) {
+                    resultReq.add(rt);
+                }
+            } if (status == 2) {
+                if (rt.getStatus() == 2) {
+                    resultReq.add(rt);
+                }
+            } if (status == 3) {
+                if (rt.getStatus() == 3) {
+                    resultReq.add(rt);
+                }
+            }
+        }
+
+        return resultReq;
+    }
 
     @Override
     public String generateIdByKategori(String kategori) {
