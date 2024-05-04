@@ -1,5 +1,6 @@
 package propensi.smail.controller;
 
+import jakarta.mail.MessagingException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import propensi.smail.service.RequestService;
 import propensi.smail.service.SuratKeluarService;
 import propensi.smail.service.TemplateService;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -931,7 +933,7 @@ public class RequestSuratController {
 
     @PostMapping("/admin/detail/{id}/updateStatus")
     public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
-                               Model model, Authentication auth) {
+                               Model model, Authentication auth) throws MessagingException, IOException {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -952,11 +954,13 @@ public class RequestSuratController {
         if (status == 3) {
             requestSurat.setAlasanPenolakan(alasanPenolakan);
             requestSurat.setTanggalPenolakan(new Date());
+            requestSuratDb.save(requestSurat);
+
+            requestService.sendEmailRejection(requestSurat.getPengaju().getEmail(), "", "", requestSurat);
         } else {
             requestSurat.setAlasanPenolakan(null);
+            requestSuratDb.save(requestSurat);
         }
-
-        requestSuratDb.save(requestSurat);
 
         String redirectUrl = "/admin/detail/" + id;
         switch (status) {

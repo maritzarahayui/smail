@@ -1,18 +1,22 @@
 package propensi.smail.controller;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
@@ -33,6 +37,9 @@ public class TemplateFEController {
 
     @Autowired
     private TemplateService templateSuratService;
+
+    @Autowired
+    RequestTemplateDb requestTemplateDb;
 
     @Autowired
     PenggunaDb penggunaDb;
@@ -70,6 +77,7 @@ public class TemplateFEController {
         return "daftar-request-template";
     }
 
+    @Transactional
     @GetMapping("/request/detail/{id}")
     public String showDetailTemplateRequests(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestTemplate requestTemplate = templateSuratService.getRequest(id);
@@ -255,6 +263,15 @@ public class TemplateFEController {
 
         if (status == 3) {
             requestTemplate.setAlasanPenolakan(alasanPenolakan);
+
+            try {
+                templateSuratService.sendEmailRejection(requestTemplate.getPengaju().getEmail(), "", "", requestTemplate);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         } else {
             requestTemplate.setAlasanPenolakan(null);
         }
@@ -264,35 +281,7 @@ public class TemplateFEController {
         return "redirect:/template/request/detail/{id}";
     }
 
-        @GetMapping("/request/acc/{id}")
-        public String terimaRequest(@PathVariable("id") String requestId, Model model) {
-            try {
-                RequestTemplate targetedRequest = templateSuratService.terimaRequest(requestId);
-                if (targetedRequest != null) {
-                    model.addAttribute("message", "Request accepted successfully.");
-                } else {
-                    model.addAttribute("errorMessage", "Template's status is not updatable.");
-                }
-            } catch (IllegalStateException e) {
-                model.addAttribute("errorMessage", e.getMessage());
-            }
-            return "redirect:/template/request/detail/{id}";
-        }
 
-        @GetMapping("/request/reject/{id}")
-        public String tolakRequest(@PathVariable("id") String requestId, Model model) {
-            try {
-                RequestTemplate targetedRequest = templateSuratService.tolakRequest(requestId);
-                if (targetedRequest != null) {
-                    model.addAttribute("message", "Request rejected successfully.");
-                } else {
-                    model.addAttribute("errorMessage", "Template's status is not updatable.");
-                }
-            } catch (IllegalStateException e) {
-                model.addAttribute("errorMessage", e.getMessage());
-            }
-            return "redirect:/template/request/detail/{id}";
-        }
 
     @GetMapping("/update/{id}")
     public String showUpdateTemplateForm(@PathVariable("id") String id, Model model, Authentication auth) {
