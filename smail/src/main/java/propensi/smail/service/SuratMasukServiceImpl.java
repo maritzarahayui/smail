@@ -57,7 +57,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(1);
+                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -82,7 +82,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                suratMasuk.setStatus(1);
+                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -138,8 +138,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Async
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
         // ubah status dan tembusan objek surat masuk
-        suratMasuk.setStatus(2);
-        // add String[] to to ArrayList<String> tembusan
+        suratMasuk.setIsDisposisi(true);
         ArrayList<String> tembusan = suratMasuk.getTembusan();
         for (String email : to) {
             if (!tembusan.contains(email)){
@@ -198,15 +197,15 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         return suratMasukList;
     }
 
-    @Override
-    public List<SuratMasuk> getSuratMasukByStatus(int status) {
-        return suratMasukDb.findByStatus(status);
-    }
+    // @Override
+    // public List<SuratMasuk> getSuratMasukByStatus(int status) {
+    //     return suratMasukDb.findByStatus(status);
+    // }
 
-    @Override
-    public List<SuratMasuk> getSuratBySearchAndStatus(String search, int status) {
-        return suratMasukDb.findBySearchAndStatus(search, status);
-    }
+    // @Override
+    // public List<SuratMasuk> getSuratBySearchAndStatus(String search, int status) {
+    //     return suratMasukDb.findBySearchAndStatus(search, status);
+    // }
 
     @Override
     public List<SuratMasuk> getSuratBySearch(String search) {
@@ -222,6 +221,26 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             })
             .collect(Collectors.toList());
         return listTembusan;
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukBySearchIsDisposisi(String search) {
+        return suratMasukDb.findBySearchAndIsDisposisi(search);
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukBySearchIsFollowUp(String search) {
+        return suratMasukDb.findBySearchAndIsFollowUp(search);
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukIsDisposisi() {
+        return suratMasukDb.findByIsDisposisiTrue();
+    }
+
+    @Override
+    public List<SuratMasuk> getSuratMasukIsFollowUp() {
+        return suratMasukDb.findByIsFollowUpTrue();
     }
     
 

@@ -310,7 +310,8 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluarDb.save(suratKeluar);
 
                 // ubah status arsip awal
-                arsipAwal.setStatus(3);
+                // arsipAwal.setStatus(3);
+                arsipAwal.setIsFollowUp(true);
                 arsipAwal.setSuratFollowUp(suratKeluar);
                 suratMasukDb.save(arsipAwal);
 
