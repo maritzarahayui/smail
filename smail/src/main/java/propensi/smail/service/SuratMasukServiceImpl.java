@@ -137,8 +137,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Async
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
-        // ubah status dan tembusan objek surat masuk
-        suratMasuk.setIsDisposisi(true);
+        // ubah status dan tembusan objek surat masuk       
         ArrayList<String> tembusan = suratMasuk.getTembusan();
         for (String email : to) {
             if (!tembusan.contains(email)){
@@ -146,6 +145,7 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             }
         }
         suratMasuk.setTembusan(tembusan);
+        suratMasuk.setIsDisposisi(true);
         suratMasukDb.save(suratMasuk);
         
         MimeMessage message = mailSender.createMimeMessage();
