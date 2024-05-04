@@ -9,6 +9,7 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
     <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/global-final.css" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 </head>
@@ -17,14 +18,11 @@
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="dashboard">
-        <div class="home-frame">
-            <!-- <b class="header">
-                <span class="pengajuan">Dashboard</span>
-                <span> Admin</span>
-            </b> -->
+        <b class="title-container">
+            <span class="title-gradient">Dashboard</span>
+        </b>  
 
-            <nav th:replace="~{fragments/asset :: asset}"></nav>
-        </div>
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
 
         <div class="cont">
             <div class="content">
@@ -531,47 +529,41 @@
             <div class="content1">
                 <div class="content">
                     <div class="txtinput">
-                        <canvas id="barChartSuratMasukKeluar"></canvas>
+                        <canvas id="combinedBarChart"></canvas>
                         
                         <script th:inline="javascript">
-                            var mapSuratMasuk = [[${mapSuratMasukMinggu}]];
-                            var labels = Object.keys(mapSuratMasuk);
-                            var dataSuratMasuk = labels.map(function(key) {
-                                return mapSuratMasuk[key];
-                            });
-                    
-                            var mapSuratKeluar = [[${mapSuratKeluarMinggu}]];
-                            var labels = Object.keys(mapSuratKeluar);
-                            var dataSuratKeluar = labels.map(function(key) {
-                                return mapSuratKeluar[key];
-                            });
-                    
-                            const barChartSuratMasukKeluar = document.getElementById('barChartSuratMasukKeluar');
-                        
-                            new Chart(barChartSuratMasukKeluar, {
+                            var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/;
+                            var mapSuratKeluarKategori = /*[[${mapSuratKeluarKategori}]]*/;
+                            
+                            var suratMasukLabels = Object.keys(mapSuratMasukKategori);
+                            var suratKeluarLabels = Object.keys(mapSuratKeluarKategori);
+                            var suratMasukData = Object.values(mapSuratMasukKategori);
+                            var suratKeluarData = Object.values(mapSuratKeluarKategori);
+                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
+                            
+                            var combinedLabels = suratMasukLabels;
+                            var combinedData = suratMasukData.concat(suratKeluarData);
+                            
+                            const combinedBarChart = document.getElementById('combinedBarChart');
+                            
+                            new Chart(combinedBarChart, {
                                 type: 'bar',
                                 data: {
-                                    labels: labels,
+                                    labels: combinedLabels,
                                     datasets: [{
-                                        label: "Surat Masuk",
-                                        backgroundColor: '#459a7d',
-                                        borderColor: '#0f7454',
-                                        borderWidth: 1,
-                                        data: dataSuratMasuk
-                                    }, {
-                                        label: "Surat Keluar",
-                                        backgroundColor: '#b1cdb8',
-                                        borderColor: '#253237',
-                                        borderWidth: 1,
-                                        data: dataSuratKeluar
-                                    }]
-                                }, 
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
+                                        label: 'Jumlah Surat Masuk',
+                                        data: suratMasukData,
+                                        backgroundColor: backgroundColors.slice(0, suratMasukLabels.length),
+                                        borderWidth: 1
                                     },
+                                    {
+                                        label: 'Jumlah Surat Keluar',
+                                        data: suratKeluarData,
+                                        backgroundColor: backgroundColors.slice(0, suratKeluarLabels.length),
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
                                     responsive: true,
                                     plugins: {
                                         legend: {
@@ -579,9 +571,19 @@
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Jumlah Surat Masuk dan Keluar'
+                                            text: 'Jumlah Surat Masuk dan Surat Keluar Berdasarkan Kategori'
                                         }
-                                    }
+                                    },
+                                    scales: {
+                                        x: {
+                                            stacked: true,
+                                        },
+                                        y: {
+                                            stacked: true
+                                        }
+                                    },
+                                    responsive: true,
+                                    maintainAspectRatio: false
                                 }
                             });
                         </script>
@@ -590,43 +592,100 @@
 
                 <div class="content">
                     <div class="txtinput">
-                        <canvas id="pieChartSuratMasuk"></canvas>
+                        <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                            <canvas id="barChartSuratMasukKeluar"></canvas>
+
+                            <div style="margin-top: 20px;">
+                                <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
+                                <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
+                                <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
+                            </div>
+                        </div>
                         
                         <script th:inline="javascript">
-                            var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/;
-                            var labels = Object.keys(mapSuratMasukKategori);
-                            var chartData = Object.values(mapSuratMasukKategori);
-                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
-                        
-                            const pieChartSuratMasuk = document.getElementById('pieChartSuratMasuk');
-                            
-                            new Chart(pieChartSuratMasuk, {
-                                type: 'doughnut',
+                            let barChartSuratMasukKeluar;
+                            var mapSuratMasukTahun = [[${mapSuratMasukTahun}]];
+                            var mapSuratMasukBulan = [[${mapSuratMasukBulan}]];
+                            var mapSuratMasukMinggu = [[${mapSuratMasukMinggu}]];
+                            var mapSuratKeluarTahun = [[${mapSuratKeluarTahun}]];
+                            var mapSuratKeluarBulan = [[${mapSuratKeluarBulan}]];
+                            var mapSuratKeluarMinggu = [[${mapSuratKeluarMinggu}]];
+
+                            document.addEventListener('DOMContentLoaded', function() {
+                            const ctx = document.getElementById('barChartSuratMasukKeluar');
+                    
+                            barChartSuratMasukKeluar = new Chart(ctx, {
+                                type: 'bar',
                                 data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Jumlah',
-                                        data: chartData,
-                                        backgroundColor: backgroundColors.slice(0, labels.length),
-                                        borderWidth: 1
-                                    }]
-                                }, 
+                                    labels: [],
+                                    datasets: [
+                                        {
+                                            label: 'Surat Masuk',
+                                            data: [],
+                                            backgroundColor: '#459a7d',
+                                        },
+                                        {
+                                            label: 'Surat Keluar',
+                                            data: [],
+                                            backgroundColor: '#b1cdb8',
+                                        }
+                                    ]
+                                },
                                 options: {
+                                    scales: {
+                                        y: { beginAtZero: true }
+                                    },
                                     responsive: true,
                                     plugins: {
-                                        legend: {
-                                            position: 'bottom',
+                                        legend: { 
+                                            position: 'bottom' 
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Jumlah Surat Masuk Berdasarkan Kategori'
+                                            text: 'Jumlah Surat Masuk dan Surat Keluar Berdasarkan Waktu'
                                         }
-                                    },
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-                                    cutout: '50%'
+                                    }
                                 }
                             });
+                    
+                            updateChartData(mapSuratMasukMinggu, mapSuratKeluarMinggu, barChartSuratMasukKeluar);
+
+                            document.querySelectorAll('.buttonWaktu').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    document.querySelectorAll('.buttonWaktu').forEach(btn => btn.classList.remove('active'));
+                                    this.classList.add('active');
+                    
+                                    let mapSuratMasuk, mapSuratKeluar;
+                                    switch (this.id) {
+                                        case 'tahunIni':
+                                            mapSuratMasuk = mapSuratMasukTahun;
+                                            mapSuratKeluar = mapSuratKeluarTahun;
+                                            break;
+                                        case 'bulanIni':
+                                            mapSuratMasuk = mapSuratMasukBulan;
+                                            mapSuratKeluar = mapSuratKeluarBulan;
+                                            break;
+                                        case 'mingguIni':
+                                            mapSuratMasuk = mapSuratMasukMinggu;
+                                            mapSuratKeluar = mapSuratKeluarMinggu;
+                                            break;
+                                    }
+
+                                    updateChartData(mapSuratMasuk, mapSuratKeluar, barChartSuratMasukKeluar);
+                                });
+                            });
+                        });
+                    
+                        function updateChartData(mapSuratMasuk, mapSuratKeluar, chart) {
+                            var labels = Object.keys(mapSuratMasuk);
+                            var dataSuratMasuk = labels.map(key => mapSuratMasuk[key]);
+                            var dataSuratKeluar = labels.map(key => mapSuratKeluar[key]);
+                    
+                            chart.data.labels = labels;
+                            chart.data.datasets[0].data = dataSuratMasuk;
+                            chart.data.datasets[1].data = dataSuratKeluar;
+                            chart.update();
+                        }
                         </script>
                     </div>
                 </div>

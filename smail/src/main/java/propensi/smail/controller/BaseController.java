@@ -117,7 +117,14 @@ public class BaseController {
                     model.addAttribute("allRoles", penggunaService.getAllRoles());
 
                     model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
+                    model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
+                   
+                    model.addAttribute("mapSuratMasukTahun", suratMasukService.getJumlahSuratMasukTahunIni());
+                    model.addAttribute("mapSuratMasukBulan", suratMasukService.getJumlahSuratMasukBulanIni());
                     model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
+
+                    model.addAttribute("mapSuratKeluarTahun", suratKeluarService.getJumlahSuratKeluarTahunIni());
+                    model.addAttribute("mapSuratKeluarBulan", suratKeluarService.getJumlahSuratKeluarBulanIni());
                     model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
 
                     return "dashboard-admin";
