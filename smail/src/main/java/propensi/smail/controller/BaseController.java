@@ -5,6 +5,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.ui.Model;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -67,22 +68,31 @@ public class BaseController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
 
                 if (role.equals("Admin")) {
-                    Map<String, Long> bulan = requestService.getJumlahRequestPerMonth();
-                    if (!bulan.isEmpty()) {
-                        model.addAttribute("bulan", bulan.keySet().iterator().next());
-                        model.addAttribute("jumlahRequestPerBulan", bulan);
+                    Map<String, Map<String, Long>> dataJumlahRequest = requestService.getJumlahRequestPerYearAndMonth();
+                    if (!dataJumlahRequest.isEmpty()) {
+                        String tahun = dataJumlahRequest.keySet().iterator().next();
+                        Map<String, Long> bulanDanJumlahRequest = dataJumlahRequest.get(tahun);
+
+                        if (!bulanDanJumlahRequest.isEmpty()) {
+                            String bulan = bulanDanJumlahRequest.keySet().iterator().next();
+
+                            model.addAttribute("bulan", bulan);
+                            model.addAttribute("tahun", tahun);
+                            model.addAttribute("jumlahRequestPerBulan", bulanDanJumlahRequest);
+                        } else {
+                            model.addAttribute("bulan", "");
+                            model.addAttribute("tahun", tahun);
+                            model.addAttribute("jumlahRequestPerBulan", Collections.emptyMap());
+                        }
                     } else {
                         model.addAttribute("bulan", "");
-                    }
-
-                    Map<String, Long> tahun = requestService.getJumlahRequestPerYear();
-                    if (!tahun.isEmpty()) {
-                        model.addAttribute("tahun", tahun.keySet().iterator().next());
-                    } else {
                         model.addAttribute("tahun", "");
+                        model.addAttribute("jumlahRequestPerBulan", Collections.emptyMap());
                     }
 
                     model.addAttribute("jumlahRequestPerMinggu", requestService.getJumlahRequestPerMinggu());
+                    model.addAttribute("currentYearMonth", requestService.getCurrentYearMonth());
+
                     model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
                     model.addAttribute("diajukan", requestService.getAllSubmitedRequestsSurat().size());
                     model.addAttribute("ditolak", requestService.getAllRejectedRequestsSurat().size());

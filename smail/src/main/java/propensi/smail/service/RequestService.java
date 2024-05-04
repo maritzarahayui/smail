@@ -60,12 +60,14 @@ public interface RequestService {
     Integer countDurasi(RequestSurat requestSurat);
     Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
     Map<String, Integer> getPerformaRequestSurat();
-    Map<String, Long> getJumlahRequestPerMinggu();
+    Map<String, Map<String, Long>> getJumlahRequestPerMinggu();
     Map<String, Long> getJumlahRequestPerMonth();
     Map<String, Long> getJumlahRequestPerYear();
     Map<String, Long> getJumlahRequestByKategori();
     Map<String, Long> getJumlahRequestByRole();
     String getTopRequester();
+    String getCurrentYearMonth();
+    Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth();
 
     //  EMIIIIIIIIIII ////
     Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);

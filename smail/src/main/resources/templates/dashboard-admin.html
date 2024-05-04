@@ -184,7 +184,12 @@
                             var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
                             console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
 
-                            var bulan = /*[[${bulan}]]*/;
+                            // var bulan = /*[[${bulan}]]*/;
+
+                            var currentYearMonth = /*[[${currentYearMonth}]]*/;
+                            var bulanTahun = currentYearMonth.split("-");
+                            var tahun = bulanTahun[0];
+                            var bulan = bulanTahun[1];
 
                             function getWeekLabel(weekNumber) {
                                 return "Minggu ke-" + weekNumber;
@@ -192,26 +197,32 @@
                         
                             var labels = [];
                             var data = [];
-                        
-                            var maxWeek = Object.keys(jumlahRequestPerMinggu).reduce(function(a, b) {
-                                return Math.max(a, parseInt(b.split("-")[1]));
-                            }, 0);
-                        
-                            for (var i = 1; i <= maxWeek; i++) {
-                                var weekLabel = getWeekLabel(i);
-                                labels.push(weekLabel);
-                        
-                                if (jumlahRequestPerMinggu.hasOwnProperty(weekLabel)) {
-                                    data.push(jumlahRequestPerMinggu[weekLabel]);
-                                } else {
-                                    data.push(0);
+
+                            Object.keys(jumlahRequestPerMinggu).forEach(function(key) {
+                                var tahunBulan = key.split("-");
+                                var tahunData = tahunBulan[0];
+                                var bulanData = tahunBulan[1];
+
+                                if (tahunData === tahun && bulanData === bulan) {
+                                    var mingguData = jumlahRequestPerMinggu[key];
+                                    Object.keys(mingguData).forEach(function(minggu) {
+                                        labels.push(minggu);
+                                        data.push(mingguData[minggu]);
+                                    });
                                 }
-                            }
+                            });
+
+                            var monthNames = [
+                                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                            ];
+
+                            var bulanName = monthNames[parseInt(bulan) - 1];
                         
                             var dataChart = {
                                 labels: labels,
                                 datasets: [{
-                                    label: `Statistik Jumlah Request Surat Bulan ${bulan}`,
+                                    label: `Statistik Jumlah Request Surat Bulan ${bulanName}`,
                                     data: data,
                                     backgroundColor: '#0f7454',
                                     borderColor: '#253237',

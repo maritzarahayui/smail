@@ -11,6 +11,7 @@ import propensi.smail.repository.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -434,31 +435,46 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Map<String, Long> getJumlahRequestPerMinggu() {
+    public Map<String, Map<String, Long>> getJumlahRequestPerMinggu() {
         List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
-    
-        Map<String, Long> jumlahRequestPerMinggu = new HashMap<>();
 
-        if (allRequestSurat == null || allRequestSurat.isEmpty()) {
-            jumlahRequestPerMinggu.put("", 0L);
-        } else {
+        Map<String, Map<String, Long>> jumlahRequestPerMinggu = new HashMap<>();
+
+        if (allRequestSurat != null && !allRequestSurat.isEmpty()) {
             for (RequestSurat requestSurat : allRequestSurat) {
-                int weekOfMonth = getWeekOfMonth(requestSurat.getTanggalPengajuan());
-                String key = "Minggu ke-" + weekOfMonth;
+                LocalDate tanggalPengajuan = requestSurat.getTanggalPengajuan().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                int year = tanggalPengajuan.getYear();
+                int month = tanggalPengajuan.getMonthValue();
+                int week = tanggalPengajuan.get(WeekFields.of(Locale.getDefault()).weekOfMonth());
 
-                jumlahRequestPerMinggu.put(key, jumlahRequestPerMinggu.getOrDefault(key, 0L) + 1);
+                String key = year + "-" + month;
+                Map<String, Long> mingguTahunBulanIni = jumlahRequestPerMinggu.getOrDefault(key, new HashMap<>());
+
+                Long jumlahPermintaanMingguIni = mingguTahunBulanIni.getOrDefault("Minggu ke-" + week, 0L);
+                mingguTahunBulanIni.put("Minggu ke-" + week, jumlahPermintaanMingguIni + 1);
+
+                jumlahRequestPerMinggu.put(key, mingguTahunBulanIni);
             }
         }
 
-        List<Map.Entry<String, Long>> sortedList = new ArrayList<>(jumlahRequestPerMinggu.entrySet());
-        Collections.sort(sortedList, Comparator.comparing(Map.Entry::getKey));
+        jumlahRequestPerMinggu.forEach((key, value) -> {
+            Map<String, Long> sortedValue = value.entrySet().stream()
+                    .sorted(Map.Entry.comparingByKey())
+                    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                            (oldValue, newValue) -> oldValue, LinkedHashMap::new));
+            jumlahRequestPerMinggu.put(key, sortedValue);
+        });
 
-        Map<String, Long> sortedMap = new LinkedHashMap<>();
-        for (Map.Entry<String, Long> entry : sortedList) {
-            sortedMap.put(entry.getKey(), entry.getValue());
-        }
-    
-        return sortedMap;
+        System.out.println("jumlahRequestPerMinggu: " + jumlahRequestPerMinggu.toString());
+        return jumlahRequestPerMinggu;
+    }
+
+    @Override
+    public String getCurrentYearMonth() {
+        LocalDate currentDate = LocalDate.now();
+        int year = currentDate.getYear();
+        int month = currentDate.getMonthValue();
+        return year + "-" + month;
     }
 
     @Override
@@ -471,12 +487,15 @@ public class RequestServiceImpl implements RequestService {
             jumlahRequestPerMonth.put("", 0L);
         } else {
             for (RequestSurat requestSurat : allRequestSurat) {
-                String monthName = getMonthName(requestSurat.getTanggalPengajuan().getMonth() + 1); // Bulan dimulai dari 0
-
-                jumlahRequestPerMonth.put(monthName, jumlahRequestPerMonth.getOrDefault(monthName, 0L) + 1);
+                if (requestSurat.getTanggalPengajuan().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear() == LocalDate.now().getYear() &&
+                    requestSurat.getTanggalPengajuan().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue() == LocalDate.now().getMonthValue()) {
+                    String monthName = getMonthName(requestSurat.getTanggalPengajuan().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue());
+                    jumlahRequestPerMonth.put(monthName, jumlahRequestPerMonth.getOrDefault(monthName, 0L) + 1);
+                }
             }
         }
     
+        System.out.println("jumlahRequestPerMonth" + jumlahRequestPerMonth.toString());
         return jumlahRequestPerMonth;
     }
 
@@ -496,13 +515,41 @@ public class RequestServiceImpl implements RequestService {
 
                 if (year == tahunSaatIni) {
                     jumlahRequestPerYear.put(String.valueOf(year), jumlahRequestPerYear.getOrDefault(String.valueOf(tahunSaatIni), 0L) + 1);
-                } else {
-                    jumlahRequestPerYear.put(String.valueOf(year), 1L);
                 }
             }
         }
-        
+ 
+        System.out.println("jumlahRequestPerYear" + jumlahRequestPerYear.toString());
         return jumlahRequestPerYear;
+    }
+
+    @Override
+    public Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth() {
+        List<RequestSurat> allRequestSurat = requestSuratDb.findAll();
+
+        Map<String, Map<String, Long>> jumlahRequestPerYearAndMonth = new HashMap<>();
+
+        if (allRequestSurat != null && !allRequestSurat.isEmpty()) {
+            for (RequestSurat requestSurat : allRequestSurat) {
+                int year = requestSurat.getTanggalPengajuan().getYear() + 1900;
+                String monthName = getMonthName(requestSurat.getTanggalPengajuan().toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue());
+
+                // Ambil map bulan untuk tahun saat ini atau buat baru jika belum ada
+                Map<String, Long> bulanTahunIni = jumlahRequestPerYearAndMonth.getOrDefault(String.valueOf(year), new HashMap<>());
+
+                // Dapatkan jumlah permintaan untuk bulan ini atau 0 jika belum ada
+                Long jumlahPermintaanBulanIni = bulanTahunIni.getOrDefault(monthName, 0L);
+
+                // Tambahkan jumlah permintaan untuk bulan ini ke dalam map bulan
+                bulanTahunIni.put(monthName, jumlahPermintaanBulanIni + 1);
+
+                // Set map bulan untuk tahun saat ini kembali ke dalam map utama
+                jumlahRequestPerYearAndMonth.put(String.valueOf(year), bulanTahunIni);
+            }
+        }
+
+        System.out.println("jumlahRequestPerYearAndMonth: " + jumlahRequestPerYearAndMonth.toString());
+        return jumlahRequestPerYearAndMonth;
     }
 
     @Override
