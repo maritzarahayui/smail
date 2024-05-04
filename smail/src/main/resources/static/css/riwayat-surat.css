@@ -34,7 +34,6 @@
 
 /* Tab status */
 a {
-  color: inherit;
   text-decoration: none;
 }
 
@@ -1048,4 +1047,8 @@ table.table tbody tr {
   font-size: var(--body-b2-size);
   color: var(--white-white-1);
   font-family: var(--heading-h4);
-}  
+}
+
+.a:hover {
+  text-decoration: none;
+}

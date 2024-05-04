@@ -413,6 +413,8 @@ public class SuratKeluarController {
         Authentication auth, Model model) throws ParseException {
         try {
             SuratKeluar suratKeluar= suratKeluarService.storeInput(file, kategori, perihal, penerima_eksternal);
+            suratKeluar.setIsSigned(true);
+            suratKeluarDb.save(suratKeluar);
             return "redirect:/surat-keluar/detail/" + suratKeluar.getNomorArsip();
         }catch (Exception e) {
             //debug

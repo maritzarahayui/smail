@@ -30,6 +30,7 @@ import propensi.smail.model.user.Pengguna;
 import propensi.smail.model.Email;
 import propensi.smail.model.SuratKeluar;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.SuratKeluarDb;
 import propensi.smail.repository.SuratMasukDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.SuratKeluarService;
@@ -57,6 +58,9 @@ public class SuratMasukController {
 
     @Autowired
     private SuratKeluarService suratKeluarService;
+
+    @Autowired
+    private SuratKeluarDb suratKeluarDb;
 
     @PostMapping("/upload")
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, 
@@ -309,6 +313,8 @@ public class SuratMasukController {
                 Pengguna pengguna = user.get();
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+                arsipFollowUp.setPengaju(pengguna);
+                suratKeluarDb.save(arsipFollowUp);
             } else {
                 return "auth-failed";
             }

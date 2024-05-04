@@ -47,7 +47,7 @@ public class SuratKeluar {
     private String fileName;
 
     @Column(name = "isSigned")
-    private Boolean isSigned;
+    private Boolean isSigned = false;
 
     @ManyToMany
     @JoinTable(

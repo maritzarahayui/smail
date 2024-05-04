@@ -28,9 +28,21 @@
           method="post"
           enctype="multipart/form-data"
         >
+          <!-- perihal  -->
           <div class="row">
             <div class="detail-wrapper">
-              <div class="detail">ID Surat</div>
+              <div class="detail">Perihal</div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content" th:text="${suratKeluar.perihal}"></div>
+            </div>
+          </div>
+
+          <!-- nomor arsip -->
+          <div class="row">
+            <div class="detail-wrapper">
+              <div class="detail">Nomor Arsip</div>
             </div>
 
             <div class="content-wrapper">
@@ -38,9 +50,10 @@
             </div>
           </div>
 
+          <!-- surat masuk terkait -->
           <div class="row">
             <div class="detail-wrapper">
-              <div class="detail">Surat Masuk Awal</div>
+              <div class="detail">Surat Masuk Terkait</div>
             </div>
 
             <div class="content-wrapper">
@@ -55,6 +68,7 @@
             </div>
           </div>
 
+          <!-- tanggal pengajuan -->
           <div class="row">
             <div class="detail-wrapper">
               <div class="detail">Tanggal Pengajuan</div>
@@ -67,6 +81,52 @@
               ></div>
             </div>
           </div>
+
+          <!-- kategori -->
+          <div class="row">
+            <div class="detail-wrapper">
+              <div class="detail">Kategori</div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content" th:text="${suratKeluar.kategori}"></div>
+            </div>
+          </div>
+
+          <!-- penerima eksternal-->
+          <div class="row">
+            <div class="detail-wrapper">
+              <div class="detail">Penerima Eksternal</div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content" th:text="${suratKeluar.penerimaEksternal}"></div>
+            </div>
+          </div>
+
+          <!-- pengaju -->
+          <div class="row">
+            <div class="detail-wrapper">
+              <div class="detail">Pengaju</div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content" th:text="${suratKeluar.pengaju.nama}"></div>
+            </div>
+          </div>
+
+          <!-- nama file -->
+          <div class="row">
+            <div class="detail-wrapper">
+              <div class="detail">Nama File</div>
+            </div>
+
+            <div class="content-wrapper">
+              <div class="content" th:text="${suratKeluar.fileName}"></div>
+            </div>
+          </div>
+
+          <!-- TTD  -->
 
           <h3 class="label6">Tanda Tangan</h3>
 

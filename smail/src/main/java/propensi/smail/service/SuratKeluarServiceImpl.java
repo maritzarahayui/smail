@@ -306,10 +306,12 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setPenerimaEksternal(penerimaEksternal);
                 suratKeluar.setFileName(fileName);
                 suratKeluar.setCurrentPenandatangan(penandatangan);
-                suratKeluar.setArsipSurat(arsipAwal);                         
+                suratKeluar.setArsipSurat(arsipAwal);
+                suratKeluarDb.save(suratKeluar);
 
                 // ubah status arsip awal
                 arsipAwal.setStatus(3);
+                arsipAwal.setSuratFollowUp(suratKeluar);
                 suratMasukDb.save(arsipAwal);
 
                 return suratKeluarDb.save(suratKeluar);
@@ -363,7 +365,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Override
     public List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan) {
-        return suratKeluarDb.findByCurrentPenandatangan(penandatangan);
+        return suratKeluarDb.findByCurrentPenandatanganOrderByIsSignedAscTanggalDibuatDesc(penandatangan);
     }
     
 }

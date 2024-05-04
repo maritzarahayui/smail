@@ -45,7 +45,16 @@
       <main class="details-frame">
         <form class="i-d-surat-jenis-nomor-pengirim">
           <!-- Detail display content -->
-          <div class="i-d-surat-holder">
+          <div>
+            <!-- perihal -->
+            <div class="frame-i-d-details">
+              <div class="i-d-label-surat">
+                <div class="id-surat1">Perihal</div>
+              </div>
+              <div class="follow-up-button">
+                <div class="ku0011" th:text="${suratMasuk.perihal}"></div>
+              </div>
+            </div>
             <!-- Nomor Surat -->
             <div class="frame-i-d-details">
               <div class="i-d-label-surat">
@@ -67,15 +76,6 @@
                 ></div>
               </div>
             </div>
-            <!-- judul
-            <div class="frame-i-d-details1">
-              <div class="jenis-surat-container">
-                <div class="jenis-surat1">Judul</div>
-              </div>
-              <div class="keuangan-container">
-                <div class="keuangan2" th:text="${suratMasuk.judul}"></div>
-              </div>
-            </div> -->
             <!-- Kategori -->
             <div class="frame-i-d-details1">
               <div class="jenis-surat-container">
@@ -118,17 +118,28 @@
                 ></div>
               </div>
             </div>
-            <!-- judul -->
-            <div class="frame-i-d-details1" th:if="${suratMasuk.status == 3}">
+
+            <!-- surat follow up if surat follow up is not null -->
+            <div
+              class="frame-i-d-details1"
+              th:if="${suratMasuk.suratFollowUp != null}"
+            >
               <div class="jenis-surat-container">
-                <div class="jenis-surat1">penandatangan</div>
+                <div class="jenis-surat1">Surat Follow Up</div>
               </div>
               <div class="keuangan-container">
-                <div class="keuangan2" th:text="${suratMasuk.penandatangan.nama}"></div>
+                <a
+                  class="keuangan2"
+                  th:href="@{'/surat-keluar/detail/' + ${suratMasuk.suratFollowUp.nomorArsip}}"
+                  th:text="${suratMasuk.suratFollowUp.nomorArsip}"
+                ></a>
               </div>
             </div>
             <!-- tembusan -->
-            <div class="frame-i-d-details5 tembusan-container">
+            <div
+              class="frame-i-d-details5 tembusan-container"
+              th:if="${suratMasuk.tembusan != null}"
+            >
               <div class="frame-div">
                 <div class="keperluan3">Tembusan</div>
               </div>
@@ -149,21 +160,30 @@
             </div>
           </div>
 
+          <div th:if="${suratMasuk.penandatangan != null}">
+            <div style="margin-bottom: 30px;">
+              <h3 class="label6">Tanda Tangan</h3>
+            </div>
+            <div>
+              <!-- ttd -->
+              <div class="frame-i-d-details1">
+                <div class="jenis-surat-container">
+                  <div class="jenis-surat1">penandatangan</div>
+                </div>
+                <div class="keuangan-container">
+                  <div
+                    class="keuangan2"
+                    th:text="${suratMasuk.penandatangan.nama}"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Footer with Download Button -->
           <div class="footer-frame">
-            <div class="copyright-frame1">
-              <h1 class="label1">Preview Surat</h1>
-              <a
-                class="button4"
-                th:href="@{'/surat-masuk/download/' + ${suratMasuk.nomorArsip}}"
-              >
-                <img
-                  class="octicondownload-16"
-                  alt=""
-                  src="\images\download-icon.svg"
-                />
-                <div class="download-surat">Download surat</div>
-              </a>
+            <div style="margin-bottom: 30px;">
+              <h3 class="label6">Preview Surat</h3>
             </div>
             <!-- Embed PDF using Base64 content -->
             <embed
@@ -175,16 +195,17 @@
             />
           </div>
 
-          <!-- Follow Up and Disposisi Buttons -->
+          <!-- Follow Up and Disposisi Buttons if surat followup null -->
           <div class="follow-up-group">
             <a
               class="button5"
+              th:if="${suratMasuk.suratFollowUp == null}"
               th:href="@{'/surat-masuk/follow-up/' + ${suratMasuk.nomorArsip}}"
             >
               <div class="follow-up">Follow Up</div>
             </a>
             <!-- Tampilkan tombol disposisi jika status surat bukan 3 -->
-            <div class="chevrondown-icon" >
+            <div class="chevrondown-icon">
               <a
                 class="button6"
                 th:href="@{'/surat-masuk/disposisi/' + ${suratMasuk.nomorArsip}}"

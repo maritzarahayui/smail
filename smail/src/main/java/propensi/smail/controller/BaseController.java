@@ -61,9 +61,7 @@ public class BaseController {
             }
 
         }
-        // debug:
-        // return "login";
-        return "pengurus-detail-followup";
+        return "login";
     }
 
     @GetMapping("/profile")
