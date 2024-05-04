@@ -88,13 +88,13 @@
             <!-- status -->
             <div class="frame-i-d-details3">
               <div class="pengirim-container">
-                <div class="pengirim1">Status</div>
+                  <div class="pengirim1">Status</div>
               </div>
               <div class="rektor-universitas-andalas-container">
-                <div
-                  class="rektor-universitas-andalas1"
-                  th:text="${statusText}"
-                ></div>
+                  <div class="rektor-universitas-andalas1" th:if="${suratMasuk.isDisposisi and !suratMasuk.isFollowUp}">Didisposisi</div>
+                  <div class="rektor-universitas-andalas1" th:if="${suratMasuk.isDisposisi and suratMasuk.isFollowUp}">Didisposisi dan difollow-up</div>
+                  <div class="rektor-universitas-andalas1" th:if="${suratMasuk.isFollowUp and !suratMasuk.isDisposisi}">Difollow-up</div>
+                  <div class="rektor-universitas-andalas1" th:unless="${suratMasuk.isDisposisi or suratMasuk.isFollowUp}">Diarsipkan</div>
               </div>
             </div>
             <!-- Bentuk Surat -->

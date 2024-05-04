@@ -97,24 +97,28 @@ public class SuratMasukController {
     public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
 
         List<SuratMasuk> allSuratMasuk;
-        List<SuratMasuk> suratMasukDiarsipkan;
+        // List<SuratMasuk> suratMasukDiarsipkan;
         List<SuratMasuk> suratMasukFollowUp;
         List<SuratMasuk> suratMasukDisposisi;
 
         if (search != null && !search.isEmpty()) {
             allSuratMasuk = suratMasukService.getSuratBySearch(search);
-            suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
-            suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
-            suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
+            // suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
+            // suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
+            // suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
+            suratMasukDisposisi = suratMasukService.getSuratMasukBySearchIsDisposisi(search);
+            suratMasukFollowUp = suratMasukService.getSuratMasukBySearchIsFollowUp(search);
         } else {
             allSuratMasuk = suratMasukService.getAllSuratMasuk();
-            suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
-            suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
-            suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
+            // suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
+            // suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
+            // suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
+            suratMasukDisposisi = suratMasukService.getSuratMasukIsDisposisi();
+            suratMasukFollowUp = suratMasukService.getSuratMasukIsFollowUp();
         }
 
         model.addAttribute("allSuratMasuk", allSuratMasuk);
-        model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
+        // model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
         model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
         model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
         
@@ -146,7 +150,7 @@ public class SuratMasukController {
 
         model.addAttribute("base64PDF", base64PDF);
         model.addAttribute("suratMasuk", suratMasuk);
-        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
+        // model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -207,7 +211,7 @@ public class SuratMasukController {
     public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
         model.addAttribute("suratMasuk", suratMasuk);
-        model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
+        // model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
