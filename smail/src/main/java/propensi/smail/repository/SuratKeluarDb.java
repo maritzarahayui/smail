@@ -27,4 +27,5 @@ public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
     // find by current penandatangan, sort by tgl dibuat dan yang issigned dibawah, yang issigned=false diatas
     List<SuratKeluar> findByCurrentPenandatanganOrderByIsSignedAscTanggalDibuatDesc(Pengguna penandatangan);
     List<SuratKeluar> findByTanggalDibuatBetween(Date tanggalAwal, Date tanggalAkhir);
+    List<SuratKeluar> findByPenandatanganContainsAndIsSigned(Pengguna penandatangan, Boolean isSigned);
 }

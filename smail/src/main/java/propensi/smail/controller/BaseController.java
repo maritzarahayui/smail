@@ -144,10 +144,16 @@ public class BaseController {
                     model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
                     model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
 
+                    var mapSuratTtd = suratKeluarService.getJumlahSuratKeluarTandaTangan(pengguna);
+                    model.addAttribute("mapSuratKeluarTtd", mapSuratTtd);
+
+                    var mapSuratMasukStatus = suratMasukService.getJumlahSuratMasukPerStatus();
+                    model.addAttribute("mapSuratMasukStatus", mapSuratMasukStatus);
+
                     model.addAttribute("totalSuratKeluar", suratKeluarService.getAllSuratKeluar().size());
                     model.addAttribute("totalSuratMasuk", suratMasukService.getAllSuratMasuk().size());
                     model.addAttribute("totalForumEsk", faqService.getFaqsByStatus(1).size());
-                    model.addAttribute("totalTtd", faqService.getFaqsByStatus(1).size());
+                    model.addAttribute("totalTtd", mapSuratTtd.get("Sudah")+mapSuratTtd.get("Belum"));
 
                     return "dashboard-pengurus";
                     
@@ -192,6 +198,9 @@ public class BaseController {
                     // Statistik jumlah req by kategori
                     Map<String, Long> requestByCategory = requestService.getCountOfRequestByCategory(pengguna);
                     model.addAttribute("requestByCategory", requestByCategory);
+
+                    var mapSuratTtd = suratKeluarService.getJumlahSuratKeluarTandaTangan(pengguna);
+                    model.addAttribute("totalTtd", mapSuratTtd.get("Sudah")+mapSuratTtd.get("Belum"));
                 
                     return "dashboard-dosen";
 

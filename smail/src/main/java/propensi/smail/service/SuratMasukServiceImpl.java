@@ -1,23 +1,11 @@
 package propensi.smail.service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
-import java.time.temporal.WeekFields;
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.time.*;
+import java.util.stream.*;
+import java.time.temporal.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,14 +20,9 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.transaction.Transactional;
-import propensi.smail.model.SuratKeluar;
-import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.repository.SuratKeluarDb;
-import propensi.smail.repository.SuratMasukDb;
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.repository.*;
 
 @Service
 @Transactional
@@ -332,6 +315,14 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         });
 
         return mapPerHari;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratMasukPerStatus() {
+        Map<String, Integer> mapSuratMasukStatus = new LinkedHashMap<String, Integer>();
+        mapSuratMasukStatus.put("Disposisi", getSuratMasukIsDisposisi().size());
+        mapSuratMasukStatus.put("Follow-up", getSuratMasukIsFollowUp().size());
+        return mapSuratMasukStatus;
     }
 
 }

@@ -1,14 +1,11 @@
 package propensi.smail.service;
 
-import propensi.smail.model.SuratKeluar;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.user.Pengguna;
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.stream.Stream;
-import java.util.List ;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +13,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.mail.MessagingException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 
 public interface SuratMasukService {
     SuratMasuk storeJudul(MultipartFile file, String kategori, String perihal, String pengirim, String judul); //gak kepake kyknya
@@ -45,5 +39,6 @@ public interface SuratMasukService {
     Map<String, Integer> getJumlahSuratMasukTahunIni();
     Map<String, Integer> getJumlahSuratMasukBulanIni();
     Map<String, Integer> getJumlahSuratMasukMingguIni();
+    Map<String, Integer> getJumlahSuratMasukPerStatus();
 
 }

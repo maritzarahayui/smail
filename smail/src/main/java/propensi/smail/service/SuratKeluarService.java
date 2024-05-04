@@ -31,7 +31,7 @@ public interface SuratKeluarService {
     SuratKeluar findSuratKeluarByID(String id);
     SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
     //  belum tes
-    List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
+    List<SuratKeluar> getSuratKeluarByCurrentPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
     // get surat keluar by currentpenandatangan only
     List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan);
 
@@ -45,6 +45,7 @@ public interface SuratKeluarService {
     Map<String, Integer> getJumlahSuratKeluarTahunIni();
     Map<String, Integer> getJumlahSuratKeluarBulanIni();
     Map<String, Integer> getJumlahSuratKeluarMingguIni();
-
+    Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan);
+    List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
 
 }

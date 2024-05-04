@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-@Transactional
 public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Autowired
     SuratKeluarDb suratKeluarDb;
@@ -316,6 +315,11 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setFileName(fileName);
                 suratKeluar.setCurrentPenandatangan(penandatangan);
                 suratKeluar.setArsipSurat(arsipAwal.getNomorArsip());
+
+                List<Pengguna> penandatangans = new ArrayList<>();
+                penandatangans.add(penandatangan);
+                suratKeluar.setPenandatangan(penandatangans);
+                
                 suratKeluarDb.save(suratKeluar);
 
                 // ubah status arsip awal
@@ -332,9 +336,9 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
-    public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+    public List<SuratKeluar> getSuratKeluarByCurrentPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
         return suratKeluarDb.findByCurrentPenandatanganAndIsSigned(penandatangan, isSigned);
-    }
+    } 
 
     @Override
     public List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned) {
@@ -467,8 +471,26 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             } else {
                 mapPerHari.merge(indonesianWeek[dayOfWeek-2], 1, Integer::sum);
             }
+
         });
 
         return mapPerHari;
     }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+        return suratKeluarDb.findByPenandatanganContainsAndIsSigned(penandatangan, isSigned);
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan) {
+        Map<String, Integer> mapSuratTtd = new LinkedHashMap<String, Integer>();
+        mapSuratTtd.put("Sudah", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, true).size());
+        System.out.println(getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).toString());
+        mapSuratTtd.put("Belum", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).size());
+        System.out.println(mapSuratTtd.get("Sudah").toString());
+        System.out.println(mapSuratTtd.get("Belum").toString());
+        return mapSuratTtd;
+    }
+
 }

@@ -282,16 +282,15 @@
 
     </script>
 
-    <!-- PIE CHART SURAT MASUK - KATEGORI -->
+    <!-- PIE CHART SURAT MASUK STATUS -->
     <script th:inline="javascript">
-        var mapSuratMasukKategori = [[${mapSuratMasukKategori}]];
-        var labels = Object.keys(mapSuratMasukKategori);
+        var mapSuratMasukStatus = [[${mapSuratMasukStatus}]];
+        var labels = Object.keys(mapSuratMasukStatus);
         var chartData = labels.map(function(key) {
-            return mapSuratMasukKategori[key];
+            return mapSuratMasukStatus[key];
         });
 
         const pieChartSuratMasuk = document.getElementById('pieChartSuratMasuk');
-    
         new Chart(pieChartSuratMasuk, {
             type: 'doughnut',
             data: {
@@ -311,15 +310,14 @@
                 }
             }
         });
-
     </script>
 
-    <!-- PIE CHART SURAT KELUAR - KATEGORI -->
+    <!-- PIE CHART SURAT KELUAR TTD -->
     <script th:inline="javascript">
-        var mapSuratKeluarKategori = [[${mapSuratKeluarKategori}]];
-        var labels = Object.keys(mapSuratKeluarKategori);
+        var mapSuratKeluarTtd = [[${mapSuratKeluarTtd}]];
+        var labels = Object.keys(mapSuratKeluarTtd);
         var chartData = labels.map(function(key) {
-            return mapSuratKeluarKategori[key];
+            return mapSuratKeluarTtd[key];
         });
 
         const pieChartSuratKeluar = document.getElementById('pieChartSuratKeluar');
