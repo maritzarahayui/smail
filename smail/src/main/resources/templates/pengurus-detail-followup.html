@@ -60,10 +60,7 @@
               <a
                 th:href="@{'/surat-masuk/detail/' + ${suratKeluar.arsipSurat}}"
               >
-                <div
-                  class="content"
-                  th:text="${suratKeluar.arsipSurat}"
-                ></div>
+                <div class="content" th:text="${suratKeluar.arsipSurat}"></div>
               </a>
             </div>
           </div>
@@ -100,7 +97,10 @@
             </div>
 
             <div class="content-wrapper">
-              <div class="content" th:text="${suratKeluar.penerimaEksternal}"></div>
+              <div
+                class="content"
+                th:text="${suratKeluar.penerimaEksternal}"
+              ></div>
             </div>
           </div>
 
@@ -116,7 +116,7 @@
           </div>
 
           <!-- nama file -->
-          <div class="row">
+          <div class="row" th:if="${suratKeluar.fileName != ''}">
             <div class="detail-wrapper">
               <div class="detail">Nama File</div>
             </div>
@@ -167,65 +167,66 @@
             />
           </div>
           <br />
-
-          <div class="form-group">
-            <div class="upload-illustration-frame">
-              <div class="file-input">
-                <div class="secondary-message">secondary message</div>
-                <div class="rectangle-frame">
-                  <div class="arsip-surat-frame">
-                    <div class="button-frame1">
-                      <label class="upload-illustration" for="file">
-                        <div class="chevrondown-icon">
-                          <div class="wrapper-group">
+          <div th:if="${suratKeluar.isSigned == false}">
+            <div class="form-group">
+              <div class="upload-illustration-frame">
+                <div class="file-input">
+                  <div class="secondary-message">secondary message</div>
+                  <div class="rectangle-frame">
+                    <div class="arsip-surat-frame">
+                      <div class="button-frame1">
+                        <label class="upload-illustration" for="file">
+                          <div class="chevrondown-icon">
+                            <div class="wrapper-group">
+                              <img
+                                class="group-icon"
+                                alt=""
+                                src="/images/imagetengah.png"
+                              />
+                            </div>
                             <img
-                              class="group-icon"
+                              class="chevrondown-icon-child"
                               alt=""
-                              src="/images/imagetengah.png"
+                              src="/images/upload.svg"
+                            />
+
+                            <img
+                              class="chevrondown-icon-item"
+                              loading="lazy"
+                              alt=""
+                              src="/images/imagekanan.png"
                             />
                           </div>
                           <img
-                            class="chevrondown-icon-child"
+                            class="upload-illustration-child"
                             alt=""
-                            src="/images/upload.svg"
+                            src="/images/imagekiri.png"
                           />
-
-                          <img
-                            class="chevrondown-icon-item"
-                            loading="lazy"
-                            alt=""
-                            src="/images/imagekanan.png"
-                          />
-                        </div>
-                        <img
-                          class="upload-illustration-child"
-                          alt=""
-                          src="/images/imagekiri.png"
+                        </label>
+                        <input
+                          type="file"
+                          class="custom-file-input"
+                          id="file"
+                          name="file"
                         />
-                      </label>
-                      <input
-                        type="file"
-                        class="custom-file-input"
-                        id="file"
-                        name="file"
-                      />
+                      </div>
+                      <h3 class="upload-file-kamu-container">
+                        <span>Upload</span>
+                        <span class="file-kamu-di">
+                          file yang sudah ditandatangani di sini dalam format
+                          .pdf</span
+                        >
+                      </h3>
+                      <span class="file-name"></span>
                     </div>
-                    <h3 class="upload-file-kamu-container">
-                      <span>Upload</span>
-                      <span class="file-kamu-di">
-                        file yang sudah ditandatangani di sini dalam format
-                        .pdf</span
-                      >
-                    </h3>
-                    <span class="file-name"></span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="text-center action-buttons">
-            <button type="submit" class="button">Simpan perubahan</button>
+            <div class="text-center action-buttons">
+              <button type="submit" class="button">Simpan perubahan</button>
+            </div>
           </div>
         </form>
       </div>

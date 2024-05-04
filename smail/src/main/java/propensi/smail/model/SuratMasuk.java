@@ -54,7 +54,7 @@ public class SuratMasuk {
     private String pengirim; // email or nama pengirim
 
     @Column(name = "tembusan")
-    private String[] tembusan; // email
+    private ArrayList<String> tembusan = new ArrayList<String>(); // email
 
     @Lob
     @Column(name = "file", nullable = false)

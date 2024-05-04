@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -144,10 +145,15 @@ public class SuratMasukServiceImpl implements SuratMasukService {
 
     @Async
     public void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException {
-        // ubah status dan tembusan objek surat masuk
-        // suratMasuk.setStatus(2);
+        // ubah status dan tembusan objek surat masuk       
+        ArrayList<String> tembusan = suratMasuk.getTembusan();
+        for (String email : to) {
+            if (!tembusan.contains(email)){
+                tembusan.add(email);
+            }
+        }
+        suratMasuk.setTembusan(tembusan);
         suratMasuk.setIsDisposisi(true);
-        suratMasuk.setTembusan(to);
         suratMasukDb.save(suratMasuk);
         
         MimeMessage message = mailSender.createMimeMessage();
