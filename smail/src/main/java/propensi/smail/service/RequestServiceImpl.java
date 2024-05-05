@@ -285,7 +285,7 @@ public class RequestServiceImpl implements RequestService {
         // Loop through the templateSuratList
         for (TemplateSurat template : templateSuratList) {
 
-            if (template.getListPengguna().contains(tipePengaju)) {
+            if (template.getListPengguna().contains(tipePengaju) && template.isActive()) {
                 String kategori = template.getKategori();
                 String jenis = template.getNamaTemplate();
 
