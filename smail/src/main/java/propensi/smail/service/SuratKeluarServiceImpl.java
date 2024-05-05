@@ -279,7 +279,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Override
     public List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
-        List<SuratKeluar> suratKeluarList = suratKeluarDb.findAll();
+        List<SuratKeluar> suratKeluarList = suratKeluarDb.findByIsSigned(true);
 
         // Filter berdasarkan query pencarian
         if (searchQuery != null && !searchQuery.isEmpty()) {
