@@ -41,7 +41,7 @@
                                 alt=""
                                 src="/images/iconoutlineexclamationcircle.svg"
                             />
-                            <div class="tabs1">Arsip Surat</div>
+                            <div class="tabs1">Surat Follow-Up</div>
                         </a>
                     </div>
 
@@ -62,18 +62,20 @@
                             <thead>
                                 <tr>
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request Surat</th>
-                                    <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                                    <th style="width: 25%; text-align: center; vertical-align: middle;">Jenis Surat</th>
                                     <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
                                     <td style="width: 15%; text-align: center; vertical-align: middle;">
-                                        <div style="display: block;">Tanggal</div>
-                                        <div style="display: block;">Pengajuan</div>
+                                        <div style="display: block;">Tanggal Pengajuan</div>
                                     </td>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Status Tanda Tangan</th>
+                                    <th style="width: 15%; text-align: center; vertical-align: middle;">Status Tanda Tangan</th>
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr th:if="${#lists.isEmpty(requestSurats)}">
+                                    <td colspan="7" style="text-align: center;">Belum ada permohonan surat yang perlu ditandatangani</td>
+                                </tr>
                             <!-- Iterate through requestTemplates -->
                                 <tr th:each="requestSurat: ${requestSurats}">
                                     <td th:text="${requestSurat.id}"></td>

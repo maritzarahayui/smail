@@ -16,8 +16,8 @@
 
     <div class="permintaan-template">
       <b class="pengajuan-permohonan-surat-container">
-        <span class="pengajuan">Daftar</span>
-        <span> Permohonan Surat</span>
+        <span class="pengajuan">Daftar Surat</span>
+        <span>Follow-Up</span>
       </b>
 
       <nav th:replace="~{fragments/asset :: asset}"></nav>
@@ -41,7 +41,7 @@
                   alt=""
                   src="/images/iconoutlineexclamationcircle.svg"
                 />
-                <div class="tabs">Arsip Surat</div>
+                <div class="tabs">Surat Follow-Up</div>
               </a>
             </div>
 
@@ -129,6 +129,9 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr th:if="${#lists.isEmpty(listSuratKeluar)}">
+                    <td colspan="6" style="text-align: center;">Belum ada surat follow-up yang perlu ditandatangani</td>
+                  </tr>
                   <!-- Iterate through requestTemplates -->
                   <tr th:each="suratkeluar: ${listSuratKeluar}" th:if="${suratkeluar.arsipSurat != null}">
                     <td th:text="${suratkeluar.nomorArsip}"></td>

@@ -101,6 +101,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <tr th:if="${#lists.isEmpty(requestSurats)}">
+                                    <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang dibatalkan</td>
+                                  </tr>
                             <!-- Iterate through requestTemplates -->
                                 <tr th:each="requestSurat: ${requestSurats}">
                                     <td th:text="${requestSurat.id}"></td>
