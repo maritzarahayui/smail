@@ -392,11 +392,13 @@ public class RequestServiceImpl implements RequestService {
 
         // Iterate over the SuratKeluar objects
         for (SuratKeluar suratKeluar : suratKeluarList) {
-            // Retrieve the associated RequestSurat object
-            RequestSurat requestSurat = suratKeluar.getRequestSurat();
+            if (suratKeluar.getRequestSurat() != null) {
+                // Retrieve the associated RequestSurat object
+                RequestSurat requestSurat = suratKeluar.getRequestSurat();
 
-            // Add the retrieved RequestSurat object to the list
-            requestSuratList.add(requestSurat);
+                // Add the retrieved RequestSurat object to the list
+                requestSuratList.add(requestSurat);
+            }
         }
 
         // Return the list of associated RequestSurat objects
