@@ -29,6 +29,7 @@ public interface RequestService {
     List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId);
+    List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId);
     RequestSurat getRequestSuratById(String requestSuratId);
     RequestSurat findRequestById(String id);
     List<RequestSurat> getRequestByJenisSurat(String jenisSurat);

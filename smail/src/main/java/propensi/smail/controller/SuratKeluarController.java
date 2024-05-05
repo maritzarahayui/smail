@@ -295,10 +295,7 @@ public class SuratKeluarController {
 
     @GetMapping("/ttd/request")
     @Transactional(readOnly = true)
-    public String showAllRequestsTTD(Model model, Authentication auth) {
-//        List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
-//        model.addAttribute("requestSurats", requestSurats);
-
+    public String showAllRequestsTTD(@RequestParam(value = "search", required = false) String keyword, Model model, Authentication auth) {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -307,8 +304,16 @@ public class SuratKeluarController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 String penandatanganId = pengguna.getId();
-                System.out.println("penandatanganId " + penandatanganId);
-                List<RequestSurat> requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
+                List<RequestSurat> requestSurats;
+
+                if (keyword != null && !keyword.isEmpty()) {
+                    // Search requests based on keyword
+                    requestSurats = requestService.searchRequestsTTD(keyword, penandatanganId);
+                } else {
+                    // Get all requests for the user
+                    requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
+                }
+
                 requestSurats.sort(Comparator.comparingInt(RequestSurat::getStatus));
                 model.addAttribute("requestSurats", requestSurats);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
@@ -320,6 +325,7 @@ public class SuratKeluarController {
 
         return "pengurus-ttd-request";
     }
+
     // route to pengurus-ttd-arsip 
     @GetMapping("/ttd/arsip")
     @Transactional(readOnly = true)

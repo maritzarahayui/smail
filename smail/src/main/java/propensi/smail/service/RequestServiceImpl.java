@@ -405,6 +405,18 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratList;
     }
 
+    @Override
+    public List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId) {
+        List<RequestSurat> requestSurats = getAllRequestSuratByPenandatanganId(penandatanganId);
+
+        // Filter the list by keyword
+        return requestSurats.stream()
+                .filter(requestSurat -> requestSurat.getId().toLowerCase().contains(keyword.toLowerCase()) ||
+                        requestSurat.getJenisSurat().toLowerCase().contains(keyword.toLowerCase()) ||
+                        requestSurat.getPengaju().getNama().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
     // ------------------REQUEST TEMPLATE----------------
     @Override
     public void createRequestTemplate(RequestTemplate requestTemplate, RequestAndFieldDataDTO requestDTO){
