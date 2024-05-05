@@ -45,7 +45,6 @@ public class RequestTemplate {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
-    
     /* RELATIONSHIPS */
     @ManyToOne
     @JoinColumn(name = "pengaju")

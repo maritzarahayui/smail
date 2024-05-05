@@ -2,7 +2,36 @@ body {
   overflow-x: hidden;
 }
 
-.pengajuan {
+.content-container {
+  width: 100%;
+  position: relative;
+  background-color: var(--white-white-1);
+  overflow: hidden;
+  height: 100%;  
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.formRequest {
+  gap: 30px 0;
+  margin: auto auto 50px;
+
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  text-align: center;
+  font-size: 48px;
+  width: 100%;
+  margin: 70px auto 35px;
+}
+
+.title-gradient {
   background: linear-gradient(
     180deg,
     #bce8a4,
@@ -12,13 +41,7 @@ body {
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.pengajuan-permohonan-surat-container {
-  position: absolute;
-  top: 90px;
-  left: calc(50% - 359px);
-  font-size: 48px;
+  margin-right: 10px;
 }
 
 .label {
@@ -60,11 +83,6 @@ body {
   overflow: hidden;
   flex-direction: row;
   color: rgba(16, 15, 15, 0.5);
-}
-
-.text-input {
-  flex-direction: column;
-  gap: 16px 0;
 }
 
 .body-14pt {
@@ -175,9 +193,11 @@ body {
   justify-content: flex-start;
 }
 
-.label-parent {
+.label-parent,
+.text-input {
   flex-direction: column;
   gap: 16px 0;
+  margin: 30px
 }
 
 .text-input5 {
@@ -251,20 +271,8 @@ body {
 .action-buttons {
   position: relative;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 50px;
   margin-bottom: 40px;
-}
-
-.ajukan-surat {
-  width: 100%;
-  position: relative;
-  background-color: #fffffe;
-  height: 1150px;
-  overflow: auto;
-  text-align: center;
-  font-size: 16px;
-  color: #253237;
-  font-family: Rubik;
 }
 
 .input-row {
@@ -354,25 +362,6 @@ body {
 
   .button {
     width: 100%;
-  }
-
-  .ajukan-surat-item {
-    position: absolute;
-    top: 21px;
-    /* left: 80%; */
-    right: 0;
-    width: 100px;
-    height: 169.91px;
-    object-fit: contain;
-    overflow: hidden;
-  }
-
-  .ajukan-surat-child {
-    position: absolute;
-    top: 58px;
-    left: -61px;
-    width: 147px;
-    height: 46.69px;
   }
 
   .label {

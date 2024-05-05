@@ -81,15 +81,15 @@ public class FAQController {
     
     @PostMapping("/tanya")
     public String tanyaFAQ(Model model, Authentication auth, FAQ faqDTO) {
-        faqService.createFAQ(faqDTO);
-
+        
+        Pengguna pengguna = null;
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
             Optional<Pengguna> user = penggunaDb.findByEmail(email);
 
             if (user.isPresent()) {
-                Pengguna pengguna = user.get();
+                pengguna = user.get();
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
@@ -97,8 +97,10 @@ public class FAQController {
             }
         }
 
+        faqService.createFAQ(faqDTO, pengguna);
         return "redirect:/faq";
     }
+
 
     @GetMapping("/{idFAQ}/jawab")
     public String formJawabFAQ(Model model, Authentication auth, @PathVariable("idFAQ") int idFAQ) {

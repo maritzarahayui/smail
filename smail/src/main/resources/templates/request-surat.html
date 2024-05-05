@@ -13,99 +13,88 @@
 </head>
 
 <body>
+
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-<div class="ajukan-surat">
-    <div class="home-frame">
-        <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Pengajuan</span>
-            <span> Permohonan Surat</span>
-        </b>
+<div class="content-container">
 
-        <nav th:replace="~{fragments/asset :: asset}"></nav>
-    </div>
+    <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-    <form th:action="@{/request}" th:object="${requestDTO}" method="POST">
+    <b class="title-container">
+        <span class="title-gradient">Pengajuan</span>
+        <span> Permohonan Surat</span>
+    </b>
 
-        <div class="text-input-parent">
-            <div class="text-input">
-                <div class="label">Bahasa</div>
+    <form th:action="@{/request}" th:object="${requestDTO}" method="POST" class="formRequest">
+        <div class="text-input">
+            <div class="label">Bahasa</div>
+            <div class="text-input7">
+                <select name="bahasa" class="form-select" th:field="*{bahasa}">
+                    <option value="">Pilih Bahasa Surat</option>
+                    <option th:each="entry : ${listBahasa}" th:value="${entry.value}" th:text="${entry.value}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div class="label-parent">
+            <div class="label">Bentuk Surat</div>
+            <div class="frame-parent">
+                <div class="radio-parent">
+                    <input type="checkbox" id="softCopy" name="bentukSurat" value="Soft Copy" />
+                    <div class="label-group">
+                        <div class="body-14pt">Soft Copy</div>
+                        <div class="body-14pt">Surat dapat diunduh di website ini.</div>
+                    </div>
+                </div>
+                <div class="radio-parent">
+                    <input type="checkbox" id="hardCopy" name="bentukSurat" value="Hard Copy" />
+                    <div class="label-group">
+                        <div class="body-14pt">Hard Copy</div>
+                        <div class="body-14pt">Surat dapat diambil di kantor administrasi.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-input">
+            <div class="label">Keperluan</div>
+            <div class="text-input7">
+                <input type="text" class="form-control" th:field="*{keperluan}" required/>
+            </div>
+        </div>
+
+        <div class="text-input">
+            <div class="label">Kategori Surat</div>
+            <div class="text-input7">
+                <select id="kategori" name="kategori" class="form-select" th:field="*{kategori}">
+                    <option value="">Pilih Kategori Surat</option>
+                    <option th:each="entry : ${jenisSuratByKategori}" th:value="${entry.key}" th:text="${entry.key}"></option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <div class="text-input" id="jenisSuratWrapper">
+                <div class="label" style="padding-bottom:16px;">Jenis Surat</div>
                 <div class="text-input7">
-                    <select name="bahasa" class="form-select" th:field="*{bahasa}">
-                        <option value="">Pilih Bahasa Surat</option>
-                        <option th:each="entry : ${listBahasa}" th:value="${entry.value}" th:text="${entry.value}"></option>
+                    <select id="jenisSurat" name="jenisSurat" class="form-select" th:field="*{jenisSurat}">
+                        <option value="">Pilih Jenis Surat</option>
+                        <option th:each="jenisSurat : ${jenisSuratByKategori}" th:value="${jenisSurat.value}" th:text="${jenisSurat.value}"></option>
                     </select>
                 </div>
             </div>
+        </div>
 
-            <div class="label-parent">
-                <div class="label">Bentuk Surat</div>
-                <div class="frame-parent">
-                    <div class="radio-parent">
-                        <input type="checkbox" id="softCopy" name="bentukSurat" value="Soft Copy" />
-                        <div class="label-group">
-                            <div class="body-14pt">Soft Copy</div>
-                            <div class="body-14pt">Surat dapat diunduh di website ini.</div>
-                        </div>
-                    </div>
-                    <div class="radio-parent">
-                        <input type="checkbox" id="hardCopy" name="bentukSurat" value="Hard Copy" />
-                        <div class="label-group">
-                            <div class="body-14pt">Hard Copy</div>
-                            <div class="body-14pt">Surat dapat diambil di kantor administrasi.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="preview-template" class="preview-template">
+            <div class="preview-title">Preview Template</div>
+        </div>
 
-            <div class="text-input">
-                <div class="label">Keperluan</div>
-                <div class="text-input7">
-                    <input type="text" class="form-control" th:field="*{keperluan}" required/>
-                </div>
-            </div>
+        <div id="listFieldWrapper"></div>
 
-            <div class="text-input">
-                <div class="label">Kategori Surat</div>
-                <div class="text-input7">
-                    <select id="kategori" name="kategori" class="form-select" th:field="*{kategori}">
-                        <option value="">Pilih Kategori Surat</option>
-                        <option th:each="entry : ${jenisSuratByKategori}" th:value="${entry.key}" th:text="${entry.key}"></option>
-                    </select>
-                </div>
-            </div>
+        <div class="container" id="reqTemplateWrapper"></div>
 
-            <div>
-                <div class="text-input" id="jenisSuratWrapper">
-                    <div class="label">Jenis Surat</div>
-                    <div class="text-input7">
-                        <select id="jenisSurat" name="jenisSurat" class="form-select" th:field="*{jenisSurat}">
-                            <option value="">Pilih Jenis Surat</option>
-                            <option th:each="jenisSurat : ${jenisSuratByKategori}" th:value="${jenisSurat.value}" th:text="${jenisSurat.value}"></option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div id="preview-template" class="preview-template">
-                <div class="preview-title">Preview Template</div>
-            </div>
-
-            <div id="listFieldWrapper"></div>
-
-            <div class="container" id="reqTemplateWrapper">
-                <div class="label">Deskripsi Surat</div>
-                <div id="list-field-data" class="form-group">
-                    <div class="input-row d-flex mt-3 mb-2">
-                        <input type="hidden" name="listFieldData[0].key" value="Deskripsi Surat">
-                        <textarea class="form-control" placeholder="Beri penjelasan terkait surat yang diajukan sedetail mungkin. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak atau tidak akan diproses." name="listFieldData[0].value" required></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center action-buttons">
-                <button type="submit" class="button">Ajukan Surat</button>
-            </div>
+        <div class="text-center action-buttons">
+            <button type="submit" class="button">Ajukan Surat</button>
         </div>
     </form>
 </div>
@@ -128,6 +117,8 @@
             reqTemplateWrapper.style.display = 'none';
 
             kategoriDropdown.addEventListener('change', function () {
+                previewTemplateWrapper.style.display = 'none';
+                listFieldWrapper.style.display = 'none';
                 if (kategoriDropdown.value !== '') {
                     jenisSuratWrapper.style.display = 'block';
                 } else {
@@ -162,21 +153,63 @@
 
             var base64PDF = /*[[${base64PDF}]]*/ '';
             jenisSuratDropdown.addEventListener('change', function() {
+
+                // Remove all key elements if they exist
+                const keyElements = document.querySelectorAll("[name^='listFieldData'][name$='.key']");
+                keyElements.forEach(element => {
+                    if (element) {
+                        element.remove(); // Safely remove only if the element exists
+                    }
+                });
+
+                // Remove all value elements if they exist
+                const valueElements = document.querySelectorAll("[name^='listFieldData'][name$='.value']");
+                valueElements.forEach(element => {
+                    if (element) {
+                        element.remove(); // Safely remove only if the element exists
+                    }
+                });
+
                 if (jenisSuratDropdown.value == 'Lainnya') {
                     reqTemplateWrapper.style.display = 'block';
                     previewTemplateWrapper.style.display = 'none';
                     listFieldWrapper.style.display = 'none';
 
+                    reqTemplateWrapper.innerHTML = '';
+
+                    var labelDiv = document.createElement('div');
+                    labelDiv.className = 'label';
+                    labelDiv.textContent = 'Deskripsi Surat';
+
+                    var formGroupDiv = document.createElement('div');
+                    formGroupDiv.className = 'form-group';
+
+                    var inputRowDiv = document.createElement('div');
+                    inputRowDiv.className = 'input-row d-flex mt-3 mb-2';
+
+                    var hiddenElement = document.createElement('input');
+                    hiddenElement.type = 'hidden';
+                    hiddenElement.name = 'listFieldData[0].key';
+                    hiddenElement.value = 'Deskripsi Surat';
+
+                    var textArea = document.createElement('textarea');
+                    textArea.className = 'form-control';
+                    textArea.placeholder = 'Beri penjelasan terkait surat yang diajukan sedetail mungkin. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak atau tidak akan diproses. Tambahan: Anda juga dapat mencantumkan link referensi template surat yang Anda miliki';
+                    textArea.name = 'listFieldData[0].value';
+                    textArea.required = true;
+
+                    inputRowDiv.appendChild(hiddenElement);
+                    inputRowDiv.appendChild(textArea);
+                    formGroupDiv.appendChild(inputRowDiv);
+                    reqTemplateWrapper.appendChild(labelDiv);
+                    reqTemplateWrapper.appendChild(formGroupDiv);
+
+                    reqTemplateWrapper.style.display = 'block';
+
                 } else if (jenisSuratDropdown.value !== '') {
                     previewTemplateWrapper.style.display = 'block';
                     listFieldWrapper.style.display = 'block';
                     reqTemplateWrapper.style.display = 'none';
-
-                    // Change
-                    const element = document.getElementsByName("listFieldData[0].key");
-                    const element2 = document.getElementsByName("listFieldData[0].value");
-                    element[0].remove();
-                    element2[0].remove();
 
                     // Mendapatkan jenis surat yang dipilih
                     var selectedJenisSurat = jenisSuratDropdown.value;
@@ -214,13 +247,17 @@
                                 var labelDiv = document.createElement('div');
                                 labelDiv.className = 'label';
                                 labelDiv.textContent = field;
+                                console.log("===== labelDiv:", field)
 
                                 var hiddenElement = document.createElement('input');
                                 hiddenElement.type = 'hidden';
                                 hiddenElement.className = 'form-control';
                                 hiddenElement.name = `listFieldData[${index}].key`; // Menggunakan index
                                 hiddenElement.field = field;
+                                console.log("===== hiddenElement field:", field)
+
                                 hiddenElement.value = field;
+                                console.log("===== hiddenElement value:", field)
 
                                 var textDiv = document.createElement('div');
                                 textDiv.className = 'text-input7';
@@ -256,3 +293,4 @@
     </script>
 </body>
 </html>
+

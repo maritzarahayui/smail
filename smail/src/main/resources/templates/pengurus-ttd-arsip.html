@@ -16,8 +16,8 @@
 
     <div class="permintaan-template">
       <b class="pengajuan-permohonan-surat-container">
-        <span class="pengajuan">Daftar</span>
-        <span> Permohonan Surat</span>
+        <span class="pengajuan">Daftar Surat</span>
+        <span>Follow-Up</span>
       </b>
 
       <nav th:replace="~{fragments/asset :: asset}"></nav>
@@ -41,7 +41,7 @@
                   alt=""
                   src="/images/iconoutlineexclamationcircle.svg"
                 />
-                <div class="tabs">Arsip Surat</div>
+                <div class="tabs">Surat Follow-Up</div>
               </a>
             </div>
 
@@ -109,13 +109,13 @@
                     </td>
                     <!-- status ttd -->
                     <th
-                      style="
+                            style="
                         width: 15%;
                         text-align: center;
                         vertical-align: middle;
                       "
                     >
-                      Status TTD
+                      Status Tanda Tangan
                     </th>
                     <th
                       style="
@@ -129,29 +129,30 @@
                   </tr>
                 </thead>
                 <tbody>
+                  <tr th:if="${#lists.isEmpty(listSuratKeluar)}">
+                    <td colspan="6" style="text-align: center;">Belum ada surat follow-up yang perlu ditandatangani</td>
+                  </tr>
                   <!-- Iterate through requestTemplates -->
-                  <tr th:each="suratkeluar: ${listSuratKeluar}">
-                    <div th:if="${suratkeluar.requestSurat == null}">
-                      <td th:text="${suratkeluar.nomorArsip}"></td>
-                      <td th:text="${suratkeluar.perihal}"></td>
-                      <td>
-                        <span th:text="${suratkeluar.penerimaEksternal}"></span>
-                      </td>
-                      <td
-                        th:text="${#dates.format(suratkeluar.tanggalDibuat, 'yyyy-MM-dd HH:mm')}"
-                      ></td>
-                      <td
-                        th:text="${suratkeluar.isSigned ? 'Selesai ditandatangani' : 'Perlu tanda tangan'}"
-                      ></td>
-                      <td style="display: flex; justify-content: space-between">
-                        <a
-                          th:href="@{/ttd/followup/{id}(id=${suratkeluar.nomorArsip})}"
-                          class="button20"
-                        >
-                          <div class="button21">Detail</div>
-                        </a>
-                      </td>
-                    </div>
+                  <tr th:each="suratkeluar: ${listSuratKeluar}" th:if="${suratkeluar.arsipSurat != null}">
+                    <td th:text="${suratkeluar.nomorArsip}"></td>
+                    <td th:text="${suratkeluar.perihal}"></td>
+                    <td>
+                      <span th:text="${suratkeluar.penerimaEksternal}"></span>
+                    </td>
+                    <td
+                      th:text="${#dates.format(suratkeluar.tanggalDibuat, 'yyyy-MM-dd HH:mm')}"
+                    ></td>
+                    <td
+                            th:text="${suratkeluar.isSigned ? 'Selesai ditandatangani' : 'Perlu tanda tangan'}"
+                    ></td>
+                    <td style="display: flex; justify-content: space-between">
+                      <a
+                        th:href="@{/ttd/followup/{id}(id=${suratkeluar.nomorArsip})}"
+                        class="button20"
+                      >
+                        <div class="button21">Detail</div>
+                      </a>
+                    </td>
                   </tr>
                 </tbody>
               </table>

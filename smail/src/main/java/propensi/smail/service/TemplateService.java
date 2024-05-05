@@ -1,13 +1,16 @@
 package propensi.smail.service;
 
+import jakarta.mail.MessagingException;
 import org.hibernate.sql.Template;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.TemplateSurat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public interface TemplateService {
@@ -38,5 +41,21 @@ public interface TemplateService {
     RequestTemplate terimaRequest(String requestId);
 
     RequestTemplate tolakRequest(String requestId);
+
+    Map<String, Long> getActiveTemplateByKategori();
+
+    List<RequestTemplate> getAllRejectedReq();
+
+    List<RequestTemplate> getAllAcceptedReq();
+
+    List<RequestTemplate> getAllRequestedReq();
+
+    RequestTemplate updateRequest(String requestId);
+
+    RequestTemplate findRequest(String id);
+
+    List<RequestTemplate> searchRequests(String keyword, int status);
+
+    void sendEmailRejection(String to, String subject, String body, RequestTemplate requestTemplate) throws MessagingException, IOException;
 }
 

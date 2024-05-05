@@ -46,7 +46,7 @@ public interface SuratMasukDb extends JpaRepository<SuratMasuk, String> {
 
    List<SuratMasuk> findByIsFollowUpTrue();
    List<SuratMasuk> findByIsDisposisiTrue();
+   
+   List<SuratMasuk> findByTanggalDibuatBetween(Date tanggalAwal, Date tanggalAkhir);
 
-
-    // List<SuratMasuk> findByNomorArsipContainingIgnoreCaseOrKategoriContainingIgnoreCaseOrPerihalContainingIgnoreCaseOrPengirimContainingIgnoreCaseAndStatus(String search, int status);
 }
