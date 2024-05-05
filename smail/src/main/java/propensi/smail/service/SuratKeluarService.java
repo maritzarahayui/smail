@@ -47,5 +47,7 @@ public interface SuratKeluarService {
     Map<String, Integer> getJumlahSuratKeluarMingguIni();
     Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan);
     List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
+    //  search follow up ttd    
+    public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan);
 
 }

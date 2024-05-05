@@ -329,7 +329,7 @@ public class SuratKeluarController {
     // route to pengurus-ttd-arsip 
     @GetMapping("/ttd/arsip")
     @Transactional(readOnly = true)
-    public String pengurusTtdArsip( Model model, Authentication auth) {
+    public String pengurusTtdArsip(@RequestParam(value = "search", required = false) String keyword, Model model, Authentication auth) {
         // list surat keluar berdasarkan id penandatangan dan status
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -338,7 +338,15 @@ public class SuratKeluarController {
 
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
-                List<SuratKeluar> listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
+                List<SuratKeluar> listSuratKeluar;
+
+                // implement search
+                if (keyword != null && !keyword.isEmpty()) {
+                    listSuratKeluar = suratKeluarService.searchFollowUpTTD(keyword, pengguna);
+                }else {
+                    listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
+                }
+
                 model.addAttribute("listSuratKeluar", listSuratKeluar);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
@@ -348,6 +356,8 @@ public class SuratKeluarController {
         }
         return "pengurus-ttd-arsip";
     }
+
+
     
 
 

@@ -503,4 +503,17 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         return mapSuratTtd;
     }
 
+    @Override
+    public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan) {
+        List<SuratKeluar> suratKeluars = getSuratKeluarByCurrentPenandatangan(penandatangan);
+
+        // Filter the list by keyword
+        return suratKeluars.stream()
+                .filter(suratKeluar -> suratKeluar.getNomorArsip().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getKategori().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getPerihal().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getPenerimaEksternal().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+        
+    }
 }
