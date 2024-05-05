@@ -25,7 +25,7 @@
         <section class="bentuk-surat-text">
             <div class="tabs-container">
                 <div class="tabs-group-parent">
-                    <div class="tabs-group">
+                    <div class="tabs-group" th:if="${role == 'Pengurus'}">
                         <a class="component-2" th:href="@{/ttd/request}">
                             <img
                                 class="iconoutlineexclamation-circl"
@@ -61,7 +61,7 @@
                         <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request Surat</th>
                                     <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
                                     <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
@@ -69,6 +69,7 @@
                                         <div style="display: block;">Tanggal</div>
                                         <div style="display: block;">Pengajuan</div>
                                     </td>
+                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Status Tanda Tangan</th>
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
                                 </tr>
                             </thead>
@@ -84,11 +85,12 @@
                                         <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
                                             <span th:text="${bentuk}"></span>
                                             <th:block th:if="${!iterStat.last}">
-                                                <span>, </span>
+                                                <span>,</span>
                                             </th:block>
                                         </th:block>
                                     </td>
                                     <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${requestSurat.status == 4 ? 'Perlu tanda tangan' : 'Selesai ditandatangani'}"></td>
                                     <td style="display: flex; justify-content: space-between;">
                                         <a th:href="@{/ttd/detail/{id}(id=${requestSurat.id})}" class="button20">
                                             <div class="button21">Detail</div>

@@ -307,7 +307,9 @@ public class SuratKeluarController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 String penandatanganId = pengguna.getId();
+                System.out.println("penandatanganId " + penandatanganId);
                 List<RequestSurat> requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
+                requestSurats.sort(Comparator.comparingInt(RequestSurat::getStatus));
                 model.addAttribute("requestSurats", requestSurats);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
