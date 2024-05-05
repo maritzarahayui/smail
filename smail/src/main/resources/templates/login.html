@@ -3,79 +3,24 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    
     <link rel="stylesheet" th:href="@{/css/login.css}" />
+    <link rel="stylesheet" href="/css/global-final.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
     />
   </head>
   
-  <style>
-    .content-container {
-        width: 100%;
-        position: relative;
-        background-color: var(--white-white-1);
-        overflow: hidden;
-        height: 100%;  
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center; 
-        background-color: var(--white-white-1);
-    }
-
-    .accordion-container {
-        min-width: 85%;
-        max-width: 85%;
-    }
-
-    .accordion {
-        background-color: var(--blue-blue-2);
-        border-radius: var(--br-xs);
-        color: var(--white-white-1);
-        padding: var(--padding-xl);
-        gap: var(--gap-xl);
-        display: flex;
-        box-sizing: border-box;
-        justify-content: space-between;
-    }
-  
-    .panel {
-        background-color: var(--green-green-5);
-        border-radius: var(--br-5xs);
-        color: var(--white-white-1);
-        padding: var(--padding-xl);
-        gap: var(--gap-xl);
-
-        display: none;
-        overflow: hidden;
-        box-sizing: border-box;
-        justify-content: space-between;
-    }
-
-    .panel.active {
-        display: block;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }
-
-    .accordion.active {
-        background-color: var(--green-green-5);
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    .chevron-rotate {
-        transform: rotate(180deg);
-    }
-
-  </style>
-
   <body>
     <div class="homepage">
-      <section class="frame-a">
+      <div class="frame-a">
         <nav class="navbar">
           <div class="wrapper-group-7-parent">
             <div class="wrapper-group-7">
@@ -129,34 +74,115 @@
             </div>
           </div>
         </div>
-      </section>
-      <section class="first-vector-frame">
-        <img
-          class="vector-node-icon"
-          loading="lazy"
-          alt=""
-          src="/images/white-hill.svg"
-        />
+      </div>
 
-        <div class="sekilas-info-frame">
-          <div class="about-s-m-a-i-l-system">
-            <b class="sekilas-mengenai-smail-container">
-              <span class="sekilas-mengenai-smail-container1">
-                <span class="sekilas"></span>
-              </span>
-            </b>
+      <br><br><br>
+
+      <div class="first-vector-frame">
+        <img class="vector-node-icon" loading="lazy" alt="" src="/images/white-hill.svg"/>
+        <div class="sekilas-info-frame"></div>
+      </div>
+
+      <div id="carouselExampleControls" class="carousel slide carousel-fade custom-carousel" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="frame-parent">
+              <div class="frame-wrapper">
+                <div class="proses-persuratan-dapat-dilaku-parent">
+                  <b class="proses-persuratan-dapat-container">
+                    <p class="proses-persuratan-dapat">
+                      Proses persuratan dapat dilakukan
+                    </p>
+                    <p class="kapan-pun-dan">kapan pun dan di mana pun</p>
+                  </b>
+
+                  <div class="cukup-dengan-membuka">
+                    Cukup dengan membuka SMAIL, pengguna bisa mengajukan permohonan
+                    surat melalui gadget yang dimiliki.
+                  </div>
+                </div>
+              </div>
+              <img
+                class="vectary-texture-icon"
+                loading="lazy"
+                alt=""
+                src="/images/mock-request.svg"
+              />
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="frame-parent">
+              <div class="frame-wrapper">
+                <div class="proses-persuratan-dapat-dilaku-parent">
+                  <b class="proses-persuratan-dapat-container">
+                    <p class="proses-persuratan-dapat">
+                      Riwayat surat dapat digunakan untuk
+                    </p>
+                    <p class="kapan-pun-dan">memantau proses pengajuan surat</p>
+                  </b>
+                  
+                  <div class="cukup-dengan-membuka">
+                    Pengguna dapat melihat status pengajuan surat, apakah ditolak, diproses, atau sudah selesai.
+                  </div>
+                </div>
+              </div>
+              <img
+                class="vectary-texture-icon"
+                loading="lazy"
+                alt=""
+                src="/images/mock-history.svg"
+              />
+            </div>
+          </div>
+
+          <div class="carousel-item">
+            <div class="frame-parent">
+              <div class="frame-wrapper">
+                <div class="proses-persuratan-dapat-dilaku-parent">
+                  <b class="proses-persuratan-dapat-container">
+                    <p class="proses-persuratan-dapat">
+                      Forum dapat digunakan sebagai sarana untuk
+                    </p>
+                    <p class="kapan-pun-dan"> mengetahui sistem persuratan pada SMAIL</p>
+                  </b>
+                  
+                  <div class="cukup-dengan-membuka">
+                    Cari pertanyaan yang sesuai dengan permasalahan yang dihadapi, jika tidak ada lekas ajukan pertanyaan pada kolom yang disediakan.
+                  </div>
+                </div>
+              </div>
+              <img
+                class="vectary-texture-icon"
+                loading="lazy"
+                alt=""
+                src="/images/mock-request.svg"
+              />
+            </div>
           </div>
         </div>
-      </section>
 
-      <div class="content-container">
+        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+      
+      <div class="content-container" th:unless="${faqsTerjawab.isEmpty()}">
+
+        <br><br><br>
 
         <b class="title-container" style="margin: 0;">
-            <span class="title-gradient">Frequently Asked</span>
-            <span>Question</span>
+            <span class="title-gradient">Forum</span>
+            <span>Pertanyaan</span>
         </b>
         
-        <br><br>
+        <br><br><br>
 
         <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
             <div class="accordion">
@@ -167,7 +193,7 @@
             <br>
         </div>
 
-        <br><br><br><br><br>
+        <br><br><br><br>
 
       </div>
 
@@ -190,6 +216,9 @@
               }
           });
       }
+
+      // carousel
+      
     </script>
 
   </body>

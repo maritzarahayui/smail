@@ -1,5 +1,7 @@
 package propensi.smail.service;
 
+import java.util.List;
+
 import propensi.smail.model.user.*;
 
 public interface PenggunaService {
@@ -7,4 +9,5 @@ public interface PenggunaService {
     String getRole(Pengguna user);
     String getFirstName(Pengguna user);
     Pengguna getPenggunaById(String id);
+    List<String> getAllRoles();
 } 

@@ -18,12 +18,12 @@
         <div class="navbar">
             <i id="menuIcon" class='bx bx-menu'></i>
             <div class="logo">
-                <img class="logo" th:src="@{/images/Logo SMAIL.svg}"/>
+                <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
             </div>
 
             <div class="nav-links">
                 <div class="sidebar-logo">
-                    <img class="logo" th:src="@{/images/Logo SMAIL.svg}"/>
+                    <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
                     <i class='bx bx-x' ></i>
                 </div>
 
@@ -36,7 +36,7 @@
                     <li th:if="${role == 'Pengurus' or role == 'Dosen'}">
                         <a th:href="@{/ttd/request}">Tanda Tangan</a>
                     </li>
-                    <li th:if="${role == 'Dosen' or role == 'Staf'}">
+                    <li th:if="${role == 'Dosen' or role == 'Staf' or role == 'Mahasiswa'}">
                         <a th:href="@{/request}">Ajukan Surat</a>
                     </li>
 
@@ -54,7 +54,7 @@
 
                     <li th:if="${role == 'Admin'}"><a th:href="@{/template/active-templates}">Template Surat</a></li>
 
-                    <li><a th:href="@{/faq}">FAQ</a></li>
+                    <li><a th:href="@{/faq}">Forum</a></li>
                 </ul>
             </div>
 
@@ -65,7 +65,7 @@
                         <img class="iconoutlinechevronDown" alt="" th:src="@{/images/chevron-down.svg}" />
                         <div id="dropdownContent" class="dropdownContent">
                             <div class="iconTextContainer">
-                                <img class="profile" alt="" th:src="@{/images/profile.svg}" />
+                                <img class="profileNavbar" alt="" th:src="@{/images/profile.svg}" />
                                 <a th:href="@{/profile}">Profile</a>
                             </div>
 

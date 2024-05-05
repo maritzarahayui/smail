@@ -947,3 +947,11 @@
     font-size: var(--font-size-lgi);
   }
 }
+
+.label6{
+    margin: 0;
+    align-self: stretch;
+    position: relative;
+    font-weight: 700;
+    font-family: inherit;
+ }

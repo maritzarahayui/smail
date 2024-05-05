@@ -65,27 +65,14 @@
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="tambah-template2">
-    <section class="home-frame">
-        <div class="sub-group-container">
-            <img
-                    class="sub-group-container-child"
-                    loading="lazy"
-                    alt=""
-                    src="/images/kiri.svg"
-            />
+    <div class="home-frame">
+        <b class="pengajuan-permohonan-surat-container">
+            <span class="pengajuan">Tambah</span>
+            <span> Template</span>
+        </b>
 
-            <div class="label-pair">
-                <h1 class="tambah-template3">
-              <span>
-                <span class="tambah">Tambah</span>
-                <span> Template</span>
-              </span>
-                </h1>
-            </div>
-        </div>
-    </section>
-    <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
-
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+    </div>
     <section class="attach-button">
         <div class="label-input-frame">
             <div class="label-frame">
@@ -118,8 +105,8 @@
                             <label for="pengguna2">Dosen</label>
                         </div>
                         <div class="custom-checkbox">
-                            <input type="checkbox" id="pengguna3" name="listPengguna" value="Staff" th:checked="${template.listPengguna.contains('Staff')}">
-                            <label for="pengguna3">Staff</label>
+                            <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf" th:checked="${template.listPengguna.contains('Staf')}">
+                            <label for="pengguna3">Staf</label>
                         </div>
                     </div>
 
@@ -156,7 +143,7 @@
                                                     <img
                                                             class="chevrondown-icon-child"
                                                             alt=""
-                                                            src="/images/upload-main.png"
+                                                            src="/images/upload.svg"
                                                     />
 
                                                     <img
@@ -176,11 +163,9 @@
                                         </div>
                                         <h3 class="upload-file-kamu-container">
                                             <span>Perbarui</span>
-                                            <span class="file-kamu-di"> file kamu di sini</span>
+                                            <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
                                         </h3>
                                         <span class="file-name" th:text="${template.fileName}"></span>
-                                        <br>
-                                        <br>
                                     </div>
                                 </div>
                             </div>

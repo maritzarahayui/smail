@@ -46,11 +46,20 @@ public class SuratKeluar {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "isSigned")
+    private Boolean isSigned = false;
 
-    /* RELATIONSHIPS */
-     @ManyToOne
-     @JoinColumn(name = "penandatangan")
-     private Pengguna penandatangan;
+    @ManyToMany
+    @JoinTable(
+            name = "suratkeluar_pengguna",
+            joinColumns = @JoinColumn(name = "surat_keluar_id"),
+            inverseJoinColumns = @JoinColumn(name = "pengguna_id")
+    )
+    private List<Pengguna> penandatangan;
+
+    @ManyToOne
+    @JoinColumn(name = "current_penandatangan")
+    private Pengguna currentPenandatangan;
 
     @ManyToOne
     @JoinColumn(name = "pengaju")
@@ -59,4 +68,7 @@ public class SuratKeluar {
     @OneToOne
     @JoinColumn(name = "surat_id")
     private RequestSurat requestSurat;
+
+    @Column(name = "arsip_id")
+    private String arsipSurat;
 }
