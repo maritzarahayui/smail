@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.mail.MessagingException;
 import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.user.*;
@@ -56,6 +58,9 @@ public interface RequestService {
     void createRequestTemplate(RequestTemplate requestTemplate, RequestAndFieldDataDTO requestDTO);
     List<RequestTemplate> retrieveAllRequest();
     Map<Integer, String> listKategori();
+    RequestTemplate store(MultipartFile file);
+    RequestTemplate getFile(String id);
+    RequestTemplate getRequestTemplateById(String requestSuratId);
 
     // PREVIEW TEMPLATE
     List<String> getAllJenisByKategori(String Kategori);

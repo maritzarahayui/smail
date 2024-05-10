@@ -45,6 +45,13 @@ public class RequestTemplate {
     @Column(name = "alasan_penolakan")
     private String alasanPenolakan;
 
+    @Lob
+    @Column(name = "file")
+    private byte[] file;
+
+    @Column(name = "file_name")
+    private String fileName;
+
     /* RELATIONSHIPS */
     @ManyToOne
     @JoinColumn(name = "pengaju")

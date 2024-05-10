@@ -106,6 +106,17 @@ public class SuratKeluarController {
     public String detailOnProcessRequestSuratAdmin(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
+        
+        RequestTemplate fileExample = requestService.getFile(id);
+
+        if (fileExample != null) {
+            byte[] pdf = fileExample.getFile();
+
+            String base64PDFex = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDFex", base64PDFex);
+            model.addAttribute("fileExample", fileExample);
+        }
 
         SuratKeluar file = suratKeluarService.getFileTtd(id);
 

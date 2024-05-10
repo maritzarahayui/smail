@@ -18,6 +18,7 @@ import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
 import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.service.PenggunaService;
+import propensi.smail.service.RequestService;
 import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,9 @@ public class TemplateFEController {
 
     @Autowired
     PenggunaService penggunaService;
+
+    @Autowired
+    private RequestService requestService;
 
     @GetMapping("/new-requests")
     public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
@@ -92,6 +96,17 @@ public class TemplateFEController {
     @GetMapping("/request/detail/{id}")
     public String showDetailTemplateRequests(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestTemplate requestTemplate = templateSuratService.getRequest(id);
+
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();

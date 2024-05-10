@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.transaction.Transactional;
 import propensi.smail.model.*;
@@ -153,6 +155,37 @@ public class RequestServiceImpl implements RequestService {
             return null;
         }
         
+    }
+
+    @Override
+    @Transactional
+    public RequestTemplate store(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            RequestTemplate requestTemplate = new RequestTemplate();
+            requestTemplate.setFile(file.getBytes());
+            requestTemplate.setFileName(fileName);
+            return requestTemplateDb.save(requestTemplate);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + fileName, e);
+        }
+    }
+
+    @Override
+    public RequestTemplate getFile(String id) {
+        Optional<RequestTemplate> optionalRequestSurat = Optional.ofNullable(getRequestTemplateById(id));
+        if (optionalRequestSurat.isPresent()) {
+            return optionalRequestSurat.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public RequestTemplate getRequestTemplateById(String requestSuratId) {
+        Optional<RequestTemplate> requestTemplate = requestTemplateDb.findById(requestSuratId);
+        return requestTemplate.orElseThrow(() -> new NoSuchElementException("RequestTemplate with id: " + requestSuratId + " not found"));
     }
 
     @Override

@@ -13,6 +13,7 @@ import propensi.smail.repository.PenggunaDb;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.SuratKeluarService;
@@ -43,6 +44,7 @@ import io.jsonwebtoken.lang.Arrays;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.ObjectError;
 
 import org.springframework.security.core.Authentication;
@@ -116,7 +118,8 @@ public class RequestSuratController {
 
     @PostMapping("/request")
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestAndFieldDataDTO requestDTO,
-                                    BindingResult bindingResult, Authentication auth) {
+                                @RequestParam("file") MultipartFile file,            
+                                BindingResult bindingResult, Authentication auth) throws IOException {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors().toString();
         }
@@ -132,6 +135,11 @@ public class RequestSuratController {
         
         if (requestDTO.getJenisSurat().equals("Lainnya")) {
             RequestTemplate requestTemplate = new RequestTemplate();
+
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+            requestTemplate.setFile(file.getBytes());
+            requestTemplate.setFileName(fileName);
             requestTemplate.setPengaju(pengguna);
             requestTemplate.setTanggalPengajuan(new Date());
             requestService.createRequestTemplate(requestTemplate,requestDTO);
@@ -553,9 +561,21 @@ public class RequestSuratController {
     // }
 
     @GetMapping("/detail/{id}/submitted")
+    @Transactional(readOnly = true)
     public String detailRequestSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
+
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -575,10 +595,22 @@ public class RequestSuratController {
     }
 
     @GetMapping("/detail/{id}/rejected")
+    @Transactional(readOnly = true)
     public String detailRequestSuratRejected(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
         
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -597,10 +629,22 @@ public class RequestSuratController {
     }
 
     @GetMapping("/detail/{id}/process")
+    @Transactional(readOnly = true)
     public String detailRequestSuratOnProcess(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
         
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -619,6 +663,7 @@ public class RequestSuratController {
     }
 
     @GetMapping("/detail/{id}/finished")
+    @Transactional(readOnly = true)
     public String detailRequestSuratFinished(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
@@ -661,10 +706,22 @@ public class RequestSuratController {
     }
 
     @GetMapping("/detail/{id}/cancelled")
+    @Transactional(readOnly = true)
     public String detailRequestSuratCancelled(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
         
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -681,38 +738,6 @@ public class RequestSuratController {
 
         return "user-detail-dibatalkan"; 
     }
-
-    // @PutMapping("/{requestSuratId}/cancel")
-    // public ResponseEntity<RequestSurat> cancelRequest(@PathVariable("requestSuratId") String requestSuratId, @RequestParam("reason") String reason) {
-    //     try {
-    //         RequestSurat canceledRequestSurat = requestService.batalkanRequestSurat(requestSuratId, reason);
-    //         return new ResponseEntity<>(canceledRequestSurat, HttpStatus.OK);
-    //     } catch (NoSuchElementException e) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestSurat with id: " + requestSuratId + " not found", e);
-    //     }
-    // }
-
-    // @PostMapping("/{id}/cancel")
-    // public String cancelRequestSurat(@PathVariable("id") String id, @RequestParam("reason") String reason, Model model, Authentication auth) {
-    //     RequestSurat requestSurats = requestService.batalkanRequestSurat(id, reason);
-    //     model.addAttribute("requestSurats", requestSurats);
-        
-    //     if (auth != null) {
-    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-    //         String email = oauthUser.getEmail();
-    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-    //         if (user.isPresent()) {
-    //             Pengguna pengguna = user.get();
-    //             model.addAttribute("role", penggunaService.getRole(pengguna));
-    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-    //         } else {
-    //             return "auth-failed";
-    //         }
-    //     }
-
-    //     return "user-detail-dibatalkan"; 
-    // }
 
     @GetMapping("/admin/request")
     @Transactional(readOnly = true)
@@ -864,9 +889,21 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/detail/{id}")
+    @Transactional(readOnly = true)
     public String detailRequestSuratAdmin(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
+
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -901,11 +938,57 @@ public class RequestSuratController {
         return "admin-detail-diajukan";
     }
 
+    @GetMapping("/admin/detail/{id}/cancelled")
+    @Transactional(readOnly = true)
+    public String detailRequestSuratAdminCancelled(@PathVariable("id") String id, Model model, Authentication auth) {
+        RequestSurat requestSurats = requestService.getRequestSuratById(id);
+        model.addAttribute("requestSurats", requestSurats);
+        
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        return "admin-detail-dibatalkan"; 
+    }
+
     @GetMapping("/admin/detail/{id}/rejected")
+    @Transactional(readOnly = true)
     public String detailRequestSuratAdminTolak(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
 
+        RequestTemplate file = requestService.getFile(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
+        }
+        
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
