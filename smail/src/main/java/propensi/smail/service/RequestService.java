@@ -67,7 +67,7 @@ public interface RequestService {
 
     /* DASHBOARD */
     Integer countDurasi(RequestSurat requestSurat);
-    Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
+    Integer countAveragePerforma(List<RequestSurat> listRequestSurat, String kategori);
     Map<String, Integer> getPerformaRequestSurat();
     Map<String, Map<String, Long>> getJumlahRequestPerMinggu();
     Map<String, Long> getJumlahRequestPerMonth();
@@ -77,6 +77,7 @@ public interface RequestService {
     String getTopRequester();
     String getCurrentYearMonth();
     Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth();
+    List<RequestSurat> getRequestSuratByKategori(String kategori);
 
     //  EMIIIIIIIIIII ////
     Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);

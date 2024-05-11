@@ -483,11 +483,11 @@ public class RequestServiceImpl implements RequestService {
     public Map<Integer, String> listKategori(){
         Map<Integer, String> kategori = new HashMap<>();
 
-        kategori.put(1, "LEGAL");
+        kategori.put(1, "Legal");
         kategori.put(2, "SDM");
-        kategori.put(3, "KEUANGAN");
-        kategori.put(4, "SARANA");
-        kategori.put(5, "KEMAHASISWAAN");
+        kategori.put(3, "Keuangan");
+        kategori.put(4, "Sarana");
+        kategori.put(5, "Kemahasiswaan");
         return kategori;
     }
 
@@ -521,12 +521,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Integer countAveragePerforma(List<RequestSurat> listRequestSurat) {
+    public Integer countAveragePerforma(List<RequestSurat> listRequestSurat, String kategori) {
         int total = 0;
         int counterRequest = 0;
 
         for (RequestSurat request : listRequestSurat) {
-            if (request.getTanggalSelesai() != null) {
+            if (request.getKategori().equals(kategori) && request.getTanggalSelesai() != null) {
                 total += countDurasi(request);
                 counterRequest++;
             }
@@ -539,26 +539,24 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Map<String, Integer> getPerformaRequestSurat() {
-        LocalDate now = LocalDate.now();
-        Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
-        String[] indonesianMonths = new String[] {"Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"};
-        
-        int value = 0;
-        int counter = 0;
-        List<RequestSurat> allRequestSuratMonthly;
+        Map<String, Integer> performaPerCategory = new LinkedHashMap<>();
 
-        for (String bulan : indonesianMonths) {
-            counter++;
-            allRequestSuratMonthly = requestSuratDb.findByTanggalPengajuanMonthly(counter, now.getYear());
+        Map<Integer, String> allCategories = listKategori();
 
-            System.out.println("WOIIIII MONTHLY" + counter + now.getYear());
-            System.out.println("WOIIIII MONTHLY" + allRequestSuratMonthly.toString());
-            value = countAveragePerforma(allRequestSuratMonthly);
-            mapPerBulan.put(bulan, value);
+        for (Integer categoryId : allCategories.keySet()) {
+            String categoryName = allCategories.get(categoryId);
+            List<RequestSurat> requestSuratByCategory = getRequestSuratByKategori(categoryName);
+            int performaRataRata = countAveragePerforma(requestSuratByCategory, categoryName);
+            performaPerCategory.put(categoryName, performaRataRata);
         }
 
-        System.out.println("MAPPPPP PER BULAN" + mapPerBulan.toString());
-        return mapPerBulan;        
+        System.out.println(performaPerCategory.toString());
+        return performaPerCategory;
+    }
+
+    @Override
+    public List<RequestSurat> getRequestSuratByKategori(String kategori) {
+        return requestSuratDb.findByKategori(kategori);
     }
 
     @Override
