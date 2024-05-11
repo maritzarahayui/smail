@@ -153,7 +153,7 @@ public class BaseController {
                     model.addAttribute("totalSuratKeluar", suratKeluarService.getAllSuratKeluar().size());
                     model.addAttribute("totalSuratMasuk", suratMasukService.getAllSuratMasuk().size());
                     model.addAttribute("totalForumEsk", faqService.getFaqsByStatus(1).size());
-                    model.addAttribute("totalTtd", mapSuratTtd.get("Sudah")+mapSuratTtd.get("Belum"));
+                    model.addAttribute("totalBelumTtd", mapSuratTtd.get("Belum"));
 
                     return "dashboard-pengurus";
                     

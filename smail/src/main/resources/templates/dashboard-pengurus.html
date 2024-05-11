@@ -25,87 +25,89 @@
         <br>
 
         <div class="container" style="width: 100%; max-width: 1200px;"> 
-            <div class="label p-1" style="text-align: center;">Overview Total</div>
             <div class="row align-items-center">
                 <div class="col">
-                    <div class="card border-0 m-4">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                            <h5 class="card-title">Surat Keluar</h5>
-                            <h2 class="card-text" th:text="${totalSuratKeluar}"></h2>
-                            <h4 class="card-title">Total</h4>
+                    <a th:href="@{'/surat-keluar/all'}" style="text-decoration: none; color: inherit;">
+                        <div class="card border-0 m-4">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                <h2 class="card-text" th:text="${totalSuratKeluar}"></h2>
+                                <h6 class="card-title">Surat Keluar</h6>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col">
-                    <div class="card border-0 m-4">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                            <h5 class="card-title">Surat Masuk</h5>
-                            <h2 class="card-text" th:text="${totalSuratMasuk}"></h2>
-                            <h5 class="card-title">Total</h5>
+                    <a th:href="@{'/surat-masuk/all'}" style="text-decoration: none; color: inherit;">
+                        <div class="card border-0 m-4">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                <h2 class="card-text" th:text="${totalSuratMasuk}"></h2>
+                                <h6 class="card-title">Surat Masuk</h6>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col">
-                    <div class="card border-0 m-4">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                            <h5 class="card-title">Forum</h5>
-                            <h2 class="card-text" th:text="${totalForumEsk}"></h2>
-                            <h5 class="card-title">Dieskalasi</h5>
+                    <a th:href="@{'/faq'}" style="text-decoration: none; color: inherit;">
+                        <div class="card border-0 m-4">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                <h2 class="card-text" th:text="${totalForumEsk}"></h2>
+                                <h6 class="card-title">Forum Dieskalasi</h6>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="col">
-                    <div class="card border-0 m-4">
-                        <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                            <h5 class="card-title">Tanda Tangan</h5>
-                            <h2 class="card-text" th:text="${totalTtd}"></h2>
-                            <h5 class="card-title">Total</h5>
+                    <a th:href="@{'/ttd/request'}" style="text-decoration: none; color: inherit;">
+                        <div class="card border-0 m-4">
+                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                <h2 class="card-text" th:text="${totalBelumTtd}"></h2>
+                                <h6 class="card-title">Surat Perlu TTD</h6>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
             <br><br>
 
-            <div class="row align-items-center">
+            <div class="row">
                 <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Kategori</div>
-                    <canvas id="barChartSuratMasukKeluarKategori" style="padding-right: 20px; height: 300px; width: 600px;"></canvas>
-                </div>
-                <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Rata-Rata Durasi Pemrosesan Request</div>
+                    <div class="label p-1" style="text-align: center;">Rata-Rata Durasi Penandatanganan Surat</div>
                     <canvas id="lineChartPerformaSurat" style="height: 300px; width: 600px;"></canvas>
+                </div>
+                <div class="col-3">
+                    <div class="row-cols-1">
+                        <div class="label p-1" style="text-align: center;">Surat Masuk</div>
+                    </div>
+                    <div class="row-cols-1">
+                        <canvas id="pieChartSuratMasuk"></canvas>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="row-cols-1">
+                        <div class="label p-1" style="text-align: center;">Surat Ditanda Tangan</div>
+                    </div>
+                    <div class="row-cols-1">
+                        <canvas id="pieChartSuratKeluar"></canvas>
+                    </div>
                 </div>
             </div>
 
             <br><br><br>
 
             <div class="row align-items-center">
-                <div class="col-8">
-                    <div style="display: flex; align-items: center; justify-content: space-between;">
-                        <div class="label p-1" style="text-align: start;">Jumlah Surat Masuk - Keluar per Waktu</div>
-                        <div>
-                            <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
-                            <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
-                            <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
-                        </div>
+                <div class="col-6">
+                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Waktu</div>
+                    <div style="text-align: center; justify-content: space-between;">
+                        <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
+                        <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
+                        <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
                     </div>
-                    
                     <canvas id="barChartSuratMasukKeluar" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
                 </div>
-                <div class="col-4">
-                    <div class="row-cols-1">
-                        <div class="label p-1" style="text-align: center;">Surat Masuk</div>
-                    </div>
-                    <div class="row-cols-1">
-                        <canvas id="pieChartSuratMasuk" style="max-height: 170px;"></canvas>
-                    </div>
-                    <div class="row-cols-1" style="margin-top: 20px;">
-                        <div class="label p-1" style="text-align: center;">Surat Ditanda Tangan</div>
-                    </div>
-                    <div class="row-cols-1">
-                        <canvas id="pieChartSuratKeluar" style="max-height: 170px;"></canvas>
-                    </div>
+                <div class="col-6">
+                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Kategori</div>
+                    <canvas id="barChartSuratMasukKeluarKategori" style="padding-right: 20px; height: 300px; width: 600px;"></canvas>
                 </div>
             </div>
 
@@ -305,7 +307,7 @@
                 responsive: true,
                 plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'top',
                 },
                 }
             }
@@ -336,7 +338,7 @@
                 responsive: true,
                 plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'top',
                 },
                 }
             }
