@@ -91,6 +91,18 @@ public class SuratKeluarController {
             }
         }
 
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate fileExample = requestService.getFile(id);
+            if (fileExample != null) {
+                byte[] pdfEx = fileExample.getFile();
+                String base64PDFEx = Base64.getEncoder().encodeToString(pdfEx);
+                model.addAttribute("base64PDFEx", base64PDFEx);
+                model.addAttribute("template", fileExample);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
+            }
+        }
+
         Map<Integer, String> statusMap = new HashMap<>();
         statusMap.put(1, "Diajukan");
         statusMap.put(3, "Ditolak");
@@ -106,16 +118,17 @@ public class SuratKeluarController {
     public String detailOnProcessRequestSuratAdmin(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
-        
-        RequestTemplate fileExample = requestService.getFile(id);
 
-        if (fileExample != null) {
-            byte[] pdf = fileExample.getFile();
-
-            String base64PDFex = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDFex", base64PDFex);
-            model.addAttribute("fileExample", fileExample);
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate fileExample = requestService.getFile(id);
+            if (fileExample != null) {
+                byte[] pdf = fileExample.getFile();
+                String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDFEx", base64PDFEx);
+                model.addAttribute("template", fileExample);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
+            }
         }
 
         SuratKeluar file = suratKeluarService.getFileTtd(id);
@@ -208,30 +221,8 @@ public class SuratKeluarController {
         }
     }
 
-
-    // @GetMapping("/pengurus/request")
-    // public String showAllRequestsPengurus(Model model, Authentication auth) {
-    //     List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSurat();
-    //     model.addAttribute("requestSurats", requestSurats);
-
-    //     if (auth != null) {
-    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-    //         String email = oauthUser.getEmail();
-    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-    //         if (user.isPresent()) {
-    //             Pengguna pengguna = user.get();
-    //             model.addAttribute("role", penggunaService.getRole(pengguna));
-    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-    //         } else {
-    //             return "auth-failed";
-    //         }
-    //     }
-
-    //     return "pengurus-ttd-request";
-    // }
-
     @GetMapping("/ttd/detail/{id}")
+    @Transactional(readOnly = true)
     public String detailRequestSuratPengurus(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
@@ -266,6 +257,18 @@ public class SuratKeluarController {
                 model.addAttribute("user", pengguna);
             } else {
                 return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate fileExample = requestService.getFile(id);
+            if (fileExample != null) {
+                byte[] pdfEx = fileExample.getFile();
+                String base64PDFEx = Base64.getEncoder().encodeToString(pdfEx);
+                model.addAttribute("base64PDFEx", base64PDFEx);
+                model.addAttribute("template", fileExample);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 

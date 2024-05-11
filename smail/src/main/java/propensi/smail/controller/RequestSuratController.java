@@ -342,17 +342,6 @@ public class RequestSuratController {
     @Transactional(readOnly = true)
     public String detailRequestSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
-    
-        RequestTemplate file = requestService.getFile(id);
-
-        if (file != null) {
-            byte[] pdf = file.getFile();
-
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file);
-        }
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -366,6 +355,33 @@ public class RequestSuratController {
             } else {
                 return "auth-failed";
             }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate fileExample = requestService.getFile(id);
+            if (fileExample != null) {
+                byte[] pdf = fileExample.getFile();
+                String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDFEx", base64PDFEx);
+                model.addAttribute("template", fileExample);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
+            }
+        }
+
+        SuratKeluar suratKeluar1 = requestSurats.getSurat();
+        model.addAttribute("outgoing", suratKeluar1);
+
+        SuratKeluar file = suratKeluarService.getFileTtd(id);
+
+        if (file != null) {
+            byte[] pdf = file.getFile();
+
+            // Convert PDF content to Base64
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
         }
 
         Map<Integer, String> statusMap = new HashMap<>();
@@ -536,17 +552,6 @@ public class RequestSuratController {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
 
-        RequestTemplate file = requestService.getFile(id);
-
-        if (file != null) {
-            byte[] pdf = file.getFile();
-
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file);
-        }
-
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -558,6 +563,18 @@ public class RequestSuratController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
                 return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 
@@ -585,17 +602,6 @@ public class RequestSuratController {
     public String detailRequestSuratAdminCancelled(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
-        
-        RequestTemplate file = requestService.getFile(id);
-
-        if (file != null) {
-            byte[] pdf = file.getFile();
-
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file);
-        }
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -611,6 +617,18 @@ public class RequestSuratController {
             }
         }
 
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
+            }
+        }
+
         return "admin-detail-dibatalkan"; 
     }
 
@@ -619,17 +637,6 @@ public class RequestSuratController {
     public String detailRequestSuratAdminTolak(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
-
-        RequestTemplate file = requestService.getFile(id);
-
-        if (file != null) {
-            byte[] pdf = file.getFile();
-
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file);
-        }
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -642,6 +649,18 @@ public class RequestSuratController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
                 return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 

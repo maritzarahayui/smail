@@ -132,7 +132,7 @@
                         <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
                         <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd')}"></td>
                         <td style="display: flex; justify-content: space-between;">
-                            <a th:href="@{/detail/{id}/cancelled(id=${requestSurat.id})}" class="button20">
+                            <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                 <div class="button21">Detail</div>
                             </a>
                         </td>
@@ -179,7 +179,7 @@
                         <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
                         <td th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd')}"></td>
                         <td style="display: flex; justify-content: space-between;">
-                            <a th:href="@{/detail/{id}/rejected(id=${requestSurat.id})}" class="button20">
+                            <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                 <div class="button21">Detail</div>
                             </a>
                         </td>
@@ -221,7 +221,7 @@
                         </td>
                         <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
                         <td style="display: flex; justify-content: space-between;">
-                            <a th:href="@{/detail/{id}/process(id=${requestSurat.id})}" class="button20">
+                            <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                 <div class="button21">Detail</div>
                             </a>
                         </td>
@@ -268,7 +268,7 @@
                         <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
                         <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd')}"></td>
                         <td style="display: flex; justify-content: space-between;">
-                            <a th:href="@{/detail/{id}/finished(id=${requestSurat.id})}" class="button20">
+                            <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                 <div class="button21">Detail</div>
                             </a>
                         </td>
