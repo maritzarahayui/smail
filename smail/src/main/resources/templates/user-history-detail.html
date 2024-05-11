@@ -130,6 +130,16 @@
                 </div>
             </div>
 
+            <div th:if="${requestSurat.status == 2}" class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Alasan Pembatalan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.alasanPembatalan}"></div>
+                </div>
+            </div>
+
             <div th:if="${requestSurat.status == 3}" class="row">
                 <div class="detail-wrapper">
                     <div class="detail">Tanggal Penolakan</div>

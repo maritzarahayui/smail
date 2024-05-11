@@ -200,28 +200,10 @@ public class RequestSuratController {
         return "user-history";
     }
 
-    @GetMapping("/request/history/{id}/cancel")
-    public String cancelRequest(Model model, Authentication auth, @PathVariable("id") String id) {
-        requestService.batalkanRequestSurat(id, "test");
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "redirect:/detail/"+id+"/cancelled";
+    @PostMapping("/request/history/{id}/cancel")
+    public String cancelRequest(Model model, Authentication auth, @PathVariable("id") String id,  @RequestParam(value = "alasanPembatalan", required = false) String alasanPembatalan) {
+        requestService.batalkanRequestSurat(id, alasanPembatalan);
+        return "redirect:/detail/"+id+"/request";
     }
 
     @GetMapping("/request/history/search")

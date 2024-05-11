@@ -85,9 +85,30 @@
                                 <div class="button21">Detail</div>
                             </a>
 
-                            <a th:href="@{/request/history/{id}/cancel(id=${requestSurat.id})}" class="button20" style="background-color: #990012;">
-                                <div class="button21">Batalkan</div>
-                            </a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="button20 button21" style="background-color: #990012; margin-left: 10px;" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelModal' + requestSurat.id}">
+                                Batalkan
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:id="${'cancelModal' + requestSurat.id}" tabindex="-1" th:aria-labelledby="'cancelModalLabel' + ${requestSurat.id}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                            <div class="modal-header" style="border-bottom: none;">
+                                                <h5 class="modal-title" th:id="${'cancelModalLabel' + requestSurat.id}">Batalkan Request Surat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form th:action="@{/request/history/{id}/cancel(id=${requestSurat.id})}" method="post">
+                                                    <div class="mb-3">
+                                                        <input type="text" class="form-control" th:id="${'inputReason' + requestSurat.id}" name="alasanPembatalan" placeholder="Masukkan alasan...">
+                                                    </div>
+                                                    <button type="submit" class="button20 button21" style="background-color: #990012;">Batalkan</button>
+                                                </form>                                            
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
