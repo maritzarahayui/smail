@@ -201,6 +201,7 @@
               class="button5"
               th:if="${suratMasuk.suratFollowUp == null}"
               th:href="@{'/surat-masuk/follow-up/' + ${suratMasuk.nomorArsip}}"
+              style="text-decoration: none;"
             >
               <div class="follow-up">Follow Up</div>
             </a>
@@ -209,6 +210,7 @@
               <a
                 class="button6"
                 th:href="@{'/surat-masuk/disposisi/' + ${suratMasuk.nomorArsip}}"
+                style="text-decoration: none;"
               >
                 <div class="disposisi">Disposisi</div>
               </a>

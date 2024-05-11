@@ -49,9 +49,7 @@ public interface RequestService {
     Map<Integer, String> listBahasa();
     void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
     void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
-    // List<String> getJenisSuratForKategori(String kategori);
-    // List<RequestSurat> getRequestsByUser(Pengguna pengguna);
-
+    
     String generateRequestId(Pengguna pengaju);
 
     // METHOD REQUEST TEMPLATE

@@ -491,7 +491,6 @@ public class RequestServiceImpl implements RequestService {
         return kategori;
     }
 
-
     // ------PREVIEW-----
     @Override
     public List<String> getAllJenisByKategori(String kategori) {

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+    <link rel="stylesheet" href="/css/tabs.css"/>
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+
+<body>
+
+<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+<div class="permintaan-template">
+
+    <b class="pengajuan-permohonan-surat-container">
+        <span class="pengajuan">Riwayat</span>
+        <span>Surat</span>
+    </b>
+
+    <nav th:replace="~{fragments/asset :: asset}"></nav>
+
+    <div class="content-wrapper" style="margin-inline: 10px;">
+
+        <div class="search-wrapper">
+            <form th:action="@{/request/history/search}" method="get" id="searchForm">
+                <div class="button17">
+                    <img class="search-icon1" alt="" src="/images/search.svg" />
+                    <input class="keuangan3" placeholder="Cari..." type="text" name="keyword" id="searchInput" />
+                </div>
+            </form>
+        </div>
+
+        <div class="tabs-group" id="tab">
+            <a class="tab-link active" data-toggle="tab" href="#diajukan">Diajukan</a>
+            <a class="tab-link" data-toggle="tab" href="#dibatalkan">Dibatalkan</a>
+            <a class="tab-link" data-toggle="tab" href="#ditolak">Ditolak</a>
+            <a class="tab-link" data-toggle="tab" href="#diproses">Diproses</a>
+            <a class="tab-link" data-toggle="tab" href="#selesai">Selesai</a>
+        </div>
+
+        <br><br>
+
+        <!-- DIAJUKAN -->
+        <div class="tab-pane" id="diajukan">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                        <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                        <th style="width: 15%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Pengajuan</div>
+                        </td>
+                        <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(allRequests)}">
+                        <td colspan="5" style="text-align: center;">Belum ada permohonan surat yang diajukan</td>
+                    </tr>
+           
+                    <tr th:each="requestSurat: ${allRequests}">
+                        <td th:text="${requestSurat.id}"></td>
+                        <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                        <td>
+                            <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                <span th:text="${bentuk}"></span>
+                                <th:block th:if="${!iterStat.last}">
+                                    <span>, </span>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                        <td style="display: flex; justify-content: space-between;">
+                            <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
+                                <div class="button21">Detail</div>
+                            </a>
+
+                            <a th:href="@{/request/history/{id}/cancel(id=${requestSurat.id})}" class="button20" style="background-color: #990012;">
+                                <div class="button21">Batalkan</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DIBATALKAN -->
+        <div class="tab-pane" id="dibatalkan">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                        <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Pengajuan</div>
+                        </td>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Dibatalkan</div>
+                        </td>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(cancelledRequests)}">
+                        <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang dibatalkan</td>
+                    </tr>
+                
+                    <tr th:each="requestSurat: ${cancelledRequests}">
+                        <td th:text="${requestSurat.id}"></td>
+                        <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                        <td>
+                            <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                <span th:text="${bentuk}"></span>
+                                <th:block th:if="${!iterStat.last}">
+                                    <span>, </span>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd')}"></td>
+                        <td style="display: flex; justify-content: space-between;">
+                            <a th:href="@{/detail/{id}/cancelled(id=${requestSurat.id})}" class="button20">
+                                <div class="button21">Detail</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DITOLAK -->
+        <div class="tab-pane" id="ditolak">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                        <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Pengajuan</div>
+                        </td>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Penolakan</div>
+                        </td>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(rejectedRequests)}">
+                        <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang ditolak</td>
+                    </tr>
+                
+                    <tr th:each="requestSurat: ${rejectedRequests}">
+                        <td th:text="${requestSurat.id}"></td>
+                        <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                        <td>
+                            <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                <span th:text="${bentuk}"></span>
+                                <th:block th:if="${!iterStat.last}">
+                                    <span>, </span>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd')}"></td>
+                        <td style="display: flex; justify-content: space-between;">
+                            <a th:href="@{/detail/{id}/rejected(id=${requestSurat.id})}" class="button20">
+                                <div class="button21">Detail</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- DIPROSES -->
+        <div class="tab-pane" id="diproses">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                        <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                        <th style="width: 15%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Pengajuan</div>
+                        </td>
+                        <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(onProcessRequests)}">
+                        <td colspan="5" style="text-align: center;">Belum ada permohonan surat yang diproses</td>
+                    </tr>
+                
+                    <tr th:each="requestSurat: ${onProcessRequests}">
+                        <td th:text="${requestSurat.id}"></td>
+                        <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                        <td>
+                            <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                <span th:text="${bentuk}"></span>
+                                <th:block th:if="${!iterStat.last}">
+                                    <span>, </span>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                        <td style="display: flex; justify-content: space-between;">
+                            <a th:href="@{/detail/{id}/process(id=${requestSurat.id})}" class="button20">
+                                <div class="button21">Detail</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SELESAI -->
+        <div class="tab-pane" id="selesai">
+            <table class="table table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                        <th style="width: 20%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                        <th style="width: 20%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Pengajuan</div>
+                        </td>
+                        <td style="width: 15%; text-align: center; vertical-align: middle;">
+                            <div style="display: block;">Tanggal</div>
+                            <div style="display: block;">Selesai</div>
+                        </td>
+                        <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(finishedRequests)}">
+                        <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang selesai</td>
+                    </tr>
+               
+                    <tr th:each="requestSurat: ${finishedRequests}">
+                        <td th:text="${requestSurat.id}"></td>
+                        <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                        <td>
+                            <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                <span th:text="${bentuk}"></span>
+                                <th:block th:if="${!iterStat.last}">
+                                    <span>, </span>
+                                </th:block>
+                            </th:block>
+                        </td>
+                        <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}"></td>
+                        <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd')}"></td>
+                        <td style="display: flex; justify-content: space-between;">
+                            <a th:href="@{/detail/{id}/finished(id=${requestSurat.id})}" class="button20">
+                                <div class="button21">Detail</div>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+        // Simulate click event on #semua tab link
+        document.querySelector('#tab .tab-link[href="#diajukan"]').click();
+    });
+
+  document.querySelectorAll('#tab .tab-link').forEach(link => {
+      link.addEventListener('click', function(e) {
+          e.preventDefault();
+          let currentActive = document.querySelector('#tab .tab-link.active');
+          let currentActivePane = document.querySelector('.tab-pane.active');
+
+          if (currentActive) {
+              currentActive.classList.remove('active');
+              currentActivePane.classList.remove('active');
+              currentActivePane.classList.remove('show');
+          }
+
+          let newActivePaneId = this.getAttribute('href');
+          let newActivePane = document.querySelector(newActivePaneId);
+
+          this.classList.add('active');
+          newActivePane.classList.add('active');
+          newActivePane.classList.add('show');
+      });
+  });
+
+</script>
+
+</body>
+</html>

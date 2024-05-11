@@ -33,7 +33,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div th:if="${requestSurat.status == 5}" class="row">
                 <div class="detail-wrapper">
                     <div class="detail">Nomor Surat</div>
                 </div>
@@ -120,7 +120,37 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div th:if="${requestSurat.status == 2}" class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Dibatalkan</div>
+                </div>
+            
+                <div class="content-wrapper">
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+
+            <div th:if="${requestSurat.status == 3}" class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Tanggal Penolakan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}"></div>
+                </div>
+            </div>
+
+            <div th:if="${requestSurat.status == 3}" class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Alasan Penolakan</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${requestSurat.alasanPenolakan}"></div>
+                </div>
+            </div>
+
+            <div th:if="${requestSurat.status == 5}" class="row">
                 <div class="detail-wrapper">
                     <div class="detail">Tanggal Selesai</div>
                 </div>
@@ -143,7 +173,7 @@
             </div>
 
             <div class="frame-button" th:if="${base64PDF != null}">
-                <h3 class="label6">Preview Surat</h3>
+                <h3 class="label6">Contoh File Surat</h3>
                 <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
             </div>
         </div>
