@@ -51,6 +51,6 @@ public class PenggunaServiceImpl implements PenggunaService {
 
     @Override
     public List<String> getAllRoles() {
-        return Arrays.asList("Admin", "Pengurus", "Dosen", "Staf", "Mahasiswa");
+        return Arrays.asList("Dosen", "Staf", "Mahasiswa");
     }
 }

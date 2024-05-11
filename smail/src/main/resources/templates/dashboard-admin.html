@@ -24,22 +24,49 @@
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <div class="cont">
-            <div class="content">
-                <div class="label" th:text="'Top Requester'"></div>
+        <div style="margin-top: 20px; margin-bottom: 20px;">
+            <button class="chips active" id="requestSurat">Request Surat</button>
+            <button class="chips" id="requestTemplate">Request Template</button>
+            <button class="chips" id="forum">Forum</button>
+            <button class="chips" id="suratKeluarMasuk">Surat Masuk & Keluar</button>
+        </div>
 
+        <div class="cont" id="requestSuratContent">
+            <div class="content">
                 <div class="txtinput">
-                    <div class="container" style="margin: 0 auto;">
-                        <div class="row-cols-1">
-                            <div class="col">
-                                <div class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h4 class="card-text" th:text="${topRequester}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h4>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <canvas id="lineChartPerformaSurat"></canvas>
+
+                    <script th:inline="javascript">
+                        var mapPerformaSurat = [[${performaRequestSurat}]];
+                        var labels = Object.keys(mapPerformaSurat);
+                        var chartData = labels.map(function(key) {
+                            return mapPerformaSurat[key];
+                        });
+                
+                        const lineChartPerformaSurat = document.getElementById('lineChartPerformaSurat');
+                    
+                        new Chart(lineChartPerformaSurat, {
+                            type: 'bar',
+                            data: {
+                                labels: labels,
+                                datasets: [{
+                                    label: 'Rata-rata Pemrosesan Request Surat (Hari)',
+                                    data: chartData,
+                                    backgroundColor: '#0f7454',
+                                    borderColor: '#253237',
+                                    borderWidth: 1
+                                }]
+                            }, 
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                legend: {
+                                    position: 'top',
+                                }
+                                }
+                            }
+                        });
+                    </script>
                 </div>
             </div>
 
@@ -175,132 +202,6 @@
 
                 <div class="content">
                     <div class="txtinput">
-                        <canvas id="myChart"></canvas>
-
-                        <script th:inline="javascript">
-                            /*<![CDATA[*/
-                            var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
-                            console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
-
-                            // var bulan = /*[[${bulan}]]*/;
-
-                            var currentYearMonth = /*[[${currentYearMonth}]]*/;
-                            var bulanTahun = currentYearMonth.split("-");
-                            var tahun = bulanTahun[0];
-                            var bulan = bulanTahun[1];
-
-                            function getWeekLabel(weekNumber) {
-                                return "Minggu ke-" + weekNumber;
-                            }
-                        
-                            var labels = [];
-                            var data = [];
-
-                            Object.keys(jumlahRequestPerMinggu).forEach(function(key) {
-                                var tahunBulan = key.split("-");
-                                var tahunData = tahunBulan[0];
-                                var bulanData = tahunBulan[1];
-
-                                if (tahunData === tahun && bulanData === bulan) {
-                                    var mingguData = jumlahRequestPerMinggu[key];
-                                    Object.keys(mingguData).forEach(function(minggu) {
-                                        labels.push(minggu);
-                                        data.push(mingguData[minggu]);
-                                    });
-                                }
-                            });
-
-                            var monthNames = [
-                                "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-                                "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-                            ];
-
-                            var bulanName = monthNames[parseInt(bulan) - 1];
-                        
-                            var dataChart = {
-                                labels: labels,
-                                datasets: [{
-                                    label: `Statistik Jumlah Request Surat Bulan ${bulanName}`,
-                                    data: data,
-                                    backgroundColor: '#0f7454',
-                                    borderColor: '#253237',
-                                    borderWidth: 1
-                                }]
-                            };
-                        
-                            const config = {
-                                type: 'line',
-                                data: dataChart,
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: false,
-                                            ticks: {
-                                                callback: function(value, index, values) {
-                                                    return value;
-                                                }
-                                            }
-                                        },
-                                        x: {
-                                            grid: {
-                                                display: false
-                                            }
-                                        }
-                                    }
-                                }
-                            };
-                        
-                            var myChart = new Chart(
-                                document.getElementById('myChart'),
-                                config
-                            );
-                            /*]]>*/
-                        </script>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content1">
-                <div class="content">
-                    <div class="txtinput">
-                        <canvas id="lineChartPerformaSurat"></canvas>
-
-                        <script th:inline="javascript">
-                            var mapPerformaSurat = [[${performaRequestSurat}]];
-                            var labels = Object.keys(mapPerformaSurat);
-                            var chartData = labels.map(function(key) {
-                                return mapPerformaSurat[key];
-                            });
-                    
-                            const lineChartPerformaSurat = document.getElementById('lineChartPerformaSurat');
-                        
-                            new Chart(lineChartPerformaSurat, {
-                                type: 'bar',
-                                data: {
-                                    labels: labels,
-                                    datasets: [{
-                                        label: 'Statistik Performa Request Surat',
-                                        data: chartData,
-                                        backgroundColor: '#0f7454',
-                                        borderColor: '#253237',
-                                        borderWidth: 1
-                                    }]
-                                }, 
-                                options: {
-                                    responsive: true,
-                                    plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    }
-                                    }
-                                }
-                            });
-                        </script>
-                    </div>
-                </div>
-
-                <div class="content">
-                    <div class="txtinput">
                         <canvas id="myDonut"></canvas>
                     
                         <script th:inline="javascript">
@@ -357,6 +258,26 @@
                 </div>
             </div>
 
+            <div class="content">
+                <div class="label" th:text="'Top Requester'"></div>
+
+                <div class="txtinput">
+                    <div class="container" style="margin: 0 auto;">
+                        <div class="row-cols-1">
+                            <div class="col">
+                                <div class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h4 class="card-text" th:text="${topRequester}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont" id="requestTemplateContent">
             <div class="content1">
                 <div class="content">
                     <div class="txtinput">
@@ -440,7 +361,7 @@
                                     borderWidth: 1,
                                     data: requestData
                                 }, {
-                                    label: "Jumlah Template Active",
+                                    label: "Jumlah Template Tersedia",
                                     backgroundColor: '#b1cdb8',
                                     borderColor: '#253237',
                                     borderWidth: 1,
@@ -478,8 +399,10 @@
                         </script>
                     </div>
                 </div>
-            </div>            
+            </div>
+        </div>           
 
+        <div class="cont" id="forumContent">
             <div class="content">
                 <div class="label" th:text="'Statistik Jumlah Pertanyaan Yang Masuk Berdasarkan Status'"></div>
 
@@ -525,7 +448,9 @@
                     </div> 
                 </div>
             </div>
+        </div>
 
+        <div class="cont" id="suratMasukKeluarContent">
             <div class="content1">
                 <div class="content">
                     <div class="txtinput">
@@ -539,7 +464,7 @@
                             var suratKeluarLabels = Object.keys(mapSuratKeluarKategori);
                             var suratMasukData = Object.values(mapSuratMasukKategori);
                             var suratKeluarData = Object.values(mapSuratKeluarKategori);
-                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
+                            var backgroundColors = ['#459a7d', '#b1cdb8'];
                             
                             var combinedLabels = suratMasukLabels;
                             var combinedData = suratMasukData.concat(suratKeluarData);
@@ -553,13 +478,13 @@
                                     datasets: [{
                                         label: 'Jumlah Surat Masuk',
                                         data: suratMasukData,
-                                        backgroundColor: backgroundColors.slice(0, suratMasukLabels.length),
+                                        backgroundColor: '#459a7d',
                                         borderWidth: 1
                                     },
                                     {
                                         label: 'Jumlah Surat Keluar',
                                         data: suratKeluarData,
-                                        backgroundColor: backgroundColors.slice(0, suratKeluarLabels.length),
+                                        backgroundColor: '#b1cdb8',
                                         borderWidth: 1
                                     }]
                                 },
@@ -694,6 +619,61 @@
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+         document.addEventListener("DOMContentLoaded", function() {
+            // Ambil semua tombol dengan kelas 'chips'
+            var buttons = document.querySelectorAll(".chips");
+
+            // Tambahkan event listener untuk setiap tombol
+            buttons.forEach(function(button) {
+                button.addEventListener("click", function() {
+                    // Hapus kelas 'active' dari semua tombol
+                    buttons.forEach(function(btn) {
+                        btn.classList.remove("active");
+                    });
+
+                    // Tambahkan kelas 'active' pada tombol yang diklik
+                    this.classList.add("active");
+                });
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // Sembunyikan semua konten grafik saat halaman dimuat
+            var allContents = document.querySelectorAll(".cont");
+            allContents.forEach(function(content) {
+                content.style.display = "none";
+            });
+            
+            // Tampilkan konten grafik default (requestSuratContent) saat halaman dimuat
+            document.getElementById("requestSuratContent").style.display = "block";
+    
+            // Tampilkan konten grafik yang sesuai saat tombol yang sesuai diklik
+            document.getElementById("requestSurat").addEventListener("click", function() {
+                showContent("requestSuratContent");
+            });
+            document.getElementById("requestTemplate").addEventListener("click", function() {
+                showContent("requestTemplateContent");
+            });
+            document.getElementById("forum").addEventListener("click", function() {
+                showContent("forumContent");
+            });
+            document.getElementById("suratKeluarMasuk").addEventListener("click", function() {
+                showContent("suratMasukKeluarContent");
+            });
+    
+            function showContent(contentId) {
+                // Sembunyikan semua konten grafik
+                allContents.forEach(function(content) {
+                    content.style.display = "none";
+                });
+                // Tampilkan konten grafik yang sesuai
+                document.getElementById(contentId).style.display = "block";
+            }
+        });
+    </script>
+    
 </body>
 
 </html>
