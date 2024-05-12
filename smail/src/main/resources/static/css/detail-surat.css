@@ -551,3 +551,18 @@
     padding-bottom: 20px;
     text-align: center;
 }
+
+/* Memberikan garis bawah pada tautan */
+a {
+    text-decoration: underline;
+}
+
+/* Mengubah warna hyperlink menjadi warna tertentu, misalnya hitam */
+a:link {
+    color: black;
+}
+
+/* Mengubah warna hyperlink saat dihover */
+a:hover {
+    color: #ff0000; /* Misalnya menjadi merah saat dihover */
+}

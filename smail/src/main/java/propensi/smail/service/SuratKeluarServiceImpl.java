@@ -1,5 +1,6 @@
 package propensi.smail.service;
 
+import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +9,29 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import propensi.smail.model.RequestSurat;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.repository.SuratKeluarDb;
+import propensi.smail.repository.SuratMasukDb;
 import propensi.smail.repository.TemplateSuratDb;
 
 import java.io.IOException;
+import java.text.DateFormatSymbols;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +47,13 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Autowired
     private TemplateSuratDb templateSuratDb;
+
+    // surat masuk db
+    @Autowired
+    private SuratMasukDb suratMasukDb;
+
+    @Autowired
+    private RequestService requestService;
 
     @Override
     public List<SuratKeluar> getAllSuratKeluar() {
@@ -91,7 +109,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             long count = suratKeluarDb.countByKategori(kategori);
 
             String idSuffix = String.format("%05d", count + 1);
-            return "IN" + "-" + abbreviation + "-" + idSuffix;
+            return "OUT" + "-" + abbreviation + "-" + idSuffix;
         } else {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
@@ -138,6 +156,8 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
         SuratKeluar suratKeluar = suratKeluarDb.findByRequestSurat(requestSurat);
 
+        RequestSurat rs = requestSuratDb.findById(id).get();
+
         try {
             System.out.println("masuk serv");
 
@@ -157,12 +177,17 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 if (current == null) {
                     suratKeluar.getRequestSurat().setStatus(5);
                     suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
+                    suratKeluar.setIsSigned(true);
+                    suratKeluarDb.save(suratKeluar);
+
+                    requestService.sendEmailFinished(rs.getPengaju().getEmail(), "", "", rs, suratKeluar);
+
                 }
 
                 suratKeluarDb.save(suratKeluar);
             }
 
-        } catch (IOException e) {
+        } catch (IOException | MessagingException e) {
             throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
         }
     }
@@ -209,6 +234,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
+    @Transactional
     public Stream<SuratKeluar> getAllFiles() {
         return suratKeluarDb.findAll().stream();
     }
@@ -253,7 +279,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Override
     public List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
-        List<SuratKeluar> suratKeluarList = suratKeluarDb.findAll();
+        List<SuratKeluar> suratKeluarList = suratKeluarDb.findByIsSigned(true);
 
         // Filter berdasarkan query pencarian
         if (searchQuery != null && !searchQuery.isEmpty()) {
@@ -280,5 +306,214 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
+            String penerimaEksternal, Pengguna penandatangan) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            // bikin objek surat keluar
+            SuratKeluar suratKeluar = new SuratKeluar();
+                suratKeluar.setNomorArsip(generateId(arsipAwal.getKategori()));
+                suratKeluar.setFile(file.getBytes());
+                suratKeluar.setKategori(arsipAwal.getKategori());
+                suratKeluar.setPerihal(perihal);
+                suratKeluar.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                suratKeluar.setIsSigned(false);
+                suratKeluar.setPenerimaEksternal(penerimaEksternal);
+                suratKeluar.setFileName(fileName);
+                suratKeluar.setCurrentPenandatangan(penandatangan);
+                suratKeluar.setArsipSurat(arsipAwal.getNomorArsip());
+
+                List<Pengguna> penandatangans = new ArrayList<>();
+                penandatangans.add(penandatangan);
+                suratKeluar.setPenandatangan(penandatangans);
+                
+                suratKeluarDb.save(suratKeluar);
+
+                // ubah status arsip awal
+                // arsipAwal.setStatus(3);
+                arsipAwal.setIsFollowUp(true);
+                arsipAwal.setSuratFollowUp(suratKeluar);
+                suratMasukDb.save(arsipAwal);
+
+                return suratKeluarDb.save(suratKeluar);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + fileName, e);
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByCurrentPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+        return suratKeluarDb.findByCurrentPenandatanganAndIsSigned(penandatangan, isSigned);
+    } 
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned) {
+        return suratKeluarDb.findByIsSigned(isSigned);
+    }
+
+    @Override
+    @Transactional 
+    public SuratKeluar getSuratKeluarByNomorArsip(String nomorArsip) {
+        return suratKeluarDb.findByNomorArsip(nomorArsip);
+    } 
+
+    @Override
+    @Transactional 
+    public void updateFollowUpFile(String id, MultipartFile file) {
+        // Retrieve the SuratKeluar object by suratKeluar nomorArsip
+        SuratKeluar suratKeluar = suratKeluarDb.findByNomorArsip(id);
+
+        try {
+            System.out.println("masuk serv");
+
+            // Check if a new file is uploaded
+            if (file != null && !file.isEmpty()) {
+                // Convert the file to byte array
+                byte[] fileBytes = file.getBytes();
+
+                // Set the file and file name
+                suratKeluar.setFile(fileBytes);
+                suratKeluar.setFileName(file.getOriginalFilename());
+                suratKeluar.setIsSigned(true);
+                suratKeluarDb.save(suratKeluar);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan) {
+        return suratKeluarDb.findByCurrentPenandatanganOrderByIsSignedAscTanggalDibuatDesc(penandatangan);
+    }
+    
+
+    @Override
+    public Map<String, Long> getJumlahSuratKeluarPerKategori() {
+        Map<String, Long> mapSuratKeluarKategori = new HashMap<>();
+
+        mapSuratKeluarKategori.put("Legal", suratKeluarDb.countByKategori("Legal"));
+        mapSuratKeluarKategori.put("SDM", suratKeluarDb.countByKategori("SDM"));
+        mapSuratKeluarKategori.put("Keuangan", suratKeluarDb.countByKategori("Keuangan"));
+        mapSuratKeluarKategori.put("Sarana", suratKeluarDb.countByKategori("Sarana"));
+        mapSuratKeluarKategori.put("Kemahasiswaan", suratKeluarDb.countByKategori("Kemahasiswaan"));
+        mapSuratKeluarKategori.put("Lainnya", suratKeluarDb.countByKategori("Lainnya"));
+
+        System.out.println(mapSuratKeluarKategori.toString());
+        return mapSuratKeluarKategori;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratKeluarTahunIni() {
+        LocalDate now = LocalDate.now();
+        Date firstDayOfYear = Date.from(now.with(TemporalAdjusters.firstDayOfYear()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfYear = Date.from(now.with(TemporalAdjusters.lastDayOfYear()).atTime(23, 59, 59, 999).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratKeluar> allSuratKeluarThisYear = suratKeluarDb.findByTanggalDibuatBetween(firstDayOfYear, lastDayOfYear);
+        Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
+
+        String[] indonesianMonths = new String[] {"Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"};
+        for (String bulan : indonesianMonths) {
+            mapPerBulan.put(bulan, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        allSuratKeluarThisYear.forEach(surat -> {
+            calendar.setTime(surat.getTanggalDibuat());
+            mapPerBulan.merge(indonesianMonths[calendar.get(Calendar.MONTH)], 1, Integer::sum);
+        });
+
+        return mapPerBulan;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratKeluarBulanIni() {
+        LocalDate now = LocalDate.now();
+        Date firstDayOfMonth = Date.from(now.with(TemporalAdjusters.firstDayOfMonth()).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfMonth = Date.from(now.with(TemporalAdjusters.lastDayOfMonth()).atTime(23, 59, 59, 999).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratKeluar> allSuratKeluarThisMonth = suratKeluarDb.findByTanggalDibuatBetween(firstDayOfMonth, lastDayOfMonth);
+        Map<String, Integer> mapPerMinggu = new LinkedHashMap<String, Integer>();
+        
+        int totalWeeks = now.with(TemporalAdjusters.lastDayOfMonth()).get(WeekFields.of(Locale.getDefault()).weekOfMonth());
+        for (int i = 1; i <= totalWeeks; i++) {
+            mapPerMinggu.put("Minggu ke-" + i, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        for (SuratKeluar surat : allSuratKeluarThisMonth) {
+            calendar.setTime(surat.getTanggalDibuat());
+            int weekOfMonth = calendar.get(Calendar.WEEK_OF_MONTH);
+            mapPerMinggu.merge("Minggu ke-" + weekOfMonth, 1, Integer::sum);
+        }
+
+        return mapPerMinggu;
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratKeluarMingguIni() {
+        LocalDate now = LocalDate.now();
+        LocalDate firstDayOfWeekLocal = now.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate lastDayOfWeekLocal = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+        Date firstDayOfWeek = Date.from(firstDayOfWeekLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date lastDayOfWeek = Date.from(lastDayOfWeekLocal.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant());
+
+        List<SuratKeluar> allSuratKeluarThisWeek = suratKeluarDb.findByTanggalDibuatBetween(firstDayOfWeek, lastDayOfWeek);
+        Map<String, Integer> mapPerHari = new LinkedHashMap<String, Integer>();
+        
+        String[] indonesianWeek = new String[] {"Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"};
+        for (String day : indonesianWeek) {
+            mapPerHari.put(day, 0);
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        allSuratKeluarThisWeek.forEach(surat -> {
+            calendar.setTime(surat.getTanggalDibuat());
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            if (dayOfWeek == 1) {
+                mapPerHari.merge(indonesianWeek[6], 1, Integer::sum);
+            } else {
+                mapPerHari.merge(indonesianWeek[dayOfWeek-2], 1, Integer::sum);
+            }
+
+        });
+
+        return mapPerHari;
+    }
+
+    @Override
+    public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
+        return suratKeluarDb.findByPenandatanganContainsAndIsSigned(penandatangan, isSigned);
+    }
+
+    @Override
+    public Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan) {
+        Map<String, Integer> mapSuratTtd = new LinkedHashMap<String, Integer>();
+        mapSuratTtd.put("Sudah", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, true).size());
+        System.out.println(getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).toString());
+        mapSuratTtd.put("Belum", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).size());
+        System.out.println(mapSuratTtd.get("Sudah").toString());
+        System.out.println(mapSuratTtd.get("Belum").toString());
+        return mapSuratTtd;
+    }
+
+    @Override
+    public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan) {
+        List<SuratKeluar> suratKeluars = getSuratKeluarByCurrentPenandatangan(penandatangan);
+
+        // Filter the list by keyword
+        return suratKeluars.stream()
+                .filter(suratKeluar -> suratKeluar.getNomorArsip().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getKategori().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getPerihal().toLowerCase().contains(keyword.toLowerCase()) ||
+                        suratKeluar.getPenerimaEksternal().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
+        
     }
 }

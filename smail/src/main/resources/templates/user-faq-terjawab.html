@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
+    />
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+  </head>
+
+<style>
+.content-container {
+  width: 100%;
+  position: relative;
+  background-color: var(--white-white-1);
+  overflow: hidden;
+  height: 100%;  
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.accordion-container {
+  min-width: 85%;
+  max-width: 85%;
+}
+
+.accordion {
+  background-color: var(--blue-blue-2);
+  border-radius: var(--br-xs);
+  color: var(--white-white-1);
+  padding: var(--padding-xl);
+  gap: var(--gap-xl);
+  /* min-width: 95%; */
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.panel {
+  /* min-width: 95%;
+  max-width: 95%; */
+
+  background-color: var(--green-green-5);
+  border-radius: var(--br-5xs);
+  color: var(--white-white-1);
+  padding: var(--padding-xl);
+  gap: var(--gap-xl);
+
+  display: none;
+  overflow: hidden;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.panel.active {
+  display: block;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.accordion.active {
+  background-color: var(--green-green-5);
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.chevron-rotate {
+  transform: rotate(180deg);
+}
+
+.faq-person {
+  width: auto;
+  position: center;
+}
+
+.question-form {
+  font-family: var(--body-b2);
+}
+
+.faq-input {
+  border: 2px solid var(--green-green-5); 
+  outline: none; 
+  border-radius: var(--br-5xs);
+}
+
+.faq-input:focus {
+  border-color: var(--green-green-5); 
+  box-shadow: 0 0 5px var(--green-green-5); 
+}
+
+.question-submit {
+  color: var(--white-white-1);
+  width: fit-content;
+  border: 0;
+  padding: 10.5px var(--padding-5xl);
+  background-color: var(--green-green-1);
+  border-radius: var(--br-xs);
+  flex-direction: row;
+}
+
+.question-submit:hover {
+  color: var(--white-white-1);
+  background-color: var(--green-green-2);
+}
+
+.question-submit-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.form-question {
+  width: 85%; 
+}
+
+.search-bar {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px 0;
+  max-width: 100%;
+}
+
+.search-box {
+  align-self: stretch;
+  height: 48px;
+  border-radius: var(--br-xs);
+  background-color: var(--white-white-1);
+  border: 2px solid var(--green-green-1);
+  box-sizing: border-box;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding: var(--padding-5xs) var(--padding-5xl);
+  gap: 0 8px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.ketik-kata-kunci {
+  width: 330px;
+  border: 0;
+  outline: 0;
+  font-family: var(--heading-h4);
+  font-size: var(--body-b2-size);
+  background-color: transparent;
+  height: 19px;
+  position: relative;
+  color: var(--black-black-2);
+  text-align: start;
+  vertical-align: middle;
+  justify-content: start;
+  max-width: calc(100% - 32px);
+  padding: 0;
+}
+
+</style>
+
+<body>
+
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="content-container">
+
+    <b class="title-container">
+        <span class="title-gradient">Pertanyaan</span>
+        <span>Saya</span>
+    </b>
+
+    <nav th:replace="~{fragments/asset :: asset}"></nav>
+
+        <div class="tabs-container">
+            <div class="tabs-group-parent">
+                <div class="tabs-group">
+                    <a class="component-2" th:href="@{/faq/user-faq/terjawab}">
+                        <img
+                            class="iconoutlineexclamation-circl"
+                            alt=""
+                            src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs">Terjawab</div>
+                    </a>
+
+                    <a class="component-3" th:href="@{/faq/user-faq/belum-terjawab}">
+                        <img
+                            class="iconoutlineexclamation-circl1"
+                            alt=""
+                            src="/images/iconoutlineexclamationcircle.svg"
+                        />
+                        <div class="tabs1">Belum Terjawab</div>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+
+        <div th:if="${faqsUserTerjawab.empty}" class="content-container">
+            <p>Anda belum memiliki pertanyaan yang terjawab</p>
+        </div> 
+
+        <div th:if="${not faqsUserTerjawab.empty}" class="content-container">
+            <div th:each="faq : ${faqsUserTerjawab}" class="accordion-container">
+                <div class="accordion">
+                    <strong th:text="${faq.pertanyaan}"></strong>
+                    <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
+                </div>
+                <div class="panel" th:text="${faq.jawaban}"></div>
+                <br>
+            </div>
+        </div>
+    </div>
+    <br><br>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                panel.classList.toggle("active");
+                var chevron = this.querySelector('.chevron');
+                if (chevron) {
+                    chevron.classList.toggle("chevron-rotate");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

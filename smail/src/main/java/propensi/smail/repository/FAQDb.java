@@ -17,5 +17,5 @@ public interface FAQDb extends JpaRepository<FAQ, Integer> {
     List<FAQ> findByStatus(int status);
     List<FAQ> findByPertanyaanContainingIgnoreCaseAndStatus(String search, int status);
     long countFAQByPengajuAndStatus(Pengguna pengaju, int status);
-
+    List<FAQ> findByPengajuAndStatus(Pengguna pengaju, int status);
 }

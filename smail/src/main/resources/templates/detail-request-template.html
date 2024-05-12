@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/detail-request-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/detail-surat.css"/>
+
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     <link
@@ -37,12 +39,14 @@
             <h1 class="detail-template2">
             <span>
               <span class="detail1">Detail</span>
-              <span class="template"> Template</span>
+              <span class="template"> Permintaan Template</span>
             </span>
             </h1>
         </div>
     </section>
+
     <section class="i-d-and-status">
+        <form th:action="@{/template/request/detail/{id}/updateStatus(id=${requestTemplate.id})}" method="post">
         <div class="data-fields-group">
             <div class="frame-parts">
                 <div class="i-d-and-types">
@@ -61,14 +65,6 @@
                     <div class="lainnya" th:text="${requestTemplate.kategori}"></div>
                 </div>
             </div>
-            <div class="frame-parts2">
-                <div class="field-wrapper">
-                    <div class="field">Field</div>
-                </div>
-                <div class="lainnya-container">
-                    <div class="lainnya1">Lainnya</div>
-                </div>
-            </div>
             <div class="frame-parts3">
                 <div class="bahasa-wrapper">
                     <div class="bahasa">Bahasa</div>
@@ -79,10 +75,18 @@
             </div>
             <div class="frame-parts4">
                 <div class="bentuk-surat-wrapper">
-                    <div class="bentuk-surat1">Bentuk Surat</div>
+                    <div class="bentuk-surat1">Nama Pengaju</div>
                 </div>
-                <div class="soft-copy-wrapper2">
-                    <div class="soft-copy5">Soft Copy</div>
+                <div class="indonesia-wrapper">
+                    <div class="indonesia" th:text="${requestTemplate.pengaju.nama}"></div>
+                </div>
+            </div>
+            <div class="frame-parts3">
+                <div class="bahasa-wrapper">
+                    <div class="bahasa">Keperluan</div>
+                </div>
+                <div class="indonesia-wrapper">
+                    <div class="indonesia" th:text="${requestTemplate.keperluan}"></div>
                 </div>
             </div>
             <div class="frame-parts6">
@@ -93,44 +97,98 @@
                     <div class="agustus-20225" th:text="${requestTemplate.tanggalPengajuan}"></div>
                 </div>
             </div>
-            <div class="frame-parts7">
-                <div class="tanggal-selesai-wrapper">
-                    <div class="tanggal-selesai">Status</div>
+            <div class="frame-parts6">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="tanggal-pengajuan1">Deskripsi</div>
                 </div>
-                <div class="agustus-2022-wrapper3">
-                    <div class="agustus-20226">
-                        <span th:if="${requestTemplate.status == 1}">Diajukan</span>
-                        <span th:if="${requestTemplate.status == 2}">Diterima</span>
-                        <span th:if="${requestTemplate.status == 3}">Ditolak</span>
-                    </div>
+                <div class="agustus-2022-wrapper2">
+                    <div class="agustus-20225" th:text="${requestTemplate.listFieldData[0].value}"></div>
                 </div>
             </div>
+
+            <div class="frame-parts6">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="tanggal-pengajuan1">Status</div>
+                </div>
+                <div class="agustus-2022-wrapper2" th:if="${requestTemplate.status == 1}">
+                    <select class="content" th:field="${requestTemplate.status}" onchange="toggleReasonField(this)">
+                        <option th:each="entry : ${statusMap.entrySet()}"
+                                th:value="${entry.key}" th:text="${entry.value}"
+                                th:selected="${entry.key == requestTemplate.status}">
+                        </option>
+                    </select>
+                </div>
+                <div class="agustus-2022-wrapper2" th:if="${requestTemplate.status == 2 || requestTemplate.status == 3}">
+                    <div class="agustus-20225" th:text="${statusMap[requestTemplate.status]}"></div>
+                </div>
+            </div>
+
+            <div class="frame-parts6" th:if="${requestTemplate.status == 3}">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="tanggal-pengajuan1">Alasan Penolakan</div>
+                </div>
+                <div class="agustus-2022-wrapper2">
+                    <div class="agustus-20225" th:text="${requestTemplate.alasanPenolakan}"></div>
+                </div>
+            </div>
+
+            <div class="frame-parts6" id="reasonField" style="display: none;">
+                <div class="tanggal-pengajuan-wrapper">
+                    <div class="detail">Alasan Penolakan</div>
+                </div>
+
+                <div class="agustus-2022-wrapper2">
+                    <textarea class="content" th:field="${requestTemplate.alasanPenolakan}" style="width: 100%; height: 50px;"></textarea>
+                </div>
+
+            </div>
+
         </div>
+            <div class="text-center action-buttons" th:if="${requestTemplate.status == 1}">
+                <button type="submit" class="button">Simpan perubahan</button>
+            </div>
+            <br><br><br>
+        </form>
+        <br><br><br>
     </section>
-    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
-        <div class="button31">
-            <a th:href="@{/template/request/acc/{id}(id=${requestTemplate.id})}">
-                <div class="simpan-perubahan">Terima Pengajuan</div>
-            </a>
-        </div>
-    </section>
-    <section class="nomor-surat1" th:if="${requestTemplate.status == 1}">
-        <div class="button31-red">
-            <a th:href="@{/template/request/reject/{id}(id=${requestTemplate.id})}">
-                <div class="simpan-perubahan">Tolak Pengajuan</div>
-            </a>
-        </div>
-    </section>
-    <section class="nomor-surat1">
-        <div class="button31">
-            <a th:href="@{'/template/new-requests'}">
-                <div class="simpan-perubahan">Daftar Request Template</div>
-            </a>
-        </div>
-    </section>
+
+<!--    <section class="nomor-surat1">-->
+<!--        <div class="button31">-->
+<!--            <a th:href="@{'/template/new-requests'}">-->
+<!--                <div class="simpan-perubahan">Daftar Request Template</div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
     <br><br><br>
 </div>
 <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script th:inline="javascript">
+    function toggleReasonField(select) {
+        var selectedValue = select.value;
+        var reasonField = document.getElementById("reasonField");
+        var alasanPenolakan = document.getElementById("alasanPenolakan");
+
+        if (selectedValue === '3') {
+            reasonField.style.display = "block";
+            alasanPenolakan.required = true; // Set required attribute
+        } else {
+            reasonField.style.display = "none";
+            alasanPenolakan.required = false; // Remove required attribute
+        }
+    }
+</script>
+
+    <!--    <script th:inline="javascript">-->
+<!--    function toggleReasonField() {-->
+<!--        var reasonField = document.getElementById("reasonField");-->
+<!--        reasonField.style.display = "block";-->
+<!--    }-->
+
+<!--    document.addEventListener("DOMContentLoaded", function() {-->
+<!--        var rejectButton = document.querySelector(".button31-red");-->
+<!--        rejectButton.addEventListener("click", toggleReasonField);-->
+<!--    });-->
+<!--</script>-->
 
 </body>
 </html>

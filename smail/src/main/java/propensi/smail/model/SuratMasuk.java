@@ -39,16 +39,22 @@ public class SuratMasuk {
     @Column(name = "tanggal_dibuat", nullable = false)
     private Date tanggalDibuat;
 
-    @NotNull
-    @Column(name = "status", nullable = false)
-    private int status;
+    // @NotNull
+    // @Column(name = "status", nullable = false)
+    // private int status;
+
+    @Column(name = "is_disposisi")
+    private Boolean isDisposisi = false;
+
+    @Column(name = "is_followup")
+    private Boolean isFollowUp = false;
 
     @NotNull
     @Column(name = "pengirim", nullable = false)
     private String pengirim; // email or nama pengirim
 
     @Column(name = "tembusan")
-    private String[] tembusan; // email
+    private ArrayList<String> tembusan = new ArrayList<String>(); // email
 
     @Lob
     @Column(name = "file", nullable = false)

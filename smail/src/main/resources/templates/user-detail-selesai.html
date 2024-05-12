@@ -25,11 +25,21 @@
         <div class="frame-parent" th:each="requestSurat: ${requestSurats}">
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">ID Surat</div>
+                    <div class="detail">ID Request Surat</div>
                 </div>
 
                 <div class="content-wrapper">
                     <div class="content" th:text="${requestSurat.id}"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="detail-wrapper">
+                    <div class="detail">Nomor Surat</div>
+                </div>
+
+                <div class="content-wrapper">
+                    <div class="content" th:text="${outgoing.nomorArsip}"></div>
                 </div>
             </div>
 
@@ -117,16 +127,6 @@
 
                 <div class="content-wrapper">
                     <div class="content" th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
-                    <div class="detail">Nomor Surat</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${outgoing.nomorArsip}"></div>
                 </div>
             </div>
 

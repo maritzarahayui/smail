@@ -1,19 +1,6 @@
-<svg width="344" height="425" viewBox="0 0 344 425" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_121_3031)">
-<path d="M129.937 242.44C126.839 242.44 124.189 241.338 121.985 239.134C119.781 236.93 118.678 234.278 118.674 231.177V163.6C118.674 160.503 119.778 157.852 121.985 155.649C124.193 153.445 126.843 152.341 129.937 152.337H220.039C223.136 152.337 225.789 153.441 227.996 155.649C230.204 157.856 231.305 160.507 231.302 163.6V231.177C231.302 234.274 230.2 236.926 227.996 239.134C225.792 241.341 223.14 242.443 220.039 242.44H129.937ZM174.988 203.02L129.937 174.863V231.177H220.039V174.863L174.988 203.02ZM174.988 191.757L220.039 163.6H129.937L174.988 191.757ZM129.937 174.863V163.6V231.177V174.863Z" fill="#253237"/>
-<path d="M41 152.337V105.733L171.105 30L303.151 105.733V152.337" stroke="#0F7454" stroke-width="50.4884"/>
-<path d="M41 241.663V288.267L171.105 364L303.151 288.267V241.663" stroke="#0F7454" stroke-width="50.4884"/>
-</g>
-<defs>
-<filter id="filter0_d_121_3031" x="0.220977" y="0.844971" width="343.708" height="423.38" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="15.5349"/>
-<feGaussianBlur stdDeviation="7.76744"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_121_3031"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_121_3031" result="shape"/>
-</filter>
-</defs>
+<svg width="94" height="99" viewBox="0 0 94 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M47 17L17 45H0L47 0L93.5 45H76.5L47 17Z" fill="#163C3F"/>
+<path d="M46.5 82L76.5 54H93.5L46.5 99L0 54H17L46.5 82Z" fill="#163C3F"/>
+<path d="M40 34.5L31.5 42.5L40 51L48.5 42.5L40 34.5Z" fill="#F1C200" stroke="#100F0F"/>
+<path d="M53.5 48L45 56L53.5 64.5L62 56L53.5 48Z" fill="#F1C200" stroke="#100F0F"/>
 </svg>

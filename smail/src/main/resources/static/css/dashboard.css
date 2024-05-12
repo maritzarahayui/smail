@@ -9,8 +9,8 @@
 }
 
 canvas {
-    width: 500px;
-    height: 250px;
+    width: 600px;
+    height: 300px;
     position: relative;
     margin: 0 auto;
 }
@@ -35,6 +35,10 @@ canvas {
     justify-content: space-around;
     align-items: center;
     gap: 40px;
+}
+
+.content1 .content:last-child {
+    margin-right: 0;
 }
 
 .cont {
@@ -78,6 +82,33 @@ canvas {
     font-size: 3rem;
     color: #253237;
     font-size: 64;
+}
+
+.chips {
+    cursor: pointer;
+    border: 2px solid var(--green-green-1);
+    margin: auto;
+    background-color: var(--white-white-1);
+    height: 50px;
+    width: 185px;
+    border-radius: 50px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    color: var(--green-green-1);
+    font-size: 16px;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.chips:last-child {
+    margin-right: 0;
+}
+
+.chips.active {
+    border: 0;
+    background-color: var(--green-green-1);
+    color: var(--white-white-1);
 }
 
 .buttonWaktu {

@@ -46,6 +46,9 @@ public class SuratKeluar {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "isSigned")
+    private Boolean isSigned = false;
+
     @ManyToMany
     @JoinTable(
             name = "suratkeluar_pengguna",
@@ -65,4 +68,7 @@ public class SuratKeluar {
     @OneToOne
     @JoinColumn(name = "surat_id")
     private RequestSurat requestSurat;
+
+    @Column(name = "arsip_id")
+    private String arsipSurat;
 }

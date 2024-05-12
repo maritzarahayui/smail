@@ -2,6 +2,7 @@ package propensi.smail.repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -50,6 +51,10 @@ public interface RequestSuratDb extends JpaRepository<RequestSurat, String> {
     "r.status = :status AND r.pengaju.id = :pengajuId")
     List<RequestSurat> findBySearchAndStatusAndPengajuId(@Param("search") String search, @Param("status") int status, @Param("pengajuId") String pengajuId);
     
+    @Query("SELECT r FROM RequestSurat r WHERE EXTRACT(YEAR FROM r.tanggalPengajuan) = :year AND EXTRACT(MONTH FROM r.tanggalPengajuan) = :month")
+    List<RequestSurat> findByTanggalPengajuanMonthly(Integer month, Integer year);
+    @Query("SELECT r.pengaju.nama FROM RequestSurat r GROUP BY r.pengaju.id, r.pengaju.nama ORDER BY COUNT(r) DESC LIMIT 1")
+    String findTopRequester();
     // emi sprint 3
     List<RequestSurat> findByPengaju(Pengguna pengaju);
     long countByPengajuAndStatus(Pengguna pengaju, int status);

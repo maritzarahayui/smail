@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import propensi.smail.model.FAQ;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.user.Dosen;
 import propensi.smail.model.user.Mahasiswa;
 import propensi.smail.model.user.Pengguna;
@@ -76,11 +77,36 @@ public class FAQServiceImpl implements FAQService {
     }
 
     @Override
+    public List<FAQ> getAllNotAnsweredFaq() {
+        return faqDb.findByStatus(0);
+    }
+
+    @Override
+    public List<FAQ> getAllEskalasiFaq() {
+        return faqDb.findByStatus(1);
+    }
+
+    @Override
+    public List<FAQ> getAllAnsweredFaq() {
+        return faqDb.findByStatus(2);
+    }
+
+    @Override
+    public List<FAQ> getAllDeletedFaq() {
+        return faqDb.findByStatus(3);
+    }
+    @Override
     public Map<String, Long> getCountOfAnsweredQuestions(Pengguna pengaju) {
         Map<String, Long> terjawab = new HashMap<>();
+        long jumlahBelumTerjawab = faqDb.countFAQByPengajuAndStatus(pengaju, 0);
         long jumlahTerjawab = faqDb.countFAQByPengajuAndStatus(pengaju, 2);
+        terjawab.put("BelumTerjawab", jumlahBelumTerjawab);
         terjawab.put("Terjawab", jumlahTerjawab);
-        System.out.println("Jumlah pertanyaan terjawab untuk role " + pengaju + ": " + jumlahTerjawab);
         return terjawab;
+    }
+
+    @Override
+    public List<FAQ> getFaqsByPengajuAndStatus(Pengguna pengaju, int status) {
+        return faqDb.findByPengajuAndStatus(pengaju, status);
     }
 }

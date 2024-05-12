@@ -1,102 +1,168 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
-    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css" />
+    <link rel="stylesheet" href="/css/riwayat-surat.css" />
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-</head>
+  </head>
 
-<body>
+  <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="permintaan-template">
-        <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Daftar</span>
-            <span> Permohonan Surat</span>
-        </b>
+      <b class="pengajuan-permohonan-surat-container">
+        <span class="pengajuan">Daftar Surat</span>
+        <span>Follow-Up</span>
+      </b>
 
-        <nav th:replace="~{fragments/asset :: asset}"></nav>
+      <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <section class="bentuk-surat-text">
-            <div class="tabs-container">
-                <div class="tabs-group-parent">
-                    <div class="tabs-group">
-                        <a class="component-3" th:href="@{/ttd/request}">
-                            <img
-                                class="iconoutlineexclamation-circl"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Request Surat</div>
-                        </a>
+      <section class="bentuk-surat-text">
+        <div class="tabs-container">
+          <div class="tabs-group-parent">
+            <div class="tabs-group">
+              <a class="component-3" th:href="@{/ttd/request}">
+                <img
+                  class="iconoutlineexclamation-circl"
+                  alt=""
+                  src="/images/iconoutlineexclamationcircle.svg"
+                />
+                <div class="tabs1">Request Surat</div>
+              </a>
 
-                        <a class="component-2" th:href="@{#}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs">Arsip Surat</div>
-                        </a>
-                    </div>
-
-                    <div class="search-button">
-                        <form th:action="@{/request/history/search}" method="get">
-                            <div class="button17">
-                                <img class="search-icon1" alt="" src="/images/search.svg" />
-                                <input class="keuangan3" placeholder="Cari surat" type="text" name="search" />
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div class="t-e-m-p-container-parent">
-                    <div class="agustus-label-parent">
-                        <!-- Start of the table -->
-                        <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
-                                    <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
-                                    <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
-                                    <td style="width: 15%; text-align: center; vertical-align: middle;">
-                                        <div style="display: block;">Tanggal</div>
-                                        <div style="display: block;">Pengajuan</div>
-                                    </td>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <!-- Iterate through requestTemplates -->
-                                <tr th:each="requestSurat: ${requestSurats}">
-                                    <td th:text="${requestSurat.id}"></td>
-                                    <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
-                                    <td>
-                                        <span th:text="${requestSurat.pengaju.nama}"></span>
-                                    </td>
-                                    <td th:text="${requestSurat.bentukSurat}"></td>
-                                    <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td style="display: flex; justify-content: space-between;">
-                                        <a th:href="@{/admin/detail/{id}(id=${requestSurat.id})}" class="button20">
-                                            <div class="button21">Detail</div>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End of the table -->
-                    </div>
-                </div>
+              <a class="component-2" th:href="@{/ttd/arsip}">
+                <img
+                  class="iconoutlineexclamation-circl1"
+                  alt=""
+                  src="/images/iconoutlineexclamationcircle.svg"
+                />
+                <div class="tabs">Surat Follow-Up</div>
+              </a>
             </div>
-        </section>
+
+            <div class="search-button">
+              <form th:action="@{/ttd/arsip}" method="get">
+                <div class="button17">
+                  <img class="search-icon1" alt="" src="/images/search.svg" />
+                  <input
+                    class="keuangan3"
+                    placeholder="Cari surat berdasarkan Nomor surat, Perihal, Penerima Eksternal, atau Kategori"
+                    type="text"
+                    name="search"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="t-e-m-p-container-parent">
+            <div class="agustus-label-parent">
+              <!-- Start of the table -->
+              <table
+                id="dataTable"
+                class="table table-bordered table-striped"
+                style="width: 100%"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      style="
+                        width: 10%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      ID Surat
+                    </th>
+                    <th
+                      style="
+                        width: 40%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      Perihal
+                    </th>
+                    <th
+                      style="
+                        width: 15%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      Penerima Eksternal
+                    </th>
+                    <td
+                      style="
+                        width: 15%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      <div style="display: block">Tanggal</div>
+                      <div style="display: block">Pengajuan</div>
+                    </td>
+                    <!-- status ttd -->
+                    <th
+                            style="
+                        width: 15%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      Status Tanda Tangan
+                    </th>
+                    <th
+                      style="
+                        width: 10%;
+                        text-align: center;
+                        vertical-align: middle;
+                      "
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:if="${#lists.isEmpty(listSuratKeluar)}">
+                    <td colspan="6" style="text-align: center;">Belum ada surat follow-up yang perlu ditandatangani</td>
+                  </tr>
+                  <!-- Iterate through requestTemplates -->
+                  <tr th:each="suratkeluar: ${listSuratKeluar}" th:if="${suratkeluar.arsipSurat != null}">
+                    <td th:text="${suratkeluar.nomorArsip}"></td>
+                    <td th:text="${suratkeluar.perihal}"></td>
+                    <td>
+                      <span th:text="${suratkeluar.penerimaEksternal}"></span>
+                    </td>
+                    <td
+                      th:text="${#dates.format(suratkeluar.tanggalDibuat, 'yyyy-MM-dd HH:mm')}"
+                    ></td>
+                    <td
+                            th:text="${suratkeluar.isSigned ? 'Selesai ditandatangani' : 'Perlu tanda tangan'}"
+                    ></td>
+                    <td style="display: flex; justify-content: space-between">
+                      <a
+                        th:href="@{/ttd/followup/{id}(id=${suratkeluar.nomorArsip})}"
+                        class="button20"
+                      >
+                        <div class="button21">Detail</div>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- End of the table -->
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
-</body>
+  </body>
 </html>

@@ -1,9 +1,12 @@
 package propensi.smail.service;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.mail.MessagingException;
+import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
 import propensi.smail.model.RequestSurat;
@@ -26,6 +29,7 @@ public interface RequestService {
     List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId);
+    List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId);
     RequestSurat getRequestSuratById(String requestSuratId);
     RequestSurat findRequestById(String id);
     List<RequestSurat> getRequestByJenisSurat(String jenisSurat);
@@ -41,6 +45,8 @@ public interface RequestService {
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);
     Map<Integer, String> listBentukSurat();
     Map<Integer, String> listBahasa();
+    void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
+    void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
     // List<String> getJenisSuratForKategori(String kategori);
     // List<RequestSurat> getRequestsByUser(Pengguna pengguna);
 
@@ -55,6 +61,19 @@ public interface RequestService {
     List<String> getAllJenisByKategori(String Kategori);
 
     List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju);
+
+    /* DASHBOARD */
+    Integer countDurasi(RequestSurat requestSurat);
+    Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
+    Map<String, Integer> getPerformaRequestSurat();
+    Map<String, Map<String, Long>> getJumlahRequestPerMinggu();
+    Map<String, Long> getJumlahRequestPerMonth();
+    Map<String, Long> getJumlahRequestPerYear();
+    Map<String, Long> getJumlahRequestByKategori();
+    Map<String, Long> getJumlahRequestByRole();
+    String getTopRequester();
+    String getCurrentYearMonth();
+    Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth();
 
     //  EMIIIIIIIIIII ////
     Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);

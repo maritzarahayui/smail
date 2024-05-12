@@ -186,7 +186,7 @@ public class FAQController {
             }
         }
 
-        model.addAttribute("newFaq", faq);
+        // model.addAttribute("newFaq"faq, faq);
         return "faq-edit";
     }
 
@@ -222,6 +222,60 @@ public class FAQController {
     public String deleteFAQ(Model model, Authentication auth, @PathVariable("idFAQ") int idFAQ) {
         FAQ faq = faqService.deleteFAQ(idFAQ);
         return "redirect:/faq";
+    }
+
+    @GetMapping("/user-faq/terjawab")
+    public String userFAQTerjawab(Model model, Authentication auth) {
+       
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                String role = penggunaService.getRole(pengguna);
+
+                List<FAQ> faqsBelumDijawab = faqService.getFaqsByPengajuAndStatus(pengguna, 0);
+                List<FAQ> faqsTerjawab = faqService.getFaqsByPengajuAndStatus(pengguna, 2);
+
+                model.addAttribute("role", role);
+                model.addAttribute("faqsUserTerjawab", faqsTerjawab);
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+
+                return "user-faq-terjawab";
+            } else {
+                return "auth-failed";
+            }   
+        }
+        return "user-faq-terjawab";
+    }
+
+    @GetMapping("/user-faq/belum-terjawab")
+    public String userFAQBelumTerjawab(Model model, Authentication auth) {
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                String role = penggunaService.getRole(pengguna);
+                List<FAQ> faqsBelumDijawab = faqService.getFaqsByPengajuAndStatus(pengguna, 0);
+                List<FAQ> faqsTerjawab = faqService.getFaqsByPengajuAndStatus(pengguna, 2);
+
+                model.addAttribute("role", role);
+                model.addAttribute("faqsUserBelumTerjawab", faqsBelumDijawab);
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+
+                return "user-faq-belum-terjawab";
+            } else {
+                return "auth-failed";
+            }
+            
+        }
+        return "user-faq-belum-terjawab";
     }
 
 }

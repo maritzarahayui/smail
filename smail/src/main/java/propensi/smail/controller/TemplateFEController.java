@@ -1,17 +1,22 @@
 package propensi.smail.controller;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
 import propensi.smail.model.user.Pengguna;
 import propensi.smail.repository.PenggunaDb;
+import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
@@ -34,15 +39,37 @@ public class TemplateFEController {
     private TemplateService templateSuratService;
 
     @Autowired
+    RequestTemplateDb requestTemplateDb;
+
+    @Autowired
     PenggunaDb penggunaDb;
 
     @Autowired
     PenggunaService penggunaService;
 
     @GetMapping("/new-requests")
-    public String showTemplateRequests(Model model, Authentication auth) {
-        List<RequestTemplate> requestTemplates = templateSuratService.getAllReqTemplate();
-        model.addAttribute("requestTemplates", requestTemplates);
+    public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestTemplate> allRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> acceptedRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> rejectedRequestTemplates = new ArrayList<>();
+        List<RequestTemplate> requestedRequestTemplates = new ArrayList<>();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            allRequestTemplates = requestTemplateDb.findByKeyword(keyword);
+            acceptedRequestTemplates = templateSuratService.searchRequests(keyword, 2);
+            rejectedRequestTemplates = templateSuratService.searchRequests(keyword, 3);
+            requestedRequestTemplates = templateSuratService.searchRequests(keyword, 1);
+        } else {
+            allRequestTemplates = templateSuratService.getAllReqTemplate();
+            acceptedRequestTemplates = templateSuratService.getAllAcceptedReq();
+            rejectedRequestTemplates = templateSuratService.getAllRejectedReq();
+            requestedRequestTemplates = templateSuratService.getAllRequestedReq();
+        }
+
+        model.addAttribute("requestTemplates", allRequestTemplates);
+        model.addAttribute("requestedRequests", requestedRequestTemplates);
+        model.addAttribute("acceptedRequests", acceptedRequestTemplates);
+        model.addAttribute("rejectedRequests", rejectedRequestTemplates);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -61,9 +88,10 @@ public class TemplateFEController {
         return "daftar-request-template";
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/request/detail/{id}")
     public String showDetailTemplateRequests(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestTemplate file = templateSuratService.getRequest(id);
+        RequestTemplate requestTemplate = templateSuratService.getRequest(id);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -79,7 +107,13 @@ public class TemplateFEController {
             }
         }
 
-        model.addAttribute("requestTemplate", file); // Add the template object to the model
+        Map<Integer, String> statusMap = new HashMap<>();
+        statusMap.put(2, "Diterima");
+        statusMap.put(3, "Ditolak");
+
+        model.addAttribute("statusMap", statusMap);
+
+        model.addAttribute("requestTemplate", requestTemplate); // Add the template object to the model
         return "detail-request-template"; // Return the PDF preview Thymeleaf template
     }
 
@@ -218,35 +252,47 @@ public class TemplateFEController {
         return "redirect:/template/active-templates"; // Redirect to the list of active templates
     }
 
-        @GetMapping("/request/acc/{id}")
-        public String terimaRequest(@PathVariable("id") String requestId, Model model) {
-            try {
-                RequestTemplate targetedRequest = templateSuratService.terimaRequest(requestId);
-                if (targetedRequest != null) {
-                    model.addAttribute("message", "Request accepted successfully.");
-                } else {
-                    model.addAttribute("errorMessage", "Template's status is not updatable.");
-                }
-            } catch (IllegalStateException e) {
-                model.addAttribute("errorMessage", e.getMessage());
+    @PostMapping("/request/detail/{id}/updateStatus")
+    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
+                               Model model, Authentication auth) {
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
             }
-            return "redirect:/template/request/detail/{id}";
         }
 
-        @GetMapping("/request/reject/{id}")
-        public String tolakRequest(@PathVariable("id") String requestId, Model model) {
+        RequestTemplate requestTemplate = templateSuratService.getRequest(id);
+        requestTemplate.setStatus(status);
+
+        if (status == 3) {
+            requestTemplate.setAlasanPenolakan(alasanPenolakan);
+
             try {
-                RequestTemplate targetedRequest = templateSuratService.tolakRequest(requestId);
-                if (targetedRequest != null) {
-                    model.addAttribute("message", "Request rejected successfully.");
-                } else {
-                    model.addAttribute("errorMessage", "Template's status is not updatable.");
-                }
-            } catch (IllegalStateException e) {
-                model.addAttribute("errorMessage", e.getMessage());
+                templateSuratService.sendEmailRejection(requestTemplate.getPengaju().getEmail(), "", "", requestTemplate);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            return "redirect:/template/request/detail/{id}";
+
+        } else {
+            requestTemplate.setAlasanPenolakan(null);
         }
+
+        templateSuratService.updateRequest(requestTemplate.getId());
+
+        return "redirect:/template/request/detail/{id}";
+    }
+
+
 
     @GetMapping("/update/{id}")
     public String showUpdateTemplateForm(@PathVariable("id") String id, Model model, Authentication auth) {

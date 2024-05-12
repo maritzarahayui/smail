@@ -14,5 +14,10 @@ public interface FAQService {
     List<FAQ> getFaqsByStatus(int status);
     List<FAQ> getFaqsByStatusAndSearch(String search, int status);
     FAQ getFAQbyId(int idFAQ);
+    List<FAQ> getAllNotAnsweredFaq();
+    List<FAQ> getAllEskalasiFaq();
+    List<FAQ> getAllAnsweredFaq();
+    List<FAQ> getAllDeletedFaq();
     Map<String, Long> getCountOfAnsweredQuestions(Pengguna pengaju);
+    List<FAQ> getFaqsByPengajuAndStatus(Pengguna pengaju, int status);
 } 
