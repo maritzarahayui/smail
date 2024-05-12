@@ -16,6 +16,7 @@ import java.util.Optional;
 @Transactional
 public interface SuratKeluarDb extends JpaRepository<SuratKeluar, String> {
     long countByKategori(String kategori);
+    List<SuratKeluar> findByKategori(String kategori);
     List<SuratKeluar> findByPenandatanganId(String penandatanganId);
     SuratKeluar findByRequestSurat(Optional<RequestSurat> requestSurat);
     SuratKeluar findByNomorArsipContainingIgnoreCase(String nomorArsip);

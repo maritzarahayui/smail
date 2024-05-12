@@ -317,12 +317,4 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         return mapPerHari;
     }
 
-    @Override
-    public Map<String, Integer> getJumlahSuratMasukPerStatus() {
-        Map<String, Integer> mapSuratMasukStatus = new LinkedHashMap<String, Integer>();
-        mapSuratMasukStatus.put("Disposisi", getSuratMasukIsDisposisi().size());
-        mapSuratMasukStatus.put("Follow-up", getSuratMasukIsFollowUp().size());
-        return mapSuratMasukStatus;
-    }
-
 }

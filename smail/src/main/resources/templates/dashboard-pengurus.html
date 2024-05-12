@@ -23,17 +23,20 @@
         </b>  
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <!-- <div style="text-align:center; margin-top: 20px; margin-bottom: 20px;">
-            <button class="chips active" id="requestSurat">Tanda Tangan</button>
-            <button class="chips" id="tandaTangan">Surat Keluar</button>
-            <button class="chips" id="forum">Surat Masuk</button>
-        </div> -->
+        <div style="text-align:center; margin-top: 20px; margin-bottom: 20px;">
+            <button class="chips active" id="overview">Overview</button>
+            <button class="chips" id="suratMasuk">Surat Masuk</button>
+            <button class="chips" id="suratKeluar">Surat Keluar</button>
+        </div>
 
+        
         <div class="container" style="width: 100%; max-width: 1200px;"> 
+        
+        <div id="overviewContent" class="content">
             <div class="row align-items-center">
                 <div class="col">
                     <a th:href="@{'/surat-keluar/all'}" style="text-decoration: none; color: inherit;">
-                        <div class="card border-0 m-4">
+                        <div class="card border-0 m-3">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
                                 <h2 class="card-text" th:text="${totalSuratKeluar}"></h2>
                                 <h6 class="card-title">Surat Keluar</h6>
@@ -43,7 +46,7 @@
                 </div>
                 <div class="col">
                     <a th:href="@{'/surat-masuk/all'}" style="text-decoration: none; color: inherit;">
-                        <div class="card border-0 m-4">
+                        <div class="card border-0 m-3">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
                                 <h2 class="card-text" th:text="${totalSuratMasuk}"></h2>
                                 <h6 class="card-title">Surat Masuk</h6>
@@ -53,7 +56,7 @@
                 </div>
                 <div class="col">
                     <a th:href="@{'/faq'}" style="text-decoration: none; color: inherit;">
-                        <div class="card border-0 m-4">
+                        <div class="card border-0 m-3">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
                                 <h2 class="card-text" th:text="${totalForumEsk}"></h2>
                                 <h6 class="card-title">Forum Dieskalasi</h6>
@@ -63,7 +66,7 @@
                 </div>
                 <div class="col">
                     <a th:href="@{'/ttd/request'}" style="text-decoration: none; color: inherit;">
-                        <div class="card border-0 m-4">
+                        <div class="card border-0 m-3">
                             <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
                                 <h2 class="card-text" th:text="${totalBelumTtd}"></h2>
                                 <h6 class="card-title">Surat Perlu TTD</h6>
@@ -73,290 +76,429 @@
                 </div>
             </div>
 
-            <br>
-
-            <div class="row">
-                <div class="col-6">
+            <div class="row align-items-center" style="margin-block: 40px;">
+                <div class="col-8">
                     <div class="label p-1" style="text-align: center;">Rata-Rata Durasi Penandatanganan Surat</div>
-                    <canvas id="lineChartPerformaSurat" style="height: 300px; width: 600px;"></canvas>
+                    <canvas id="barChartDurasiTtd" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
+
+                    <!-- BAR CHART PERFORMA SURAT - KATEGORI -->
+                    <script th:inline="javascript">
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var mapAverageDurasiTtd = /*[[${mapAverageDurasiTtd}]]*/0;
+                            var labels = Object.keys(mapAverageDurasiTtd);
+                            var chartData = labels.map(function(key) {
+                                return mapAverageDurasiTtd[key];
+                            });
+                    
+                            const barChartDurasiTtd = document.getElementById('barChartDurasiTtd');
+                        
+                            new Chart(barChartDurasiTtd, {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Hari',
+                                        data: chartData,
+                                        borderColor: '#459a7d',
+                                        backgroundColor: '#459a7d',
+                                    }]
+                                }, 
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    }
+                                }
+                            })
+                        });
+                    </script>
                 </div>
-                <div class="col-3">
-                    <div class="row-cols-1">
-                        <div class="label p-1" style="text-align: center;">Surat Masuk</div>
+
+                <div class="col-4">
+                    <div class="row-cols-1" style="margin-bottom: 5px;">
+                        <div class="label p-1" style="text-align: center;">Surat Masuk Didisposisi</div>
                     </div>
                     <div class="row-cols-1">
-                        <canvas id="pieChartSuratMasuk"></canvas>
+                        <canvas id="pieChartSuratMasukDisposisi" style="max-height: 170px;"></canvas>
+
+                        <!-- PIE CHART SURAT MASUK DISPOSISI -->
+                        <script th:inline="javascript">
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var suratMasukDisposisi = /*[[${suratMasukDisposisi}]]*/0;
+                                var totalSuratMasuk = /*[[${totalSuratMasuk}]]*/0; 
+                                var tidakDidisposisi = totalSuratMasuk - suratMasukDisposisi;
+
+                                const pieChartSuratMasukDisposisi = document.getElementById('pieChartSuratMasukDisposisi');
+                                new Chart(pieChartSuratMasukDisposisi, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: ["Didisposisi", "Tidak"],
+                                        datasets: [{
+                                            label: 'Jumlah',
+                                            data: [suratMasukDisposisi, tidakDidisposisi],
+                                            backgroundColor: ['#459a7d', '#b1cdb8'],
+                                        }]
+                                    }, 
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                        legend: {
+                                            position: 'right',
+                                        },
+                                        }
+                                    }
+                                })
+                            });
+                        </script>                    
                     </div>
-                </div>
-                <div class="col-3">
-                    <div class="row-cols-1">
-                        <div class="label p-1" style="text-align: center;">Surat Ditanda Tangan</div>
+                    <div class="row-cols-1" style="margin-top: 20px; margin-bottom: 5px;">
+                        <div class="label p-1" style="text-align: center;">Surat Masuk Difollow-Up</div>
                     </div>
                     <div class="row-cols-1">
-                        <canvas id="pieChartSuratKeluar"></canvas>
+                        <canvas id="pieChartSuratMasukFollowUp" style="max-height: 170px;"></canvas>
+                        
+                        <!-- PIE CHART SURAT MASUK - FOLLOW UP -->
+                        <script th:inline="javascript">
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var suratMasukFollowUp = /*[[${suratMasukFollowUp}]]*/0;
+                                var totalSuratMasuk = /*[[${totalSuratMasuk}]]*/0; 
+                                var tidakFollowUp = totalSuratMasuk - suratMasukFollowUp;
+                        
+                                const pieChartSuratMasukFollowUp = document.getElementById('pieChartSuratMasukFollowUp');
+                            
+                                new Chart(pieChartSuratMasukFollowUp, {
+                                    type: 'doughnut',
+                                    data: {
+                                        labels: ["Difollow-Up", "Tidak"],
+                                        datasets: [{
+                                            label: 'Jumlah',
+                                            data: [suratMasukFollowUp, tidakFollowUp],
+                                            backgroundColor: ['#459a7d', '#b1cdb8'],
+                                        }]
+                                    }, 
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                        legend: {
+                                            position: 'right',
+                                        },
+                                        }
+                                    }
+                                })
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
-
-            <br><br><br>
-
-            <div class="row align-items-center">
-                <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Waktu</div>
-                    <div style="text-align: center; justify-content: space-between;">
-                        <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
-                        <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
-                        <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
-                    </div>
-                    <canvas id="barChartSuratMasukKeluar" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
-                </div>
-                <div class="col-6">
-                    <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk - Keluar per Kategori</div>
-                    <canvas id="barChartSuratMasukKeluarKategori" style="padding-right: 20px; height: 300px; width: 600px;"></canvas>
-                </div>
-            </div>
-
-            <br><br><br>
-
         </div>
+
+        <div id="suratMasukContent" class="content">
+            <div class="row" style="margin-block: 40px; justify-content: space-between;" >
+                <div class="col-8">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="label p-1" style="text-align: start;">Jumlah Surat Masuk per Waktu</div>
+                        <div>
+                            <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
+                            <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
+                            <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
+                        </div>
+                    </div>
+                    
+                    <canvas id="barChartSuratMasuk" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
+
+                    <!-- BAR CHART SURAT MASUK PER WAKTU -->
+                    <script th:inline="javascript">
+                        let barChartSuratMasuk;
+                        var mapSuratMasukTahun = /*[[${mapSuratMasukTahun}]]*/0;
+                        var mapSuratMasukBulan = /*[[${mapSuratMasukBulan}]]*/0;
+                        var mapSuratMasukMinggu = /*[[${mapSuratMasukMinggu}]]*/0;
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const ctx = document.getElementById('barChartSuratMasuk');
+                    
+                            barChartSuratMasuk = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [],
+                                    datasets: [
+                                        {
+                                            label: 'Surat Masuk',
+                                            data: [],
+                                            backgroundColor: '#459a7d',
+                                        },
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        y: { beginAtZero: true }
+                                    },
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { position: 'top' }
+                                    }
+                                }
+                            });
+                    
+                            updateChartData(mapSuratMasukMinggu, barChartSuratMasuk);
+
+                            document.querySelectorAll('.buttonWaktu').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    document.querySelectorAll('.buttonWaktu').forEach(btn => btn.classList.remove('active'));
+                                    this.classList.add('active');
+                    
+                                    let mapSuratMasuk;
+                                    switch (this.id) {
+                                        case 'tahunIni':
+                                            mapSuratMasuk = mapSuratMasukTahun;
+                                            break;
+                                        case 'bulanIni':
+                                            mapSuratMasuk = mapSuratMasukBulan;
+                                            break;
+                                        case 'mingguIni':
+                                            mapSuratMasuk = mapSuratMasukMinggu;
+                                            break;
+                                    }
+
+                                    updateChartData(mapSuratMasuk, barChartSuratMasuk);
+                                });
+                            });
+                        });
+                    
+                        function updateChartData(mapSuratMasuk, chart) {
+                            var labels = Object.keys(mapSuratMasuk);
+                            var dataSuratMasuk = labels.map(key => mapSuratMasuk[key]);
+                    
+                            chart.data.labels = labels;
+                            chart.data.datasets[0].data = dataSuratMasuk;
+                            chart.update();
+                        }
+
+                    </script>
+                </div>
+
+                <div class="col-4">
+                    <div class="row-cols-1">
+                        <div class="label p-1" style="text-align: center;">Jumlah Surat Masuk per Kategori</div>
+                    </div>
+                    <div class="row-cols-1">
+                        <canvas id="pieChartSuratMasukKategori" style="max-height: 390px;"></canvas>
+
+                        <!-- PIE CHART SURAT MASUK KATEGORI -->
+                        <script th:inline="javascript">
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/0;
+                                var labels = Object.keys(mapSuratMasukKategori);
+                                var dataSuratMasuk = labels.map(function(key) {
+                                    return mapSuratMasukKategori[key];
+                                });
+                        
+                                const pieChartSuratMasukKategori = document.getElementById('pieChartSuratMasukKategori');
+                            
+                                new Chart(pieChartSuratMasukKategori, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: 'Surat Masuk',
+                                            data: dataSuratMasuk,
+                                            backgroundColor: ['#06533a', '#0c855e', '#24bf8e', '#5bcaa7', '#4b937c', '#3d6d5e'],
+                                        }]
+                                    }, 
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                        }
+                                    }
+                                })
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="suratKeluarContent" class="content">
+            <div class="row" style="margin-block: 40px; justify-content: space-between;" >
+                <div class="col-8">
+                    <div style="display: flex; align-items: center; justify-content: space-between;">
+                        <div class="label p-1" style="text-align: start;">Jumlah Surat Keluar per Waktu</div>
+                        <div>
+                            <button class="buttonWaktu" id="tahunIni">Tahun ini</button>
+                            <button class="buttonWaktu" id="bulanIni">Bulan ini</button>
+                            <button class="buttonWaktu active" id="mingguIni">Minggu ini</button>
+                        </div>
+                    </div>
+                    
+                    <canvas id="barChartSuratKeluar" style="padding-right: 10px; height: 396px; width: 792px;"></canvas>
+
+                    <!-- BAR CHART SURAT KELUAR PER WAKTU -->
+                    <script th:inline="javascript">
+                        let barChartSuratKeluar;
+                        var mapSuratKeluarTahun = /*[[${mapSuratKeluarTahun}]]*/0;
+                        var mapSuratKeluarBulan = /*[[${mapSuratKeluarBulan}]]*/0;
+                        var mapSuratKeluarMinggu = /*[[${mapSuratKeluarMinggu}]]*/0;
+
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const ctx = document.getElementById('barChartSuratKeluar');
+
+                            barChartSuratKeluar = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: [],
+                                    datasets: [
+                                        {
+                                            label: 'Surat Keluar',
+                                            data: [],
+                                            backgroundColor: '#459a7d',
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        y: { beginAtZero: true }
+                                    },
+                                    responsive: true,
+                                    plugins: {
+                                        legend: { position: 'top' }
+                                    }
+                                }
+                            });
+
+                            updateChartData(mapSuratKeluarMinggu, barChartSuratKeluar);
+
+                            document.querySelectorAll('.buttonWaktu').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    document.querySelectorAll('.buttonWaktu').forEach(btn => btn.classList.remove('active'));
+                                    this.classList.add('active');
+
+                                    let mapSuratKeluar;
+                                    switch (this.id) {
+                                        case 'tahunIni':
+                                            mapSuratKeluar = mapSuratKeluarTahun;
+                                            break;
+                                        case 'bulanIni':
+                                            mapSuratKeluar = mapSuratKeluarBulan;
+                                            break;
+                                        case 'mingguIni':
+                                            mapSuratKeluar = mapSuratKeluarMinggu;
+                                            break;
+                                    }
+
+                                    updateChartData(mapSuratKeluar, barChartSuratKeluar);
+                                });
+                            });
+                        });
+
+                        function updateChartData(mapSuratKeluar, chart) {
+                            var labels = Object.keys(mapSuratKeluar);
+                            var dataSuratKeluar = labels.map(key => mapSuratKeluar[key]);
+
+                            chart.data.labels = labels;
+                            chart.data.datasets[0].data = dataSuratKeluar;
+                            chart.update();
+                        }
+
+                    </script>
+                </div>
+
+                <div class="col-4">
+                    <div class="row-cols-1">
+                        <div class="label p-1" style="text-align: center;">Jumlah Surat Keluar per Kategori</div>
+                    </div>
+                    <div class="row-cols-1">
+                        <canvas id="pieChartSuratKeluarKategori" style="max-height: 390px;"></canvas>
+                        <!-- PIE CHART SURAT KELUAR KATEGORI -->
+                        <script th:inline="javascript">
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var mapSuratKeluarKategori = /*[[${mapSuratKeluarKategori}]]*/0;
+                                var labels = Object.keys(mapSuratKeluarKategori);
+                                var dataSuratKeluar = labels.map(function(key) {
+                                    return mapSuratKeluarKategori[key];
+                                });
+
+                                const pieChartSuratKeluarKategori = document.getElementById('pieChartSuratKeluarKategori');
+                            
+                                new Chart(pieChartSuratKeluarKategori, {
+                                    type: 'pie',
+                                    data: {
+                                        labels: labels,
+                                        datasets: [{
+                                            label: 'Surat Keluar',
+                                            data: dataSuratKeluar,
+                                            backgroundColor: ['#06533a', '#0c855e', '#24bf8e', '#5bcaa7', '#4b937c', '#3d6d5e'],
+                                        }]
+                                    }, 
+                                    options: {
+                                        responsive: true,
+                                        plugins: {
+                                            legend: {
+                                                position: 'top',
+                                            },
+                                        }
+                                    }
+                                })
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
 
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <!-- BAR CHART SURAT MASUK KELUAR PER WAKTU -->
-    <script th:inline="javascript">
-        let barChartSuratMasukKeluar;
-        var mapSuratMasukTahun = [[${mapSuratMasukTahun}]];
-        var mapSuratMasukBulan = [[${mapSuratMasukBulan}]];
-        var mapSuratMasukMinggu = [[${mapSuratMasukMinggu}]];
-        var mapSuratKeluarTahun = [[${mapSuratKeluarTahun}]];
-        var mapSuratKeluarBulan = [[${mapSuratKeluarBulan}]];
-        var mapSuratKeluarMinggu = [[${mapSuratKeluarMinggu}]];
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+           var buttons = document.querySelectorAll(".chips");
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const ctx = document.getElementById('barChartSuratMasukKeluar');
-    
-            barChartSuratMasukKeluar = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [],
-                    datasets: [
-                        {
-                            label: 'Surat Masuk',
-                            data: [],
-                            backgroundColor: '#459a7d',
-                        },
-                        {
-                            label: 'Surat Keluar',
-                            data: [],
-                            backgroundColor: '#b1cdb8',
-                        }
-                    ]
-                },
-                options: {
-                    scales: {
-                        y: { beginAtZero: true }
-                    },
-                    responsive: true,
-                    plugins: {
-                        legend: { position: 'top' }
-                    }
-                }
-            });
-    
-            updateChartData(mapSuratMasukMinggu, mapSuratKeluarMinggu, barChartSuratMasukKeluar);
+           buttons.forEach(function(button) {
+               button.addEventListener("click", function() {
+                   buttons.forEach(function(btn) {
+                       btn.classList.remove("active");
+                   });
 
-            document.querySelectorAll('.buttonWaktu').forEach(button => {
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.buttonWaktu').forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-    
-                    let mapSuratMasuk, mapSuratKeluar;
-                    switch (this.id) {
-                        case 'tahunIni':
-                            mapSuratMasuk = mapSuratMasukTahun;
-                            mapSuratKeluar = mapSuratKeluarTahun;
-                            break;
-                        case 'bulanIni':
-                            mapSuratMasuk = mapSuratMasukBulan;
-                            mapSuratKeluar = mapSuratKeluarBulan;
-                            break;
-                        case 'mingguIni':
-                            mapSuratMasuk = mapSuratMasukMinggu;
-                            mapSuratKeluar = mapSuratKeluarMinggu;
-                            break;
-                    }
+                   this.classList.add("active");
+               });
+           });
+       });
 
-                    updateChartData(mapSuratMasuk, mapSuratKeluar, barChartSuratMasukKeluar);
-                });
-            });
-        });
-    
-        function updateChartData(mapSuratMasuk, mapSuratKeluar, chart) {
-            var labels = Object.keys(mapSuratMasuk);
-            var dataSuratMasuk = labels.map(key => mapSuratMasuk[key]);
-            var dataSuratKeluar = labels.map(key => mapSuratKeluar[key]);
-    
-            chart.data.labels = labels;
-            chart.data.datasets[0].data = dataSuratMasuk;
-            chart.data.datasets[1].data = dataSuratKeluar;
-            chart.update();
-        }
-
+       document.addEventListener("DOMContentLoaded", function() {
+           var allContents = document.querySelectorAll(".content");
+           allContents.forEach(function(content) {
+               content.style.display = "none";
+           });
+           
+           // Tampilkan konten grafik default (requestSuratContent) saat halaman dimuat
+           document.getElementById("overviewContent").style.display = "block";
+   
+           // Tampilkan konten grafik yang sesuai saat tombol yang sesuai diklik
+           document.getElementById("overview").addEventListener("click", function() {
+               showContent("overviewContent");
+           });
+           document.getElementById("suratMasuk").addEventListener("click", function() {
+               showContent("suratMasukContent");
+           });
+           document.getElementById("suratKeluar").addEventListener("click", function() {
+               showContent("suratKeluarContent");
+           });
+   
+           function showContent(contentId) {
+               allContents.forEach(function(content) {
+                   content.style.display = "none";
+               });
+               document.getElementById(contentId).style.display = "block";
+           }
+       });
     </script>
 
-    <!-- BAR CHART SURAT MASUK KELUAR KATEGORI -->
-    <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-
-        var mapSuratMasukKategori = [[${mapSuratMasukKategori}]];
-        var labels = Object.keys(mapSuratMasukKategori);
-        var dataSuratMasuk = labels.map(function(key) {
-            return mapSuratMasukKategori[key];
-        });
-
-        var mapSuratKeluarKategori = [[${mapSuratKeluarKategori}]];
-        var labels = Object.keys(mapSuratKeluarKategori);
-        var dataSuratKeluar = labels.map(function(key) {
-            return mapSuratKeluarKategori[key];
-        });
-
-        const barChartSuratMasukKeluarKategori = document.getElementById('barChartSuratMasukKeluarKategori');
-    
-        new Chart(barChartSuratMasukKeluarKategori, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: 'Surat Masuk',
-                        data: dataSuratMasuk,
-                        backgroundColor: '#459a7d',
-                    },
-                    {
-                        label: 'Surat Keluar',
-                        data: dataSuratKeluar,
-                        backgroundColor: '#b1cdb8',
-                    }
-                ]
-            }, 
-            options: {
-                indexAxis: 'y',
-                scales: {
-                    x: {
-                        beginAtZero: true
-                    }
-                },
-                responsive: true,
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
-                }
-            }
-        })
-    });
-    </script>
-
-    <!-- LINE CHART PERFORMA SURAT - KATEGORI -->
-    <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var mapPerformaSurat = [[${performaRequestSurat}]];
-        var labels = Object.keys(mapPerformaSurat);
-        var chartData = labels.map(function(key) {
-            return mapPerformaSurat[key];
-        });
-
-        const lineChartPerformaSurat = document.getElementById('lineChartPerformaSurat');
-    
-        new Chart(lineChartPerformaSurat, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Hari',
-                    data: chartData,
-                    borderColor: '#459a7d',
-                    backgroundColor: '#459a7d',
-                }]
-            }, 
-            options: {
-                responsive: true,
-                plugins: {
-                legend: {
-                    position: 'top',
-                },
-                }
-            }
-        })
-    });
-    </script>
-
-    <!-- PIE CHART SURAT MASUK STATUS -->
-    <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var mapSuratMasukStatus = [[${mapSuratMasukStatus}]];
-        var labels = Object.keys(mapSuratMasukStatus);
-        var chartData = labels.map(function(key) {
-            return mapSuratMasukStatus[key];
-        });
-
-        const pieChartSuratMasuk = document.getElementById('pieChartSuratMasuk');
-        new Chart(pieChartSuratMasuk, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Jumlah',
-                    data: chartData,
-                    backgroundColor: ['#459a7d', '#b1cdb8'],
-                }]
-            }, 
-            options: {
-                responsive: true,
-                plugins: {
-                legend: {
-                    position: 'top',
-                },
-                }
-            }
-        })
-    });
-    </script>
-
-    <!-- PIE CHART SURAT KELUAR TTD -->
-    <script th:inline="javascript">
-    document.addEventListener('DOMContentLoaded', function () {
-        var mapSuratKeluarTtd = [[${mapSuratKeluarTtd}]];
-        var labels = Object.keys(mapSuratKeluarTtd);
-        var chartData = labels.map(function(key) {
-            return mapSuratKeluarTtd[key];
-        });
-
-        const pieChartSuratKeluar = document.getElementById('pieChartSuratKeluar');
-    
-        new Chart(pieChartSuratKeluar, {
-            type: 'doughnut',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Jumlah',
-                    data: chartData,
-                    backgroundColor: ['#459a7d', '#b1cdb8'],
-                }]
-            }, 
-            options: {
-                responsive: true,
-                plugins: {
-                legend: {
-                    position: 'top',
-                },
-                }
-            }
-        })
-    });
-    </script>
 
 </body>
 
