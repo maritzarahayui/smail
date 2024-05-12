@@ -39,6 +39,5 @@ public interface SuratMasukService {
     Map<String, Integer> getJumlahSuratMasukTahunIni();
     Map<String, Integer> getJumlahSuratMasukBulanIni();
     Map<String, Integer> getJumlahSuratMasukMingguIni();
-    Map<String, Integer> getJumlahSuratMasukPerStatus();
 
 }

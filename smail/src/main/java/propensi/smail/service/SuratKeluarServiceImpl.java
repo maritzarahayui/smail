@@ -178,6 +178,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                     suratKeluar.getRequestSurat().setStatus(5);
                     suratKeluar.getRequestSurat().setTanggalSelesai(new Date());
                     suratKeluar.setIsSigned(true);
+                    suratKeluar.setTanggalSigned(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
                     suratKeluarDb.save(suratKeluar);
 
                     requestService.sendEmailFinished(rs.getPengaju().getEmail(), "", "", rs, suratKeluar);
@@ -379,6 +380,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
                 suratKeluar.setIsSigned(true);
+                suratKeluar.setTanggalSigned(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
                 suratKeluarDb.save(suratKeluar);
             }
 
@@ -489,15 +491,15 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Override
     public List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned) {
-        return suratKeluarDb.findByPenandatanganContainsAndIsSigned(penandatangan, isSigned);
+        return suratKeluarDb.findByCurrentPenandatanganAndIsSigned(penandatangan, isSigned);
     }
 
     @Override
     public Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan) {
         Map<String, Integer> mapSuratTtd = new LinkedHashMap<String, Integer>();
-        mapSuratTtd.put("Sudah", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, true).size());
+        mapSuratTtd.put("Sudah", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, true).size());
         System.out.println(getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).toString());
-        mapSuratTtd.put("Belum", getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).size());
+        mapSuratTtd.put("Belum", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, false).size());
         System.out.println(mapSuratTtd.get("Sudah").toString());
         System.out.println(mapSuratTtd.get("Belum").toString());
         return mapSuratTtd;
@@ -515,5 +517,36 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                         suratKeluar.getPenerimaEksternal().toLowerCase().contains(keyword.toLowerCase()))
                 .collect(Collectors.toList());
         
+    }
+
+    @Override
+    public Integer countAverageDurasiTtd(List<SuratKeluar> listSuratKeluar) {
+        int sum = 0;
+        int counter = 0;
+
+        for (SuratKeluar surat : listSuratKeluar) {
+            int temp = surat.getDurasiTtd();
+            if (temp >= 0) {
+                sum += temp;
+                counter++;
+            }
+        }
+
+        return counter == 0? 0 : (int) Math.ceil(sum/counter);
+    }
+
+    @Override
+    public Map<String, Integer> getAverageDurasiTtd() {
+        Map<String, Integer> averageDurasi = new LinkedHashMap<>();
+        
+        String[] kategori = new String[] {"Legal", "SDM", "Keuangan", "Sarana", "Kemahasiswaan", "Lainnya"};
+        for (String k : kategori) {
+            List<SuratKeluar> listSuratKeluar = suratKeluarDb.findByKategori(k);
+            int value = countAverageDurasiTtd(listSuratKeluar);
+            averageDurasi.put(k, value);
+        }
+
+        System.out.println(averageDurasi.toString());
+        return averageDurasi;
     }
 }

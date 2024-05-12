@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+    <link rel="stylesheet" href="/css/global-final.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -25,7 +26,68 @@
       
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <div class="cont">
+        <div style="margin-top: 20px; margin-bottom: 20px;">
+            <button class="chips active" id="requestSurat">Request Surat</button>
+            <button class="chips" id="tandaTangan">Tanda Tangan</button>
+            <button class="chips" id="forum">Forum</button>
+        </div>
+
+        <div class="cont" id="requestSuratContent">
+            <!-- Jumlah Req By Status -->
+            <div class="content">
+                <div class="label" th:text="'Statistik Request Surat Berdasarkan Status'"></div>
+
+                <div class="txtinput">
+                    <div class="container">
+                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5">
+                            <div class="col">
+                                <a th:href="@{/request/history}" class="card bg-primary text-white mb-4">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h2 class="card-text" th:text="${diajukan}"></h2>
+                                        <h5 class="card-title">Diajukan</h5>
+                                    </div>
+                                </a>
+                            </div>
+            
+                            <div class="col">
+                                <a th:href="@{/request/history/cancelled}" class="card bg-primary text-white mb-4">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h2 class="card-text" th:text="${dibatalkan}"></h2>
+                                        <h5 class="card-title">Dibatalkan</h5>
+                                    </div>
+                                </a>
+                            </div>
+            
+                            <div class="col">
+                                <a th:href="@{/request/history/rejected}" class="card bg-primary text-white mb-4">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h2 class="card-text" th:text="${ditolak}"></h2>
+                                        <h5 class="card-title">Ditolak</h5>
+                                    </div>
+                                </a>
+                            </div>
+            
+                            <div class="col">
+                                <a th:href="@{/request/history/process}" class="card bg-primary text-white mb-4">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h2 class="card-text" th:text="${diproses}"></h2>
+                                        <h5 class="card-title">Diproses</h5>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col">
+                                <a th:href="@{/request/history/finished}" class="card bg-primary text-white mb-4">
+                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                        <h2 class="card-text" th:text="${selesai}"></h2>
+                                        <h5 class="card-title">Selesai</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+            </div>
             
             <!-- Jumlah req TAHUN ini -->
             <div class="content1">
@@ -175,62 +237,6 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Jumlah Req By Status -->
-            <div class="content">
-                <div class="label" th:text="'Statistik Request Surat Berdasarkan Status'"></div>
-
-                <div class="txtinput">
-                    <div class="container">
-                        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5">
-                            <div class="col">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h2 class="card-text" th:text="${diajukan}"></h2>
-                                        <h5 class="card-title">Diajukan</h5>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="col">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h2 class="card-text" th:text="${dibatalkan}"></h2>
-                                        <h5 class="card-title">Dibatalkan</h5>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="col">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h2 class="card-text" th:text="${ditolak}"></h2>
-                                        <h5 class="card-title">Ditolak</h5>
-                                    </div>
-                                </div>
-                            </div>
-            
-                            <div class="col">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h2 class="card-text" th:text="${diproses}"></h2>
-                                        <h5 class="card-title">Diproses</h5>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col">
-                                <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                        <h2 class="card-text" th:text="${selesai}"></h2>
-                                        <h5 class="card-title">Selesai</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>            
-                </div>
-            </div>
 
             <!-- Jumlah req surat by kategori (Dosen & Staf) -->
             <div class="content">
@@ -238,45 +244,74 @@
                     <canvas id="pieChartByKategori"></canvas>
                     
                     <script th:inline="javascript">
-                        var requestByCategory = /*[[${requestByCategory}]]*/;
-                        var labels = Object.keys(requestByCategory);
-                        var chartData = Object.values(requestByCategory);
-                        var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
-                    
-                        const pieChartByKategori = document.getElementById('pieChartByKategori');
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var requestByCategory = /*[[${requestByCategory}]]*/;
+                            var labels = Object.keys(requestByCategory);
+                            var chartData = Object.values(requestByCategory);
+                            var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
                         
-                        new Chart(pieChartByKategori, {
-                            type: 'doughnut',
-                            data: {
-                                labels: labels,
-                                datasets: [{
-                                    label: 'Jumlah',
-                                    data: chartData,
-                                    backgroundColor: backgroundColors.slice(0, labels.length),
-                                    borderWidth: 1
-                                }]
-                            }, 
-                            options: {
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'bottom',
+                            const pieChartByKategori = document.getElementById('pieChartByKategori');
+                            
+                            new Chart(pieChartByKategori, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Jumlah',
+                                        data: chartData,
+                                        backgroundColor: backgroundColors.slice(0, labels.length),
+                                        borderWidth: 1
+                                    }]
+                                }, 
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Statistik Request Surat Berdasarkan Kategori'
+                                        }
                                     },
-                                    title: {
-                                        display: true,
-                                        text: 'Statistik Request Surat Berdasarkan Kategori'
-                                    }
-                                },
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                cutout: '50%'
-                            }
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: '50%'
+                                }
+                            })
                         });
                     </script>
                 </div>
             </div>
+        </div>
 
-            <!-- PERTANYAAN & TTD -->
+        <div class="cont" id="tandaTanganContent">
+            <!-- Kartu Statistik Jumlah Request Surat Ditandatangani -->
+            <div class="container">
+                <div class="col">
+                    <div class="content">
+                        <div class="label d-flex flex-column align-items-center text-center" th:text="'Jumlah Surat yang Perlu Ditandatangani'"></div>
+                        <div class="txtinput">
+                            <div class="container" style="margin: 0 auto;">
+                                <div class="row-cols-1">
+                                    <div class="col">
+                                        <a th:href="@{/ttd/request}" class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
+                                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                                                <h2 class="card-text" th:text="${totalTtd}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h2>
+                                                <h5 class="card-title">Surat</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cont" id="forumContent">
+            <!-- PERTANYAAN Terjawab & Belum Terjawab -->
             <div class="container">
                 <div class="row">
                     <!-- Kartu Statistik Jumlah Pertanyaan Terjawab -->
@@ -287,32 +322,32 @@
                                 <div class="container" style="margin: 0 auto;">
                                     <div class="row-cols-1">
                                         <div class="col">
-                                            <div class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
+                                            <a th:href="@{/faq/user-faq/terjawab}" class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
                                                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
                                                     <h2 class="card-text" th:text="${answeredFAQs}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h2>
                                                     <h5 class="card-title">Terjawab</h5>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Kartu Statistik Jumlah Request Surat Ditandatangani -->
+                    <!-- Kartu Statistik Jumlah Pertanyaan BELUM Terjawab -->
                     <div class="col">
                         <div class="content">
-                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Statistik Surat Ditandatangani'"></div>
+                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Statistik Pertanyaan Belum Terjawab'"></div>
                             <div class="txtinput">
                                 <div class="container" style="margin: 0 auto;">
                                     <div class="row-cols-1">
                                         <div class="col">
-                                            <div class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
+                                            <a th:href="@{/faq/user-faq/belum-terjawab}" class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
                                                 <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                                    <h2 class="card-text" th:text="${totalTtd}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h2>
-                                                    <h5 class="card-title">Ditandatangani</h5>
+                                                    <h2 class="card-text" th:text="${unansweredFAQs}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h2>
+                                                    <h5 class="card-title">Belum Terjawab</h5>
                                                 </div>
-                                            </div>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -321,11 +356,62 @@
                     </div>
                 </div>
             </div>
-            
         </div>
+            
+        
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+           // Ambil semua tombol dengan kelas 'chips'
+           var buttons = document.querySelectorAll(".chips");
+
+           // Tambahkan event listener untuk setiap tombol
+           buttons.forEach(function(button) {
+               button.addEventListener("click", function() {
+                   // Hapus kelas 'active' dari semua tombol
+                   buttons.forEach(function(btn) {
+                       btn.classList.remove("active");
+                   });
+
+                   // Tambahkan kelas 'active' pada tombol yang diklik
+                   this.classList.add("active");
+               });
+           });
+       });
+
+       document.addEventListener("DOMContentLoaded", function() {
+           // Sembunyikan semua konten grafik saat halaman dimuat
+           var allContents = document.querySelectorAll(".cont");
+           allContents.forEach(function(content) {
+               content.style.display = "none";
+           });
+           
+           // Tampilkan konten grafik default (requestSuratContent) saat halaman dimuat
+           document.getElementById("requestSuratContent").style.display = "block";
+   
+           // Tampilkan konten grafik yang sesuai saat tombol yang sesuai diklik
+           document.getElementById("requestSurat").addEventListener("click", function() {
+               showContent("requestSuratContent");
+           });
+           document.getElementById("tandaTangan").addEventListener("click", function() {
+               showContent("tandaTanganContent");
+           });
+           document.getElementById("forum").addEventListener("click", function() {
+               showContent("forumContent");
+           });
+   
+           function showContent(contentId) {
+               // Sembunyikan semua konten grafik
+               allContents.forEach(function(content) {
+                   content.style.display = "none";
+               });
+               // Tampilkan konten grafik yang sesuai
+               document.getElementById(contentId).style.display = "block";
+           }
+       });
+   </script>
 </body>
 </html>
-            
