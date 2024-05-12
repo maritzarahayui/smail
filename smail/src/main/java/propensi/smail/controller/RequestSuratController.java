@@ -13,6 +13,7 @@ import propensi.smail.repository.PenggunaDb;
 import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratKeluar;
+import propensi.smail.model.SuratMasuk;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.SuratKeluarService;
@@ -43,6 +44,7 @@ import io.jsonwebtoken.lang.Arrays;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.ObjectError;
 
 import org.springframework.security.core.Authentication;
@@ -116,7 +118,8 @@ public class RequestSuratController {
 
     @PostMapping("/request")
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestAndFieldDataDTO requestDTO,
-                                    BindingResult bindingResult, Authentication auth) {
+                                @RequestParam(value = "file", required = false) MultipartFile file,            
+                                BindingResult bindingResult, Authentication auth) throws IOException {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors().toString();
         }
@@ -130,8 +133,13 @@ public class RequestSuratController {
             pengguna = user.get(); 
         }
         
-        if (requestDTO.getJenisSurat().equals("Lainnya")) {
+        if (requestDTO.getJenisSurat().equals("Lainnya") && file != null) {
             RequestTemplate requestTemplate = new RequestTemplate();
+
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+            requestTemplate.setFile(file.getBytes());
+            requestTemplate.setFileName(fileName);
             requestTemplate.setPengaju(pengguna);
             requestTemplate.setTanggalPengajuan(new Date());
             requestService.createRequestTemplate(requestTemplate,requestDTO);
@@ -153,6 +161,7 @@ public class RequestSuratController {
     }
 
     @GetMapping("/request/history")
+    @Transactional(readOnly = true)
     public String showAllRequests(Model model, Authentication auth) {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -162,45 +171,44 @@ public class RequestSuratController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
+
+                // Get all request types
+                List<RequestSurat> allRequests = requestService.getAllSubmittedRequestsSuratByPengaju(userId);
+                List<RequestSurat> cancelledRequests = requestService.getAllCancelledRequestsSuratByPengaju(userId);
+                List<RequestSurat> rejectedRequests = requestService.getAllRejectedRequestsSuratByPengaju(userId);
+                List<RequestSurat> onProcessRequests = requestService.getAllOnProcessRequestsSuratByPengaju(userId);
+                List<RequestSurat> finishedRequests = requestService.getAllFinishedRequestsSuratByPengaju(userId);
+
+                // Get all surat keluar
+                List<SuratKeluar> suratKeluar = suratKeluarService.getAllSuratKeluar();
+
+                model.addAttribute("allRequests", allRequests);
+                model.addAttribute("cancelledRequests", cancelledRequests);
+                model.addAttribute("rejectedRequests", rejectedRequests);
+                model.addAttribute("onProcessRequests", onProcessRequests);
+                model.addAttribute("finishedRequests", finishedRequests);
+                model.addAttribute("suratKeluar", suratKeluar);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+
+                return "user-history";
             } else {
                 return "auth-failed";
             }
         }
 
-        return "user-history-diajukan";
+        return "user-history";
     }
 
-    @GetMapping("/request/history/{id}/cancel")
-    public String cancelRequest(Model model, Authentication auth, @PathVariable("id") String id) {
-        requestService.batalkanRequestSurat(id, "test");
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "redirect:/detail/"+id+"/cancelled";
+    @PostMapping("/request/history/{id}/cancel")
+    public String cancelRequest(Model model, Authentication auth, @PathVariable("id") String id,  @RequestParam(value = "alasanPembatalan", required = false) String alasanPembatalan) {
+        requestService.batalkanRequestSurat(id, alasanPembatalan);
+        return "redirect:/detail/"+id+"/request";
     }
 
     @GetMapping("/request/history/search")
     @Transactional(readOnly = true)
-    public String searchHistory(@RequestParam(name = "search", required = false) String search,
+    public String searchHistory(@RequestParam(name = "keyword", required = false) String keyword,
                                 Model model, Authentication auth) {
 
         String pengaju = "";
@@ -219,268 +227,38 @@ public class RequestSuratController {
             }
         }
 
-        List<RequestSurat> requestSurats; 
-        if (search != null && !search.isEmpty()) {
-            requestSurats = requestService.getBySearchAndStatusAndPengaju(1, search, pengaju);
-            model.addAttribute("requestSurats", requestSurats);
+        List<RequestSurat> allRequests = new ArrayList<>();
+        List<RequestSurat> cancelledRequests = new ArrayList<>();
+        List<RequestSurat> rejectedRequests = new ArrayList<>();
+        List<RequestSurat> onProcessRequests = new ArrayList<>();
+        List<RequestSurat> finishedRequests = new ArrayList<>();
+
+        if (keyword != null && !keyword.isEmpty()) {
+            allRequests = requestSuratDb.findByKeyword(keyword);
+            cancelledRequests = requestService.searchRequests(keyword, 2);
+            rejectedRequests = requestService.searchRequests(keyword, 3);
+            onProcessRequests = requestService.searchRequests(keyword, 4);
+            finishedRequests = requestService.searchRequests(keyword, 5);
         } else {
-            // Jika tidak ada input, kembalikan semua permintaan surat
-            requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            model.addAttribute("requestSurats", requestSurats);
+            allRequests = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
+            cancelledRequests = requestService.getAllCancelledRequestsSuratByPengaju(pengaju);
+            rejectedRequests = requestService.getAllRejectedRequestsSuratByPengaju(pengaju);
+            onProcessRequests = requestService.getAllOnProcessRequestsSuratByPengaju(pengaju);
+            finishedRequests = requestService.getAllFinishedRequestsSuratByPengaju(pengaju);
         }
-        
-        if (requestSurats.size() == 0) {
+
+        model.addAttribute("allRequests", allRequests);
+        model.addAttribute("cancelledRequests", cancelledRequests);
+        model.addAttribute("rejectedRequests", rejectedRequests);
+        model.addAttribute("onProcessRequests", onProcessRequests);
+        model.addAttribute("finishedRequests", finishedRequests);
+
+        if (allRequests.size() == 0 || cancelledRequests.size() == 0 || rejectedRequests.size() == 0 ||
+            onProcessRequests.size() == 0 || finishedRequests.size() == 0) {
             model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
         }
 
-        return "user-history-diajukan";
-    }
-
-    @GetMapping("/request/history/cancelled")
-    @Transactional(readOnly = true)
-    public String showCancelledRequests(Model model, Authentication auth) {
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllCancelledRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-history-dibatalkan";
-    }
-
-    @GetMapping("/request/history/cancelled/search")
-    @Transactional(readOnly = true)
-    public String searchHistoryCancelled(@RequestParam(name = "search", required = false) String search,
-                                Model model, Authentication auth) {
-        
-        String pengaju = "";
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                pengaju = pengguna.getId();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        List<RequestSurat> requestSurats; 
-        if (search != null && !search.isEmpty()) {
-            requestSurats = requestService.getBySearchAndStatusAndPengaju(2, search, pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        } else {
-            // Jika tidak ada input, kembalikan semua permintaan surat
-            requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        }
-        
-        if (requestSurats.size() == 0) {
-            model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
-        }           
-
-        return "user-history-dibatalkan";
-    }
-
-    @GetMapping("/request/history/rejected")
-    @Transactional(readOnly = true)
-    public String showRejectedRequests(Model model, Authentication auth) {
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllRejectedRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-history-ditolak";
-    }
-
-    @GetMapping("/request/history/rejected/search")
-    @Transactional(readOnly = true)
-    public String searchHistoryRejected(@RequestParam(name = "search", required = false) String search,
-                                Model model, Authentication auth) {
-
-        String pengaju = "";
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                pengaju = pengguna.getId();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        List<RequestSurat> requestSurats; 
-        if (search != null && !search.isEmpty()) {
-            requestSurats = requestService.getBySearchAndStatusAndPengaju(3, search, pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        } else {
-            // Jika tidak ada input, kembalikan semua permintaan surat
-            requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        }
-        
-        if (requestSurats.size() == 0) {
-            model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
-        }
-                            
-        return "user-history-ditolak";
-    }
-
-    @GetMapping("/request/history/process")
-    @Transactional(readOnly = true)
-    public String showOnProcessRequests(Model model, Authentication auth) {
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                String userId = pengguna.getId();
-                List<RequestSurat> requestSurats = requestService.getAllOnProcessRequestsSuratByPengaju(userId);
-                model.addAttribute("requestSurats", requestSurats);
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-history-diproses";
-    }
-
-    @GetMapping("/request/history/process/search")
-    @Transactional(readOnly = true)
-    public String searchHistoryOnProcess(@RequestParam(name = "search", required = false) String search,
-                                Model model, Authentication auth) {
-
-        String pengaju = "";
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                pengaju = pengguna.getId();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        List<RequestSurat> requestSurats; 
-        if (search != null && !search.isEmpty()) {
-            requestSurats = requestService.getBySearchAndStatusAndPengaju(4, search, pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        } else {
-            // Jika tidak ada input, kembalikan semua permintaan surat
-            requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        }
-        
-        if (requestSurats.size() == 0) {
-            model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
-        }
-                            
-        return "user-history-diproses";
-    }
-
-    @GetMapping("/request/history/finished")
-    @Transactional(readOnly = true)
-    public String showFinishedRequests(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllFinishedRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
-        List<SuratKeluar> suratKeluar = suratKeluarService.getAllSuratKeluar();
-        model.addAttribute("suratKeluar", suratKeluar);
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-history-selesai";
-    }
-
-    @GetMapping("/request/history/finished/search")
-    @Transactional(readOnly = true)
-    public String searchHistoryFinished(@RequestParam(name = "search", required = false) String search,
-                                Model model, Authentication auth) {
-
-        String pengaju = "";
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                pengaju = pengguna.getId();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        List<RequestSurat> requestSurats; 
-        if (search != null && !search.isEmpty()) {
-            requestSurats = requestService.getBySearchAndStatusAndPengaju(5, search, pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        } else {
-            // Jika tidak ada input, kembalikan semua permintaan surat
-            requestSurats = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            model.addAttribute("requestSurats", requestSurats);
-        }
-        
-        if (requestSurats.size() == 0) {
-            model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
-        }
-                            
-        return "user-history-selesai";
+        return "user-history";
     }
 
     // Admin
@@ -542,20 +320,10 @@ public class RequestSuratController {
         return "redirect:/admin/request/" + requestId;
     }
 
-    // @GetMapping("/{requestSuratId}")
-    // public ResponseEntity<RequestSurat> showDetailRequest(@PathVariable("requestSuratId") String requestSuratId) {
-    //     try {
-    //         RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
-    //         return new ResponseEntity<>(requestSurat, HttpStatus.OK);
-    //     } catch (NoSuchElementException e) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestSurat with id: " + requestSuratId + " not found", e);
-    //     }
-    // }
-
-    @GetMapping("/detail/{id}/submitted")
+    @GetMapping("/detail/{id}/request")
+    @Transactional(readOnly = true)
     public String detailRequestSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
-        model.addAttribute("requestSurats", requestSurats);
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -571,148 +339,45 @@ public class RequestSuratController {
             }
         }
 
-        return "user-detail-diajukan"; 
-    }
-
-    @GetMapping("/detail/{id}/rejected")
-    public String detailRequestSuratRejected(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestSurat requestSurats = requestService.getRequestSuratById(id);
-        model.addAttribute("requestSurats", requestSurats);
-        
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate fileExample = requestService.getFile(id);
+            if (fileExample != null) {
+                byte[] pdf = fileExample.getFile();
+                String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDFEx", base64PDFEx);
+                model.addAttribute("template", fileExample);
             } else {
-                return "auth-failed";
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
-
-        return "user-detail-ditolak"; 
-    }
-
-    @GetMapping("/detail/{id}/process")
-    public String detailRequestSuratOnProcess(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestSurat requestSurats = requestService.getRequestSuratById(id);
-        model.addAttribute("requestSurats", requestSurats);
-        
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-detail-diproses"; 
-    }
-
-    @GetMapping("/detail/{id}/finished")
-    public String detailRequestSuratFinished(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestSurat requestSurats = requestService.getRequestSuratById(id);
-        model.addAttribute("requestSurats", requestSurats);
-
-        SuratKeluar suratKeluar = suratKeluarService.getFileTtd(id);
-        byte[] pdf = suratKeluar.getFile();
 
         SuratKeluar suratKeluar1 = requestSurats.getSurat();
         model.addAttribute("outgoing", suratKeluar1);
 
-        // Mengonversi konten PDF ke Base64
-        String base64PDF = Base64.getEncoder().encodeToString(pdf);
+        SuratKeluar file = suratKeluarService.getFileTtd(id);
 
-        model.addAttribute("base64PDF", base64PDF);
-        model.addAttribute("suratKeluar", suratKeluar);
-        
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+        if (file != null) {
+            byte[] pdf = file.getFile();
 
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
+            // Convert PDF content to Base64
+            String base64PDF = Base64.getEncoder().encodeToString(pdf);
+
+            model.addAttribute("base64PDF", base64PDF);
+            model.addAttribute("template", file);
         }
 
         Map<Integer, String> statusMap = new HashMap<>();
         statusMap.put(1, "Diajukan");
+        statusMap.put(2, "Dibatalkan");
         statusMap.put(3, "Ditolak");
         statusMap.put(4, "Diproses");
         statusMap.put(5, "Selesai");
 
         model.addAttribute("statusMap", statusMap);
-
-        return "user-detail-selesai"; 
-    }
-
-    @GetMapping("/detail/{id}/cancelled")
-    public String detailRequestSuratCancelled(@PathVariable("id") String id, Model model, Authentication auth) {
-        RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
-        
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
 
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "user-detail-dibatalkan"; 
+        return "user-history-detail"; 
     }
-
-    // @PutMapping("/{requestSuratId}/cancel")
-    // public ResponseEntity<RequestSurat> cancelRequest(@PathVariable("requestSuratId") String requestSuratId, @RequestParam("reason") String reason) {
-    //     try {
-    //         RequestSurat canceledRequestSurat = requestService.batalkanRequestSurat(requestSuratId, reason);
-    //         return new ResponseEntity<>(canceledRequestSurat, HttpStatus.OK);
-    //     } catch (NoSuchElementException e) {
-    //         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "RequestSurat with id: " + requestSuratId + " not found", e);
-    //     }
-    // }
-
-    // @PostMapping("/{id}/cancel")
-    // public String cancelRequestSurat(@PathVariable("id") String id, @RequestParam("reason") String reason, Model model, Authentication auth) {
-    //     RequestSurat requestSurats = requestService.batalkanRequestSurat(id, reason);
-    //     model.addAttribute("requestSurats", requestSurats);
-        
-    //     if (auth != null) {
-    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-    //         String email = oauthUser.getEmail();
-    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-    //         if (user.isPresent()) {
-    //             Pengguna pengguna = user.get();
-    //             model.addAttribute("role", penggunaService.getRole(pengguna));
-    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-    //         } else {
-    //             return "auth-failed";
-    //         }
-    //     }
-
-    //     return "user-detail-dibatalkan"; 
-    // }
 
     @GetMapping("/admin/request")
     @Transactional(readOnly = true)
@@ -864,6 +529,7 @@ public class RequestSuratController {
     }
 
     @GetMapping("/admin/detail/{id}")
+    @Transactional(readOnly = true)
     public String detailRequestSuratAdmin(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
@@ -879,6 +545,18 @@ public class RequestSuratController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
                 return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 
@@ -901,8 +579,9 @@ public class RequestSuratController {
         return "admin-detail-diajukan";
     }
 
-    @GetMapping("/admin/detail/{id}/rejected")
-    public String detailRequestSuratAdminTolak(@PathVariable("id") String id, Model model, Authentication auth) {
+    @GetMapping("/admin/detail/{id}/cancelled")
+    @Transactional(readOnly = true)
+    public String detailRequestSuratAdminCancelled(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
 
@@ -917,6 +596,53 @@ public class RequestSuratController {
                 model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
             } else {
                 return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
+            }
+        }
+
+        return "admin-detail-dibatalkan"; 
+    }
+
+    @GetMapping("/admin/detail/{id}/rejected")
+    @Transactional(readOnly = true)
+    public String detailRequestSuratAdminTolak(@PathVariable("id") String id, Model model, Authentication auth) {
+        RequestSurat requestSurats = requestService.getRequestSuratById(id);
+        model.addAttribute("requestSurats", requestSurats);
+        
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        if (requestSurats.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate file = requestService.getFile(id);
+            if (file != null) {
+                byte[] pdf = file.getFile();
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            } else {
+                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 

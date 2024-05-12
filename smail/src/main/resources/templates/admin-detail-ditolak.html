@@ -153,6 +153,11 @@
                     <div class="content" th:text="${fieldName.value}"></div>
                 </div>
             </div>
+
+            <div class="frame-button" th:if="${base64PDF != null}">
+                <h3 class="label6">Contoh File Surat</h3>
+                <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
+            </div>
         </form>
     </div>
 </div>

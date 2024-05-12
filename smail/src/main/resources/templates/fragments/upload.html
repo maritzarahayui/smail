@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
+    <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/detail-surat.css"/>
+</head>
+
+<body>
+    <div th:fragment="upload" class="form-group">
+        <div class="upload-illustration-frame">
+            <div class="file-input">
+                <div class="secondary-message">secondary message</div>
+                <div class="rectangle-frame">
+                    <div class="arsip-surat-frame">
+                        <div class="button-frame1">
+                            <label class="upload-illustration" for="file">
+                                <div class="chevrondown-icon">
+                                    <div class="wrapper-group">
+                                        <img
+                                                class="group-icon"
+                                                alt=""
+                                                src="/images/imagetengah.png"
+                                        />
+                                    </div>
+                                    <img
+                                            class="chevrondown-icon-child"
+                                            alt=""
+                                            src="/images/upload.svg"
+                                    />
+
+                                    <img
+                                            class="chevrondown-icon-item"
+                                            loading="lazy"
+                                            alt=""
+                                            src="/images/imagekanan.png"
+                                    />
+                                </div>
+                                <img
+                                        class="upload-illustration-child"
+                                        alt=""
+                                        src="/images/imagekiri.png"
+                                />
+                            </label>
+                            <input type="file" class="custom-file-input" id="file" name="file">
+                        </div>
+                        <h3 class="upload-file-kamu-container">
+                            <span>Upload</span>
+                            <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
+                        </h3>
+                        <span class="file-name"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let listFieldValues = [];
+        
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.querySelector('.file-name').textContent = fileName;
+        });
+
+
+        document.getElementById('myForm').onsubmit = function() {
+        // Get all checkboxes with the name 'penandatangan'
+            var checkboxes = document.querySelectorAll('input[name="penandatangan"]');
+
+            // Check if at least one checkbox is checked
+            var checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
+
+            if (!checkedOne) {
+                alert("Please check at least one checkbox.");
+                return false; // Prevent form from submitting
+            }
+            return true; // Allow form submission
+        };
+    </script>
+</body>
+</html>

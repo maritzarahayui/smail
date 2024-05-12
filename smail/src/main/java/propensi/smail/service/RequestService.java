@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import jakarta.mail.MessagingException;
 import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.user.*;
@@ -47,15 +49,16 @@ public interface RequestService {
     Map<Integer, String> listBahasa();
     void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
     void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
-    // List<String> getJenisSuratForKategori(String kategori);
-    // List<RequestSurat> getRequestsByUser(Pengguna pengguna);
-
+    
     String generateRequestId(Pengguna pengaju);
 
     // METHOD REQUEST TEMPLATE
     void createRequestTemplate(RequestTemplate requestTemplate, RequestAndFieldDataDTO requestDTO);
     List<RequestTemplate> retrieveAllRequest();
     Map<Integer, String> listKategori();
+    RequestTemplate store(MultipartFile file);
+    RequestTemplate getFile(String id);
+    RequestTemplate getRequestTemplateById(String requestSuratId);
 
     // PREVIEW TEMPLATE
     List<String> getAllJenisByKategori(String Kategori);
@@ -64,7 +67,7 @@ public interface RequestService {
 
     /* DASHBOARD */
     Integer countDurasi(RequestSurat requestSurat);
-    Integer countAveragePerforma(List<RequestSurat> listRequestSurat);
+    Integer countAveragePerforma(List<RequestSurat> listRequestSurat, String kategori);
     Map<String, Integer> getPerformaRequestSurat();
     Map<String, Map<String, Long>> getJumlahRequestPerMinggu();
     Map<String, Long> getJumlahRequestPerMonth();
@@ -74,6 +77,7 @@ public interface RequestService {
     String getTopRequester();
     String getCurrentYearMonth();
     Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth();
+    List<RequestSurat> getRequestSuratByKategori(String kategori);
 
     //  EMIIIIIIIIIII ////
     Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);

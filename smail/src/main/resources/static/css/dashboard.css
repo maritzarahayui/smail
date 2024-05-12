@@ -17,7 +17,7 @@ canvas {
 
 .label {
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     font-weight: bold;
     font-size: 20px;
     color: #163c3f;
@@ -25,7 +25,6 @@ canvas {
 
 .content {
     flex-direction: column;
-    gap: 20px 0;
     padding-bottom: 20px;
 }
 
@@ -34,7 +33,11 @@ canvas {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    gap: 40px;
+    gap: 10px;
+}
+
+.content1 .content:last-child {
+    margin-right: 0;
 }
 
 .content1 .content:last-child {

@@ -35,16 +35,6 @@
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Nomor Surat</div>
-                </div>
-
-                <div class="content-wrapper">
-                    <div class="content" th:text="${outgoing.nomorArsip}"></div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="detail-wrapper">
                     <div class="detail">Tanggal Pengajuan</div>
                 </div>
 
@@ -116,17 +106,17 @@
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${statusMap[requestSurat.status]}"></div>
+                    <div class="content">Dibatalkan</div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="detail-wrapper">
-                    <div class="detail">Tanggal Selesai</div>
+                    <div class="detail">Tanggal Dibatalkan</div>
                 </div>
 
                 <div class="content-wrapper">
-                    <div class="content" th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}"></div>
+                    <div class="content" th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd HH:mm')}"></div>
                 </div>
             </div>
 
@@ -143,7 +133,7 @@
             </div>
 
             <div class="frame-button" th:if="${base64PDF != null}">
-                <h3 class="label6">Preview Surat</h3>
+                <h3 class="label6">Contoh File Surat</h3>
                 <embed th:attr="src='data:application/pdf;base64,' + ${base64PDF}" type="application/pdf" width="100%" height="500px">
             </div>
         </div>

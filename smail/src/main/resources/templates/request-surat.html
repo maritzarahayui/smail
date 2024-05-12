@@ -10,6 +10,8 @@
 
     <link rel="stylesheet" href="/css/request-surat.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"/>
+    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+
 </head>
 
 <body>
@@ -25,7 +27,7 @@
         <span> Permohonan Surat</span>
     </b>
 
-    <form th:action="@{/request}" th:object="${requestDTO}" method="POST" class="formRequest">
+    <form th:action="@{/request}" th:object="${requestDTO}" method="POST" class="formRequest" enctype="multipart/form-data">
         <div class="text-input">
             <div class="label">Bahasa</div>
             <div class="text-input7">
@@ -206,17 +208,31 @@
 
                     var textArea = document.createElement('textarea');
                     textArea.className = 'form-control';
-                    textArea.placeholder = 'Beri penjelasan terkait surat yang diajukan sedetail mungkin. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak atau tidak akan diproses. Tambahan: Anda juga dapat mencantumkan link referensi template surat yang Anda miliki';
+                    textArea.placeholder = 'Beri penjelasan terkait surat yang diajukan sedetail mungkin. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak.';
                     textArea.name = 'listFieldData[0].value';
                     textArea.required = true;
 
+                    // Upload file
+                    var labelDivEx = document.createElement('div');
+                    labelDivEx.className = 'label';
+                    labelDivEx.textContent = 'Masukkan contoh surat (Optional)';
+                    labelDivEx.style.paddingBottom = '10px';
+
+                    var fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.id = 'file';
+                    fileInput.name = 'file';
+                    
                     inputRowDiv.appendChild(hiddenElement);
                     inputRowDiv.appendChild(textArea);
                     formGroupDiv.appendChild(inputRowDiv);
                     reqTemplateWrapper.appendChild(labelDiv);
                     reqTemplateWrapper.appendChild(formGroupDiv);
-
+                    reqTemplateWrapper.appendChild(labelDivEx);
+                    reqTemplateWrapper.appendChild(fileInput);
+                    
                     reqTemplateWrapper.style.display = 'block';
+                    reqTemplateWrapper.style.width = '94%';
 
                 } else if (jenisSuratDropdown.value !== '') {
                     previewTemplateWrapper.style.display = 'block';

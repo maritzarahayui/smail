@@ -139,7 +139,7 @@ public class BaseController {
                     model.addAttribute("mapSuratKeluarBulan", suratKeluarService.getJumlahSuratKeluarBulanIni());
                     model.addAttribute("mapSuratKeluarMinggu", suratKeluarService.getJumlahSuratKeluarMingguIni());
 
-                    model.addAttribute("performaRequestSurat", requestService.getPerformaRequestSurat());
+                    model.addAttribute("mapAverageDurasiTtd", suratKeluarService.getAverageDurasiTtd());
 
                     model.addAttribute("mapSuratMasukKategori", suratMasukService.getJumlahSuratMasukPerKategori());
                     model.addAttribute("mapSuratKeluarKategori", suratKeluarService.getJumlahSuratKeluarPerKategori());
@@ -147,13 +147,13 @@ public class BaseController {
                     var mapSuratTtd = suratKeluarService.getJumlahSuratKeluarTandaTangan(pengguna);
                     model.addAttribute("mapSuratKeluarTtd", mapSuratTtd);
 
-                    var mapSuratMasukStatus = suratMasukService.getJumlahSuratMasukPerStatus();
-                    model.addAttribute("mapSuratMasukStatus", mapSuratMasukStatus);
+                    model.addAttribute("suratMasukDisposisi", suratMasukService.getSuratMasukIsDisposisi().size());
+                    model.addAttribute("suratMasukFollowUp", suratMasukService.getSuratMasukIsFollowUp().size());
 
                     model.addAttribute("totalSuratKeluar", suratKeluarService.getAllSuratKeluar().size());
                     model.addAttribute("totalSuratMasuk", suratMasukService.getAllSuratMasuk().size());
                     model.addAttribute("totalForumEsk", faqService.getFaqsByStatus(1).size());
-                    model.addAttribute("totalTtd", mapSuratTtd.get("Sudah")+mapSuratTtd.get("Belum"));
+                    model.addAttribute("totalBelumTtd", mapSuratTtd.get("Belum"));
 
                     return "dashboard-pengurus";
                     
@@ -200,7 +200,7 @@ public class BaseController {
                     model.addAttribute("requestByCategory", requestByCategory);
 
                     var mapSuratTtd = suratKeluarService.getJumlahSuratKeluarTandaTangan(pengguna);
-                    model.addAttribute("totalTtd", mapSuratTtd.get("Sudah")+mapSuratTtd.get("Belum"));
+                    model.addAttribute("totalTtd", mapSuratTtd.get("Belum"));
                 
                     return "dashboard-dosen";
 

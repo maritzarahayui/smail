@@ -50,4 +50,7 @@ public interface SuratKeluarService {
     //  search follow up ttd    
     public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan);
 
+    Integer countAverageDurasiTtd(List<SuratKeluar> listSuratKeluar);
+    Map<String, Integer> getAverageDurasiTtd();
+
 }

@@ -9,6 +9,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.transaction.Transactional;
 import propensi.smail.model.*;
@@ -153,6 +155,37 @@ public class RequestServiceImpl implements RequestService {
             return null;
         }
         
+    }
+
+    @Override
+    @Transactional
+    public RequestTemplate store(MultipartFile file) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        try {
+            RequestTemplate requestTemplate = new RequestTemplate();
+            requestTemplate.setFile(file.getBytes());
+            requestTemplate.setFileName(fileName);
+            return requestTemplateDb.save(requestTemplate);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store file " + fileName, e);
+        }
+    }
+
+    @Override
+    public RequestTemplate getFile(String id) {
+        Optional<RequestTemplate> optionalRequestSurat = Optional.ofNullable(getRequestTemplateById(id));
+        if (optionalRequestSurat.isPresent()) {
+            return optionalRequestSurat.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public RequestTemplate getRequestTemplateById(String requestSuratId) {
+        Optional<RequestTemplate> requestTemplate = requestTemplateDb.findById(requestSuratId);
+        return requestTemplate.orElseThrow(() -> new NoSuchElementException("RequestTemplate with id: " + requestSuratId + " not found"));
     }
 
     @Override
@@ -450,14 +483,13 @@ public class RequestServiceImpl implements RequestService {
     public Map<Integer, String> listKategori(){
         Map<Integer, String> kategori = new HashMap<>();
 
-        kategori.put(1, "LEGAL");
+        kategori.put(1, "Legal");
         kategori.put(2, "SDM");
-        kategori.put(3, "KEUANGAN");
-        kategori.put(4, "SARANA");
-        kategori.put(5, "KEMAHASISWAAN");
+        kategori.put(3, "Keuangan");
+        kategori.put(4, "Sarana");
+        kategori.put(5, "Kemahasiswaan");
         return kategori;
     }
-
 
     // ------PREVIEW-----
     @Override
@@ -489,12 +521,12 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public Integer countAveragePerforma(List<RequestSurat> listRequestSurat) {
+    public Integer countAveragePerforma(List<RequestSurat> listRequestSurat, String kategori) {
         int total = 0;
         int counterRequest = 0;
 
         for (RequestSurat request : listRequestSurat) {
-            if (request.getTanggalSelesai() != null) {
+            if (request.getKategori().equals(kategori) && request.getTanggalSelesai() != null) {
                 total += countDurasi(request);
                 counterRequest++;
             }
@@ -507,26 +539,24 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Map<String, Integer> getPerformaRequestSurat() {
-        LocalDate now = LocalDate.now();
-        Map<String, Integer> mapPerBulan = new LinkedHashMap<String, Integer>();
-        String[] indonesianMonths = new String[] {"Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des"};
-        
-        int value = 0;
-        int counter = 0;
-        List<RequestSurat> allRequestSuratMonthly;
+        Map<String, Integer> performaPerCategory = new LinkedHashMap<>();
 
-        for (String bulan : indonesianMonths) {
-            counter++;
-            allRequestSuratMonthly = requestSuratDb.findByTanggalPengajuanMonthly(counter, now.getYear());
+        Map<Integer, String> allCategories = listKategori();
 
-            System.out.println("WOIIIII MONTHLY" + counter + now.getYear());
-            System.out.println("WOIIIII MONTHLY" + allRequestSuratMonthly.toString());
-            value = countAveragePerforma(allRequestSuratMonthly);
-            mapPerBulan.put(bulan, value);
+        for (Integer categoryId : allCategories.keySet()) {
+            String categoryName = allCategories.get(categoryId);
+            List<RequestSurat> requestSuratByCategory = getRequestSuratByKategori(categoryName);
+            int performaRataRata = countAveragePerforma(requestSuratByCategory, categoryName);
+            performaPerCategory.put(categoryName, performaRataRata);
         }
 
-        System.out.println("MAPPPPP PER BULAN" + mapPerBulan.toString());
-        return mapPerBulan;        
+        System.out.println(performaPerCategory.toString());
+        return performaPerCategory;
+    }
+
+    @Override
+    public List<RequestSurat> getRequestSuratByKategori(String kategori) {
+        return requestSuratDb.findByKategori(kategori);
     }
 
     @Override

@@ -1,6 +1,9 @@
 package propensi.smail.model;
 
 import lombok.*;
+
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -48,6 +51,24 @@ public class SuratKeluar {
 
     @Column(name = "isSigned")
     private Boolean isSigned = false;
+
+    @Column(name = "tanggal_signed")
+    private Date tanggalSigned;
+
+    @Transient
+    private int durasiTtd;
+
+    public int getDurasiTtd() {
+        if (tanggalSigned != null) {
+            long tanggalDibuat = this.tanggalDibuat.getTime();        
+            long tanggalSigned = this.tanggalSigned.getTime();
+
+            long durationInMillis = tanggalSigned - tanggalDibuat;
+            long durationInDays = durationInMillis / (1000 * 60 * 60 * 24);
+
+            return ((int)durationInDays);
+        } return -1;
+    }
 
     @ManyToMany
     @JoinTable(
