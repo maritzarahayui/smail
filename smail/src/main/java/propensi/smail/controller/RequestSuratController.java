@@ -133,7 +133,7 @@ public class RequestSuratController {
             pengguna = user.get(); 
         }
         
-        if (requestDTO.getJenisSurat().equals("Lainnya")) {
+        if (requestDTO.getJenisSurat().equals("Lainnya") && file != null) {
             RequestTemplate requestTemplate = new RequestTemplate();
 
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());

@@ -196,114 +196,31 @@
 
                     var textArea = document.createElement('textarea');
                     textArea.className = 'form-control';
-                    textArea.placeholder = 'Beri penjelasan terkait surat yang diajukan sedetail mungkin. Anda juga dapat mencantumkan link referensi template surat yang Anda miliki. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak.';
+                    textArea.placeholder = 'Beri penjelasan terkait surat yang diajukan sedetail mungkin. Kurangnya informasi yang diberikan dapat mengakibatkan pengajuan surat ditolak.';
                     textArea.name = 'listFieldData[0].value';
                     textArea.required = true;
 
                     // Upload file
-                    var formGroupDiv = document.createElement('div');
-                    formGroupDiv.className = 'form-group';
+                    var labelDivEx = document.createElement('div');
+                    labelDivEx.className = 'label';
+                    labelDivEx.textContent = 'Masukkan contoh surat (Optional)';
+                    labelDivEx.style.paddingBottom = '10px';
 
-                    var uploadIllustrationFrameDiv = document.createElement('div');
-                    uploadIllustrationFrameDiv.className = 'upload-illustration-frame';
-
-                    var fileInputDiv = document.createElement('div');
-                    fileInputDiv.className = 'file-input';
-
-                    var secondaryMessageDiv = document.createElement('div');
-                    secondaryMessageDiv.className = 'secondary-message';
-                    secondaryMessageDiv.textContent = 'secondary message';
-
-                    var rectangleFrameDiv = document.createElement('div');
-                    rectangleFrameDiv.className = 'rectangle-frame';
-
-                    var arsipSuratFrameDiv = document.createElement('div');
-                    arsipSuratFrameDiv.className = 'arsip-surat-frame';
-
-                    var buttonFrame1Div = document.createElement('div');
-                    buttonFrame1Div.className = 'button-frame1';
-
-                    var uploadIllustrationLabel = document.createElement('label');
-                    uploadIllustrationLabel.className = 'upload-illustration';
-                    uploadIllustrationLabel.setAttribute('for', 'file');
-
-                    var chevronDownIconDiv = document.createElement('div');
-                    chevronDownIconDiv.className = 'chevrondown-icon';
-
-                    var wrapperGroupDiv = document.createElement('div');
-                    wrapperGroupDiv.className = 'wrapper-group';
-
-                    var groupIconImg = document.createElement('img');
-                    groupIconImg.className = 'group-icon';
-                    groupIconImg.alt = '';
-                    groupIconImg.src = '/images/imagetengah.png';
-
-                    var chevronDownIconChildImg = document.createElement('img');
-                    chevronDownIconChildImg.className = 'chevrondown-icon-child';
-                    chevronDownIconChildImg.alt = '';
-                    chevronDownIconChildImg.src = '/images/upload.svg';
-
-                    var chevronDownIconItemImg = document.createElement('img');
-                    chevronDownIconItemImg.className = 'chevrondown-icon-item';
-                    chevronDownIconItemImg.loading = 'lazy';
-                    chevronDownIconItemImg.alt = '';
-                    chevronDownIconItemImg.src = '/images/imagekanan.png';
-
-                    var uploadIllustrationChildImg = document.createElement('img');
-                    uploadIllustrationChildImg.className = 'upload-illustration-child';
-                    uploadIllustrationChildImg.alt = '';
-                    uploadIllustrationChildImg.src = '/images/imagekiri.png';
-
-                    var inputFile = document.createElement('input');
-                    inputFile.type = 'file';
-                    inputFile.className = 'custom-file-input';
-                    inputFile.id = 'file';
-                    inputFile.name = 'file';
-
-                    var uploadFileKamuContainer = document.createElement('h3');
-                    uploadFileKamuContainer.className = 'upload-file-kamu-container';
-
-                    var span1 = document.createElement('span');
-                    span1.textContent = 'Upload';
-
-                    var span2 = document.createElement('span');
-                    span2.className = 'file-kamu-di';
-                    span2.textContent = ' file kamu di sini dalam format .pdf';
-
-                    var fileNameSpan = document.createElement('span');
-                    fileNameSpan.className = 'file-name';
-
+                    var fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.id = 'file';
+                    fileInput.name = 'file';
+                    
                     inputRowDiv.appendChild(hiddenElement);
                     inputRowDiv.appendChild(textArea);
                     formGroupDiv.appendChild(inputRowDiv);
                     reqTemplateWrapper.appendChild(labelDiv);
-                    
-                    uploadIllustrationLabel.appendChild(chevronDownIconDiv);
-                    uploadIllustrationLabel.appendChild(uploadIllustrationChildImg);
-
-                    chevronDownIconDiv.appendChild(wrapperGroupDiv);
-                    wrapperGroupDiv.appendChild(groupIconImg);
-                    chevronDownIconDiv.appendChild(chevronDownIconChildImg);
-                    chevronDownIconDiv.appendChild(chevronDownIconItemImg);
-
-                    buttonFrame1Div.appendChild(uploadIllustrationLabel);
-                    buttonFrame1Div.appendChild(inputFile);
-                    uploadFileKamuContainer.appendChild(span1);
-                    uploadFileKamuContainer.appendChild(span2);
-
-                    arsipSuratFrameDiv.appendChild(buttonFrame1Div);
-                    arsipSuratFrameDiv.appendChild(uploadFileKamuContainer);
-                    arsipSuratFrameDiv.appendChild(fileNameSpan);
-
-                    rectangleFrameDiv.appendChild(arsipSuratFrameDiv);
-                    fileInputDiv.appendChild(secondaryMessageDiv);
-                    fileInputDiv.appendChild(rectangleFrameDiv);
-                    uploadIllustrationFrameDiv.appendChild(fileInputDiv);
-                    formGroupDiv.appendChild(uploadIllustrationFrameDiv);
-
                     reqTemplateWrapper.appendChild(formGroupDiv);
-
+                    reqTemplateWrapper.appendChild(labelDivEx);
+                    reqTemplateWrapper.appendChild(fileInput);
+                    
                     reqTemplateWrapper.style.display = 'block';
+                    reqTemplateWrapper.style.width = '94%';
 
                 } else if (jenisSuratDropdown.value !== '') {
                     previewTemplateWrapper.style.display = 'block';
