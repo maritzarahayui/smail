@@ -64,7 +64,7 @@
                                     <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request Surat</th>
                                     <th style="width: 25%; text-align: center; vertical-align: middle;">Jenis Surat</th>
                                     <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Nomor Surat</th>
                                     <td style="width: 15%; text-align: center; vertical-align: middle;">
                                         <div style="display: block;">Tanggal Pengajuan</div>
                                     </td>
@@ -84,12 +84,8 @@
                                         <span th:text="${requestSurat.pengaju.nama}"></span>
                                     </td>
                                     <td>
-                                        <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
-                                            <span th:text="${bentuk}"></span>
-                                            <th:block th:if="${!iterStat.last}">
-                                                <span>,</span>
-                                            </th:block>
-                                        </th:block>
+                                        <!-- Display SuratKeluar nomorSurat if available, otherwise show 'N/A' -->
+                                        <span th:text="${requestSurat.surat != null ? requestSurat.surat.nomorArsip : 'N/A'}"></span>
                                     </td>
                                     <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
                                     <td th:text="${requestSurat.status == 4 ? 'Perlu tanda tangan' : 'Selesai ditandatangani'}"></td>

@@ -379,6 +379,46 @@ public class RequestSuratController {
         return "user-history-detail"; 
     }
 
+    @GetMapping("/admin/request/all")
+    @Transactional(readOnly = true)
+    public String showAllRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+        List<RequestSurat> requestSurats;
+
+        if (keyword != null && !keyword.isEmpty()) {
+//            requestSurats = requestService.searchRequests(keyword, 1);
+            requestSurats = requestService.getAllRequestsSurat();
+        } else {
+            requestSurats = requestService.getAllRequestsSurat();
+        }
+        model.addAttribute("requestSurats", requestSurats);
+
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
+        Map<Integer, String> statusMap = new HashMap<>();
+        statusMap.put(1, "Diajukan");
+        statusMap.put(2, "Dibatalkan");
+        statusMap.put(3, "Ditolak");
+        statusMap.put(4, "Diproses");
+        statusMap.put(5, "Selesai");
+
+        model.addAttribute("statusMap", statusMap);
+
+        return "admin-history-all";
+    }
+
     @GetMapping("/admin/request")
     @Transactional(readOnly = true)
     public String showAllRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
