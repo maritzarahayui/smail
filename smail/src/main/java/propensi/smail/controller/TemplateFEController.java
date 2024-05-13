@@ -290,6 +290,13 @@ public class TemplateFEController {
         if (status == 3) {
             requestTemplate.setAlasanPenolakan(alasanPenolakan);
 
+            RequestSurat requestSurat = requestService.getRequestSuratById(id);
+            if (requestSurat != null) {
+                requestSurat.setStatus(3); // Set status to 'rejected'
+                requestSurat.setAlasanPenolakan(alasanPenolakan);
+                requestService.saveOrUpdate(requestSurat); // Update the RequestSurat in the database
+            }
+
             try {
                 templateSuratService.sendEmailRejection(requestTemplate.getPengaju().getEmail(), "", "", requestTemplate);
             } catch (MessagingException e) {

@@ -28,40 +28,42 @@
             <div class="inner-frame">
                 <div class="ellipse-shape-parent">
                     <div class="ellipse-shape">
+                        
                         <div class="text-input-frame">
-                            <div class="text-input">
-                                <div class="label">Nama Lengkap</div>
-                                <div class="text-input1">
-                                    <div class="placeholder-text">
-                                        <div class="placeholder" th:text="${nama}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input2">
-                                <div class="label1" th:text="${role == 'mahasiswa' ? 'NPM' : 'NIP'}"></div>
-                                <div class="text-input3">
-                                    <div class="placeholder-text1">
-                                        <div class="placeholder" th:text="${id}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input4">
-                                <div class="label2">Email</div>
-                                <div class="text-input5">
-                                    <div class="placeholder-text2">
-                                        <div class="placeholder" th:text="${email}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input6">
-                                <div class="label3">Role</div>
-                                <div class="text-input7">
-                                    <div class="placeholder-text3">
-                                        <div class="placeholder" th:text="${role}"></div>
-                                    </div>
+                        <div class="text-input">
+                            <div class="label">Nama Lengkap</div>
+                            <div class="text-input1">
+                                <div class="placeholder-text">
+                                    <div class="placeholder" th:text="${nama}"></div>
                                 </div>
                             </div>
                         </div>
+                        <div class="text-input2">
+                            <div class="label1" th:text="${role == 'mahasiswa' ? 'NPM' : 'NIP'}"></div>
+                            <div class="text-input3">
+                                <div class="placeholder-text1">
+                                    <div class="placeholder" th:text="${id}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-input4">
+                            <div class="label2">Email</div>
+                            <div class="text-input5">
+                                <div class="placeholder-text2">
+                                    <div class="placeholder" th:text="${email}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-input6">
+                            <div class="label3">Role</div>
+                            <div class="text-input7">
+                                <div class="placeholder-text3">
+                                    <div class="placeholder" th:text="${role}"></div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
                     </div>
                 </div>
             </div>

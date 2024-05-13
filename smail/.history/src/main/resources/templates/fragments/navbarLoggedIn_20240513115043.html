@@ -17,15 +17,15 @@
         
         <div class="navbar">
             <i id="menuIcon" class='bx bx-menu'></i>
-            <a class="logo" th:href="@{/}">
+            <div class="logo">
                 <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
-            </a>
+            </div>
 
             <div class="nav-links">
-                <a class="sidebar-logo" th:href="@{/}">
+                <div class="sidebar-logo">
                     <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
                     <i class='bx bx-x' ></i>
-                </a>
+                </div>
 
                 <ul class="links">
                     <li><a th:href="@{/}">Beranda</a></li>
@@ -62,9 +62,9 @@
                         <a href="#">Forum</a>
                         <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
                         <ul id="htmlCssSubMenu" class="htmlCss-sub-menu sub-menu">
-                            <li><a th:href="@{/faq}">Semua Pertanyaan</a></li>
+                            <li><a th:href="@{/faq}">Semua</a></li>
                             <hr class="linehrz" />
-                            <li><a th:href="@{/faq/user-faq/terjawab}">Pertanyaan Saya</a></li>
+                            <li><a th:href="@{/faq/user-faq/terjawab}">Pertanyaanku</a></li>
                         </ul>
                     </li>
                 </ul>

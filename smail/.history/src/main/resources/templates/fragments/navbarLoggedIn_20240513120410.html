@@ -17,15 +17,23 @@
         
         <div class="navbar">
             <i id="menuIcon" class='bx bx-menu'></i>
-            <a class="logo" th:href="@{/}">
+            <div class="logo">
                 <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
-            </a>
+            </div>
 
             <div class="nav-links">
                 <a class="sidebar-logo" th:href="@{/}">
                     <img class="logo" th:src="@{/images/logo-smail-lg.svg}"/>
                     <i class='bx bx-x' ></i>
                 </a>
+
+                <div class="sidebar-logo">
+                    <a href="/">
+                        <img class="logo" src="/images/logo-smail-lg.svg"/>
+                    </a>
+                    <i class='bx bx-x'></i>
+                </div>
+                
 
                 <ul class="links">
                     <li><a th:href="@{/}">Beranda</a></li>

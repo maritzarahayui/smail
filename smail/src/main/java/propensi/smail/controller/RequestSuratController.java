@@ -133,13 +133,14 @@ public class RequestSuratController {
             pengguna = user.get(); 
         }
         
-        if (requestDTO.getJenisSurat().equals("Lainnya") && file != null) {
+        if (requestDTO.getJenisSurat().equals("Lainnya")) {
             RequestTemplate requestTemplate = new RequestTemplate();
 
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
-            requestTemplate.setFile(file.getBytes());
-            requestTemplate.setFileName(fileName);
+            if (file != null && !file.isEmpty()) {
+                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                requestTemplate.setFile(file.getBytes());
+                requestTemplate.setFileName(fileName);
+            }
             requestTemplate.setPengaju(pengguna);
             requestTemplate.setTanggalPengajuan(new Date());
             requestService.createRequestTemplate(requestTemplate,requestDTO);
@@ -341,11 +342,14 @@ public class RequestSuratController {
 
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate fileExample = requestService.getFile(id);
+            System.out.println("fileExample null gak " + fileExample);
             if (fileExample != null) {
                 byte[] pdf = fileExample.getFile();
-                String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
-                model.addAttribute("base64PDFEx", base64PDFEx);
-                model.addAttribute("template", fileExample);
+                if (pdf != null) {
+                    String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
+                    model.addAttribute("base64PDFEx", base64PDFEx);
+                    model.addAttribute("template", fileExample);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
@@ -590,11 +594,14 @@ public class RequestSuratController {
 
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate file = requestService.getFile(id);
+            System.out.println("file null gak " + file);
             if (file != null) {
                 byte[] pdf = file.getFile();
-                String base64PDF = Base64.getEncoder().encodeToString(pdf);
-                model.addAttribute("base64PDF", base64PDF);
-                model.addAttribute("template", file);
+                if (pdf != null) {
+                    String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                    model.addAttribute("base64PDF", base64PDF);
+                    model.addAttribute("template", file);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }

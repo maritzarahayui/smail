@@ -28,7 +28,6 @@
 
         <div style="margin-top: 20px; margin-bottom: 20px;">
             <button class="chips active" id="requestSurat">Request Surat</button>
-            <button class="chips" id="tandaTangan">Tanda Tangan</button>
             <button class="chips" id="forum">Forum</button>
         </div>
 
@@ -88,21 +87,22 @@
                     </div>            
                 </div>
             </div>
-            <!-- Jumlah req surat by kategori (Dosen & Staf) -->
+
+            <!-- Jumlah req surat by jenis (mhs) -->
             <div class="content">
                 <div class="txtinput">
-                    <canvas id="pieChartByKategori"></canvas>
+                    <canvas id="pieChartByJenis"></canvas>
                     
                     <script th:inline="javascript">
                         document.addEventListener('DOMContentLoaded', function () {
-                            var requestByCategory = /*[[${requestByCategory}]]*/;
-                            var labels = Object.keys(requestByCategory);
-                            var chartData = Object.values(requestByCategory);
+                            var requestByJenis = /*[[${requestByJenis}]]*/;
+                            var labels = Object.keys(requestByJenis);
+                            var chartData = Object.values(requestByJenis);
                             var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
                         
-                            const pieChartByKategori = document.getElementById('pieChartByKategori');
+                            const pieChartByJenis = document.getElementById('pieChartByJenis');
                             
-                            new Chart(pieChartByKategori, {
+                            new Chart(pieChartByJenis, {
                                 type: 'doughnut',
                                 data: {
                                     labels: labels,
@@ -121,7 +121,7 @@
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Statistik Request Surat Berdasarkan Kategori'
+                                            text: 'Statistik Request Surat Berdasarkan Jenis'
                                         }
                                     },
                                     responsive: true,
@@ -133,7 +133,7 @@
                     </script>
                 </div>
             </div>
-            <!-- Jumlah req TAHUN ini -->
+            <!-- Jumlah req per bulan -->
             <div class="content1">
                 <div class="content">
                     <div class="txtinput">
@@ -209,7 +209,6 @@
                     </div>
                 </div>
 
-                <!-- jumlah req BULAN ini -->
                 <div class="content">
                     <div class="txtinput">
                         <canvas id="myChart"></canvas>
@@ -282,40 +281,15 @@
                 </div>
             </div>
         </div>
-
-        <div class="cont" id="tandaTanganContent">
-            <!-- Kartu Statistik Jumlah Request Surat Ditandatangani -->
-            <div class="container">
-                <div class="col">
-                    <div class="content">
-                        <div class="label d-flex flex-column align-items-center text-center" th:text="'Statistik Surat Perlu Ditandatangani'"></div>
-                        <div class="txtinput">
-                            <div class="container" style="margin: 0 auto;">
-                                <div class="row-cols-1">
-                                    <div class="col">
-                                        <a th:href="@{/ttd/request}" class="card" style="min-width: 50%; border: 1px solid #0f7454; background: white;">
-                                            <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                                                <h2 class="card-text" th:text="${totalTtd}" style="font-size: 20px; font-weight: bold; color: #0f7454;"></h2>
-                                                <h5 class="card-title">Ditandatangani</h5>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+            
         <div class="cont" id="forumContent">
-            <!-- PERTANYAAN Terjawab & Belum Terjawab -->
+            <!-- Jumlah pertanyaan terjawab -->
             <div class="container">
                 <div class="row">
                     <!-- Kartu Statistik Jumlah Pertanyaan Terjawab -->
                     <div class="col">
                         <div class="content">
-                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Jumlah Pertanyaan Terjawab'"></div>
+                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Statistik Pertanyaan Terjawab'"></div>
                             <div class="txtinput">
                                 <div class="container" style="margin: 0 auto;">
                                     <div class="row-cols-1">
@@ -335,7 +309,7 @@
                     <!-- Kartu Statistik Jumlah Pertanyaan BELUM Terjawab -->
                     <div class="col">
                         <div class="content">
-                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Jumlah Pertanyaan Belum Terjawab'"></div>
+                            <div class="label d-flex flex-column align-items-center text-center" th:text="'Statistik Pertanyaan Belum Terjawab'"></div>
                             <div class="txtinput">
                                 <div class="container" style="margin: 0 auto;">
                                     <div class="row-cols-1">
@@ -355,8 +329,7 @@
                 </div>
             </div>
         </div>
-            
-        
+        </div>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
@@ -394,9 +367,6 @@
            document.getElementById("requestSurat").addEventListener("click", function() {
                showContent("requestSuratContent");
            });
-           document.getElementById("tandaTangan").addEventListener("click", function() {
-               showContent("tandaTanganContent");
-           });
            document.getElementById("forum").addEventListener("click", function() {
                showContent("forumContent");
            });
@@ -413,3 +383,4 @@
    </script>
 </body>
 </html>
+            

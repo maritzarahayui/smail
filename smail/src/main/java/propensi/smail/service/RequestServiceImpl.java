@@ -174,14 +174,13 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public RequestTemplate getFile(String id) {
-        Optional<RequestTemplate> optionalRequestSurat = Optional.ofNullable(getRequestTemplateById(id));
-        if (optionalRequestSurat.isPresent()) {
-            return optionalRequestSurat.get();
+        Optional<RequestTemplate> optionalRequestTemplate = Optional.ofNullable(getRequestTemplateById(id));
+        if (optionalRequestTemplate.isPresent()) {
+            return optionalRequestTemplate.get();
         } else {
             return null;
         }
     }
-
     @Override
     public RequestTemplate getRequestTemplateById(String requestSuratId) {
         Optional<RequestTemplate> requestTemplate = requestTemplateDb.findById(requestSuratId);
