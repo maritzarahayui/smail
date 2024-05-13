@@ -95,9 +95,11 @@ public class SuratKeluarController {
             RequestTemplate fileExample = requestService.getFile(id);
             if (fileExample != null) {
                 byte[] pdfEx = fileExample.getFile();
-                String base64PDFEx = Base64.getEncoder().encodeToString(pdfEx);
-                model.addAttribute("base64PDFEx", base64PDFEx);
-                model.addAttribute("template", fileExample);
+                if (pdfEx != null) {
+                    String base64PDFEx = Base64.getEncoder().encodeToString(pdfEx);
+                    model.addAttribute("base64PDFEx", base64PDFEx);
+                    model.addAttribute("template", fileExample);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
@@ -123,9 +125,11 @@ public class SuratKeluarController {
             RequestTemplate fileExample = requestService.getFile(id);
             if (fileExample != null) {
                 byte[] pdf = fileExample.getFile();
-                String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
-                model.addAttribute("base64PDFEx", base64PDFEx);
-                model.addAttribute("template", fileExample);
+                if (pdf != null) {
+                    String base64PDFEx = Base64.getEncoder().encodeToString(pdf);
+                    model.addAttribute("base64PDFEx", base64PDFEx);
+                    model.addAttribute("template", fileExample);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
@@ -136,11 +140,11 @@ public class SuratKeluarController {
         if (file != null) {
             byte[] pdf = file.getFile();
 
-            // Convert PDF content to Base64
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file); // Add the template object to the model
+            if (pdf != null) {
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            }
         }
 
         if (auth != null) {
@@ -257,18 +261,6 @@ public class SuratKeluarController {
                 model.addAttribute("user", pengguna);
             } else {
                 return "auth-failed";
-            }
-        }
-
-        if (requestSurats.getJenisSurat().equals("Lainnya")) {
-            RequestTemplate fileExample = requestService.getFile(id);
-            if (fileExample != null) {
-                byte[] pdfEx = fileExample.getFile();
-                String base64PDFEx = Base64.getEncoder().encodeToString(pdfEx);
-                model.addAttribute("base64PDFEx", base64PDFEx);
-                model.addAttribute("template", fileExample);
-            } else {
-                model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
         }
 

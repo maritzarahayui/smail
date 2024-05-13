@@ -102,10 +102,11 @@ public class TemplateFEController {
         if (file != null) {
             byte[] pdf = file.getFile();
 
-            String base64PDF = Base64.getEncoder().encodeToString(pdf);
-
-            model.addAttribute("base64PDF", base64PDF);
-            model.addAttribute("template", file);
+            if (pdf != null) {
+                String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                model.addAttribute("base64PDF", base64PDF);
+                model.addAttribute("template", file);
+            }
         }
 
         if (auth != null) {
@@ -294,6 +295,7 @@ public class TemplateFEController {
             if (requestSurat != null) {
                 requestSurat.setStatus(3); // Set status to 'rejected'
                 requestSurat.setAlasanPenolakan(alasanPenolakan);
+                requestSurat.setTanggalPenolakan(new Date());
                 requestService.saveOrUpdate(requestSurat); // Update the RequestSurat in the database
             }
 
@@ -305,7 +307,15 @@ public class TemplateFEController {
                 e.printStackTrace();
             }
 
-        } else {
+        } else if (status == 2) {
+
+            RequestSurat requestSurat = requestService.getRequestSuratById(id);
+            if (requestSurat != null) {
+                requestSurat.setStatus(4); // Set status to 'rejected'
+                requestService.saveOrUpdate(requestSurat); // Update the RequestSurat in the database
+            }
+
+        }else {
             requestTemplate.setAlasanPenolakan(null);
         }
 

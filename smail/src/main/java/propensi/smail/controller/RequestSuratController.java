@@ -14,6 +14,7 @@ import propensi.smail.repository.RequestSuratDb;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratKeluar;
 import propensi.smail.model.SuratMasuk;
+import propensi.smail.repository.RequestTemplateDb;
 import propensi.smail.service.PenggunaService;
 import propensi.smail.service.RequestService;
 import propensi.smail.service.SuratKeluarService;
@@ -68,6 +69,9 @@ public class RequestSuratController {
 
     @Autowired
     RequestSuratDb requestSuratDb;
+
+    @Autowired
+    RequestTemplateDb requestTemplateDb;
 
     @Autowired
     private SuratKeluarService suratKeluarService;
@@ -594,7 +598,6 @@ public class RequestSuratController {
 
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate file = requestService.getFile(id);
-            System.out.println("file null gak " + file);
             if (file != null) {
                 byte[] pdf = file.getFile();
                 if (pdf != null) {
@@ -650,9 +653,11 @@ public class RequestSuratController {
             RequestTemplate file = requestService.getFile(id);
             if (file != null) {
                 byte[] pdf = file.getFile();
-                String base64PDF = Base64.getEncoder().encodeToString(pdf);
-                model.addAttribute("base64PDF", base64PDF);
-                model.addAttribute("template", file);
+                if (pdf != null) {
+                    String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                    model.addAttribute("base64PDF", base64PDF);
+                    model.addAttribute("template", file);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
@@ -685,9 +690,11 @@ public class RequestSuratController {
             RequestTemplate file = requestService.getFile(id);
             if (file != null) {
                 byte[] pdf = file.getFile();
-                String base64PDF = Base64.getEncoder().encodeToString(pdf);
-                model.addAttribute("base64PDF", base64PDF);
-                model.addAttribute("template", file);
+                if (pdf != null) {
+                    String base64PDF = Base64.getEncoder().encodeToString(pdf);
+                    model.addAttribute("base64PDF", base64PDF);
+                    model.addAttribute("template", file);
+                }
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
@@ -724,9 +731,21 @@ public class RequestSuratController {
         RequestSurat requestSurat = requestService.getRequestSuratById(id);
         requestSurat.setStatus(status);
 
+        if (requestSurat.getJenisSurat().equals("Lainnya")) {
+            RequestTemplate requestTemplate = requestService.getRequestTemplateById(id);
+            if (status == 3) {
+                requestTemplate.setStatus(3);
+                requestTemplate.setAlasanPenolakan(alasanPenolakan);
+            } else if (status == 4) {
+                requestTemplate.setStatus(2);
+            }
+            requestTemplateDb.save(requestTemplate);
+        }
+
         if (status == 3) {
             requestSurat.setAlasanPenolakan(alasanPenolakan);
             requestSurat.setTanggalPenolakan(new Date());
+
             requestSuratDb.save(requestSurat);
 
             requestService.sendEmailRejection(requestSurat.getPengaju().getEmail(), "", "", requestSurat);
