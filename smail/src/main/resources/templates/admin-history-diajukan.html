@@ -22,6 +22,15 @@
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
+        <div class="search-button">
+            <form th:action="@{/admin/request}" method="get">
+                <div class="button17">
+                    <img class="search-icon1" alt="" src="/images/search.svg" />
+                    <input class="keuangan3" placeholder="Cari surat" type="text" name="keyword" />
+                </div>
+            </form>
+        </div>
+
         <section class="bentuk-surat-text">
             <div class="tabs-container">
                 <div class="tabs-group-parent">
@@ -79,16 +88,6 @@
                             />
                             <div class="tabs1">Selesai</div>
                         </a>
-                    </div>
-
-                    <div class="search-button">
-                        <form th:action="@{/admin/request}" method="get">
-                            <div class="button17">
-                                <img class="search-icon1" alt="" src="/images/search.svg" />
-                                <input class="keuangan3" placeholder="Cari surat" type="text" name="keyword" />
-                            </div>
-                        </form>
-
                     </div>
                 </div>
 

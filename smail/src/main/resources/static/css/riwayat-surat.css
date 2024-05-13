@@ -201,7 +201,8 @@ table.table tbody tr {
 .search-button {
   flex-direction: row;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: center;
+  margin-top: 25px;
   gap: var(--gap-xl);
 }
 
