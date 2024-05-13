@@ -108,7 +108,8 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 "SDM", "SDM",
                 "KEUANGAN", "KEU",
                 "SARANA", "SAR",
-                "KEMAHASISWAAN", "KMH"
+                "KEMAHASISWAAN", "KMH",
+                "LAINNYA", "LN"
         );
 
         String abbreviation = kategoriMap.get(kategori.toUpperCase());

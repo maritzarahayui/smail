@@ -28,16 +28,6 @@
       width: 200px;
       text-align: center;
     }
-
-    .buttonWrapper a {
-      text-decoration: none;
-      color: white;
-      transition: background-color 0.3s ease;
-    }
-
-    .buttonWrapper a:hover {
-      background-color: var(--green-green-5);
-    }
   </style>
 </head>
 
@@ -54,11 +44,11 @@
     <nav th:replace="~{fragments/asset :: asset}"></nav>
       
     <div class="content-wrapper" style="margin-inline: 10px;">
-      <div style="margin: 30px" class="buttonWrapper">
+      <div class="buttonWrapper" style="margin: 30px; text-decoration: none; color: white;">
         <a
           th:if="${role == 'Admin'}"
           th:href="@{/surat-masuk/form}"
-          class="button"
+          class="button" style="text-decoration: none; color: white;"
         >
           <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
           <div class="input-surat1">Input Surat</div>
