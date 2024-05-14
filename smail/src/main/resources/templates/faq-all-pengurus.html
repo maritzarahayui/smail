@@ -14,7 +14,7 @@
 <style>
 
 .tabs-group {
-    width: 80%;
+    width: 60%;
     height: 56px;
     margin: 20px auto 0;
     display: flex;
@@ -170,6 +170,7 @@ table.table tbody tr {
                 <div class="search-box">
                     <img class="search-icon" alt="" src="/images/search.svg" />
                     <input class="ketik-kata-kunci" placeholder="Cari pertanyaan..." type="text" name="search" />
+                    <input type="hidden" name="activeTab" id="hiddenActiveTab">
                 </div>
             </form>
         </div>
@@ -177,14 +178,14 @@ table.table tbody tr {
         <br>
 
         <div class="tabs-group" id="tab">
-            <a class="tab-link active" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
+            <a class="tab-link" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
             <a class="tab-link" data-toggle="tab" href="#terjawab">Terjawab</a>
         </div>
     
         <br><br>
 
         <!-- DIESKALASI -->
-        <div class="tab-pane active" id="dieskalasi">
+        <div class="tab-pane" id="dieskalasi">
             <table class="table table-bordered" style="width:100%">
                 <thead>
                     <tr>
@@ -244,28 +245,34 @@ table.table tbody tr {
     <footer th:replace="~{fragments/footer :: footer}"></footer>
        
     <script>
-        document.querySelectorAll('#tab .tab-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                let currentActive = document.querySelector('#tab .tab-link.active');
-                let currentActivePane = document.querySelector('.tab-pane.active');
-                
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                    currentActivePane.classList.remove('active');
-                    currentActivePane.classList.remove('show');
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('#tab .tab-link');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            let savedActiveTab = sessionStorage.getItem('activeTab') || '#dieskalasi';
+    
+            function setActiveTab(activeTabId) {
+                document.querySelectorAll('.tab-link.active, .tab-pane.active').forEach(el => el.classList.remove('active', 'show'));
+                const activeTab = document.querySelector(`.tab-link[href="${activeTabId}"]`);
+                const activePane = document.querySelector(activeTabId);
+                if (activeTab && activePane) {
+                    activeTab.classList.add('active');
+                    activePane.classList.add('active', 'show');
                 }
-
-                let newActivePaneId = this.getAttribute('href');
-                let newActivePane = document.querySelector(newActivePaneId);
-
-                this.classList.add('active');
-                newActivePane.classList.add('active');
-                newActivePane.classList.add('show');
+                sessionStorage.setItem('activeTab', activeTabId);
+                document.getElementById('hiddenActiveTab').value = activeTabId;  // Set the value of hidden input
+            }
+    
+            // Set the default active tab
+            setActiveTab(savedActiveTab);
+    
+            tabs.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setActiveTab(this.getAttribute('href'));
+                });
             });
         });
-
     </script>
-
+    
 </body>
 </html>

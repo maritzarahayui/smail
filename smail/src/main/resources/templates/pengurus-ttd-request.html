@@ -25,6 +25,16 @@
         <section class="bentuk-surat-text">
             <div class="tabs-container">
                 <div class="tabs-group-parent">
+
+                    <div class="search-button">
+                        <form th:action="@{/ttd/request}" method="get">
+                            <div class="button17">
+                                <img class="search-icon1" alt="" src="/images/search.svg" />
+                                <input class="keuangan3" placeholder="Cari request berdasarkan ID, Jenis Surat, atau Nama Pengaju" type="text" name="search" />
+                            </div>
+                        </form>
+                    </div>
+
                     <div class="tabs-group" th:if="${role == 'Pengurus'}">
                         <a class="component-2" th:href="@{/ttd/request}">
                             <img
@@ -45,14 +55,6 @@
                         </a>
                     </div>
 
-                    <div class="search-button">
-                        <form th:action="@{/ttd/request}" method="get">
-                            <div class="button17">
-                                <img class="search-icon1" alt="" src="/images/search.svg" />
-                                <input class="keuangan3" placeholder="Cari request berdasarkan ID, Jenis Surat, atau Nama Pengaju" type="text" name="search" />
-                            </div>
-                        </form>
-                    </div>
                 </div>
 
                 <div class="t-e-m-p-container-parent">

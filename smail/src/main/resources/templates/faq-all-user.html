@@ -183,8 +183,18 @@
         <nav th:replace="~{fragments/asset :: asset}"></nav>
     
         <br><br>
+<!-- 
+        <div th:if="${#lists.isEmpty(faqsTerjawab)}">
+            <h3 style="justify-content: center; font-weight: 400; margin: 60px;">Belum ada forum yang terjawab 😔</h3>
+        </div> -->
 
-        <div class="search-bar">
+        <div class="search-bar" style="align-self: center; margin: 30px;" th:if="${#lists.isEmpty(faqsTerjawab)}">
+            <div class="search-box" style="width: fit-content;">
+                <h4 style="justify-content: center; font-weight: 400; margin: 40px;">Belum ada forum yang terjawab 😔</h4>
+            </div>
+        </div>
+
+        <div class="search-bar" th:unless="${#lists.isEmpty(faqsTerjawab)}">
             <form th:action="@{/faq}" method="get">
                 <div class="search-box">
                     <img class="search-icon" alt="" src="/images/search.svg" />

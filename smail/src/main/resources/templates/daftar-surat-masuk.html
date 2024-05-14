@@ -44,9 +44,8 @@
     <nav th:replace="~{fragments/asset :: asset}"></nav>
       
     <div class="content-wrapper" style="margin-inline: 10px;">
-      <div class="buttonWrapper" style="margin: 30px; text-decoration: none; color: white;">
+      <div class="buttonWrapper" th:if="${role == 'Admin'}" style="margin: 30px; text-decoration: none; color: white;">
         <a
-          th:if="${role == 'Admin'}"
           th:href="@{/surat-masuk/form}"
           class="button" style="text-decoration: none; color: white;"
         >
@@ -71,7 +70,7 @@
         <a class="tab-link" data-toggle="tab" href="#disposisi">Disposisi</a>
       </div>
 
-      <br><br>
+      <br>
 
       <!-- SEMUA -->
       <div class="tab-pane active" id="semua">

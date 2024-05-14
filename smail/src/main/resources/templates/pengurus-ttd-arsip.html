@@ -25,6 +25,21 @@
       <section class="bentuk-surat-text">
         <div class="tabs-container">
           <div class="tabs-group-parent">
+            
+            <div class="search-button">
+              <form th:action="@{/ttd/arsip}" method="get">
+                <div class="button17">
+                  <img class="search-icon1" alt="" src="/images/search.svg" />
+                  <input
+                    class="keuangan3"
+                    placeholder="Cari surat berdasarkan Nomor surat, Perihal, Penerima Eksternal, atau Kategori"
+                    type="text"
+                    name="search"
+                  />
+                </div>
+              </form>
+            </div>
+            
             <div class="tabs-group">
               <a class="component-3" th:href="@{/ttd/request}">
                 <img
@@ -45,19 +60,6 @@
               </a>
             </div>
 
-            <div class="search-button">
-              <form th:action="@{/ttd/arsip}" method="get">
-                <div class="button17">
-                  <img class="search-icon1" alt="" src="/images/search.svg" />
-                  <input
-                    class="keuangan3"
-                    placeholder="Cari surat berdasarkan Nomor surat, Perihal, Penerima Eksternal, atau Kategori"
-                    type="text"
-                    name="search"
-                  />
-                </div>
-              </form>
-            </div>
           </div>
 
           <div class="t-e-m-p-container-parent">

@@ -30,7 +30,8 @@ public class FAQController {
     private PenggunaDb penggunaDb;
 
     @GetMapping
-    public String showFAQ(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
+    public String showFAQ(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search,
+        @RequestParam(required = false) String activeTab) {
 
         List<FAQ> faqsBelumDijawab;
         List<FAQ> faqsDieskalasi;
@@ -65,6 +66,7 @@ public class FAQController {
             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
 
             if (role.equals("Admin")) {
+                model.addAttribute("activeTab", activeTab != null ? activeTab : "#belumDijawab");
                 return "faq-all-admin";
             } else if (role.equals("Pengurus")) {
                 return "faq-all-pengurus";
@@ -186,7 +188,7 @@ public class FAQController {
             }
         }
 
-        // model.addAttribute("newFaq"faq, faq);
+        model.addAttribute("newFaq", faq);
         return "faq-edit";
     }
 

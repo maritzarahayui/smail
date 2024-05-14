@@ -119,7 +119,7 @@ a:hover {
 .tabs-group {
   width: 100%;
   max-width: 859px;
-  margin: 20px auto 0;
+  margin: 30px auto 0;
   height: 56px;
   background-color: var(--green-green-5);
   border: 4px solid var(--green-green-3);
@@ -210,7 +210,7 @@ table.table tbody tr {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 55px 0;
+  gap: 45px 0;
 }
 .id-template {
   position: relative;
@@ -1041,7 +1041,7 @@ table.table tbody tr {
   align-items: flex-start;
   justify-content: center;
   padding: 0 var(--padding-xl) 12.199999999999818px;
-  padding-top: 20px;
+  /* padding-top: 20px; */
   box-sizing: border-box;
   max-width: 100%;
   text-align: left;
