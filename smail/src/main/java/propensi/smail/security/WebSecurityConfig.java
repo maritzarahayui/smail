@@ -55,21 +55,33 @@ public class WebSecurityConfig {
                     .requestMatchers("/").permitAll()
                     .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                     .requestMatchers("/profile").hasAnyAuthority("ADMIN", "STAF", "DOSEN", "MAHASISWA", "PENGURUS")
-                    .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAuthority("ADMIN") // Izinkan akses POST untuk testing
-                    .requestMatchers("/surat-masuk/all", "/surat-masuk/detail/*", "/surat-masuk/download/*").hasAnyAuthority("PENGURUS", "ADMIN")
-                    .requestMatchers("/surat-masuk/**").hasAnyAuthority("ADMIN", "PENGURUS")
-                    .requestMatchers(HttpMethod.POST, "/template/new-template", "/template/update/*").hasAuthority("ADMIN") // Izinkan akses POST untuk testing
+
+                    .requestMatchers(HttpMethod.POST, "/template/new-template", "/template/update/*").hasAuthority("ADMIN")
                     .requestMatchers("/template/**").hasAuthority("ADMIN")
+
                     .requestMatchers(HttpMethod.POST, "/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
                     .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                    // .requestMatchers("/request/admin/**").hasAuthority("ADMIN")
                     .requestMatchers("/request/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
-                    .requestMatchers("/template/**").hasAuthority("ADMIN")
+                    .requestMatchers("/detail/{id:.+}/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+                    
+                    .requestMatchers(HttpMethod.POST, "/ttd/update/{id:.+}").hasAnyAuthority("PENGURUS", "DOSEN")
+                    .requestMatchers("/ttd/**").hasAnyAuthority("PENGURUS", "DOSEN")
+
+                    .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/surat-masuk/form").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/surat-masuk/**").hasAnyAuthority("PENGURUS", "ADMIN")
+
+                    .requestMatchers(HttpMethod.POST, "/surat-keluar/upload").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/surat-keluar/form").hasAnyAuthority("ADMIN")
+                    .requestMatchers("/surat-keluar/**").hasAnyAuthority("PENGURUS", "ADMIN")
+
                     .requestMatchers(HttpMethod.POST, "/faq/**").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA", "PENGURUS", "ADMIN")
                     .requestMatchers("/faq").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA", "PENGURUS", "ADMIN")
                     .requestMatchers("/faq/tanya").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
-                    .requestMatchers("/faq/{id:\\d+}/jawab", "/faq/{id:\\d+}/detail").hasAnyAuthority("PENGURUS", "ADMIN")
-                    .requestMatchers("/faq/{id:\\d+}/eskalasi", "/faq/{id:\\d+}/hapus").hasAuthority("ADMIN")
+                    .requestMatchers("/faq/{id:.+}/jawab", "/faq/{id:.+}/detail").hasAnyAuthority("PENGURUS", "ADMIN")
+                    .requestMatchers("/faq/{id:.+}/eskalasi", "/faq/{id:.+}/hapus", "/faq/{id:.+}/edit").hasAuthority("ADMIN")
+                    .requestMatchers("/user-faq/terjawab", "/user-faq/belum-terjawab").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
+
                     .anyRequest().authenticated())
                 
                 .oauth2Login(oauth2 -> oauth2

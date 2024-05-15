@@ -16,6 +16,49 @@
 
 <body>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageKey = 'templatePage'; // Gunakan identifikasi unik untuk setiap halaman
+            const tabs = document.querySelectorAll('#tab .tab-link');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            let savedActiveTab = sessionStorage.getItem(pageKey);
+        
+            console.log('Saved active tab from session:', savedActiveTab); // Log untuk debugging
+        
+            function setActiveTab(activeTabId) {
+                console.log('Setting active tab:', activeTabId); // Log untuk debugging
+                document.querySelectorAll('.tab-link.active, .tab-pane.active').forEach(el => {
+                    el.classList.remove('active', 'show');
+                });
+                const activeTab = document.querySelector(`.tab-link[href="${activeTabId}"]`);
+                const activePane = document.querySelector(activeTabId);
+                if (activeTab && activePane) {
+                    activeTab.classList.add('active');
+                    activePane.classList.add('active', 'show');
+                }
+                sessionStorage.setItem(pageKey, activeTabId);
+                if(document.getElementById('hiddenActiveTab')) {
+                    document.getElementById('hiddenActiveTab').value = activeTabId; // Update hidden input
+                }
+            }
+        
+            // Tentukan tab default atau pulihkan tab sebelumnya
+            if (!savedActiveTab) {
+                console.log('No saved tab, setting default to #semua'); // Log untuk debugging
+                setActiveTab('#semua');
+            } else {
+                setActiveTab(savedActiveTab);
+            }
+        
+            tabs.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setActiveTab(this.getAttribute('href'));
+                });
+            });
+        });
+    </script>    
+    
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="permintaan-template">
@@ -34,12 +77,13 @@
                 <div class="button17">
                     <img class="search-icon1" alt="" src="/images/search.svg" />
                     <input class="keuangan3" placeholder="Cari..." type="text" name="keyword" id="searchInput" />
+                    <input type="hidden" name="activeTab" id="hiddenActiveTab">
                 </div>
             </form>
         </div>
 
         <div class="tabs-group" id="tab">
-            <a class="tab-link active" data-toggle="tab" href="#semua">Semua</a>
+            <a class="tab-link" data-toggle="tab" href="#semua">Semua</a>
             <a class="tab-link" data-toggle="tab" href="#diajukan">Diajukan</a>
             <a class="tab-link" data-toggle="tab" href="#diterima">Diterima</a>
             <a class="tab-link" data-toggle="tab" href="#ditolak">Ditolak</a>
@@ -190,7 +234,7 @@
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
         // Simulate click event on #semua tab link
         document.querySelector('#tab .tab-link[href="#semua"]').click();
@@ -217,7 +261,7 @@
       });
   });
 
-</script>
+</script> -->
 
 </body>
 </html>

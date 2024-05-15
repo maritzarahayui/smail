@@ -69,6 +69,7 @@ public class FAQController {
                 model.addAttribute("activeTab", activeTab != null ? activeTab : "#belumDijawab");
                 return "faq-all-admin";
             } else if (role.equals("Pengurus")) {
+                model.addAttribute("activeTab", activeTab != null ? activeTab : "#dieskalasi");
                 return "faq-all-pengurus";
             } else {
                 model.addAttribute("newFaq", new FAQ());

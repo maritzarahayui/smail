@@ -52,7 +52,8 @@ public class TemplateFEController {
     private RequestService requestService;
 
     @GetMapping("/new-requests")
-    public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, 
+        Authentication auth, @RequestParam(required = false) String activeTab) {
         List<RequestTemplate> allRequestTemplates = new ArrayList<>();
         List<RequestTemplate> acceptedRequestTemplates = new ArrayList<>();
         List<RequestTemplate> rejectedRequestTemplates = new ArrayList<>();
@@ -74,6 +75,7 @@ public class TemplateFEController {
         model.addAttribute("requestedRequests", requestedRequestTemplates);
         model.addAttribute("acceptedRequests", acceptedRequestTemplates);
         model.addAttribute("rejectedRequests", rejectedRequestTemplates);
+        model.addAttribute("activeTab", activeTab != null ? activeTab : "#semua");
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();

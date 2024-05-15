@@ -94,7 +94,8 @@ public class SuratMasukController {
 
     //get all surat masuk
     @GetMapping("/all")
-    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search) {
+    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search,
+        @RequestParam(required = false) String activeTab) {
 
         List<SuratMasuk> allSuratMasuk;
         // List<SuratMasuk> suratMasukDiarsipkan;
@@ -121,6 +122,7 @@ public class SuratMasukController {
         // model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
         model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
         model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
+        model.addAttribute("activeTab", activeTab != null ? activeTab : "#semua");
         
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();

@@ -148,6 +148,49 @@ table.table tbody tr {
 </style>
 
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const pageKey = 'faqAdminPage'; // Gunakan identifikasi unik untuk setiap halaman
+            const tabs = document.querySelectorAll('#tab .tab-link');
+            const tabPanes = document.querySelectorAll('.tab-pane');
+            let savedActiveTab = sessionStorage.getItem(pageKey);
+        
+            console.log('Saved active tab from session:', savedActiveTab); // Log untuk debugging
+        
+            function setActiveTab(activeTabId) {
+                console.log('Setting active tab:', activeTabId); // Log untuk debugging
+                document.querySelectorAll('.tab-link.active, .tab-pane.active').forEach(el => {
+                    el.classList.remove('active', 'show');
+                });
+                const activeTab = document.querySelector(`.tab-link[href="${activeTabId}"]`);
+                const activePane = document.querySelector(activeTabId);
+                if (activeTab && activePane) {
+                    activeTab.classList.add('active');
+                    activePane.classList.add('active', 'show');
+                }
+                sessionStorage.setItem(pageKey, activeTabId);
+                if(document.getElementById('hiddenActiveTab')) {
+                    document.getElementById('hiddenActiveTab').value = activeTabId; // Update hidden input
+                }
+            }
+        
+            // Tentukan tab default atau pulihkan tab sebelumnya
+            if (!savedActiveTab) {
+                console.log('No saved tab, setting default to #semua'); // Log untuk debugging
+                setActiveTab('#belumDijawab');
+            } else {
+                setActiveTab(savedActiveTab);
+            }
+        
+            tabs.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setActiveTab(this.getAttribute('href'));
+                });
+            });
+        });
+    </script>    
+
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="content-container">
@@ -315,37 +358,6 @@ table.table tbody tr {
         });
 
     </script> -->
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const tabs = document.querySelectorAll('#tab .tab-link');
-            const tabPanes = document.querySelectorAll('.tab-pane');
-            let savedActiveTab = sessionStorage.getItem('activeTab') || '#belumDijawab';
-    
-            function setActiveTab(activeTabId) {
-                document.querySelectorAll('.tab-link.active, .tab-pane.active').forEach(el => el.classList.remove('active', 'show'));
-                const activeTab = document.querySelector(`.tab-link[href="${activeTabId}"]`);
-                const activePane = document.querySelector(activeTabId);
-                if (activeTab && activePane) {
-                    activeTab.classList.add('active');
-                    activePane.classList.add('active', 'show');
-                }
-                sessionStorage.setItem('activeTab', activeTabId);
-                document.getElementById('hiddenActiveTab').value = activeTabId;  // Set the value of hidden input
-            }
-    
-            // Set the default active tab
-            setActiveTab(savedActiveTab);
-    
-            tabs.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    setActiveTab(this.getAttribute('href'));
-                });
-            });
-        });
-    </script>
-    
     
 
 </body>
