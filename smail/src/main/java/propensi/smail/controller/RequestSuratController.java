@@ -267,29 +267,6 @@ public class RequestSuratController {
     }
 
     // Admin
-    @GetMapping("/admin/request/history")
-    public String showAllRequest(Model model, Authentication auth) {
-        List<RequestSurat> requestSurats = requestService.getAllRequestsSurat();
-        model.addAttribute("requestSurats", requestSurats);
-
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        return "riwayat-surat-admin";
-    }
-
     @GetMapping("/admin/request/{id}")
     public String showDetaileRequests(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat req = requestService.getRequestSuratById(id);

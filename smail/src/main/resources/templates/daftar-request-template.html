@@ -12,6 +12,14 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Datatables -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
+    
 </head>
 
 <body>
@@ -72,16 +80,6 @@
 
     <div class="content-wrapper" style="margin-inline: 10px;">
 
-        <div class="search-wrapper">
-            <form th:action="@{/template/new-requests}" method="get" id="searchForm">
-                <div class="button17">
-                    <img class="search-icon1" alt="" src="/images/search.svg" />
-                    <input class="keuangan3" placeholder="Cari..." type="text" name="keyword" id="searchInput" />
-                    <input type="hidden" name="activeTab" id="hiddenActiveTab">
-                </div>
-            </form>
-        </div>
-
         <div class="tabs-group" id="tab">
             <a class="tab-link" data-toggle="tab" href="#semua">Semua</a>
             <a class="tab-link" data-toggle="tab" href="#diajukan">Diajukan</a>
@@ -93,175 +91,147 @@
 
         <!-- SEMUA -->
         <div class="tab-pane" id="semua">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Status</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${#lists.isEmpty(requestTemplates)}">
-                    <td colspan="6" style="text-align: center;">Belum ada permintaan template</td>
-                </tr>
-                <tr th:each="requestTemplate : ${requestTemplates}" th:unless="${#lists.isEmpty(requestTemplates)}">
-                    <td th:text="${requestTemplate.id}"></td>
-                    <td th:text="${requestTemplate.kategori}"></td>
-                    <td th:text="${requestTemplate.pengaju.nama}"></td>
-                    <td th:text="${requestTemplate.bahasa}"></td>
-                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                    <td th:text="${requestTemplate.status == 1 ? 'Diajukan' :
-                      (requestTemplate.status == 2 ? 'Diterima' :
-                      (requestTemplate.status == 3 ? 'Ditolak' : ''))}">
-                    </td>
-                    <td style="display: flex; justify-content: space-between;">
-                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                            <div class="button21">Detail</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="semuaTemplate" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                            <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                            <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Status</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="requestTemplate : ${requestTemplates}" th:unless="${#lists.isEmpty(requestTemplates)}">
+                            <td th:text="${requestTemplate.id}"></td>
+                            <td th:text="${requestTemplate.kategori}"></td>
+                            <td th:text="${requestTemplate.pengaju.nama}"></td>
+                            <td th:text="${requestTemplate.bahasa}"></td>
+                            <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                            <td th:text="${requestTemplate.status == 1 ? 'Diajukan' :
+                            (requestTemplate.status == 2 ? 'Diterima' :
+                            (requestTemplate.status == 3 ? 'Ditolak' : ''))}">
+                            </td>
+                            <td style="display: flex; justify-content: space-between;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- DIAJUKAN -->
         <div class="tab-pane" id="diajukan">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${#lists.isEmpty(requestedRequests)}">
-                    <td colspan="6" style="text-align: center;">Belum ada permintaan template</td>
-                </tr>
-                <tr th:each="requestTemplate : ${requestedRequests}" th:unless="${#lists.isEmpty(requestedRequests)}">
-                    <td th:text="${requestTemplate.id}"></td>
-                    <td th:text="${requestTemplate.kategori}"></td>
-                    <td th:text="${requestTemplate.pengaju.nama}"></td>
-                    <td th:text="${requestTemplate.bahasa}"></td>
-                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                    <td style="display: flex; justify-content: space-between;">
-                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                            <div class="button21">Detail</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="diajukanTemplate" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                            <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                            <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="requestTemplate : ${requestedRequests}" th:unless="${#lists.isEmpty(requestedRequests)}">
+                            <td th:text="${requestTemplate.id}"></td>
+                            <td th:text="${requestTemplate.kategori}"></td>
+                            <td th:text="${requestTemplate.pengaju.nama}"></td>
+                            <td th:text="${requestTemplate.bahasa}"></td>
+                            <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                            <td style="display: flex; justify-content: space-between;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- DITERIMA -->
         <div class="tab-pane" id="diterima">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${#lists.isEmpty(acceptedRequests)}">
-                    <td colspan="6" style="text-align: center;">Belum ada permintaan template yang diterima</td>
-                </tr>
-                <tr th:each="requestTemplate : ${acceptedRequests}" th:unless="${#lists.isEmpty(acceptedRequests)}">
-                    <td th:text="${requestTemplate.id}"></td>
-                    <td th:text="${requestTemplate.kategori}"></td>
-                    <td th:text="${requestTemplate.pengaju.nama}"></td>
-                    <td th:text="${requestTemplate.bahasa}"></td>
-                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                    <td style="display: flex; justify-content: space-between;">
-                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                            <div class="button21">Detail</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="diterimaTemplate" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                            <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                            <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="requestTemplate : ${acceptedRequests}" th:unless="${#lists.isEmpty(acceptedRequests)}">
+                            <td th:text="${requestTemplate.id}"></td>
+                            <td th:text="${requestTemplate.kategori}"></td>
+                            <td th:text="${requestTemplate.pengaju.nama}"></td>
+                            <td th:text="${requestTemplate.bahasa}"></td>
+                            <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                            <td style="display: flex; justify-content: space-between;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
+        <!-- DITOLAK -->
         <div class="tab-pane" id="ditolak">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-                    <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                    <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
-                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:if="${#lists.isEmpty(rejectedRequests)}">
-                    <td colspan="6" style="text-align: center;">Belum ada permintaan template yang ditolak</td>
-                </tr>
-                <tr th:each="requestTemplate : ${rejectedRequests}" th:unless="${#lists.isEmpty(rejectedRequests)}">
-                    <td th:text="${requestTemplate.id}"></td>
-                    <td th:text="${requestTemplate.kategori}"></td>
-                    <td th:text="${requestTemplate.pengaju.nama}"></td>
-                    <td th:text="${requestTemplate.bahasa}"></td>
-                    <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                    <td style="display: flex; justify-content: space-between;">
-                        <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                            <div class="button21">Detail</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table id="ditolakTemplate" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">ID Request</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                            <th style="width: 45%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                            <th style="width: 15%; text-align: center; vertical-align: middle;">Bahasa</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="requestTemplate : ${rejectedRequests}" th:unless="${#lists.isEmpty(rejectedRequests)}">
+                            <td th:text="${requestTemplate.id}"></td>
+                            <td th:text="${requestTemplate.kategori}"></td>
+                            <td th:text="${requestTemplate.pengaju.nama}"></td>
+                            <td th:text="${requestTemplate.bahasa}"></td>
+                            <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
+                            <td style="display: flex; justify-content: space-between;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
+                                    <div class="button21">Detail</div>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-
     </div>
-
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-<!-- <script>
-  document.addEventListener('DOMContentLoaded', function() {
-        // Simulate click event on #semua tab link
-        document.querySelector('#tab .tab-link[href="#semua"]').click();
-    });
-
-  document.querySelectorAll('#tab .tab-link').forEach(link => {
-      link.addEventListener('click', function(e) {
-          e.preventDefault();
-          let currentActive = document.querySelector('#tab .tab-link.active');
-          let currentActivePane = document.querySelector('.tab-pane.active');
-
-          if (currentActive) {
-              currentActive.classList.remove('active');
-              currentActivePane.classList.remove('active');
-              currentActivePane.classList.remove('show');
-          }
-
-          let newActivePaneId = this.getAttribute('href');
-          let newActivePane = document.querySelector(newActivePaneId);
-
-          this.classList.add('active');
-          newActivePane.classList.add('active');
-          newActivePane.classList.add('show');
-      });
-  });
-
-</script> -->
+<script>
+    new DataTable('#semuaTemplate');
+    new DataTable('#diajukanTemplate');
+    new DataTable('#diterimaTemplate');
+    new DataTable('#ditolakTemplate');
+</script>
 
 </body>
 </html>

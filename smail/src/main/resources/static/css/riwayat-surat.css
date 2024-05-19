@@ -129,21 +129,6 @@ a:hover {
   row-gap: 20px;
 }
 
-/* Tabel */
-.table thead {
-  background-color: var(--green-green-2);
-  color: #fff;
-  text-align: center;
-}
-
-.table tbody td {
-  text-align: center;
-}
-
-table.table tbody tr {
-  background-color: #ffffff;
-}
-
 /* Filter */
 .search-button {
   text-align: center;
@@ -997,36 +982,14 @@ table.table tbody tr {
   overflow: hidden;
   padding: var(--padding-5xs) var(--padding-xl);
 }
-.agustus-label-parent,
-.agustus-label4 {
-  width: 1215px;
-  flex: 1;
-  align-items: flex-start;
-}
-.agustus-label4 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 0 1px;
-}
-.agustus-label-parent {
-  overflow-x: auto;
-}
-.agustus-label-parent,
-.t-e-m-p-container-parent,
+
 .tabs-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-width: 100%;
+  width: 100%;
 }
-.t-e-m-p-container-parent {
-  align-self: stretch;
-  height: 382px;
-  align-items: flex-start;
-  gap: 12px 0;
-  color: var(--black-black-1);
-}
+
 .tabs-container {
   width: 1216px;
   align-items: flex-end;

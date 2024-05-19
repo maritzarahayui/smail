@@ -1,16 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
 
-/* Custom CSS for table */
-.custom-table th,
-.custom-table td {
-    font-size: 20px; /* Adjust font size as needed */
-}
-
-/* Custom CSS for table rows */
-.custom-tr {
-    font-size: 14px; /* Adjust font size as needed */
-}
-
 .daftar-template-surat-child {
   width: 355.4px;
   height: 330.5px;
@@ -283,7 +272,7 @@
   gap: 0 8px;
   max-width: 100%;
 }
-
+/* p */
 .fluentadd-16-filled-icon {
   height: 24px;
   width: 24px;
@@ -291,14 +280,14 @@
   overflow: hidden;
   flex-shrink: 0;
 }
-
+/* p */
 .button2,
 .tambah-template {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
+/* p */
 .tambah-template {
   width: 138px;
   position: relative;
@@ -308,7 +297,7 @@
   color: var(--white-white-1);
   text-align: center;
 }
-
+/* p */
 .button2 {
   cursor: pointer;
   border: 0;
@@ -319,16 +308,16 @@
   flex-direction: row;
   box-sizing: border-box;
   gap: 0 8px;
-  min-width: 169px;
+  max-width: 300px;
   min-height: 50px;
   white-space: nowrap;
 }
-
+/* p */
 .button2:hover {
   background-color: #253237;
   color: white;
 }
-
+/* p */
 .lihat-permintaan-template {
   flex: 1;
   position: relative;
@@ -338,7 +327,7 @@
   color: var(--green-green-1);
   text-align: center;
 }
-
+/* p */
 .button3 {
   cursor: pointer;
   border: 2px solid var(--green-green-1);
@@ -351,16 +340,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  min-width: 169px;
+  max-width: 300px;
   min-height: 50px;
 }
-
+/* p */
 .button3:hover {
   background-color: rgba(54, 156, 122, 0.09);
   border: 2px solid var(--color-seagreen-100);
   box-sizing: border-box;
 }
-
+/* p */
 .keuangan-frame,
 .search-bar,
 .template-list {
@@ -667,7 +656,7 @@
   align-items: flex-start;
   justify-content: flex-start;
 }
-
+/* pertahankan */
 .request-surat1,
 .template-surat3 {
   align-items: flex-start;
@@ -685,14 +674,14 @@
   max-width: 100%;
   gap: var(--gap-xl);
 }
-
+/* pertahankan */
 .request-surat1 {
   width: 764px;
   padding: 0 0 0 var(--padding-xl);
   gap: 20px 0;
   font-size: var(--heading-h4-size);
 }
-
+/* pertahankan */
 .keuangan-template-frame,
 .request-surat1,
 .template-frame {

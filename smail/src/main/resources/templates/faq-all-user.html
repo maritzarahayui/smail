@@ -3,16 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
     <link rel="stylesheet" href="/css/global-final.css" />
     <link rel="stylesheet" href="/css/asset.css"/>
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
-    />
   </head>
 
   <style>
@@ -46,9 +42,6 @@
     }
   
     .panel {
-        /* min-width: 95%;
-        max-width: 95%; */
-
         background-color: var(--green-green-5);
         border-radius: var(--br-5xs);
         color: var(--white-white-1);
@@ -183,10 +176,6 @@
         <nav th:replace="~{fragments/asset :: asset}"></nav>
     
         <br><br>
-<!-- 
-        <div th:if="${#lists.isEmpty(faqsTerjawab)}">
-            <h3 style="justify-content: center; font-weight: 400; margin: 60px;">Belum ada forum yang terjawab 😔</h3>
-        </div> -->
 
         <div class="search-bar" style="align-self: center; margin: 30px;" th:if="${#lists.isEmpty(faqsTerjawab)}">
             <div class="search-box" style="width: fit-content;">

@@ -12,6 +12,13 @@
 
   <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
   <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+  <!-- Datatables -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+  <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
     
   <style>
     .button {
@@ -74,7 +81,7 @@
             });
         });
     });
-</script>    
+  </script>    
 
   <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
@@ -97,20 +104,9 @@
           <div class="input-surat1">Input Surat</div>
         </a>
       </div>
-      
-      <div class="search-wrapper">
-        <form action="/surat-masuk/all" method="get" id="searchForm">
-          <div class="button17">
-            <img class="search-icon1" alt="" src="/images/search.svg" />
-            <input class="keuangan3" placeholder="Cari..." type="text" name="search" id="searchInput" />
-            <input type="hidden" name="activeTab" id="hiddenActiveTab">
-          </div>
-        </form>
-      </div>
 
       <div class="tabs-group" id="tab">
         <a class="tab-link" data-toggle="tab" href="#semua">Semua</a>
-        <!-- <a class="tab-link" data-toggle="tab" href="#diarsipkan">Diarsipkan</a> -->
         <a class="tab-link" data-toggle="tab" href="#followUp">Follow Up</a>
         <a class="tab-link" data-toggle="tab" href="#disposisi">Disposisi</a>
       </div>
@@ -119,139 +115,108 @@
 
       <!-- SEMUA -->
       <div class="tab-pane" id="semua">
-        <table class="table table-bordered" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-              <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-              <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:if="${#lists.isEmpty(allSuratMasuk)}">
-              <td colspan="6" style="text-align: center;">Belum ada surat masuk</td>
-            </tr>
-            <tr th:each="suratMasuk : ${allSuratMasuk}" th:unless="${#lists.isEmpty(allSuratMasuk)}">
-              <td th:text="${suratMasuk.nomorArsip}"></td>
-              <td th:text="${suratMasuk.kategori}"></td>
-              <td th:text="${suratMasuk.perihal}"></td>
-              <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
-              <td th:text="${suratMasuk.pengirim}"></td>
-              <td style="display: flex;">
-                <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                  <div class="button21">Detail</div>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- DIARSIPKAN -->
-      <div class="tab-pane" id="diarsipkan">
-        <table class="table table-bordered" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-              <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-              <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:if="${#lists.isEmpty(suratMasukDiarsipkan)}">
-              <td colspan="6" style="text-align: center;">Belum ada surat masuk yang diarsipkan</td>
-            </tr>
-            <tr th:each="suratMasuk : ${suratMasukDiarsipkan}" th:unless="${#lists.isEmpty(suratMasukDiarsipkan)}">
-              <td th:text="${suratMasuk.nomorArsip}"></td>
-              <td th:text="${suratMasuk.kategori}"></td>
-              <td th:text="${suratMasuk.perihal}"></td>
-              <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
-              <td th:text="${suratMasuk.pengirim}"></td>
-              <td style="display: flex;">
-                <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                  <div class="button21">Detail</div>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table id="semuaMasuk" class="table table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
+                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="suratMasuk : ${allSuratMasuk}" th:unless="${#lists.isEmpty(allSuratMasuk)}">
+                <td th:text="${suratMasuk.nomorArsip}"></td>
+                <td th:text="${suratMasuk.kategori}"></td>
+                <td th:text="${suratMasuk.perihal}"></td>
+                <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                <td th:text="${suratMasuk.pengirim}"></td>
+                <td style="display: flex;">
+                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="button21">Detail</div>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- FOLLOW UP -->
       <div class="tab-pane" id="followUp">
-        <table class="table table-bordered" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-              <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-              <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:if="${#lists.isEmpty(suratMasukFollowUp)}">
-              <td colspan="6" style="text-align: center;">Belum ada surat masuk yang difollow-up</td>
-            </tr>
-            <tr th:each="suratMasuk : ${suratMasukFollowUp}" th:unless="${#lists.isEmpty(suratMasukFollowUp)}">
-              <td th:text="${suratMasuk.nomorArsip}"></td>
-              <td th:text="${suratMasuk.kategori}"></td>
-              <td th:text="${suratMasuk.perihal}"></td>
-              <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
-              <td th:text="${suratMasuk.pengirim}"></td>
-              <td style="display: flex;">
-                <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                  <div class="button21">Detail</div>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table id="folupMasuk" class="table table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
+                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="suratMasuk : ${suratMasukFollowUp}" th:unless="${#lists.isEmpty(suratMasukFollowUp)}">
+                <td th:text="${suratMasuk.nomorArsip}"></td>
+                <td th:text="${suratMasuk.kategori}"></td>
+                <td th:text="${suratMasuk.perihal}"></td>
+                <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                <td th:text="${suratMasuk.pengirim}"></td>
+                <td style="display: flex;">
+                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="button21">Detail</div>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- DISPOSISI -->
       <div class="tab-pane" id="disposisi">
-        <table class="table table-bordered" style="width:100%">
-          <thead>
-            <tr>
-              <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
-              <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-              <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
-              <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr th:if="${#lists.isEmpty(suratMasukDisposisi)}">
-              <td colspan="6" style="text-align: center;">Belum ada surat masuk yang didisposisi</td>
-            </tr>
-            <tr th:each="suratMasuk : ${suratMasukDisposisi}" th:unless="${#lists.isEmpty(suratMasukDisposisi)}">
-              <td th:text="${suratMasuk.nomorArsip}"></td>
-              <td th:text="${suratMasuk.kategori}"></td>
-              <td th:text="${suratMasuk.perihal}"></td>
-              <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
-              <td th:text="${suratMasuk.pengirim}"></td>
-              <td style="display: flex;">
-                <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                  <div class="button21">Detail</div>
-                </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table id="disposisiMasuk" class="table table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
+                <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
+                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="suratMasuk : ${suratMasukDisposisi}" th:unless="${#lists.isEmpty(suratMasukDisposisi)}">
+                <td th:text="${suratMasuk.nomorArsip}"></td>
+                <td th:text="${suratMasuk.kategori}"></td>
+                <td th:text="${suratMasuk.perihal}"></td>
+                <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                <td th:text="${suratMasuk.pengirim}"></td>
+                <td style="display: flex;">
+                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="button21">Detail</div>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      </div>
+    </div>
   </div>
 
   <footer th:replace="~{fragments/footer :: footer}"></footer>
 
+  <script>
+    new DataTable('#semuaMasuk');
+    new DataTable('#folupMasuk');
+    new DataTable('#disposisiMasuk');
+  </script>
 </body>
 </html>

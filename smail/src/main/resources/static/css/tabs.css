@@ -93,67 +93,47 @@ table.table tbody tr {
     width: 100%;
 }
 
-.centered-column {
-    width: 15%;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.centered-text {
-    display: block;
-    text-align: center;
-}
-
-#diajukan-table {
+#diajukan-table, #dibatalkan-table, #ditolak-table, #diproses-table, #selesai-table,
+#adminAll, #adminDiajukan, #adminDibatalkan, #adminDitolak, #adminDiproses, #adminSelesai,
+#request-ttd, #arsip-ttd,
+#dieskalasiPeng, #terjawabPeng,
+#belumDijawabAdm, #dieskalasiAdm, #terjawabAdm, #dihapusAdm,
+#daftar-template, #suratkeluar,
+#semuaMasuk, #diarsipkanMasuk, #folupMasuk, #disposisiMasuk,
+#semuaTemplate, #diajukanTemplate, #diterimaTemplate, #ditolakTemplate {
     border-collapse: collapse;
     width: 100%;
 }
 
-#diajukan-table th, #diajukan-table td {
-    border: 1px solid #dee2e6;
-    text-align: center;
-    vertical-align: middle;
-}
-
-#dibatalkan-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#dibatalkan-table th, #dibatalkan-table td {
-    border: 1px solid #dee2e6;
-    text-align: center;
-    vertical-align: middle;
-}
-
-#ditolak-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#ditolak-table th, #ditolak-table td {
-    border: 1px solid #dee2e6;
-    text-align: center;
-    vertical-align: middle;
-}
-
-#diproses-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#diproses-table th, #diproses-table td {
-    border: 1px solid #dee2e6;
-    text-align: center;
-    vertical-align: middle;
-}
-
-#selesai-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-#selesai-table th, #selesai-table td {
+#diajukan-table th, #diajukan-table td,
+#dibatalkan-table th, #dibatalkan-table td,
+#ditolak-table th, #ditolak-table td,
+#diproses-table th, #diproses-table td,
+#selesai-table th, #selesai-table td,
+#adminAll th, #adminAll td,
+#adminDiajukan th, #adminDiajukan td,
+#adminDibatalkan th, #adminDibatalkan td,
+#adminDitolak th, #adminDitolak td,
+#adminDiproses th, #adminDiproses td,
+#adminSelesai th, #adminSelesai td,
+#request-ttd th, #request-ttd td,
+#arsip-ttd th, #arsip-ttd td,
+#dieskalasiPeng th, #dieskalasiPeng td,
+#terjawabPeng th, #terjawabPeng td,
+#belumDijawabAdm th, #belumDijawabAdm td,
+#dieskalasiAdm th, #dieskalasiAdm td,
+#terjawabAdm th, #terjawabAdm td,
+#dihapusAdm th, #dihapusAdm td,
+#daftar-template th, #daftar-template td,
+#semuaMasuk th, #semuaMasuk td,
+#diarsipkanMasuk th, #diarsipkanMasuk td,
+#folupMasuk th, #folupMasuk td,
+#disposisiMasuk th, #disposisiMasuk td,
+#suratkeluar th, #suratkeluar td,
+#semuaTemplate th, #semuaTemplate td,
+#diajukanTemplate th, #diajukanTemplate td,
+#diterimaTemplate th, #diterimaTemplate td,
+#ditolakTemplate th, #ditolakTemplate td {
     border: 1px solid #dee2e6;
     text-align: center;
     vertical-align: middle;

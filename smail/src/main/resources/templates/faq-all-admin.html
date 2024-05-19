@@ -5,149 +5,150 @@
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
     <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/asset.css"/>
+    <link rel="stylesheet" href="/css/tabs.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <!-- Datatables -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
 </head>
 
-<style>
-
-.tabs-group {
-    width: 60%;
-    height: 56px;
-    margin: 20px auto 0;
-    display: flex;
-    box-sizing: border-box;
-    border-radius: var(--br-31xl);
-    border: 4px solid var(--green-green-3);
-    background-color: var(--green-green-5);
-    font-weight: 600;
-}
-
-.tabs-group .tab-link {
-    flex: 1;
-    gap: 0 8px;
-    width: auto;
-    height: 100%;
-    display: flex;
-    text-decoration: none;
-    align-items: center;
-    justify-content: center;
-    color: var(--white-white-1);
-    padding: var(--padding-3xs) var(--padding-13xl);
-}
-
-.tab-link:hover {
-    color: var(--white-white-1);
-    text-decoration: none;
-}
-
-.tabs-group .tab-link.active {
-    background-color: var(--green-green-1);
-    border-radius: var(--br-31xl);
-    color: var(--white-white-1);
-    flex-direction: row;
-    box-sizing: border-box;
-}
-
-.tabs-group .tab-link.active {
-    color: var(--white-white-1);
-    text-decoration: none;
-}
-
-.tab-pane {
-    max-width: 80%;
-    display: none; 
-}
-
-.tab-pane.active {
-    max-width: 80%;
-    display: flex; 
-    margin: auto;
-}
-
-/* Tabel */
-.table thead {
-  background-color: var(--green-green-2);
-  color: #fff;
-  text-align: center;
-}
-
-.table tbody td {
-  text-align: center;
-}
-
-table.table tbody tr {
-  background-color: #ffffff;
-}
-
-.table-button {
-    color: var(--white-white-1);
-    display: flex;
-    margin-inline: 3px;
-    flex-direction: row;
-    padding: var(--padding-5xs);
-    border-radius: var(--br-xs);
-    justify-content: center;
-}
-
-.table-button:hover {
-    color: var(--white-white-1);
-    background-color: var(--green-green-2);
-    text-decoration: none;
-}
-
-.search-bar {
-        align-self: stretch;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        gap: 0 12px;
-        flex-direction: column;
-        align-items: center;
-        gap: 24px 0;
-        max-width: 100%;
-	}
-
-    .search-box {
-        align-self: stretch;
-        height: 48px;
-        border-radius: var(--br-xs);
-        background-color: var(--white-white-1);
-        border: 2px solid var(--green-green-1);
-        box-sizing: border-box;
-        flex-direction: row;
-        justify-content: flex-start;
-        padding: var(--padding-5xs) var(--padding-5xl);
-        gap: 0 8px;
-        max-width: 100%;
-        display: flex;
-        align-items: center;
-    }
-
-    .ketik-kata-kunci {
-        width: 330px;
-        border: 0;
-        outline: 0;
-        font-family: var(--heading-h4);
-        font-size: var(--body-b2-size);
-        background-color: transparent;
-        height: 19px;
-        position: relative;
-        color: var(--black-black-2);
-        text-align: start;
-        vertical-align: middle;
-        justify-content: start;
-        max-width: calc(100% - 32px);
-        padding: 0;
-    }
-
-
-</style>
-
 <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+
+    <div class="content-container">
+        <b class="title-container">
+            <span class="title-gradient">Forum</span>
+            <span>Pertanyaan</span>
+        </b>
+    
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+
+        <br>
+
+        <div class="tabs-group" id="tab">
+              <a class="tab-link" data-toggle="tab" href="#belumDijawab">Belum Dijawab</a>
+              <a class="tab-link" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
+              <a class="tab-link" data-toggle="tab" href="#terjawab">Terjawab</a>
+              <a class="tab-link" data-toggle="tab" href="#dihapus">Dihapus</a>
+        </div>
+    
+        <br><br>
+
+        <!-- BELUM DIJAWAB -->
+        <div class="tab-pane" id="belumDijawab">
+            <div class="table-container">
+                <table id="belumDijawabAdm" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
+                            <th style="width: 70%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                            <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="faq, stat : ${faqsBelumDijawab}" th:unless="${#lists.isEmpty(faqsBelumDijawab)}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
+                            <td style="display: flex;">
+                                <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
+                                style="background-color: var(--yellow-yellow-1); color: var(--black-black-1)"
+                                >Jawab</a>
+                                <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/hapus'}"
+                                style="background-color: var(--red-red-1);"
+                                >Hapus</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DIESKALASI -->
+        <div class="tab-pane" id="dieskalasi">
+            <div class="table-container">
+                <table id="dieskalasiAdm" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
+                            <th style="width: 90%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-weight: 400;">
+                        <tr th:each="faq, stat : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TERJAWAB -->
+        <div class="tab-pane" id="terjawab">
+            <div class="table-container">
+                <table id="terjawabAdm" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
+                            <th style="width: 55%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                            <th style="width: 35%; text-align: center; vertical-align: middle;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="faq, stat : ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
+                            <td style="display: flex;">
+                                <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
+                                style="background-color: var(--green-green-1);"
+                                >Detail</a>
+                                <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/edit'}"
+                                style="background-color: var(--yellow-yellow-1); color: var(--black-black-1)"
+                                >Ubah</a>
+                                <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/hapus'}"
+                                style="background-color: var(--red-red-1);"
+                                >Hapus</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+         <!-- DIHAPUS -->
+         <div class="tab-pane" id="dihapus">
+            <div class="table-container">
+                <table id="dihapusAdm" class="table table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
+                            <th style="width: 90%; text-align: center; vertical-align: middle;">Pertanyaan</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-weight: 400;">
+                        <tr th:each="faq, stat : ${faqsDihapus}" th:unless="${#lists.isEmpty(faqsDihapus)}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <br><br><br><br>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+       
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const pageKey = 'faqAdminPage'; // Gunakan identifikasi unik untuk setiap halaman
@@ -189,176 +190,11 @@ table.table tbody tr {
                 });
             });
         });
-    </script>    
 
-    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
-
-    <div class="content-container">
-        <b class="title-container">
-            <span class="title-gradient">Forum</span>
-            <span>Pertanyaan</span>
-        </b>
-    
-        <nav th:replace="~{fragments/asset :: asset}"></nav>
-
-        <br>
-
-        <div class="search-bar">
-            <form th:action="@{/faq}" method="get">
-                <div class="search-box">
-                    <img class="search-icon" alt="" src="/images/search.svg" />
-                    <input class="ketik-kata-kunci" placeholder="Cari pertanyaan..." type="text" name="search" />
-                    <input type="hidden" name="activeTab" id="hiddenActiveTab">
-                </div>
-            </form>
-        </div>
-
-        <br>
-
-        <div class="tabs-group" id="tab">
-              <a class="tab-link" data-toggle="tab" href="#belumDijawab">Belum Dijawab</a>
-              <a class="tab-link" data-toggle="tab" href="#dieskalasi">Dieskalasi</a>
-              <a class="tab-link" data-toggle="tab" href="#terjawab">Terjawab</a>
-              <a class="tab-link" data-toggle="tab" href="#dihapus">Dihapus</a>
-        </div>
-    
-        <br><br>
-
-        <!-- BELUM DIJAWAB -->
-        <div class="tab-pane" id="belumDijawab">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
-                        <th style="width: 70%; text-align: center; vertical-align: middle;">Pertanyaan</th>
-                        <th style="width: 20%; text-align: center; vertical-align: middle;">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:if="${#lists.isEmpty(faqsBelumDijawab)}">
-                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Belum Dijawab</td>
-                    </tr>
-                    <tr th:each="faq, stat : ${faqsBelumDijawab}" th:unless="${#lists.isEmpty(faqsBelumDijawab)}">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                        <td style="display: flex;">
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
-                            style="background-color: var(--yellow-yellow-1); color: var(--black-black-1)"
-                            >Jawab</a>
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/hapus'}"
-                            style="background-color: var(--red-red-1);"
-                            >Hapus</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- DIESKALASI -->
-        <div class="tab-pane" id="dieskalasi">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
-                        <th style="width: 90%; text-align: center; vertical-align: middle;">Pertanyaan</th>
-                    </tr>
-                </thead>
-                <tbody style="font-weight: 400;">
-                    <tr th:if="${#lists.isEmpty(faqsDieskalasi)}">
-                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dieskalasi</td>
-                    </tr>
-                    <tr th:each="faq, stat : ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- TERJAWAB -->
-        <div class="tab-pane" id="terjawab">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
-                        <th style="width: 55%; text-align: center; vertical-align: middle;">Pertanyaan</th>
-                        <th style="width: 35%; text-align: center; vertical-align: middle;">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:if="${#lists.isEmpty(faqsTerjawab)}">
-                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Terjawab</td>
-                    </tr>
-                    <tr th:each="faq, stat : ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                        <td style="display: flex;">
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
-                            style="background-color: var(--green-green-1);"
-                            >Detail</a>
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/edit'}"
-                            style="background-color: var(--yellow-yellow-1); color: var(--black-black-1)"
-                            >Ubah</a>
-                            <a class="table-button w-50" th:href="@{'/faq/' + ${faq.id} + '/hapus'}"
-                            style="background-color: var(--red-red-1);"
-                            >Hapus</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-         <!-- DIHAPUS -->
-         <div class="tab-pane" id="dihapus">
-            <table class="table table-bordered" style="width:100%">
-                <thead>
-                    <tr>
-                        <th style="width: 10%; text-align: center; vertical-align: middle;">No.</th>
-                        <th style="width: 90%; text-align: center; vertical-align: middle;">Pertanyaan</th>
-                    </tr>
-                </thead>
-                <tbody style="font-weight: 400;">
-                    <tr th:if="${#lists.isEmpty(faqsDihapus)}">
-                        <td colspan="3" style="text-align: center;">Belum ada FAQ yang Dihapus</td>
-                    </tr>
-                    <tr th:each="faq, stat : ${faqsDihapus}" th:unless="${#lists.isEmpty(faqsDihapus)}">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${faq.pertanyaan}" style="text-align: left; font-weight: 400;"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <br><br><br><br>
-
-    </div>
-
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
-       
-    <!-- <script>
-        document.querySelectorAll('#tab .tab-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                let currentActive = document.querySelector('#tab .tab-link.active');
-                let currentActivePane = document.querySelector('.tab-pane.active');
-                
-                if (currentActive) {
-                    currentActive.classList.remove('active');
-                    currentActivePane.classList.remove('active');
-                    currentActivePane.classList.remove('show');
-                }
-
-                let newActivePaneId = this.getAttribute('href');
-                let newActivePane = document.querySelector(newActivePaneId);
-
-                this.classList.add('active');
-                newActivePane.classList.add('active');
-                newActivePane.classList.add('show');
-            });
-        });
-
-    </script> -->
-    
-
+        new DataTable('#belumDijawabAdm');
+        new DataTable('#dieskalasiAdm');
+        new DataTable('#terjawabAdm');
+        new DataTable('#dihapusAdm');
+    </script>
 </body>
 </html>

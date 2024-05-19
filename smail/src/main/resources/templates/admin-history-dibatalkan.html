@@ -6,9 +6,17 @@
 
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+    <link rel="stylesheet" href="/css/tabs.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+
+    <!-- Datatables -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
 </head>
 
 <body>
@@ -21,15 +29,6 @@
         </b>
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
-
-        <div class="search-button">
-            <form th:action="@{/admin/request/cancelled}" method="get">
-                <div class="button17">
-                    <img class="search-icon1" alt="" src="/images/search.svg" />
-                    <input class="keuangan3" placeholder="Cari surat" type="text" name="keyword" />
-                </div>
-            </form>
-        </div>
         
         <section class="bentuk-surat-text">
             <div class="tabs-container">
@@ -37,9 +36,9 @@
                     <div class="tabs-group">
                         <a class="component-3" th:href="@{/admin/request/all}">
                             <img
-                                    class="iconoutlineexclamation-circl"
-                                    alt=""
-                                    src="/images/iconoutlineexclamationcircle.svg"
+                                class="iconoutlineexclamation-circl"
+                                alt=""
+                                src="/images/iconoutlineexclamationcircle.svg"
                             />
                             <div class="tabs">Semua</div>
                         </a>
@@ -91,58 +90,51 @@
                     </div>
                 </div>
 
-                <div class="t-e-m-p-container-parent">
-                    <div class="agustus-label-parent">
-                        <!-- Start of the table -->
-                        <table id="dataTable" class="table table-bordered table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
-                                    <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
-                                    <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
-                                    <td style="width: 15%; text-align: center; vertical-align: middle;">
-                                        <div style="display: block;">Tanggal</div>
-                                        <div style="display: block;">Pengajuan</div>
-                                    </td>
-                                    <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:if="${#lists.isEmpty(requestSurats)}">
-                                    <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang dibatalkan</td>
-                                  </tr>
-                            <!-- Iterate through requestTemplates -->
-                                <tr th:each="requestSurat: ${requestSurats}">
-                                    <td th:text="${requestSurat.id}"></td>
-                                    <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
-                                    <td>
-                                        <span th:text="${requestSurat.pengaju.nama}"></span>
-                                    </td>
-                                    <td>
-                                        <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
-                                            <span th:text="${bentuk}"></span>
-                                            <th:block th:if="${!iterStat.last}">
-                                                <span>, </span>
-                                            </th:block>
+                <div class="table-container">
+                    <table id="adminDibatalkan" class="table table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 10%; text-align: center; vertical-align: middle;">ID Surat</th>
+                                <th style="width: 40%; text-align: center; vertical-align: middle;">Jenis Surat</th>
+                                <th style="width: 15%; text-align: center; vertical-align: middle;">Nama Pengaju</th>
+                                <th style="width: 10%; text-align: center; vertical-align: middle;">Bentuk Surat</th>
+                                <th style="width: 15%; text-align: center; vertical-align: middle;">Tanggal Pengajuan</th>
+                                <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="requestSurat: ${requestSurats}">
+                                <td th:text="${requestSurat.id}"></td>
+                                <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
+                                <td>
+                                    <span th:text="${requestSurat.pengaju.nama}"></span>
+                                </td>
+                                <td>
+                                    <th:block th:each="bentuk, iterStat : ${requestSurat.bentukSurat}">
+                                        <span th:text="${bentuk}"></span>
+                                        <th:block th:if="${!iterStat.last}">
+                                            <span>, </span>
                                         </th:block>
-                                    </td>
-                                    <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
-                                    <td style="display: flex; justify-content: space-between;">
-                                        <a th:href="@{/admin/detail/{id}/cancelled(id=${requestSurat.id})}" class="button20">
-                                            <div class="button21">Detail</div>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- End of the table -->
-                    </div>
+                                    </th:block>
+                                </td>
+                                <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td style="display: flex; justify-content: space-between;">
+                                    <a th:href="@{/admin/detail/{id}/cancelled(id=${requestSurat.id})}" class="button20">
+                                        <div class="button21">Detail</div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </section>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
+
+    <script>
+        new DataTable('#adminDibatalkan');
+    </script>
 </body>
 </html>

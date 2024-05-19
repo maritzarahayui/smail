@@ -60,10 +60,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(allRequests)}">
-                            <td colspan="5" style="text-align: center;">Belum ada permohonan surat yang diajukan</td>
-                        </tr>
-            
                         <tr th:each="requestSurat: ${allRequests}">
                             <td th:text="${requestSurat.id}"></td>
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
@@ -75,7 +71,7 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>
@@ -129,10 +125,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(cancelledRequests)}">
-                            <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang dibatalkan</td>
-                        </tr>
-                    
                         <tr th:each="requestSurat: ${cancelledRequests}">
                             <td th:text="${requestSurat.id}"></td>
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
@@ -144,8 +136,8 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
-                            <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>
@@ -172,10 +164,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(rejectedRequests)}">
-                            <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang ditolak</td>
-                        </tr>
-                    
                         <tr th:each="requestSurat: ${rejectedRequests}">
                             <td th:text="${requestSurat.id}"></td>
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
@@ -187,8 +175,8 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>
@@ -214,10 +202,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(onProcessRequests)}">
-                            <td colspan="5" style="text-align: center;">Belum ada permohonan surat yang diproses</td>
-                        </tr>
-                    
                         <tr th:each="requestSurat: ${onProcessRequests}">
                             <td th:text="${requestSurat.id}"></td>
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
@@ -229,7 +213,7 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>
@@ -256,10 +240,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(finishedRequests)}">
-                            <td colspan="6" style="text-align: center;">Belum ada permohonan surat yang selesai</td>
-                        </tr>
-                
                         <tr th:each="requestSurat: ${finishedRequests}">
                             <td th:text="${requestSurat.id}"></td>
                             <td th:text="${requestSurat.jenisSurat}" style="text-align: left;"></td>
@@ -271,8 +251,8 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd')}" style="text-align: center;"></td>
-                            <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td style="display: flex; justify-content: space-between;">
                                 <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
                                     <div class="button21">Detail</div>
