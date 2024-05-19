@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
     <link rel="stylesheet" href="/css/detail-surat.css"/>
+    <link rel="stylesheet" href="/css/follow-up.css" />
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -138,8 +139,8 @@
                         <div class="detail">Status</div>
                     </div>
 
-                    <div class="content-wrapper">
-                        <select class="content" th:field="${requestSurats.status}" onchange="toggleReasonField(this)">
+                    <div class="content-wrapper-dropdown">
+                        <select class="content-dropdown" th:field="${requestSurats.status}" onchange="toggleReasonField(this)">
                             <option th:each="entry : ${statusMap.entrySet()}"
                                     th:value="${entry.key}" th:text="${entry.value}"
                                     th:selected="${entry.key == requestSurats.status}">

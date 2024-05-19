@@ -69,7 +69,8 @@
                                     <span th:text="${requestSurat.surat != null ? requestSurat.surat.nomorArsip : 'N/A'}"></span>
                                 </td>
                                 <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
-                                <td th:text="${requestSurat.status == 4 ? 'Perlu tanda tangan' : 'Selesai ditandatangani'}"></td>
+                                <td th:style="${requestSurat.status == 4} ? 'color: red;' : ''"
+                                    th:text="${requestSurat.status == 4 ? 'Perlu tanda tangan' : 'Selesai ditandatangani'}"></td>
                                 <td style="display: flex; justify-content: space-between;">
                                     <a th:href="@{/ttd/detail/{id}(id=${requestSurat.id})}" class="button20">
                                         <div class="button21">Detail</div>
