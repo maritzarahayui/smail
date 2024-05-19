@@ -8,58 +8,10 @@
 
     <link rel="stylesheet" href="/css/add-template.css"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/request-surat.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-    <!-- <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
-    /> -->
-    <style>
-        .custom-checkbox input[type="checkbox"] {
-            display: none; /* Sembunyikan kotak centang asli */
-        }
-
-        .custom-checkbox label {
-            position: relative;
-            padding-left: 25px; /* Buat ruang antara kotak centang dan label */
-            cursor: pointer;
-        }
-
-        .custom-checkbox label:before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 18px;
-            height: 18px;
-            border: 1px solid #adb5bd; /* Warna border */
-            background-color: #fff; /* Warna latar belakang */
-        }
-
-        .custom-checkbox input[type="checkbox"]:checked + label:before {
-            background-color: #28a745; /* Warna latar belakang saat dicentang */
-            border-color: #28a745; /* Warna border saat dicentang */
-        }
-
-        .custom-checkbox label:after {
-            content: "";
-            position: absolute;
-            top: 4px;
-            left: 4px;
-            width: 10px;
-            height: 6px;
-            border: solid #fff; /* Warna tanda centang */
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            opacity: 0; /* Sembunyikan tanda centang secara default */
-        }
-
-        .custom-checkbox input[type="checkbox"]:checked + label:after {
-            opacity: 1; /* Tampilkan tanda centang saat dicentang */
-        }
-    </style>
-
 </head>
 <body>
 
@@ -97,15 +49,15 @@
                     <br>
                     <div class="text-input-frame">
                         <label for="listPengguna" class="label9">List Pengguna:</label><br>
-                        <div class="custom-checkbox">
+                        <div class="radio-parent">
                             <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa" th:checked="${template.listPengguna.contains('Mahasiswa')}">
                             <label for="pengguna1">Mahasiswa</label>
                         </div>
-                        <div class="custom-checkbox">
+                        <div class="radio-parent">
                             <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen" th:checked="${template.listPengguna.contains('Dosen')}">
                             <label for="pengguna2">Dosen</label>
                         </div>
-                        <div class="custom-checkbox">
+                        <div class="radio-parent">
                             <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf" th:checked="${template.listPengguna.contains('Staf')}">
                             <label for="pengguna3">Staf</label>
                         </div>

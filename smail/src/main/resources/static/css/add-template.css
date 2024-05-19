@@ -71,38 +71,6 @@ body {
   gap: 30px 0;
 }
 
-.custom-checkbox input[type="checkbox"] {
-  display: none;
-}
-
-.custom-checkbox label {
-  position: relative;
-  display: inline-block;
-  margin-right: 10px;
-  padding-left: 25px;
-  cursor: pointer;
-}
-
-.custom-checkbox .check {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border: 2px solid #999;
-  border-radius: 3px;
-  background-color: transparent;
-}
-
-.custom-checkbox input[type="checkbox"]:checked + label .check {
-  background-color: #28a745;
-  border-color: #28a745;
-}
-
-.custom-checkbox .label-text {
-  margin-left: 30px;
-}
-
 .secondary-message {
   width: 616.8px;
   height: 38px;
