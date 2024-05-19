@@ -1,59 +1,39 @@
 package propensi.smail.controller;
 
 import jakarta.mail.MessagingException;
+import jakarta.validation.Valid;
+
+import io.jsonwebtoken.lang.Arrays;
+
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.dto.RequestAndFieldDataDTO;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
+
+import java.text.*;
+import java.util.*;
+import java.io.IOException;
+import java.util.stream.Collectors;
+
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import propensi.smail.model.user.*;
-import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.model.RequestSurat;
-import propensi.smail.model.TemplateSurat;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.repository.RequestSuratDb;
-import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.SuratKeluar;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.repository.RequestTemplateDb;
-import propensi.smail.service.PenggunaService;
-import propensi.smail.service.RequestService;
-import propensi.smail.service.SuratKeluarService;
-import propensi.smail.service.TemplateService;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.stream.Collectors;
-
-import jakarta.validation.Valid;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
-
-import io.jsonwebtoken.lang.Arrays;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.ObjectError;
 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-
 @Controller
-// @RequestMapping("/api")
-public class RequestSuratController {
+public class RequestController {
     
     @Autowired
     private RequestService requestService;
@@ -157,7 +137,6 @@ public class RequestSuratController {
             requestService.createRequestSurat(requestSurat, requestDTO);
             List<String> bentukSurat = requestDTO.getBentukSurat();
             requestSurat.setBentukSurat(bentukSurat);
-            System.out.println("BERHASIL");
             return "redirect:/request/history";
         } catch (Exception e) {
             e.printStackTrace();
@@ -323,7 +302,6 @@ public class RequestSuratController {
 
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate fileExample = requestService.getFile(id);
-            System.out.println("fileExample null gak " + fileExample);
             if (fileExample != null) {
                 byte[] pdf = fileExample.getFile();
                 if (pdf != null) {

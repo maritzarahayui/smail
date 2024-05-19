@@ -48,8 +48,7 @@ public class AuthServiceImpl implements AuthService {
                 } else if (role.equalsIgnoreCase("Mahasiswa")) {
                     pengguna = new Mahasiswa();
                 }
-                System.out.println("HAAALOOOOOOO");
-
+                
                 pengguna.setId(id);
                 pengguna.setEmail(email);
                 pengguna.setNama(nama);

@@ -36,7 +36,6 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public TemplateSurat createTemplate(TemplateSurat templateSurat) {
-        System.out.println("masuk method createTemplate serv");
         String kategori = templateSurat.getKategori();
         String id = generateIdByKategori(kategori);
 

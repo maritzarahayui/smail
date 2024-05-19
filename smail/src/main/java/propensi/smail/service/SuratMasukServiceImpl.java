@@ -62,12 +62,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     @Override
     public SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        //debug
-        System.out.println("File Name: " + fileName);
-        System.out.println(kategori);
-        System.out.println(perihal);
-        System.out.println(pengirim);
-
         try {
             SuratMasuk suratMasuk = new SuratMasuk();
                 suratMasuk.setNomorArsip(generateId(kategori));
@@ -236,7 +230,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
         mapSuratMasukKategori.put("Kemahasiswaan", suratMasukDb.countByKategori("Kemahasiswaan"));
         mapSuratMasukKategori.put("Lainnya", suratMasukDb.countByKategori("Lainnya"));
 
-        System.out.println(mapSuratMasukKategori.toString());
         return mapSuratMasukKategori;
     }
 

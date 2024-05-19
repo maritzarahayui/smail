@@ -2,6 +2,7 @@ package propensi.smail.controller;
 
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,23 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import propensi.smail.model.RequestSurat;
-import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.TemplateSurat;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.repository.RequestTemplateDb;
-import propensi.smail.service.PenggunaService;
-import propensi.smail.service.RequestService;
-import propensi.smail.service.TemplateService;
 import org.springframework.ui.Model;
-import org.springframework.stereotype.Controller;
+
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.*;
 
 import org.springframework.security.core.Authentication;
@@ -34,7 +27,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 @Controller
 @RequestMapping("/template")
-public class TemplateFEController {
+public class TemplateController {
 
     @Autowired
     private TemplateService templateSuratService;

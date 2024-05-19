@@ -1,13 +1,10 @@
 package propensi.smail.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.Base64;
-import java.util.Date;
 import java.io.IOException;
 import java.text.ParseException;
+import jakarta.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,28 +14,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.mail.MessagingException;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.model.Email;
-import propensi.smail.model.SuratKeluar;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.repository.SuratKeluarDb;
-import propensi.smail.repository.SuratMasukDb;
-import propensi.smail.service.PenggunaService;
-import propensi.smail.service.SuratKeluarService;
-import propensi.smail.service.SuratMasukService;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
 
 @Controller
 @RequestMapping("/surat-masuk")
@@ -244,36 +229,6 @@ public class SuratMasukController {
      * BRANCH ARSIP
      * BRANCH ARSIP
      */
-    // @GetMapping("/search")
-    // public String searchSuratMasuk(@RequestParam Map<String, String> params, Model model, Authentication auth,
-    //                             @RequestParam(value = "tanggalDibuat", required = false)
-    //                             @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
-    //                             @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
-
-    //     // Mendapatkan nilai pencarian dari parameter "q"
-    //     String searchQuery = params.get("q");
-
-    //     // Melakukan pencarian dan filtering surat masuk berdasarkan nilai pencarian
-    //     List<SuratMasuk> suratMasukList = suratMasukService.searchSuratMasuk(params, tanggalDibuat, sort, searchQuery);
-    //     model.addAttribute("suratMasukList", suratMasukList);
-
-    //     if (auth != null) {
-    //         OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-    //         String email = oauthUser.getEmail();
-    //         Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-    //         if (user.isPresent()) {
-    //             Pengguna pengguna = user.get();
-    //             model.addAttribute("role", penggunaService.getRole(pengguna));
-    //             model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-    //         } else {
-    //             return "auth-failed";
-    //         }
-    //     }
-
-    //     return "daftar-surat-masuk";
-    // }
-
     // route to follow up arsip surat 
     @GetMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {

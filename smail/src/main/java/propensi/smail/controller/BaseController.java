@@ -1,31 +1,20 @@
 package propensi.smail.controller;
 
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
-import org.springframework.security.oauth2.core.oidc.user.OidcUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.io.IOException;
-import java.util.Optional;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import java.util.*;
 
-import propensi.smail.model.FAQ;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.service.FAQService;
-import propensi.smail.service.PenggunaService;
-import propensi.smail.service.RequestService;
-import propensi.smail.service.SuratKeluarService;
-import propensi.smail.service.SuratMasukService;
-import propensi.smail.service.TemplateService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
 
 
 @Controller
@@ -207,7 +196,6 @@ public class BaseController {
                 } else if (role.equals("Staf")) {
                     // Jumlah request surat (bulan, tahun)
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
-                    System.out.println(bulan);
                     if (bulan.isEmpty()) {
                         model.addAttribute("bulan", "");
                     } else {
@@ -252,7 +240,6 @@ public class BaseController {
                 } else if (role.equals("Mahasiswa")){
                     // Jumlah request surat (bulan, tahun)
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
-                    System.out.println(bulan);
                     if (bulan.isEmpty()) {
                         model.addAttribute("bulan", "");
                     } else {

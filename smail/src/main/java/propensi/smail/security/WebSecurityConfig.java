@@ -89,12 +89,8 @@ public class WebSecurityConfig {
                     .successHandler(new AuthenticationSuccessHandler() {
                         @Override
                         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
-                                System.out.println("SEBELUMMM CASTING");
-
                                 OidcUser oidcUser = (OidcUser) authentication.getPrincipal();
-                                String email = oidcUser.getEmail();
-                                System.out.println("SESUDAH CASTING");
-    
+                                String email = oidcUser.getEmail();    
                                 if (authService.validatePengguna(email)) {
                                         response.sendRedirect("/");
                                 } else {

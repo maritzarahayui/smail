@@ -1,6 +1,7 @@
 package propensi.smail.controller;
 
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
@@ -15,23 +16,16 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import propensi.smail.dto.RequestAndFieldDataDTO;
-import propensi.smail.model.RequestSurat;
-import propensi.smail.model.RequestTemplate;
-import propensi.smail.model.SuratKeluar;
-import propensi.smail.model.SuratMasuk;
-import propensi.smail.model.TemplateSurat;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.repository.RequestSuratDb;
-import propensi.smail.repository.SuratKeluarDb;
-import propensi.smail.service.PenggunaService;
-import propensi.smail.service.RequestService;
-import propensi.smail.service.SuratKeluarService;
-import java.text.ParseException;
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.text.ParseException;
 import java.util.stream.Collectors;
 
 @Controller
@@ -64,12 +58,6 @@ public class SuratKeluarController {
 
         SuratKeluar suratKeluar1 = requestSurats.getSurat();
         model.addAttribute("outgoing", suratKeluar1);
-
-        System.out.println("ID: " + id);
-        System.out.println("Request Surats: " + requestSurats);
-        System.out.println("Surat Keluar: " + suratKeluar);
-
-        // System.out.println(Arrays.toString(pdf));
 
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
@@ -194,7 +182,6 @@ public class SuratKeluarController {
                                     @RequestParam(value = "penandatangan", required = false) ArrayList<String> penandatanganIds,
                                     Model model) {
         try {
-            System.out.println("msk controller");
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
 
             List<Pengguna> penandatangans = new ArrayList<>();
@@ -220,7 +207,6 @@ public class SuratKeluarController {
 
             return "redirect:/admin/request/process";
         } catch (Exception e) {
-            System.out.println("error:" + e.getMessage());
             return "redirect:/admin/request/process";
         }
     }
@@ -236,12 +222,6 @@ public class SuratKeluarController {
 
         SuratKeluar suratKeluar1 = requestSurats.getSurat();
         model.addAttribute("outgoing", suratKeluar1);
-
-        System.out.println("ID: " + id);
-        System.out.println("Request Surats: " + requestSurats);
-        System.out.println("Surat Keluar: " + suratKeluar);
-
-        // System.out.println(Arrays.toString(pdf));
 
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
@@ -282,17 +262,13 @@ public class SuratKeluarController {
         String message = "";
 
         try {
-            System.out.println("masukkkkkkkkkk");
             // Update the SuratKeluar file
             suratKeluarService.updateSuratKeluarFile(id, file);
-
             message = "PDF updated successfully";
-            System.out.println(message);
             model.addAttribute("message", message);
             return "redirect:/ttd/detail/{id}";
         } catch (Exception e) {
             message = "Failed to update the template: " + e.getMessage();
-            System.out.println(message);
             model.addAttribute("errorMessage", message);
             return "redirect:/ttd/detail/{id}";
         }
@@ -437,8 +413,6 @@ public class SuratKeluarController {
             suratKeluarDb.save(suratKeluar);
             return "redirect:/surat-keluar/detail/" + suratKeluar.getNomorArsip();
         }catch (Exception e) {
-            //debug
-            System.out.println("error kenapee:" + e.getMessage());
             return "redirect:/surat-keluar/form";
         }
     }
@@ -529,11 +503,7 @@ public class SuratKeluarController {
         SuratKeluar suratKeluar = suratKeluarService.getSuratKeluarByNomorArsip(id);
         byte[] pdf = suratKeluar.getFile();
 
-
         model.addAttribute("suratKeluar", suratKeluar);
-
-        System.out.println("ID: " + id);
-        System.out.println("Surat Keluar: " + suratKeluar);
 
         // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
@@ -566,16 +536,13 @@ public class SuratKeluarController {
         String message = "";
 
         try {
-            System.out.println("masukkkkkkkkkk");
             // Update the SuratKeluar file
             suratKeluarService.updateFollowUpFile(id, file);
             message = "PDF updated successfully";
-            System.out.println(message);
             model.addAttribute("message", message);
             return "redirect:/ttd/followup/{id}";
         } catch (Exception e) {
             message = "Failed to update the template: " + e.getMessage();
-            System.out.println(message);
             model.addAttribute("errorMessage", message);
             return "redirect:/ttd/followup/{id}";
         }

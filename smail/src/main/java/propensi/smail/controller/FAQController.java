@@ -12,9 +12,8 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
 import propensi.smail.model.*;
 import propensi.smail.model.user.*;
-import propensi.smail.repository.PenggunaDb;
-import propensi.smail.service.FAQService;
-import propensi.smail.service.PenggunaService;
+import propensi.smail.repository.*;
+import propensi.smail.service.*;
 
 @Controller
 @RequestMapping("/faq")

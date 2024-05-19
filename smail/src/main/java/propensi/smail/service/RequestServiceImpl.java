@@ -131,8 +131,6 @@ public class RequestServiceImpl implements RequestService {
     @Override
     public RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO) {
         try {
-            System.out.println("msk service");
-
             requestSurat.setBentukSurat(requestDTO.getBentukSurat());
             requestSurat.setBahasa(requestDTO.getBahasa());
             requestSurat.setKategori(requestDTO.getKategori());
@@ -511,11 +509,6 @@ public class RequestServiceImpl implements RequestService {
         long durationInMillis = tanggalSelesai - tanggalPengajuan;
         long durationInDays = durationInMillis / (1000 * 60 * 60 * 24);
 
-        // Print the duration
-        System.out.println("awal: " + requestSurat.getTanggalPengajuan());
-        System.out.println("akhir " + requestSurat.getTanggalSelesai());
-        System.out.println("Duration in days: " + durationInDays);
-
         return ((int)durationInDays);
     }
 
@@ -530,8 +523,6 @@ public class RequestServiceImpl implements RequestService {
                 counterRequest++;
             }
         }
-
-        System.out.println(listRequestSurat.toString());
 
         return counterRequest == 0? 0 : (int) Math.ceil(total/counterRequest);
     }
@@ -549,7 +540,6 @@ public class RequestServiceImpl implements RequestService {
             performaPerCategory.put(categoryName, performaRataRata);
         }
 
-        System.out.println(performaPerCategory.toString());
         return performaPerCategory;
     }
 
@@ -589,7 +579,6 @@ public class RequestServiceImpl implements RequestService {
             jumlahRequestPerMinggu.put(key, sortedValue);
         });
 
-        System.out.println("jumlahRequestPerMinggu: " + jumlahRequestPerMinggu.toString());
         return jumlahRequestPerMinggu;
     }
 
@@ -619,7 +608,6 @@ public class RequestServiceImpl implements RequestService {
             }
         }
     
-        System.out.println("jumlahRequestPerMonth" + jumlahRequestPerMonth.toString());
         return jumlahRequestPerMonth;
     }
 
@@ -643,7 +631,6 @@ public class RequestServiceImpl implements RequestService {
             }
         }
  
-        System.out.println("jumlahRequestPerYear" + jumlahRequestPerYear.toString());
         return jumlahRequestPerYear;
     }
 
@@ -672,7 +659,6 @@ public class RequestServiceImpl implements RequestService {
             }
         }
 
-        System.out.println("jumlahRequestPerYearAndMonth: " + jumlahRequestPerYearAndMonth.toString());
         return jumlahRequestPerYearAndMonth;
     }
 

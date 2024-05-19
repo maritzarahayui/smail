@@ -160,8 +160,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         RequestSurat rs = requestSuratDb.findById(id).get();
 
         try {
-            System.out.println("masuk serv");
-
             // Check if a new file is uploaded
             if (file != null && !file.isEmpty()) {
                 // Convert the file to byte array
@@ -214,11 +212,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Override
     public SuratKeluar storeInput(MultipartFile file, String kategori, String perihal, String penerimaEksternal) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        //debug
-        System.out.println("File Name: " + fileName);
-        System.out.println(kategori);
-        System.out.println(penerimaEksternal);
-
         try {
             SuratKeluar suratKeluar = new SuratKeluar();
                 suratKeluar.setNomorArsip(generateId(kategori));
@@ -244,7 +237,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Override
     public SuratKeluar getFileInput(String id) {
         Optional<SuratKeluar> optionalSuratKeluar = suratKeluarDb.findById(id);
-        System.out.println(optionalSuratKeluar + "HAKSHDKJSAHJDHJASHDKAHSDJKSHKJDAHKDAHK" + id);
         if (optionalSuratKeluar.isPresent()) {
             return optionalSuratKeluar.get();
         } else {
@@ -370,8 +362,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         SuratKeluar suratKeluar = suratKeluarDb.findByNomorArsip(id);
 
         try {
-            System.out.println("masuk serv");
-
             // Check if a new file is uploaded
             if (file != null && !file.isEmpty()) {
                 // Convert the file to byte array
@@ -406,8 +396,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         mapSuratKeluarKategori.put("Sarana", suratKeluarDb.countByKategori("Sarana"));
         mapSuratKeluarKategori.put("Kemahasiswaan", suratKeluarDb.countByKategori("Kemahasiswaan"));
         mapSuratKeluarKategori.put("Lainnya", suratKeluarDb.countByKategori("Lainnya"));
-
-        System.out.println(mapSuratKeluarKategori.toString());
         return mapSuratKeluarKategori;
     }
 
@@ -499,10 +487,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     public Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan) {
         Map<String, Integer> mapSuratTtd = new LinkedHashMap<String, Integer>();
         mapSuratTtd.put("Sudah", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, true).size());
-        System.out.println(getSuratKeluarByPenandatanganAndIsSigned(penandatangan, false).toString());
         mapSuratTtd.put("Belum", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, false).size());
-        System.out.println(mapSuratTtd.get("Sudah").toString());
-        System.out.println(mapSuratTtd.get("Belum").toString());
         return mapSuratTtd;
     }
 
@@ -546,8 +531,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             int value = countAverageDurasiTtd(listSuratKeluar);
             averageDurasi.put(k, value);
         }
-
-        System.out.println(averageDurasi.toString());
         return averageDurasi;
     }
 }
