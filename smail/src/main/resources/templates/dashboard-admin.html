@@ -10,8 +10,6 @@
 
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/global-final.css" />
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 </head>
 
 <body>
@@ -37,7 +35,7 @@
                     <canvas id="lineChartPerformaSurat"></canvas>
 
                     <script th:inline="javascript">
-                        var mapPerformaSurat = [[${performaRequestSurat}]];
+                        var mapPerformaSurat = /*[[${performaRequestSurat}]]*/0;
                         var labels = Object.keys(mapPerformaSurat);
                         var chartData = labels.map(function(key) {
                             return mapPerformaSurat[key];
@@ -135,7 +133,7 @@
                             var jumlahRequestPerBulan = /*[[${jumlahRequestPerBulan}]]*/ {};
                             console.log("Data jumlah request per bulan:", jumlahRequestPerBulan);
 
-                            var tahun = /*[[${tahun}]]*/;
+                            var tahun = /*[[${tahun}]]*/0;
 
                             function getMonthName(monthNumber) {
                                 var months = [
@@ -457,8 +455,8 @@
                         <canvas id="combinedBarChart"></canvas>
                         
                         <script th:inline="javascript">
-                            var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/;
-                            var mapSuratKeluarKategori = /*[[${mapSuratKeluarKategori}]]*/;
+                            var mapSuratMasukKategori = /*[[${mapSuratMasukKategori}]]*/0;
+                            var mapSuratKeluarKategori = /*[[${mapSuratKeluarKategori}]]*/0;
                             
                             var suratMasukLabels = Object.keys(mapSuratMasukKategori);
                             var suratKeluarLabels = Object.keys(mapSuratKeluarKategori);
@@ -529,12 +527,12 @@
                         
                         <script th:inline="javascript">
                             let barChartSuratMasukKeluar;
-                            var mapSuratMasukTahun = [[${mapSuratMasukTahun}]];
-                            var mapSuratMasukBulan = [[${mapSuratMasukBulan}]];
-                            var mapSuratMasukMinggu = [[${mapSuratMasukMinggu}]];
-                            var mapSuratKeluarTahun = [[${mapSuratKeluarTahun}]];
-                            var mapSuratKeluarBulan = [[${mapSuratKeluarBulan}]];
-                            var mapSuratKeluarMinggu = [[${mapSuratKeluarMinggu}]];
+                            var mapSuratMasukTahun = /*[[${mapSuratMasukTahun}]]*/0;
+                            var mapSuratMasukBulan = /*[[${mapSuratMasukBulan}]]*/0;
+                            var mapSuratMasukMinggu = /*[[${mapSuratMasukMinggu}]]*/0;
+                            var mapSuratKeluarTahun = /*[[${mapSuratKeluarTahun}]]*/0;
+                            var mapSuratKeluarBulan = /*[[${mapSuratKeluarBulan}]]*/0;
+                            var mapSuratKeluarMinggu = /*[[${mapSuratKeluarMinggu}]]*/0;
 
                             document.addEventListener('DOMContentLoaded', function() {
                             const ctx = document.getElementById('barChartSuratMasukKeluar');

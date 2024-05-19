@@ -23,15 +23,13 @@
 <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div class="content-container">
+    <div class="permintaan-template">
         <b class="title-container">
             <span class="title-gradient">Forum</span>
             <span>Pertanyaan</span>
         </b>
     
         <nav th:replace="~{fragments/asset :: asset}"></nav>
-
-        <br>
 
         <div class="tabs-group" id="tab">
               <a class="tab-link" data-toggle="tab" href="#belumDijawab">Belum Dijawab</a>
@@ -40,7 +38,7 @@
               <a class="tab-link" data-toggle="tab" href="#dihapus">Dihapus</a>
         </div>
     
-        <br><br>
+        <br>
 
         <!-- BELUM DIJAWAB -->
         <div class="tab-pane" id="belumDijawab">

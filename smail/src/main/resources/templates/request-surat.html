@@ -9,7 +9,6 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
     <link rel="stylesheet" href="/css/request-surat.css"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"/>
     <link rel="stylesheet" href="/css/global-daftar-template.css"/>
 
 </head>
@@ -296,14 +295,11 @@
                                 inputElement.name = `listFieldData[${index}].value`; // Menggunakan index
                                 inputElement.required = true;
 
-                                var breakElement = document.createElement('br');
-
                                 textDiv.appendChild(inputElement);
                                 inputDiv.appendChild(labelDiv);
                                 inputDiv.appendChild(hiddenElement);
                                 inputDiv.appendChild(textDiv);
                                 listFieldWrapper.appendChild(inputDiv);
-                                listFieldWrapper.appendChild(breakElement);
                             });
 
                             listFieldWrapper.style.display = 'block';

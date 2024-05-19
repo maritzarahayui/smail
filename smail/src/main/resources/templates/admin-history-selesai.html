@@ -30,66 +30,19 @@
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
         
-        <section class="bentuk-surat-text">
-            <div class="tabs-container">
-                <div class="tabs-group-parent">
-                    <div class="tabs-group">
-                        <a class="component-3" th:href="@{/admin/request/all}">
-                            <img
-                                class="iconoutlineexclamation-circl"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs">Semua</div>
-                        </a>
+        <div class="content-wrapper" style="margin-inline: 10px;">
+            <div class="tabs-group">
+                <a class="tab-link" th:href="@{/admin/request/all}">Semua</a>
+                <a class="tab-link" th:href="@{/admin/request}">Diajukan</a>
+                <a class="tab-link" th:href="@{/admin/request/cancelled}">Dibatalkan</a>
+                <a class="tab-link" th:href="@{/admin/request/rejected}">Ditolak</a>
+                <a class="tab-link" th:href="@{/admin/request/process}">Diproses</a>
+                <a class="tab-link active" th:href="@{/admin/request/finished}">Selesai</a>
+            </div>
+    
+            <br>
 
-                        <a class="component-3" th:href="@{/admin/request}">
-                            <img
-                                class="iconoutlineexclamation-circl"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Diajukan</div>
-                        </a>
-
-                        <a class="component-3" th:href="@{/admin/request/cancelled}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Dibatalkan</div>
-                        </a>
-
-                        <a class="component-3" th:href="@{/admin/request/rejected}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Ditolak</div>
-                        </a>
-
-                        <a class="component-3" th:href="@{/admin/request/process}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Diproses</div>
-                        </a>
-
-                        <a class="component-2" th:href="@{/admin/request/finished}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs">Selesai</div>
-                        </a>
-                    </div>
-                </div>
-
+            <div class="tab-pane active">
                 <div class="table-container">
                     <table id="adminSelesai" class="table table-bordered" style="width:100%">
                         <thead>
@@ -128,13 +81,11 @@
                     </table>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <script>
-        new DataTable('#adminSelesai');
-    </script>
+    <script> new DataTable('#adminSelesai'); </script>
 </body>
 </html>

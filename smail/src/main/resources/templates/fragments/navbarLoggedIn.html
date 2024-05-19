@@ -54,19 +54,7 @@
 
                     <li th:if="${role == 'Admin'}"><a th:href="@{/template/active-templates}">Template Surat</a></li>
 
-                    <li th:if="${role == 'Admin' or role == 'Pengurus'}">
-                        <a th:href="@{/faq}">Forum</a>
-                    </li>
-
-                    <li th:if="${role == 'Dosen' or role == 'Mahasiswa' or role == 'Staf'}">
-                        <a href="#">Forum</a>
-                        <i class='bx bxs-chevron-down htmlcss-arrow arrow  '></i>
-                        <ul id="htmlCssSubMenu" class="htmlCss-sub-menu sub-menu">
-                            <li><a th:href="@{/faq}">Semua Pertanyaan</a></li>
-                            <hr class="linehrz" />
-                            <li><a th:href="@{/faq/user-faq/terjawab}">Pertanyaan Saya</a></li>
-                        </ul>
-                    </li>
+                    <li><a th:href="@{/faq}">Forum</a></li>
                 </ul>
             </div>
 

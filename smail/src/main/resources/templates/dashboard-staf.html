@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="/css/dashboard.css" />
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/global-final.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap" />
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -96,7 +95,7 @@
                     
                     <script th:inline="javascript">
                         document.addEventListener('DOMContentLoaded', function () {
-                            var requestByCategory = /*[[${requestByCategory}]]*/;
+                            var requestByCategory = /*[[${requestByCategory}]]*/0;
                             var labels = Object.keys(requestByCategory);
                             var chartData = Object.values(requestByCategory);
                             var backgroundColors = ['#0f7454', '#3a8b5a', '#459a7d', '#b1cdb8', '#253237', '#52828d'];
@@ -146,7 +145,7 @@
                             var jumlahRequestPerBulan = /*[[${jumlahRequestPerBulan}]]*/ {};
                             console.log("Data jumlah request per bulan:", jumlahRequestPerBulan);
 
-                            var tahun = /*[[${tahun}]]*/;
+                            var tahun = /*[[${tahun}]]*/0;
 
                             function getMonthName(monthNumber) {
                                 var months = [
@@ -220,7 +219,7 @@
                             var jumlahRequestPerMinggu = /*[[${jumlahRequestPerMinggu}]]*/ {};
                             console.log("Data jumlah request per minggu:", jumlahRequestPerMinggu);
 
-                            var bulan = /*[[${bulan}]]*/;
+                            var bulan = /*[[${bulan}]]*/0;
 
                             function getWeekLabel(weekNumber) {
                                 return "Minggu ke-" + weekNumber;

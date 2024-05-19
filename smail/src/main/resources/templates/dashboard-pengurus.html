@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/global-final.css" />
     <link rel="stylesheet" href="/css/asset.css"/>
     <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -17,10 +18,11 @@
 <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div class="content-container">
+    <div class="permintaan-template">
         <b class="title-container">
             <span class="title-gradient">Dashboard</span>
         </b>  
+
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
         <div style="text-align:center; margin-top: 20px; margin-bottom: 20px;">

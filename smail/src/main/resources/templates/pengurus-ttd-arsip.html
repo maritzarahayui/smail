@@ -30,31 +30,16 @@
 
       <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-      <section class="bentuk-surat-text">
-        <div class="tabs-container">
-          <div class="tabs-group-parent">
-            
-            <div class="tabs-group">
-              <a class="component-3" th:href="@{/ttd/request}">
-                <img
-                  class="iconoutlineexclamation-circl"
-                  alt=""
-                  src="/images/iconoutlineexclamationcircle.svg"
-                />
-                <div class="tabs1">Request Surat</div>
-              </a>
+      <div class="content-wrapper" style="margin-inline: 10px;">
 
-              <a class="component-2" th:href="@{/ttd/arsip}">
-                <img
-                  class="iconoutlineexclamation-circl1"
-                  alt=""
-                  src="/images/iconoutlineexclamationcircle.svg"
-                />
-                <div class="tabs">Surat Follow-Up</div>
-              </a>
-            </div>
-          </div>
+        <div class="tabs-group">
+          <a class="tab-link" th:href="@{/ttd/request}">Request Surat</a>
+          <a class="tab-link active" th:href="@{/ttd/arsip}">Surat Follow-Up</a>
+        </div>
 
+        <br>
+        
+        <div class="tab-pane active">   
           <div class="table-container">
             <table id="arsip-ttd" class="table table-bordered" style="width: 100%">
               <thead>
@@ -86,7 +71,7 @@
             </table>
           </div>
         </div>
-      </section>
+      </div>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>

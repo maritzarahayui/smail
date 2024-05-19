@@ -33,42 +33,7 @@
         width: 200px;
         text-align: center; 
       }
-
     </style>
-
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-          // Tangkap elemen formulir dan input pencarian
-          const searchForm = document.getElementById('searchForm');
-          const searchInput = document.getElementById('searchInput');
-          const inputSuratButton = document.querySelector('.button');
-
-          // Tambahkan event listener untuk menangani pengiriman formulir
-          searchForm.addEventListener('submit', function(event) {
-              // Hentikan pengiriman formulir default
-              event.preventDefault();
-              
-              // Ambil nilai input pencarian
-              const searchQuery = searchInput.value.trim();
-
-              // Ubah URL berdasarkan nilai input pencarian
-              const searchParams = new URLSearchParams();
-              searchParams.set('q', searchQuery);
-              const newUrl = '/surat-keluar/search?' + searchParams.toString();
-
-              // Redirect ke URL pencarian baru
-              window.location.href = newUrl;
-          });
-
-          // Event listener untuk button "Input Surat"
-          inputSuratButton.addEventListener('click', function(event) {
-              // Redirect ke halaman input surat
-              window.location.href = '/surat-keluar/form';
-          });
-      });
-    </script>
 </head>
 
 <body>
@@ -84,7 +49,7 @@
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
     
-    <div class="content-wrapper" style="margin-inline: 55px;">
+    <div class="content-wrapper" style="margin-inline: 10px;">
       <div class="buttonWrapper" th:if="${role == 'Admin'}" style="margin: 30px; text-decoration: none; color: white;">
           <a
               th:href="@{/surat-keluar/form}"
@@ -94,43 +59,40 @@
               <div class="input-surat1">Input Surat</div>
           </a>
       </div>
-    
-      <section class="bentuk-surat-text">
-      
-        <div class="tabs-container">
-            <div class="tabs-group-parent">
 
-              <div class="table-container">
-                  <table id="suratkeluar" class="table table-bordered" style="width:100%">
-                      <thead>
-                        <tr>
-                            <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
-                            <th style="width: 15%; text-align: center; vertical-align: middle;">Kategori</th>
-                            <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-                            <th style="width: 15%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-                            <th style="width: 15%; text-align: center; vertical-align: middle;">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr th:each="suratKeluar : ${suratKeluarList}">
-                          <td th:text="${suratKeluar.nomorArsip}"></td>
-                          <td th:text="${suratKeluar.kategori}"></td>
-                          <td th:text="${suratKeluar.perihal}"></td>
-                          <td th:text="${#dates.format(suratKeluar.tanggalDibuat, 'dd-MM-yyyy')}"></td>
-                          <td>
-                            <a class="button20" th:href="@{'/surat-keluar/detail/' + ${suratKeluar.nomorArsip}}">
-                                <div class="button21">Detail</div>
-                            </a>
-                          </td>
-                        </tr>
-                      </tbody>
-                  </table>
-              </div>
-        </div>
+      <div class="buttonWrapper" th:if="${role == 'Pengurus'}" style="margin: 30px; text-decoration: none; color: white;">
+        
       </div>
-    </section>
+    
+      <div class="tab-pane active">
+        <div class="table-container">
+            <table id="suratkeluar" class="table table-bordered" style="width:100%">
+                <thead>
+                  <tr>
+                      <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                      <th style="width: 15%; text-align: center; vertical-align: middle;">Kategori</th>
+                      <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
+                      <th style="width: 15%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                      <th style="width: 15%; text-align: center; vertical-align: middle;">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="suratKeluar : ${suratKeluarList}">
+                    <td th:text="${suratKeluar.nomorArsip}"></td>
+                    <td th:text="${suratKeluar.kategori}"></td>
+                    <td th:text="${suratKeluar.perihal}"></td>
+                    <td th:text="${#dates.format(suratKeluar.tanggalDibuat, 'dd-MM-yyyy')}"></td>
+                    <td>
+                      <a class="button20" th:href="@{'/surat-keluar/detail/' + ${suratKeluar.nomorArsip}}">
+                          <div class="button21">Detail</div>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
+  </div>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>

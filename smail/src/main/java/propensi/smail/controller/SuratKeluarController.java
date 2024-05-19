@@ -363,10 +363,6 @@ public class SuratKeluarController {
         return "pengurus-ttd-arsip";
     }
 
-
-    
-
-
     /* BRANCH ARSIPPP
      * BRANCH ARSIPPP
      * BRANCH ARSIPPP
@@ -494,23 +490,6 @@ public class SuratKeluarController {
         // return "detail-surat-tes"; 
         return "detail-surat-keluar"; 
 
-    }
-
-    @GetMapping("/surat-keluar/daftar")
-    public String form(Model model) {
-        return "daftar-surat-keluar";
-    }
-
-    // route to semua-surat-keluar
-    @GetMapping("/surat-keluar/daftar-arsip")
-    public String semuaSuratKeluar(Model model, Authentication auth) {
-        return "daftar-arsip-tes";
-    }
-
-    // route to detail-surat-keluar
-    @GetMapping("/surat-keluar/detail-surat-keluar")
-    public String detailSuratKeluar(Model model, Authentication auth) {
-        return "detail-surat-keluar";
     }
 
     @GetMapping("/surat-keluar/search")

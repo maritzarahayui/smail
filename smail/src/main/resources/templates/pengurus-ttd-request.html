@@ -30,31 +30,20 @@
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <section class="bentuk-surat-text">
-            <div class="tabs-container">
-                <div class="tabs-group-parent">
-
-                    <div class="tabs-group" th:if="${role == 'Pengurus'}">
-                        <a class="component-2" th:href="@{/ttd/request}">
-                            <img
-                                class="iconoutlineexclamation-circl"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs">Request Surat</div>
-                        </a>
-
-                        <a class="component-3" th:href="@{/ttd/arsip}">
-                            <img
-                                class="iconoutlineexclamation-circl1"
-                                alt=""
-                                src="/images/iconoutlineexclamationcircle.svg"
-                            />
-                            <div class="tabs1">Surat Follow-Up</div>
-                        </a>
-                    </div>
+        <div class="content-wrapper" style="margin-inline: 10px;">    
+            <div th:if="${role == 'Pengurus'}">
+                <div class="tabs-group">
+                    <a class="tab-link active" th:href="@{/ttd/request}">Request Surat</a>
+                    <a class="tab-link" th:href="@{/ttd/arsip}">Surat Follow-Up</a>
                 </div>
+                <br>
+            </div>
+            
+            <div th:unless="${role == 'Pengurus'}">
+                <br><br><br>
+            </div>
 
+            <div class="tab-pane active">                
                 <div class="table-container">
                     <table id="request-ttd" class="table table-bordered" style="width:100%">
                         <thead>
@@ -91,7 +80,7 @@
                     </table>
                 </div>
             </div>
-        </section>
+        </div>
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>

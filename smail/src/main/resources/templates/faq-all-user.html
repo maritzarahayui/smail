@@ -73,6 +73,7 @@
     .faq-person {
         width: auto;
         position: center;
+        padding-left: 35px;
     }
 
     .question-form {
@@ -160,6 +161,38 @@
         padding: 0;
     }
 
+    .button-outline {
+        cursor: pointer;
+        border: 2px solid var(--green-green-1);
+        padding: var(--padding-5xs) 22px;
+        background-color: transparent;
+        flex: 1;
+        border-radius: var(--br-xs);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        max-width: 300px;
+        min-height: 50px;
+    }
+
+    .button-outline:hover {
+        background-color: rgba(54, 156, 122, 0.09);
+        border: 2px solid var(--color-seagreen-100);
+        box-sizing: border-box;
+    }
+
+    .button-outline-text {
+        flex: 1;
+        position: relative;
+        font-size: var(--body-b2-size);
+        font-weight: 600;
+        font-family: var(--heading-h4);
+        color: var(--green-green-1);
+        text-align: center;
+    }
+
   </style>
 
   <body>
@@ -176,12 +209,6 @@
         <nav th:replace="~{fragments/asset :: asset}"></nav>
     
         <br><br>
-
-        <div class="search-bar" style="align-self: center; margin: 30px;" th:if="${#lists.isEmpty(faqsTerjawab)}">
-            <div class="search-box" style="width: fit-content;">
-                <h4 style="justify-content: center; font-weight: 400; margin: 40px;">Belum ada forum yang terjawab 😔</h4>
-            </div>
-        </div>
 
         <div class="search-bar" th:unless="${#lists.isEmpty(faqsTerjawab)}">
             <form th:action="@{/faq}" method="get">
@@ -207,21 +234,32 @@
 
         <div class="row form-question">
             <div class="col-md-3" style="justify-content: center;">
-                <img class="faq-person img-fluid" src="/images/faq-person.svg"/>
-            </div>
-            <form class="col-md-9 question-form" th:action="@{/faq/tanya}" th:object="${newFaq}" method="POST">
                 <div class="row">
-                    <p style="font-weight: bold;">Masih memiliki pertanyaan?</p>
+                    <img class="faq-person img-fluid" src="/images/faq-person.svg"/>
                 </div>
                 <div class="row">
-                    <p>Tidak dapat menemukan jawaban yang Anda cari. Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
+                    <a th:href="@{/faq/user-faq/terjawab}" style="color: #459a7d; margin-block: 10px; text-align: left; font-size: 18px;">Lihat Pertanyaan Saya</a>
+                </div>
+            </div>
+            <form class="col-md-9 question-form" th:action="@{/faq/tanya}" th:object="${newFaq}" method="POST">
+                <div class="row" th:unless="${#lists.isEmpty(faqsTerjawab)}">
+                    <p style="padding-left: 0px;">Masih memiliki pertanyaan? Tidak dapat menemukan jawaban yang Anda cari?</p>
+                </div>
+                <div class="row" th:unless="${#lists.isEmpty(faqsTerjawab)}">
+                    <p style="padding-left: 0px;">Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
+                </div>
+                <div class="row" th:if="${#lists.isEmpty(faqsTerjawab)}">
+                    <p style="padding-left: 0px;">Belum ada pertanyaan yang sudah terjawab.</p>
+                </div>
+                <div class="row" th:if="${#lists.isEmpty(faqsTerjawab)}">
+                    <p style="padding-left: 0px;">Jika ada yang ingin ditanyakan, silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
                 </div>
                 <div class="row">
                     <textarea class="form-control faq-input" rows="4" th:field="*{pertanyaan}" placeholder="Type your question here" required></textarea>
                 </div>
                 <br>
-                <div class="row question-submit-row">
-                    <button type="submit" class="btn btn-primary question-submit">Kirim pertanyaan</button>
+                <div class="row question-submit-row" style="align-items: end;">
+                   <button type="submit" class="btn btn-primary question-submit">Kirim pertanyaan</button>
                 </div>
             </form>
         </div>

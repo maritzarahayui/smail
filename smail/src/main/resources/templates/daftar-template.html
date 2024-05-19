@@ -31,19 +31,19 @@
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
     
-    <section class="bentuk-surat-text">
-        <div class="tabs-container">
-            <div class="keuangan-frame" style="margin-top: 20px;">
-                <button class="button2" th:onclick="'window.location.href = \'/template/new-template\''" style="width: 200px;">
-                    <img class="fluentadd-16-filled-icon" alt="" src="/images/plus.svg" />
-                    <div class="tambah-template">Tambah Template</div>
-                </button>
+    <div class="content-wrapper" style="margin-inline: 10px;">
+        <div class="keuangan-frame" style="margin-top: 20px;">
+            <button class="button2" th:onclick="'window.location.href = \'/template/new-template\''" style="width: 200px;">
+                <img class="fluentadd-16-filled-icon" alt="" src="/images/plus.svg" />
+                <div class="tambah-template">Tambah Template</div>
+            </button>
 
-                <button class="button3" th:onclick="'window.location.href = \'/template/new-requests\''" style="width: 200px;">
-                    <div class="lihat-permintaan-template">Lihat Permintaan Template</div>
-                </button>
-            </div>
+            <button class="button3" th:onclick="'window.location.href = \'/template/new-requests\''" style="width: 200px;">
+                <div class="lihat-permintaan-template">Lihat Permintaan Template</div>
+            </button>
+        </div>
 
+        <div class="tab-pane active">
             <div class="table-container">
                 <table id="daftar-template" class="table table-bordered">
                     <thead>
@@ -74,13 +74,13 @@
                 </table>
             </div>
         </div>
-    </section>
+    </div>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-<script>
-    new DataTable('#daftar-template');
-</script>
+<script> new DataTable('#daftar-template'); </script>
+
 </body>
+
 </html>
