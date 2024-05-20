@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/tabs.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -73,29 +74,29 @@
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td th:text="${statusMap[requestSurat.status]}"></td>
-                            <td style="display: flex; justify-content: space-between;" th:if="${requestSurat.status == 1}">
-                                <a th:href="@{/admin/detail/{id}(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 1}">
+                                <a th:href="@{/admin/detail/{id}(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
-                            <td style="display: flex; justify-content: space-between;" th:if="${requestSurat.status == 2}">
-                                <a th:href="@{/admin/detail/{id}/cancelled(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 2}">
+                                <a th:href="@{/admin/detail/{id}/cancelled(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
-                            <td style="display: flex; justify-content: space-between;" th:if="${requestSurat.status == 3}">
-                                <a th:href="@{/admin/detail/{id}/rejected(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 3}">
+                                <a th:href="@{/admin/detail/{id}/rejected(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
-                            <td style="display: flex; justify-content: space-between;" th:if="${requestSurat.status == 4}">
-                                <a th:href="@{/admin/detail/{id}/process(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 4}">
+                                <a th:href="@{/admin/detail/{id}/process(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
-                            <td style="display: flex; justify-content: space-between;" th:if="${requestSurat.status == 5}">
-                                <a th:href="@{/admin/detail/{id}/finished(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 5}">
+                                <a th:href="@{/admin/detail/{id}/finished(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>

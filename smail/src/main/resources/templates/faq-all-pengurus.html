@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/asset.css"/>
     <link rel="stylesheet" href="/css/tabs.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -54,10 +55,10 @@
                         <tr th:each="faq, stat: ${faqsDieskalasi}" th:unless="${#lists.isEmpty(faqsDieskalasi)}">
                             <td th:text="${stat.count}"></td>
                             <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                            <td style="justify-content: center;">
-                                <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/jawab'}"
-                                style="background-color: var(--green-green-1);"
-                                >Jawab</a>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/faq/' + ${faq.id} + '/jawab'}" class="warning-button">
+                                    <div class="warning-text">Jawab</div>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
@@ -80,10 +81,10 @@
                         <tr th:each="faq, stat: ${faqsTerjawab}" th:unless="${#lists.isEmpty(faqsTerjawab)}">
                             <td th:text="${stat.count}"></td>
                             <td th:text="${faq.pertanyaan}" style="text-align: left;"></td>
-                            <td style="justify-content: center;">
-                                <a class="table-button w-100" th:href="@{'/faq/' + ${faq.id} + '/detail'}"
-                                style="background-color: var(--green-green-1);"
-                                >Detail</a>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/faq/' + ${faq.id} + '/detail'}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
+                                </a>
                             </td>
                         </tr>
                     </tbody>

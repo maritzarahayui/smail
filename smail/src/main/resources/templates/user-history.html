@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/tabs.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
     
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -72,14 +73,14 @@
                                 </th:block>
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="primary-button" style="margin-right: 10px;">
+                                    <div class="primary-text">Detail</div>
                                 </a>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="button20" style="background-color: #990012; margin-left: 10px;" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelModal' + requestSurat.id}">
-                                    <div class="button21">Batalkan</div>
+                                <button type="button" class="cancel-button" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelModal' + requestSurat.id}">
+                                    <div class="primary-text">Batalkan</div>
                                 </button>
 
                                 <!-- Modal -->
@@ -95,8 +96,8 @@
                                                     <div class="mb-3">
                                                         <input type="text" class="form-control" th:id="${'inputReason' + requestSurat.id}" name="alasanPembatalan" placeholder="Masukkan alasan...">
                                                     </div>
-                                                    <button type="submit" class="button20" style="background-color: #990012;">
-                                                        <div class="button21">Batalkan</div>
+                                                    <button type="submit" class="cancel-button">
+                                                        <div class="primary-text">Batalkan</div>
                                                     </button>
                                                 </form>                                            
                                             </div>
@@ -138,9 +139,9 @@
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td th:text="${#dates.format(requestSurat.tanggalDibatalkan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -177,9 +178,9 @@
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td th:text="${#dates.format(requestSurat.tanggalPenolakan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -214,9 +215,9 @@
                                 </th:block>
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -253,9 +254,9 @@
                             </td>
                             <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
                             <td th:text="${#dates.format(requestSurat.tanggalSelesai, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{/detail/{id}/request(id=${requestSurat.id})}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>

@@ -3,45 +3,48 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    
     <title>Disposisi Arsip</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <link rel="stylesheet" href="/css/global-surat-masuk.css" />
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/disposisi.css" />
+    <link rel="stylesheet" href="/css/button.css"/>
+    <link rel="stylesheet" href="/css/form-surat-masuk.css" />
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap"
-    />
   </head>
 
   <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
     <div class="disposisi-surat">
-      <img class="disposisi-surat-child" alt="" src="/images/kanan.svg" />
+      <section class="home-frame">
+        <div class="sub-group-container">
+          <img
+            class="sub-group-container-child"
+            loading="lazy"
+            alt=""
+            src="/images/kiri.svg"
+          />
 
-      <section class="footer-info1">
-        <img
-          class="footer-info-child"
-          loading="lazy"
-          alt=""
-          src="/images/kiri.svg"
-        />
+          <div class="label-pair">
+            <h1 class="input-surat-masuk-container">
+              <span class="input-surat-masuk-container1">
+                <span class="input">Disposisi</span>
+                <span>Surat</span>
+              </span>
+            </h1>
+          </div>
 
-        <div class="label-disposisi">
-          <h1 class="disposisi-surat1">
-            <span class="disposisi1">Disposisi</span>
-            <span> Surat</span>
-          </h1>
+          <img class="tambah-template-item" alt="" src="/images/kanan.svg" />
         </div>
       </section>
+
       <section class="confirmation-button-wrapper">
         <div class="confirmation-button">
-          <div class="cancel-button">
+          <div class="email">
             <div class="label2">Masukkan alamat email yang dituju</div>
 
             <form class="collaborator-logos">
@@ -55,11 +58,8 @@
                     />
                   </div>
                 </div>
-                <button
-                  class="delete-button-wrapper"
-                  type="button"
-                  onclick="addRow(event)"
-                >
+
+                <button class="delete-button-wrapper" type="button" onclick="addRow(event)">
                   <div class="delete-button">
                     <div class="button23">
                       <img
@@ -73,15 +73,17 @@
               </div>
             </form>
           </div>
-          <a
-            class="button30"
-            th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
-            onclick="sendData()"
-          >
-            <div class="disposisikan-surat">Disposisikan surat</div>
-          </a>
+
+          <div class="text-center action-buttons" style="width: 1010px; margin: 0 auto;">
+            <a class="primary-long-button" 
+                onclick="sendData()"
+                th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
+                style="color: #fffffe; width: 100%; margin: 0 auto;">
+                Disposisikan surat
+            </a>
+          </div>
         </div>
-      </section>
+      </section>      
     </div>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
@@ -106,10 +108,14 @@
         // Buat div untuk wrapper tombol
         let frameWrapperDiv = document.createElement("div");
         frameWrapperDiv.className = "frame-wrapper1";
+        frameWrapperDiv.style.height = '60px';
+        frameWrapperDiv.style.padding = '12px 51px';
 
         // Buat div untuk parent tombol
         let buttonParentDiv = document.createElement("div");
         buttonParentDiv.className = "button-parent2";
+        buttonParentDiv.style.height = '60px';
+        buttonParentDiv.style.padding = '12px 51px';
 
         // Buat tombol plus
         let plusButton = document.createElement("div");

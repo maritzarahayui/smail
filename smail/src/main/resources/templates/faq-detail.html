@@ -7,51 +7,10 @@
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 
-    <link rel="stylesheet" href="/css/global-final.css" />
+    <link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/asset.css"/>
+    <link rel="stylesheet" href="/css/faq.css"/>
 </head>
-
-<style>
-
-.pertanyaan-box {
-    background-color: var(--blue-blue-2);
-    border-radius: var(--br-5xs);
-    border: 2px solid var(--green-green-2);
-    color: var(--white-white-1);
-    padding: var(--padding-xl);
-    width: 80%;
-    display: flex;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    font-size: var(--body-b2-size);
-}
-
-.jawaban-box {
-    border-radius: var(--br-5xs);
-    background-color: rgba(16, 15, 15, 0.05);
-    border: 2px solid var(--green-green-5);
-    width: 80%;
-    padding: var(--padding-xl);    
-    color: var(--black-black-1);
-    display: flex;
-    box-sizing: border-box;
-    justify-content: flex-start;
-    font-size: var(--body-b2-size);
-}
-
-.content-container {
-    width: 100%;
-    position: relative;
-    background-color: var(--white-white-1);
-    overflow: hidden;
-    height: 100%;  
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-}
-
-</style>
 
 <body>
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>

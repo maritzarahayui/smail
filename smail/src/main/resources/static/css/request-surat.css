@@ -247,34 +247,6 @@ body {
   color: #100f0f;
 }
 
-.button {
-  position: relative;
-  font-weight: 600;
-  border-radius: 12px;
-  background-color: #0f7454;
-  width: 1010px;
-  height: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 24px;
-  color: #fffffe;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.button:hover {
-  background-color: #253237;
-}
-
-.action-buttons {
-  position: relative;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 40px;
-}
-
 .input-row {
   display: flex;
   justify-content: column;

@@ -270,7 +270,7 @@
   justify-content: flex-start;
   padding: var(--padding-4xl-5) var(--padding-xl);
   min-width: 195px;
-  max-width: 100%;
+  height: 60px;
 }
 .lets-iconsadd-round {
   height: 20px;
@@ -307,6 +307,7 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+  height: 60px;
 }
 .gmail-logo-parent {
   align-self: stretch;
@@ -332,7 +333,7 @@
   text-align: left;
   display: inline-block;
   white-space: nowrap;
-  padding: 0;
+  padding-left: 10px;
 }
 .cacaccacacacacagmailcom-wrapper {
   flex: 1;
@@ -587,7 +588,7 @@
   justify-content: center;
   padding: var(--padding-xs) var(--padding-4xl);
 }
-.cancel-button,
+.email,
 .collaborator-logos,
 .frame-parent8 {
   align-self: stretch;
@@ -601,7 +602,7 @@
   flex-wrap: wrap;
   row-gap: 20px;
 }
-.cancel-button,
+.email,
 .collaborator-logos {
   flex-direction: column;
 }
@@ -609,8 +610,8 @@
   margin: 0;
   gap: var(--gap-xs);
 }
-.cancel-button {
-  padding: 0 0.5px 0 0;
+.email {
+  padding-top: 20px;
   box-sizing: border-box;
   gap: 24px;
   z-index: 2;
@@ -644,7 +645,13 @@
 
 }
 .button30:hover {
-  color: inherit; /* Menetapkan warna teks sesuai dengan pewarisan */
+  color: inherit;
+}
+.text-center.action-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 40px;
 }
 .confirmation-button {
   width: 1151px;
@@ -790,83 +797,7 @@
   line-height: normal;
   letter-spacing: normal;
 }
-@media screen and (max-width: 1350px) {
-  .footer-info-child {
-    flex: 1;
-  }
-  .footer-info1 {
-    flex-wrap: wrap;
-    gap: 137px;
-    padding-left: var(--padding-250xl);
-    padding-right: var(--padding-250xl);
-    box-sizing: border-box;
-  }
-}
-@media screen and (max-width: 1125px) {
-  .navbar4 {
-    padding-left: var(--padding-37xl);
-    padding-right: var(--padding-37xl);
-    box-sizing: border-box;
-  }
-  .frame-parent9 {
-    flex-wrap: wrap;
-  }
-}
-@media screen and (max-width: 800px) {
-  .navbar4 {
-    padding-left: var(--padding-9xl);
-    padding-right: var(--padding-9xl);
-    box-sizing: border-box;
-  }
-  .disposisi-surat1 {
-    font-size: var(--font-size-19xl);
-  }
-  .footer-info1 {
-    gap: 68px;
-    padding-left: var(--padding-115xl);
-    padding-right: var(--padding-115xl);
-    box-sizing: border-box;
-  }
-  .confirmation-button {
-    gap: var(--gap-7xl);
-  }
-  .confirmation-button-wrapper {
-    padding-bottom: var(--padding-15xl);
-    box-sizing: border-box;
-  }
-  .frame-parent9 {
-    padding-left: var(--padding-55xl);
-    padding-right: var(--padding-55xl);
-    box-sizing: border-box;
-  }
-  .disposisi-surat {
-    gap: var(--gap-lg);
-  }
-}
-@media screen and (max-width: 450px) {
-  .disposisi-surat1 {
-    font-size: var(--font-size-10xl);
-  }
-  .footer-info1 {
-    gap: 34px;
-    padding-left: var(--padding-xl);
-    padding-right: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .developed-by-rtx3,
-  .in-collaboration-with3,
-  .propensi-d023 {
-    font-size: var(--font-size-lgi);
-  }
-  .frame-parent9 {
-    padding-left: var(--padding-xl);
-    padding-right: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .copyright-2024-tazkia3 {
-    font-size: var(--font-size-lgi);
-  }
-}
+
 .button26:hover,
 .button27:hover {
   cursor: pointer;

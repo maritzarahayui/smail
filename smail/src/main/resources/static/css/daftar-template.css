@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
-
 .daftar-template-surat-child {
   width: 355.4px;
   height: 330.5px;
@@ -272,83 +270,7 @@
   gap: 0 8px;
   max-width: 100%;
 }
-/* p */
-.fluentadd-16-filled-icon {
-  height: 24px;
-  width: 24px;
-  position: relative;
-  overflow: hidden;
-  flex-shrink: 0;
-}
-/* p */
-.button2,
-.tambah-template {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-/* p */
-.tambah-template {
-  width: 138px;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-weight: 600;
-  font-family: var(--heading-h4);
-  color: var(--white-white-1);
-  text-align: center;
-}
-/* p */
-.button2 {
-  cursor: pointer;
-  border: 0;
-  padding: var(--padding-5xs) var(--padding-5xl);
-  background-color: var(--green-green-1);
-  flex: 1;
-  border-radius: var(--br-xs);
-  flex-direction: row;
-  box-sizing: border-box;
-  gap: 0 8px;
-  max-width: 300px;
-  min-height: 50px;
-  white-space: nowrap;
-}
-/* p */
-.button2:hover {
-  background-color: #253237;
-  color: white;
-}
-/* p */
-.lihat-permintaan-template {
-  flex: 1;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-weight: 600;
-  font-family: var(--heading-h4);
-  color: var(--green-green-1);
-  text-align: center;
-}
-/* p */
-.button3 {
-  cursor: pointer;
-  border: 2px solid var(--green-green-1);
-  padding: var(--padding-5xs) 22px;
-  background-color: transparent;
-  flex: 1;
-  border-radius: var(--br-xs);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  max-width: 300px;
-  min-height: 50px;
-}
-/* p */
-.button3:hover {
-  background-color: rgba(54, 156, 122, 0.09);
-  border: 2px solid var(--color-seagreen-100);
-  box-sizing: border-box;
-}
+
 /* p */
 .keuangan-frame,
 .search-bar,

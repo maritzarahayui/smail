@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/daftar-template.css"/>
     <link rel="stylesheet" href="/css/tabs.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -26,19 +27,19 @@
 <div class="permintaan-template">
     <b class="pengajuan-permohonan-surat-container">
         <span class="pengajuan">Daftar</span>
-        <span> Template Surat</span>
+        <span> Template  Surat</span>
     </b>
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
     
     <div class="content-wrapper" style="margin-inline: 10px;">
         <div class="keuangan-frame" style="margin-top: 20px;">
-            <button class="button2" th:onclick="'window.location.href = \'/template/new-template\''" style="width: 200px;">
+            <button class="primary-large-button" th:onclick="'window.location.href = \'/template/new-template\''" style="width: 200px;">
                 <img class="fluentadd-16-filled-icon" alt="" src="/images/plus.svg" />
                 <div class="tambah-template">Tambah Template</div>
             </button>
 
-            <button class="button3" th:onclick="'window.location.href = \'/template/new-requests\''" style="width: 200px;">
+            <button class="primary-large-outline-button" th:onclick="'window.location.href = \'/template/new-requests\''" style="width: 200px;">
                 <div class="lihat-permintaan-template">Lihat Permintaan Template</div>
             </button>
         </div>
@@ -64,9 +65,9 @@
                             <td class="custom-td" th:if="${requestSurat.isActive}">Active</td>
                             <td class="custom-td" th:unless="${requestSurat.isActive}">Inactive</td>
                             <td th:text="${#dates.format(requestSurat.tanggalDibuat, 'yyyy-MM-dd HH:mm')}" class="custom-td"></td>
-                            <td style="display: flex; justify-content: space-between;" class="custom-td">
-                                <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;" class="custom-td">
+                                <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>

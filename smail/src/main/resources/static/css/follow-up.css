@@ -547,6 +547,11 @@
   align-self: stretch;
   font-weight: 600;
 }
+.body-14pt2 {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 .body-14pt2,
 .label3 {
   position: relative;
@@ -557,6 +562,7 @@
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  padding-right: 10px;
 }
 .disclosure-header {
   align-self: stretch;

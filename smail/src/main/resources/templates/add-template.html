@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 
     <link rel="stylesheet" href="/css/add-template.css"/>
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/request-surat.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
     
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -77,16 +78,24 @@
                             </label>
                         </div>
                     </div>                    
-                   
-                    <div class="text-input-frame" id="listFieldContainer">
-                        <label for="listField" class="label9">List Field:</label>
-                        <input type="text" class="text-input14" id="listField1" name="listField" required>
+
+                    <div class="row-container">
+                        <div class="list-field" id="listFieldContainer">
+                            <label for="listField" class="label9">List Field:</label>
+                            <input type="text" class="text-input15" id="listField1" name="listField" required>
+                        </div>
+
+                        <div class="button-container">
+                            <button type="button" class="button15" onclick="addRow()" style="color:#fffffe;">
+                                <img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">
+                            </button>
+
+                            <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe;">
+                                <img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">
+                            </button>
+                        </div>
                     </div>
-                    <br>
-                    <button type="button" class="button15" onclick="addRow()" style="color:#fffffe">Add Row</button>
-                    <br>
-                    <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe">Delete Row</button>
-                    <br><br>
+                    
                     <div class="form-group">
                         <div class="upload-illustration-frame">
                             <div class="file-input">
@@ -135,10 +144,8 @@
                         </div>
                     </div>
                 
-                    <div class="creator-info-frame">
-                        <button type="submit" class="button15" onclick="submitForm()">
-                            <div class="buat-template">Buat template</div>
-                        </button>
+                    <div class="text-center action-buttons">
+                        <button type="submit" onclick="submitForm()" class="primary-long-button">Buat template</button>
                     </div>
                 </form>
             </div>
@@ -160,7 +167,7 @@ document.getElementById('file').addEventListener('change', function() {
 function addRow() {
     let newInput = document.createElement('input');
     newInput.type = 'text';
-    newInput.className = 'text-input14 listField';
+    newInput.className = 'text-input15 listField';
     newInput.name = 'listField'; // Set the name as listField
 
     let container = document.getElementById('listFieldContainer');

@@ -4,15 +4,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+    
     <link rel="stylesheet" th:href="@{/css/home.css}"/>
-	<link rel="stylesheet" href="/css/global-final.css" />
+	<link rel="stylesheet" href="/css/global.css" />
     <link rel="stylesheet" href="/css/asset.css"/>
-    <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&display=swap"
-    />
 </head>
 
 <style>
@@ -123,11 +121,22 @@
 
             <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
                 <div class="accordion">
+                    <strong>Berapa lama surat yang saya ajukan akan diproses?</strong>
+                    <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
+                </div>
+                <div class="panel">Surat akan diproses selama 3-5 hari kerja</div>
+    
+                <div class="accordion">
+                    <strong>Apakah saya akan mendapatkan notifikasi jika surat yang saya ajukan telah selesai diproses?</strong>
+                    <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
+                </div>
+                <div class="panel">Ya, anda akan mendapatkan notifikasi melalui email</div>
+
+                <div class="accordion">
                     <strong th:text="${faq.pertanyaan}"></strong>
                     <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
                 </div>
                 <div class="panel" th:text="${faq.jawaban}"></div>
-                <br>
             </div>
 
             <br><br><br><br>

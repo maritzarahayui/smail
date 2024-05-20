@@ -615,9 +615,10 @@
   border-radius: var(--br-xs);
   flex-direction: row;
   justify-content: center;
+  height: 50px;
 }
 .button11:hover {
-  background-color: #253237;
+  background-color: #163c3f;
 }
 .mdidelete-icon {
   height: 24px;
@@ -657,7 +658,7 @@
   border-radius: var(--br-xs);
   flex-direction: row;
   justify-content: center;
-  /* gap: 0 8px; */
+  height: 50px;
 }
 .button12:hover {
   background-color: #6B000C;

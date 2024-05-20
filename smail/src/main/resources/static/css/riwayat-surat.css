@@ -434,46 +434,14 @@ a:hover {
   justify-content: center;
   padding: var(--padding-5xs) var(--padding-lgi);
 }
-.button21 {
-  flex: 1;
-  position: relative;
-  font-size: var(--body-b2-size);
-  font-weight: 600;
-  font-family: var(--heading-h4);
-  color: var(--white-white-1);
-  text-align: center;
-  margin: auto;
-  justify-content: center;
-  text-decoration: none;
-}
-.button20 {
-  cursor: pointer;
-  border: 0;
-  margin: auto;
-  padding: var(--padding-5xs) var(--padding-5xl);
-  background-color: var(--green-green-1);
-  height: 40px;
-  width: 94px;
-  border-radius: var(--br-xs);
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  text-decoration: none;
-}
-.button20:hover,
-.button22:hover,
-.button24:hover,
-.button26:hover,
-.button28:hover {
-  background-color: var(--color-seagreen-200);
-  text-decoration: none;
-}
+
 .agustus-label,
 .button-group4,
 .button20 {
   display: flex;
   flex-direction: row;
 }
+
 .button-group4 {
   align-self: stretch;
   flex: 0.9222;

@@ -172,7 +172,6 @@
     border: none;
     background-color: transparent;
     box-shadow: none;
-    padding: var(--padding-base-5);
 }
 
 .row,
@@ -674,19 +673,17 @@
     padding-top: 20px;
     padding-bottom: 20px;
     text-align: center;
+    font-weight: 600;
 }
 
-/* Memberikan garis bawah pada tautan */
 a {
     text-decoration: underline;
 }
 
-/* Mengubah warna hyperlink menjadi warna tertentu, misalnya hitam */
 a:link {
     color: black;
 }
 
-/* Mengubah warna hyperlink saat dihover */
 a:hover {
-    color: #ff0000; /* Misalnya menjadi merah saat dihover */
+    color: #ff0000;
 }

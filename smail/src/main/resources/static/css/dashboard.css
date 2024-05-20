@@ -132,6 +132,6 @@ canvas {
 
 .buttonWaktu.active {
     border: 0;
-    background-color: var(--green-green-1); /* Active background */
-    color: var(--white-white-1); /* Active text color */
+    background-color: var(--green-green-1);
+    color: var(--white-white-1);
 }

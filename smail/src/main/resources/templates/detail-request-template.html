@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/detail-surat.css"/>
-
+    <link rel="stylesheet" href="/css/button.css"/>
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 </head>
@@ -99,8 +100,8 @@
                     <div class="detail">Status</div>
                 </div>
 
-                <div class="content-wrapper" th:if="${requestTemplate.status == 1}">
-                    <select class="content" th:field="${requestTemplate.status}" onchange="toggleReasonField(this)">
+                <div class="content-wrapper-dropdown" th:if="${requestTemplate.status == 1}">
+                    <select class="content-dropdown" th:field="${requestTemplate.status}" onchange="toggleReasonField(this)">
                         <option th:each="entry : ${statusMap.entrySet()}"
                                 th:value="${entry.key}" th:text="${entry.value}"
                                 th:selected="${entry.key == requestTemplate.status}">
@@ -108,8 +109,8 @@
                     </select>
                 </div>
 
-                <div class="content-wrapper" th:if="${requestTemplate.status == 2 || requestTemplate.status == 3}">
-                    <div class="content" th:text="${statusMap[requestTemplate.status]}"></div>
+                <div class="content-wrapper-dropdown" th:if="${requestTemplate.status == 2 || requestTemplate.status == 3}">
+                    <div class="content-dropdown" th:text="${statusMap[requestTemplate.status]}"></div>
                 </div>
             </div>
 
@@ -138,7 +139,7 @@
             </div>
 
             <div class="text-center action-buttons" th:if="${requestTemplate.status == 1}">
-                <button type="submit" class="button">Simpan perubahan</button>
+                <button type="submit" class="primary-long-button">Simpan perubahan</button>
             </div>
         </div>
     </form>

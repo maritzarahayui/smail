@@ -6,10 +6,10 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/css/detail-template.css"/>
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
+    
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-
 </head>
 <body>
 
@@ -127,25 +127,19 @@
     </main>
     <div class="icon-outlinechevrondown">
         <div class="frame-footer">
-            <!-- <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;"> -->
-                <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;">
-                    <!-- <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/> -->
-                    <div class="ubah-template">
-                        <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/>
-                        <div class="ubah-template1">Ubah template</div>
-                    </div>
-                </a>
-            <!-- </a>-->
+            <a th:href="@{'/template/update/' + ${template.id}}" class="button11" style="text-decoration: none;">
+                <div class="ubah-template">
+                    <img class="bitcoin-iconsedit-filled" alt="" src="/images/pulpen.svg"/>
+                    <div class="ubah-template1">Ubah template</div>
+                </div>
+            </a>
 
-            <!-- <a th:href="@{'/template/soft-delete/' + ${template.id}}" class="button12" style="text-decoration: none;"> -->
-                <a class="button12" th:href="@{'/template/soft-delete/' + ${template.id}}" style="text-decoration: none;">
-                    <!-- <img class="mdidelete-icon" alt="" src="/images/delete.svg" /> -->
-                    <div class="hapus-template-wrapper">
-                        <img class="mdidelete-icon" alt="" src="/images/delete.svg" />
-                        <div class="hapus-template">Hapus template</div>
-                    </div>
-                </a>
-            <!-- </a> -->
+            <a class="button12" th:href="@{'/template/soft-delete/' + ${template.id}}" style="text-decoration: none;">
+                <div class="hapus-template-wrapper">
+                    <img class="mdidelete-icon" alt="" src="/images/delete.svg" />
+                    <div class="hapus-template">Hapus template</div>
+                </div>
+            </a>
         </div>
     </div>
 </div>

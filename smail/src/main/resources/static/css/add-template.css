@@ -27,14 +27,16 @@ body {
 
 .pengajuan-permohonan-surat-container {
   position: absolute;
-  top: 10px;
+  top: 25px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 48px;
 }
 
 .text-input-frame,
-.text-input14 {
+.list-field,
+.text-input14,
+.text-input15 {
   align-self: stretch;
   display: flex;
   align-items: flex-start;
@@ -55,9 +57,31 @@ body {
   padding-left: 8px;
 }
 
+.text-input15 {
+  border: 2px solid var(--green-green-2);
+  outline: 0;
+  background-color: transparent;
+  height: 43px;
+  border-radius: var(--br-5xs);
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+  flex-direction: row;
+  width: 870px;
+  padding-left: 8px;
+}
+
 .text-input-frame {
   flex-direction: column;
   padding-bottom: 10px;
+  margin-right: 20px;
+}
+
+.list-field {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center;
+  margin-right: 10px; */
 }
 
 .label9 {
@@ -383,6 +407,7 @@ body {
   max-width: 100%;
   text-align: left;
   color: var(--black-black-1);
+  padding-top: 25px;
 }
 
 .buat-template {
@@ -409,8 +434,10 @@ body {
   border: 0;
   padding: 10px var(--padding-smi);
   background-color: var(--green-green-1);
-  width: 1000px;
+  width: 50px;
   border-radius: var(--br-xs);
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .button15:hover {
@@ -423,7 +450,7 @@ body {
   border: 0;
   padding: 10px var(--padding-smi);
   background-color: var(--red-red-1);
-  width: 1000px;
+  width: 50px;
   border-radius: var(--br-xs);
 }
 
@@ -436,122 +463,14 @@ body {
   padding: 0 var(--padding-xl) 44.19999999999982px;
 }
 
-@media screen and (max-width: 1050px) {
-  .navbar2 {
-    padding-left: var(--padding-37xl);
-    padding-right: var(--padding-37xl);
-    box-sizing: border-box;
-  }
-  .sub-group-container {
-    gap: 0 122px;
-  }
-  .upload-illustration-frame {
-    padding-left: 32px;
-    padding-right: 29px;
-    box-sizing: border-box;
-    align-items: center;
-  }
-  .label-input-frame {
-    gap: 42px 0;
-  }
+.row-container {
+  display: flex;
+  align-items: center;
 }
-@media screen and (max-width: 1000px) {
-  .sub-group-container-child {
-    flex: 1;
-  }
-  .tambah-template3 {
-    font-size: var(--font-size-19xl);
-  }
-  .sub-group-container {
-    flex-wrap: wrap;
-  }
-  .attach-button {
-    padding-bottom: var(--padding-9xl);
-    box-sizing: border-box;
-  }
-  .frame-parent {
-    flex-wrap: wrap;
-  }
-}
-@media screen and (max-width: 725px) {
-  .template-settings {
-    flex-wrap: wrap;
-  }
-  .navbar2 {
-    padding-left: var(--padding-9xl);
-    padding-right: var(--padding-9xl);
-    box-sizing: border-box;
-  }
-  .sub-group-container {
-    gap: 0 61px;
-  }
-  .home-frame {
-    gap: 18px 0;
-  }
-  .link-area {
-    gap: 21px 0;
-  }
-  .file-input {
-    gap: 20px 0;
-    padding-bottom: 55px;
-    box-sizing: border-box;
-  }
-  .label-input-frame {
-    gap: 21px 0;
-  }
-  .frame-parent {
-    padding-left: var(--padding-55xl);
-    padding-right: var(--padding-55xl);
-    box-sizing: border-box;
-  }
-  .tambah-template2 {
-    gap: 38px 0;
-  }
-}
-@media screen and (max-width: 450px) {
-  .tambah-template3 {
-    font-size: var(--font-size-10xl);
-  }
-  .sub-group-container {
-    gap: 0 31px;
-  }
-  .secondary-message {
-    font-size: var(--font-size-xl);
-    line-height: 30px;
-  }
-  .atau,
-  .cantumkan-link-google,
-  .upload-file-kamu-container {
-    font-size: var(--font-size-lgi);
-  }
-  .input-field1 {
-    padding-left: var(--padding-xl);
-    padding-right: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .body-14pt {
-    font-size: var(--font-size-xl);
-    line-height: 30px;
-  }
-  .attach-button {
-    padding-bottom: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .developed-by-rtx2,
-  .in-collaboration-with3,
-  .propensi-d022 {
-    font-size: var(--font-size-lgi);
-  }
-  .frame-parent {
-    padding-left: var(--padding-xl);
-    padding-right: var(--padding-xl);
-    box-sizing: border-box;
-  }
-  .copyright-2024-tazkia2 {
-    font-size: var(--font-size-lgi);
-  }
-  .tambah-template2 {
-    gap: 19px 0;
-  }
 
+.button-container {
+  display: flex;
+  align-items: center;
+  align-self: flex-end;
+  margin-right: 10px;
 }

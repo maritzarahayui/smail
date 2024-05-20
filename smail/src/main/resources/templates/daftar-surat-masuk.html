@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-  <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+  <link rel="stylesheet" href="/css/global.css"/>
   <link rel="stylesheet" href="/css/riwayat-surat.css"/>
   <link rel="stylesheet" href="/css/tabs.css"/>
+  <link rel="stylesheet" href="/css/button.css"/>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
@@ -19,27 +20,9 @@
   <script src="https://cdn.datatables.net/2.0.7/js/dataTables.bootstrap5.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
-    
-  <style>
-    .button {
-      background-color: #3a8b5a;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      display: flex; 
-      align-items: center;
-      justify-content: center;
-      transition: background-color 0.3s;
-      width: 200px;
-      text-align: center;
-    }
-  </style>
 </head>
 
 <body>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
         const pageKey = 'suratMasukPage'; // Gunakan identifikasi unik untuk setiap halaman
@@ -89,19 +72,16 @@
     
     <b class="pengajuan-permohonan-surat-container">
       <span class="pengajuan">Daftar</span>
-      <span>Surat Masuk</span>
+      <span>Surat  Masuk</span>
     </b>
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
       
     <div class="content-wrapper" style="margin-inline: 10px;">
       <div class="buttonWrapper" th:if="${role == 'Admin'}" style="margin: 30px; text-decoration: none; color: white;">
-        <a
-          th:href="@{/surat-masuk/form}"
-          class="button" style="text-decoration: none; color: white;"
-        >
-          <img class="input-surat1" alt="" src="/images/plus-icon.svg" />
-          <div class="input-surat1">Input Surat</div>
+        <a th:href="@{/surat-masuk/form}" class="button-input">
+          <img class="fluentadd-16-filled-icon" alt="" src="/images/plus-icon.svg" />
+          <div class="primary-text">Input Surat</div>
         </a>
       </div>
 
@@ -119,11 +99,11 @@
           <table id="semuaMasuk" class="table table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
                 <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Pengirim</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
               </tr>
             </thead>
@@ -134,9 +114,9 @@
                 <td th:text="${suratMasuk.perihal}"></td>
                 <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
                 <td th:text="${suratMasuk.pengirim}"></td>
-                <td style="display: flex;">
-                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                    <div class="button21">Detail</div>
+                <td style="display: flex; justify-content: space-between; border: none;">
+                  <a class="primary-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="primary-text">Detail</div>
                   </a>
                 </td>
               </tr>
@@ -151,11 +131,11 @@
           <table id="folupMasuk" class="table table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
                 <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Pengirim</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
               </tr>
             </thead>
@@ -166,9 +146,9 @@
                 <td th:text="${suratMasuk.perihal}"></td>
                 <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
                 <td th:text="${suratMasuk.pengirim}"></td>
-                <td style="display: flex;">
-                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                    <div class="button21">Detail</div>
+                <td style="display: flex; justify-content: space-between; border: none;">
+                  <a class="primary-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="primary-text">Detail</div>
                   </a>
                 </td>
               </tr>
@@ -183,11 +163,11 @@
           <table id="disposisiMasuk" class="table table-bordered" style="width:100%">
             <thead>
               <tr>
-                <th style="width: 12%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Nomor Arsip</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Kategori</th>
                 <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
-                <th style="width: 18%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
-                <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
+                <th style="width: 15%; text-align: center; vertical-align: middle;">Pengirim</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
               </tr>
             </thead>
@@ -198,9 +178,9 @@
                 <td th:text="${suratMasuk.perihal}"></td>
                 <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
                 <td th:text="${suratMasuk.pengirim}"></td>
-                <td style="display: flex;">
-                  <a class="button20" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
-                    <div class="button21">Detail</div>
+                <td style="display: flex; justify-content: space-between; border: none;">
+                  <a class="primary-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                    <div class="primary-text">Detail</div>
                   </a>
                 </td>
               </tr>

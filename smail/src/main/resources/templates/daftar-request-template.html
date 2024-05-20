@@ -4,9 +4,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="/css/global-daftar-template.css"/>
+    <link rel="stylesheet" href="/css/global.css"/>
     <link rel="stylesheet" href="/css/riwayat-surat.css"/>
     <link rel="stylesheet" href="/css/tabs.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -73,7 +74,7 @@
 
     <b class="pengajuan-permohonan-surat-container">
         <span class="pengajuan">Daftar</span>
-        <span>Permintaan Template</span>
+        <span>Permintaan  Template</span>
     </b>
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
@@ -115,9 +116,9 @@
                             (requestTemplate.status == 2 ? 'Diterima' :
                             (requestTemplate.status == 3 ? 'Ditolak' : ''))}">
                             </td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -147,9 +148,9 @@
                             <td th:text="${requestTemplate.pengaju.nama}"></td>
                             <td th:text="${requestTemplate.bahasa}"></td>
                             <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -179,9 +180,9 @@
                             <td th:text="${requestTemplate.pengaju.nama}"></td>
                             <td th:text="${requestTemplate.bahasa}"></td>
                             <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
@@ -211,9 +212,9 @@
                             <td th:text="${requestTemplate.pengaju.nama}"></td>
                             <td th:text="${requestTemplate.bahasa}"></td>
                             <td th:text="${#dates.format(requestTemplate.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
-                            <td style="display: flex; justify-content: space-between;">
-                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="button20">
-                                    <div class="button21">Detail</div>
+                            <td style="display: flex; justify-content: space-between; border: none;">
+                                <a th:href="@{'/template/request/detail/' + ${requestTemplate.id}}" class="primary-button">
+                                    <div class="primary-text">Detail</div>
                                 </a>
                             </td>
                         </tr>
