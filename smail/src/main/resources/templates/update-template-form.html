@@ -1,239 +1,423 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
 
-    <link rel="stylesheet" href="/css/add-template.css"/>
-    <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/request-surat.css"/>
-    <link rel="stylesheet" href="/css/button.css"/>
+    <link rel="stylesheet" href="/css/add-template.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/request-surat.css" />
+    <link rel="stylesheet" href="/css/button.css" />
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-</head>
-<body>
+  </head>
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
-
-<div class="tambah-template2">
-    <div class="home-frame">
+    <div class="tambah-template2">
+      <div class="home-frame">
         <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Ubah</span>
-            <span> Template</span>
+          <span class="pengajuan">Ubah</span>
+          <span> Template</span>
         </b>
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
-    </div>
-    <section class="attach-button">
+      </div>
+      <section class="attach-button">
         <div class="label-input-frame">
-            <div class="label-frame">
-                <form th:action="@{'/template/update/' + ${template.id}}" method="post" enctype="multipart/form-data">
-                    <div class="text-input-frame">
-                        <div class="label8">Nama Template</div>
-                        <input class="text-input15" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required />
-                    </div>
-                    <br>
-                    <div class="text-input-frame">
-                        <label for="kategori" class="label9">Kategori:</label>
-                        <select class="text-input15" id="kategori" name="kategori" required>
-                            <option value="" th:selected="${template.kategori == null}">-- Pilih Kategori --</option>
-                            <option value="Legal" th:selected="${template.kategori == 'Legal'}">Legal</option>
-                            <option value="SDM" th:selected="${template.kategori == 'SDM'}">SDM</option>
-                            <option value="Keuangan" th:selected="${template.kategori == 'Keuangan'}">Keuangan</option>
-                            <option value="Sarana" th:selected="${template.kategori == 'Sarana'}">Sarana</option>
-                            <option value="Kemahasiswaan" th:selected="${template.kategori == 'Kemahasiswaan'}">Kemahasiswaan</option>
-                        </select>
-                    </div>
-                    <br>
-                    <div class="text-input-frame">
-                        <label for="listPengguna" class="label9">List Pengguna:</label><br>
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa" th:checked="${template.listPengguna.contains('Mahasiswa')}">
-                            <label for="pengguna1">Mahasiswa</label>
-                        </div>
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen" th:checked="${template.listPengguna.contains('Dosen')}">
-                            <label for="pengguna2">Dosen</label>
-                        </div>
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf" th:checked="${template.listPengguna.contains('Staf')}">
-                            <label for="pengguna3">Staf</label>
-                        </div>
-                    </div>
+          <div class="label-frame">
+            <form
+              th:action="@{'/template/update/' + ${template.id}}"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="text-input-frame">
+                <div class="label8">Nama Template</div>
+                <input
+                  class="text-input15"
+                  type="text"
+                  id="namaTemplate"
+                  name="namaTemplate"
+                  th:value="${template.namaTemplate}"
+                  required
+                />
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <label for="kategori" class="label9">Kategori:</label>
+                <select
+                  class="text-input15"
+                  id="kategori"
+                  name="kategori"
+                  required
+                >
+                  <option value="" th:selected="${template.kategori == null}">
+                    -- Pilih Kategori --
+                  </option>
+                  <option
+                    value="Legal"
+                    th:selected="${template.kategori == 'Legal'}"
+                  >
+                    Legal
+                  </option>
+                  <option
+                    value="SDM"
+                    th:selected="${template.kategori == 'SDM'}"
+                  >
+                    SDM
+                  </option>
+                  <option
+                    value="Keuangan"
+                    th:selected="${template.kategori == 'Keuangan'}"
+                  >
+                    Keuangan
+                  </option>
+                  <option
+                    value="Sarana"
+                    th:selected="${template.kategori == 'Sarana'}"
+                  >
+                    Sarana
+                  </option>
+                  <option
+                    value="Kemahasiswaan"
+                    th:selected="${template.kategori == 'Kemahasiswaan'}"
+                  >
+                    Kemahasiswaan
+                  </option>
+                </select>
+              </div>
+              <br />
+              <div class="text-input-frame">
+                <label for="listPengguna" class="label9">List Pengguna:</label
+                ><br />
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna1"
+                    name="listPengguna"
+                    value="Mahasiswa"
+                    th:checked="${template.listPengguna.contains('Mahasiswa')}"
+                  />
+                  <label for="pengguna1">Mahasiswa</label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna2"
+                    name="listPengguna"
+                    value="Dosen"
+                    th:checked="${template.listPengguna.contains('Dosen')}"
+                  />
+                  <label for="pengguna2">Dosen</label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna3"
+                    name="listPengguna"
+                    value="Staf"
+                    th:checked="${template.listPengguna.contains('Staf')}"
+                  />
+                  <label for="pengguna3">Staf</label>
+                </div>
+              </div>
 
-                    <div class="row-container">
-                        <div class="list-field" id="listFieldContainer">
-                            <label for="listField" class="label9">List Field:</label>
-                            <input type="text" class="text-input15" id="listField1" name="listField" required>
-                        </div>
+              <div id="fieldsContainer">
+                <label for="listField" class="label9">List Field:</label>
+                <!-- Loop through each item in the listField[] -->
+                <div
+                  th:each="field, fieldStat : ${template.listField}"
+                  class="row-container"
+                >
+                  <!-- Check if it's the first item, if not, show the "Delete Row" button -->
+                  <div
+                    class="list-field"
+                    th:classappend="${fieldStat.index == 0 ? '' : 'with-button'}"
+                  >
+                    <!-- Populate the value with the current item -->
+                    <input
+                      type="text"
+                      class="text-input15"
+                      name="listField[]"
+                      th:value="${field}"
+                      required
+                    />
+                  </div>
+                  <div class="button-container">
+                    <!-- Show the "Add Row" button only if it's the first item -->
+                    <button
+                      type="button"
+                      class="button15"
+                      onclick="addRow()"
+                      style="color: #fffffe"
+                    >
+                        <img
+                            class="lets-iconsadd-round2"
+                            loading="lazy"
+                            alt=""
+                            src="/images/plus-icon.svg"
+                        />
+                    </button>
 
-                        <div class="button-container">
-                            <button type="button" class="button15" onclick="addRow()" style="color:#fffffe;">
-                                <img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">
-                            </button>
+                    <!-- Show the "Delete Row" button only if it's not the first item -->
+                    <button
+                      type="button"
+                      class="button15-red"
+                      onclick="deleteRow(this)"
+                      style="color: #fffffe"
+                      th:unless="${fieldStat.index == 0}"
+                    >
+                      <img
+                        class="mdidelete-icon1"
+                        loading="lazy"
+                        alt=""
+                        src="/images/delete.svg"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-                            <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe;">
-                                <img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="upload-illustration-frame">
-                            <div class="file-input">
-                                <div class="secondary-message">secondary message</div>
-                                <div class="rectangle-frame">
-                                    <div class="arsip-surat-frame">
-                                        <div class="button-frame1">
-                                            <label class="upload-illustration" for="file">
-                                                <div class="chevrondown-icon">
-                                                    <div class="wrapper-group">
-                                                        <img
-                                                                class="group-icon"
-                                                                alt=""
-                                                                src="/images/imagetengah.png"
-                                                        />
-                                                    </div>
-                                                    <img
-                                                            class="chevrondown-icon-child"
-                                                            alt=""
-                                                            src="/images/upload.svg"
-                                                    />
+              <div class="form-group" style="margin-top: 50px">
+                <div class="upload-illustration-frame">
+                  <div class="file-input">
+                    <div class="secondary-message">secondary message</div>
+                    <div class="rectangle-frame">
+                      <div class="arsip-surat-frame">
+                        <div class="button-frame1">
+                          <label class="upload-illustration" for="file">
+                            <div class="chevrondown-icon">
+                              <div class="wrapper-group">
+                                <img
+                                  class="group-icon"
+                                  alt=""
+                                  src="/images/imagetengah.png"
+                                />
+                              </div>
+                              <img
+                                class="chevrondown-icon-child"
+                                alt=""
+                                src="/images/upload.svg"
+                              />
 
-                                                    <img
-                                                            class="chevrondown-icon-item"
-                                                            loading="lazy"
-                                                            alt=""
-                                                            src="/images/imagekanan.png"
-                                                    />
-                                                </div>
-                                                <img
-                                                        class="upload-illustration-child"
-                                                        alt=""
-                                                        src="/images/imagekiri.png"
-                                                />
-                                            </label>
-                                            <input type="file" class="custom-file-input" id="file" name="file">
-                                        </div>
-                                        <h3 class="upload-file-kamu-container">
-                                            <span>Perbarui</span>
-                                            <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
-                                        </h3>
-                                        <span class="file-name" th:text="${template.fileName}"></span>
-                                    </div>
-                                </div>
+                              <img
+                                class="chevrondown-icon-item"
+                                loading="lazy"
+                                alt=""
+                                src="/images/imagekanan.png"
+                              />
                             </div>
+                            <img
+                              class="upload-illustration-child"
+                              alt=""
+                              src="/images/imagekiri.png"
+                            />
+                          </label>
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="file"
+                            name="file"
+                          />
                         </div>
+                        <h3 class="upload-file-kamu-container">
+                          <span>Perbarui</span>
+                          <span class="file-kamu-di">
+                            file kamu di sini dalam format .pdf</span
+                          >
+                        </h3>
+                        <span
+                          class="file-name"
+                          th:text="${template.fileName}"
+                        ></span>
+                      </div>
                     </div>
-                    
-                    <div class="text-center action-buttons">
-                        <button type="submit" onclick="submitForm()" class="primary-long-button" 
-                            data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + template.id}"
-                            >Update</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="text-center action-buttons">
+                <button
+                  type="submit"
+                  onclick="submitForm()"
+                  class="primary-long-button"
+                  data-bs-toggle="modal"
+                  th:attr="data-bs-target=${'#confirmationModal' + template.id}"
+                >
+                  Update
+                </button>
+              </div>
+
+              <!-- Modal UBAH -->
+              <div
+                class="modal fade"
+                th:id="${'confirmationModal' + template.id}"
+                tabindex="-1"
+              >
+                <div class="modal-dialog">
+                  <div
+                    class="modal-content"
+                    style="width: 450px; height: fit-content; padding: 15px"
+                  >
+                    <div
+                      class="modal-header"
+                      style="border-bottom: none; justify-content: center"
+                    >
+                      <h5 class="modal-title">
+                        <strong>Ubah Template</strong>
+                      </h5>
                     </div>
-
-                    <!-- Modal UBAH -->
-                    <div class="modal fade" th:id="${'confirmationModal' + template.id}" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
-                                <div class="modal-header" style="border-bottom: none; justify-content: center;">
-                                    <h5 class="modal-title"><strong>Ubah Template</strong></h5>
-                                </div>
-                                <div class="modal-body m-0">
-                                    <p style="font-size: large; text-align: center;">
-                                        Apakah Anda yakin ingin mengubah template ini? 
-                                        Pastikan seluruh perubahan sudah benar.
-                                    </p>
-                                </div>
-                                <div class="modal-footer" style="border-top: none; justify-content: center; gap: 5px">   
-                                    <button type="button" class="cancel-button m-0" data-bs-dismiss="modal" aria-label="Close">
-                                        <div class="primary-text">Cancel</div>
-                                    </button>
-                                    <a th:href="@{'/template/update/' + ${template.id}}">
-                                        <button type="button" class="primary-button m-0">
-                                            <div class="primary-text">Ubah</div>
-                                        </button>
-                                    </a>                            
-                                </div>
-                            </div>
-                        </div>
+                    <div class="modal-body m-0">
+                      <p style="font-size: large; text-align: center">
+                        Apakah Anda yakin ingin mengubah template ini? Pastikan
+                        seluruh perubahan sudah benar.
+                      </p>
                     </div>
-
-                </form>
-            </div>
-
+                    <div
+                      class="modal-footer"
+                      style="
+                        border-top: none;
+                        justify-content: center;
+                        gap: 5px;
+                      "
+                    >
+                      <button
+                        type="button"
+                        class="cancel-button m-0"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <div class="primary-text">Cancel</div>
+                      </button>
+                      <a th:href="@{'/template/update/' + ${template.id}}">
+                        <button type="button" class="primary-button m-0">
+                          <div class="primary-text">Ubah</div>
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-    </section>
-</div>
+      </section>
+    </div>
 
-<footer th:replace="~{fragments/footer :: footer}"></footer>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
 
+    <script>
+      let listFieldValues = []; // Array to store input values
 
-<script>
-let listFieldValues = []; // Array to store input values
+      document.getElementById("file").addEventListener("change", function () {
+        var fileName = this.files[0].name;
+        document.querySelector(".file-name").textContent = fileName;
+      });
 
-document.getElementById('file').addEventListener('change', function() {
-    var fileName = this.files[0].name;
-    document.querySelector('.file-name').textContent = fileName;
-});
+      function addRow() {
+        const container = document.getElementById("fieldsContainer");
 
-function addRow() {
-    let newInput = document.createElement('input');
-    newInput.type = 'text';
-    newInput.className = 'text-input15 listField';
-    newInput.name = 'listField'; // Set the name as listField
+        const rowContainer = document.createElement("div");
+        rowContainer.className = "row-container";
 
-    let container = document.getElementById('listFieldContainer');
-    container.appendChild(document.createElement('br'));
-    container.appendChild(newInput);
+        const listFieldContainer = document.createElement("div");
+        listFieldContainer.className = "list-field";
 
-    // Add event listener to the new input field to capture its value
-    newInput.addEventListener('input', function() {
-        listFieldValues.push(newInput.value); // Push the value to the array
-    });
-}
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "text-input15 listField";
+        input.name = "listField[]";
+        input.required = true;
 
-function deleteRow() {
-    let container = document.getElementById('listFieldContainer');
-    let inputs = container.querySelectorAll('.text-input15');
+        listFieldContainer.appendChild(input);
 
-    // Hapus input field terakhir dan br sebelumnya
-    if (inputs.length > 1) {
-        let lastInput = inputs[inputs.length - 1];
-        let precedingBr = lastInput.previousElementSibling;
+        const buttonContainer = document.createElement("div");
+        buttonContainer.className = "button-container";
 
-        if (precedingBr && precedingBr.tagName === 'BR') {
-            container.removeChild(precedingBr);
+        const addButton = document.createElement("button");
+        addButton.type = "button";
+        addButton.className = "button15";
+        addButton.style.color = "#fffffe";
+        addButton.onclick = addRow;
+
+        const addIcon = document.createElement("img");
+        addIcon.className = "lets-iconsadd-round2";
+        addIcon.loading = "lazy";
+        addIcon.alt = "";
+        addIcon.src = "/images/plus-icon.svg";
+
+        addButton.appendChild(addIcon);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "button15-red";
+        deleteButton.style.color = "#fffffe";
+        deleteButton.onclick = function () {
+          deleteRow(this);
+        };
+
+        const deleteIcon = document.createElement("img");
+        deleteIcon.className = "mdidelete-icon1";
+        deleteIcon.loading = "lazy";
+        deleteIcon.alt = "";
+        deleteIcon.src = "/images/delete.svg";
+
+        deleteButton.appendChild(deleteIcon);
+
+        buttonContainer.appendChild(addButton);
+        buttonContainer.appendChild(deleteButton);
+
+        rowContainer.appendChild(listFieldContainer);
+        rowContainer.appendChild(buttonContainer);
+
+        container.appendChild(rowContainer);
+
+        // Add event listener to the new input field to capture its value
+        input.addEventListener("input", function () {
+          listFieldValues.push(input.value); // Push the value to the array
+        });
+      }
+
+      function deleteRow(button) {
+        const rowContainer = button.closest(".row-container");
+        const input = rowContainer.querySelector(".listField");
+
+        if (input) {
+          const index = listFieldValues.indexOf(input.value);
+          if (index !== -1) {
+            listFieldValues.splice(index, 1); // Remove the value from the array
+          }
         }
 
-        container.removeChild(lastInput);
-    }
-}
+        rowContainer.remove();
+      }
 
-// Function to submit the form
-function submitForm() {
-    // Add the listFieldValues array to the form data before submitting
-    let formData = new FormData();
-    for (let i = 0; i < listFieldValues.length; i++) {
-        formData.append('listField', listFieldValues[i]);
-    }
+      // Function to submit the form
+      function submitForm() {
+        // Add the listFieldValues array to the form data before submitting
+        let formData = new FormData();
+        for (let i = 0; i < listFieldValues.length; i++) {
+          formData.append("listField", listFieldValues[i]);
+        }
 
-    // Submit the form
-    fetch('/template/new-template', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        // Handle response as needed
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-
-</script>
-</body>
+        // Submit the form
+        fetch("/template/new-template", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            // Handle response as needed
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
 </html>
