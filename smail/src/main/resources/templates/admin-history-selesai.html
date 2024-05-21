@@ -71,7 +71,7 @@
                                         </th:block>
                                     </th:block>
                                 </td>
-                                <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}"></td>
+                                <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
                                 <td style="display: flex; justify-content: space-between; border: none;">
                                     <a th:href="@{/admin/detail/{id}/selesai(id=${requestSurat.id})}" class="primary-button">
                                         <div class="primary-text">Detail</div>

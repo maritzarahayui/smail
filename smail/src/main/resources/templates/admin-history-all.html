@@ -72,7 +72,7 @@
                                     </th:block>
                                 </th:block>
                             </td>
-                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'yyyy-MM-dd HH:mm')}" style="text-align: center;"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'dd-MM-yyyy')}" style="text-align: center;"></td>
                             <td th:text="${statusMap[requestSurat.status]}"></td>
                             <td style="display: flex; justify-content: space-between; border: none;" th:if="${requestSurat.status == 1}">
                                 <a th:href="@{/admin/detail/{id}(id=${requestSurat.id})}" class="primary-button">

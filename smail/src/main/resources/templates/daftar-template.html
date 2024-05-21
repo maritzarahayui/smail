@@ -25,6 +25,7 @@
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
 <div class="permintaan-template">
+
     <b class="pengajuan-permohonan-surat-container">
         <span class="pengajuan">Daftar</span>
         <span> Template  Surat</span>
@@ -46,7 +47,7 @@
 
         <div class="tab-pane active">
             <div class="table-container">
-                <table id="daftar-template" class="table table-bordered">
+                <table id="daftar-template" class="table table-bordered" style="width:100%">
                     <thead>
                         <tr>
                             <th class="custom-th" style="width: 10%; text-align: center; vertical-align: middle;">ID Template</th>
@@ -58,14 +59,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="requestSurat: ${activeTemplates}" class="custom-tr">
-                            <td th:text="${requestSurat.id}" class="custom-td"></td>
-                            <td th:text="${requestSurat.namaTemplate}" style="text-align: left;" class="custom-td"></td>
-                            <td th:text="${requestSurat.kategori}" class="custom-td"></td>
-                            <td class="custom-td" th:if="${requestSurat.isActive}">Active</td>
-                            <td class="custom-td" th:unless="${requestSurat.isActive}">Inactive</td>
-                            <td th:text="${#dates.format(requestSurat.tanggalDibuat, 'yyyy-MM-dd HH:mm')}" class="custom-td"></td>
-                            <td style="display: flex; justify-content: space-between; border: none;" class="custom-td">
+                        <tr th:each="requestSurat: ${activeTemplates}">
+                            <td th:text="${requestSurat.id}"></td>
+                            <td th:text="${requestSurat.namaTemplate}" style="text-align: left;"></td>
+                            <td th:text="${requestSurat.kategori}"></td>
+                            <td th:if="${requestSurat.isActive}">Active</td>
+                            <td th:unless="${requestSurat.isActive}">Inactive</td>
+                            <td th:text="${#dates.format(requestSurat.tanggalDibuat, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td style="display: flex; justify-content: space-between; border: none;">
                                 <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="primary-button">
                                     <div class="primary-text">Detail</div>
                                 </a>

@@ -150,12 +150,6 @@
   z-index: 2;
 }
 
-.admin {
-  flex: 1;
-  position: relative;
-  font-weight: 600;
-}
-
 .iconoutlinechevron-down1 {
   height: 20px;
   width: 20px;
@@ -176,13 +170,11 @@
   gap: 0 8px;
 }
 
-.admin-text,
 .button {
   flex: 1;
   justify-content: center;
 }
 
-.admin-text,
 .button-frame,
 .navbar {
   display: flex;
