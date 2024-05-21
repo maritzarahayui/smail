@@ -1,221 +1,318 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, width=device-width" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-LdG/VIBk5lH/5GjtuZW9jpjqQuSc5O+Z4e8C8Ad+MlI3yd4fPnYNkIPLsGyOxPk4" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-
-    <link rel="stylesheet" href="/css/add-template.css"/>
-    <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" href="/css/request-surat.css"/>
-    <link rel="stylesheet" href="/css/button.css"/>
-    
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha384-LdG/VIBk5lH/5GjtuZW9jpjqQuSc5O+Z4e8C8Ad+MlI3yd4fPnYNkIPLsGyOxPk4"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="/css/add-template.css" />
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/css/request-surat.css" />
+    <link rel="stylesheet" href="/css/button.css" />
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
-</head>
-
-<body>
-
-<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
-
-<div class="tambah-template2">
-    <div class="home-frame">
+  </head>
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+    <div class="tambah-template2">
+      <div class="home-frame">
         <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Tambah</span>
-            <span> Template</span>
+          <span class="pengajuan">Tambah</span>
+          <span> Template</span>
         </b>
-
         <nav th:replace="~{fragments/asset :: asset}"></nav>
-    </div>
-
-    <div class="attach-button">
+      </div>
+      <div class="attach-button">
         <div class="label-input-frame">
-            <div class="label-frame">
-                <form action="/template/new-template" method="post" enctype="multipart/form-data">
-                    
-                    <div class="text-input-frame">
-                        <div class="label9">Nama Template</div>
-                        <input class="text-input14" type="text" id="namaTemplate" name="namaTemplate" />
-                    </div>
-                   
-                    <div class="text-input-frame">
-                        <label for="kategori" class="label9">Kategori:</label>
-                        <select class="text-input14" id="kategori" name="kategori" required>
-                            <option value="" class="pilih-kategori">-- Pilih Kategori --</option>
-                            <option value="Legal">Legal</option>
-                            <option value="SDM">SDM</option>
-                            <option value="Keuangan">Keuangan</option>
-                            <option value="Sarana">Sarana</option>
-                            <option value="Kemahasiswaan">Kemahasiswaan</option>
-                        </select>
-                    </div>
-                    
-                    <div class="text-input-frame">
-                        <label for="listPengguna" class="label9">List Pengguna:</label>
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa">
-                            <label for="pengguna1">
-                                <span class="check"></span>
-                                <span class="label-text">Mahasiswa</span>
-                            </label>
-                        </div>
-
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen">
-                            <label for="pengguna2">
-                                <span class="check"></span>
-                                <span class="label-text">Dosen</span>
-                            </label>
-                        </div>
-
-                        <div class="radio-parent">
-                            <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf">
-                            <label for="pengguna3">
-                                <span class="check"></span>
-                                <span class="label-text">Staf</span>
-                            </label>
-                        </div>
-                    </div>                    
-
-                    <div class="row-container">
-                        <div class="list-field" id="listFieldContainer">
-                            <label for="listField" class="label9">List Field:</label>
-                            <input type="text" class="text-input15" id="listField1" name="listField" required>
-                        </div>
-
-                        <div class="button-container">
-                            <button type="button" class="button15" onclick="addRow()" style="color:#fffffe;">
-                                <img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg">
-                            </button>
-
-                            <button type="button" class="button15-red" onclick="deleteRow()" style="color:#fffffe;">
-                                <img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg">
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="upload-illustration-frame">
-                            <div class="file-input">
-                                <div class="secondary-message">secondary message</div>
-                                <div class="rectangle-frame">
-                                    <div class="arsip-surat-frame">
-                                        <div class="button-frame1">
-                                            <label class="upload-illustration" for="file">
-                                                <div class="chevrondown-icon">
-                                                    <div class="wrapper-group">
-                                                        <img
-                                                                class="group-icon"
-                                                                alt=""
-                                                                src="/images/imagetengah.png"
-                                                        />
-                                                    </div>
-                                                    <img
-                                                            class="chevrondown-icon-child"
-                                                            alt=""
-                                                            src="/images/upload.svg"
-                                                    />
-
-                                                    <img
-                                                            class="chevrondown-icon-item"
-                                                            loading="lazy"
-                                                            alt=""
-                                                            src="/images/imagekanan.png"
-                                                    />
-                                                </div>
-                                                <img
-                                                        class="upload-illustration-child"
-                                                        alt=""
-                                                        src="/images/imagekiri.png"
-                                                />
-                                            </label>
-                                            <input type="file" class="custom-file-input" id="file" name="file">
-                                        </div>
-                                        <h3 class="upload-file-kamu-container">
-                                            <span>Upload</span>
-                                            <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
-                                        </h3>
-                                        <span class="file-name"></span>
-                                    </div>
-                                </div>
+          <div class="label-frame">
+            <form
+              action="/template/new-template"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="text-input-frame">
+                <div class="label9">Nama Template</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="namaTemplate"
+                  name="namaTemplate"
+                  required
+                />
+              </div>
+              <div class="text-input-frame">
+                <label for="kategori" class="label9">Kategori:</label>
+                <select
+                  class="text-input14"
+                  id="kategori"
+                  name="kategori"
+                  required
+                >
+                  <option value="" class="pilih-kategori">
+                    -- Pilih Kategori --
+                  </option>
+                  <option value="Legal">Legal</option>
+                  <option value="SDM">SDM</option>
+                  <option value="Keuangan">Keuangan</option>
+                  <option value="Sarana">Sarana</option>
+                  <option value="Kemahasiswaan">Kemahasiswaan</option>
+                </select>
+              </div>
+              <div class="text-input-frame">
+                <label for="listPengguna" class="label9">List Pengguna:</label>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna1"
+                    name="listPengguna"
+                    value="Mahasiswa"
+                  />
+                  <label for="pengguna1">
+                    <span class="check"></span>
+                    <span class="label-text">Mahasiswa</span>
+                  </label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna2"
+                    name="listPengguna"
+                    value="Dosen"
+                  />
+                  <label for="pengguna2">
+                    <span class="check"></span>
+                    <span class="label-text">Dosen</span>
+                  </label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna3"
+                    name="listPengguna"
+                    value="Staf"
+                  />
+                  <label for="pengguna3">
+                    <span class="check"></span>
+                    <span class="label-text">Staf</span>
+                  </label>
+                </div>
+              </div>
+              <div id="fieldsContainer">
+                <div class="row-container">
+                  <div class="list-field">
+                    <label for="listField" class="label9">List Field:</label>
+                    <input
+                      type="text"
+                      class="text-input15 listField"
+                      name="listField[]"
+                      required
+                    />
+                  </div>
+                  <div class="button-container">
+                    <button
+                      type="button"
+                      class="button15"
+                      onclick="addRow()"
+                      style="color: #fffffe"
+                    >
+                      <img
+                        class="lets-iconsadd-round2"
+                        loading="lazy"
+                        alt=""
+                        src="/images/plus-icon.svg"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-top: 50px">
+                <div class="upload-illustration-frame">
+                  <div class="file-input">
+                    <div class="secondary-message">secondary message</div>
+                    <div class="rectangle-frame">
+                      <div class="arsip-surat-frame">
+                        <div class="button-frame1">
+                          <label class="upload-illustration" for="file">
+                            <div class="chevrondown-icon">
+                              <div class="wrapper-group">
+                                <img
+                                  class="group-icon"
+                                  alt=""
+                                  src="/images/imagetengah.png"
+                                />
+                              </div>
+                              <img
+                                class="chevrondown-icon-child"
+                                alt=""
+                                src="/images/upload.svg"
+                              />
+                              <img
+                                class="chevrondown-icon-item"
+                                loading="lazy"
+                                alt=""
+                                src="/images/imagekanan.png"
+                              />
                             </div>
+                            <img
+                              class="upload-illustration-child"
+                              alt=""
+                              src="/images/imagekiri.png"
+                            />
+                          </label>
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="file"
+                            name="file"
+                            required
+                          />
                         </div>
+                        <h3 class="upload-file-kamu-container">
+                          <span>Upload</span>
+                          <span class="file-kamu-di">
+                            file kamu di sini dalam format .pdf</span
+                          >
+                        </h3>
+                        <span class="file-name"></span>
+                      </div>
                     </div>
-                
-                    <div class="text-center action-buttons">
-                        <button type="submit" onclick="submitForm()" class="primary-long-button">Buat template</button>
-                    </div>
-                </form>
-            </div>
-
+                  </div>
+                </div>
+              </div>
+              <div class="text-center action-buttons">
+                <button
+                  type="submit"
+                  onclick="submitForm()"
+                  class="primary-long-button"
+                >
+                  Buat template
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <script>
+      let listFieldValues = []; // Array to store input values
+      document.getElementById("file").addEventListener("change", function () {
+        var fileName = this.files[0].name;
+        document.querySelector(".file-name").textContent = fileName;
+      });
 
-<footer th:replace="~{fragments/footer :: footer}"></footer>
+      function addRow() {
+        const container = document.getElementById("fieldsContainer");
 
-<script>
-let listFieldValues = []; // Array to store input values
+        const rowContainer = document.createElement("div");
+        rowContainer.className = "row-container";
 
-document.getElementById('file').addEventListener('change', function() {
-    var fileName = this.files[0].name;
-    document.querySelector('.file-name').textContent = fileName;
-});
+        const listFieldContainer = document.createElement("div");
+        listFieldContainer.className = "list-field";
 
-function addRow() {
-    let newInput = document.createElement('input');
-    newInput.type = 'text';
-    newInput.className = 'text-input15 listField';
-    newInput.name = 'listField'; // Set the name as listField
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "text-input15 listField";
+        input.name = "listField[]";
+        input.required = true;
 
-    let container = document.getElementById('listFieldContainer');
-    container.appendChild(document.createElement('br'));
-    container.appendChild(newInput);
+        listFieldContainer.appendChild(input);
 
-    // Add event listener to the new input field to capture its value
-    newInput.addEventListener('input', function() {
-        listFieldValues.push(newInput.value); // Push the value to the array
-    });
-}
+        const buttonContainer = document.createElement("div");
+        buttonContainer.className = "button-container";
 
-// Function to delete the last row
-function deleteRow() {
-    let container = document.getElementById('listFieldContainer');
-    let inputs = container.querySelectorAll('.listField');
+        const addButton = document.createElement("button");
+        addButton.type = "button";
+        addButton.className = "button15";
+        addButton.style.color = "#fffffe";
+        addButton.onclick = addRow;
 
-    if (inputs.length > 0) {
-        let lastInput = inputs[inputs.length - 1];
-        container.removeChild(lastInput.previousElementSibling); // Remove the <br> element
-        container.removeChild(lastInput); // Remove the input element
+        const addIcon = document.createElement("img");
+        addIcon.className = "lets-iconsadd-round2";
+        addIcon.loading = "lazy";
+        addIcon.alt = "";
+        addIcon.src = "/images/plus-icon.svg";
 
-        // Remove the last value from the listFieldValues array
-        listFieldValues.pop();
-    }
-}
+        addButton.appendChild(addIcon);
 
-// Function to submit the form
-function submitForm() {
-    // Add the listFieldValues array to the form data before submitting
-    let formData = new FormData();
-    for (let i = 0; i < listFieldValues.length; i++) {
-        formData.append('listField', listFieldValues[i]);
-    }
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "button15-red";
+        deleteButton.style.color = "#fffffe";
+        deleteButton.onclick = function () {
+          deleteRow(this);
+        };
 
-    // Submit the form
-    fetch('/template/new-template', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => {
-        // Handle response as needed
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
+        const deleteIcon = document.createElement("img");
+        deleteIcon.className = "mdidelete-icon1";
+        deleteIcon.loading = "lazy";
+        deleteIcon.alt = "";
+        deleteIcon.src = "/images/delete.svg";
 
-</script>
-</body>
+        deleteButton.appendChild(deleteIcon);
+
+        buttonContainer.appendChild(addButton);
+        buttonContainer.appendChild(deleteButton);
+
+        rowContainer.appendChild(listFieldContainer);
+        rowContainer.appendChild(buttonContainer);
+
+        container.appendChild(rowContainer);
+
+        // Add event listener to the new input field to capture its value
+        input.addEventListener("input", function () {
+          listFieldValues.push(input.value); // Push the value to the array
+        });
+      }
+
+      function deleteRow(button) {
+        const rowContainer = button.closest(".row-container");
+        const input = rowContainer.querySelector(".listField");
+
+        if (input) {
+          const index = listFieldValues.indexOf(input.value);
+          if (index !== -1) {
+            listFieldValues.splice(index, 1); // Remove the value from the array
+          }
+        }
+
+        rowContainer.remove();
+      }
+
+      function submitForm() {
+        // Create FormData object
+        let formData = new FormData();
+
+        // Select all input fields with the name 'listField[]'
+        const listFieldInputs = document.querySelectorAll(
+          'input[name="listField[]"]'
+        );
+
+        // Append the values of each input field to the FormData object
+        listFieldInputs.forEach((input) => {
+          formData.append("listField", input.value);
+        });
+
+        // Submit the form
+        fetch("/template/new-template", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => {
+            // Handle response as needed
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+  </body>
 </html>
