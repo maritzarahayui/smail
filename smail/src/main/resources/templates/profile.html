@@ -8,66 +8,65 @@
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
     
-    <link rel="stylesheet" href="/css/global.css"/>
-    <link rel="stylesheet" th:href="@{/css/profile.css}"/>
+    <link rel="stylesheet" th:href="@{/css/global.css}"/>
     <link rel="stylesheet" th:href="@{/css/riwayat-surat.css}"/>
 </head>
+
+<style>
+.data-group {
+  flex-direction: column;
+  gap: 10px 0;
+  display: flex;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.data-box {
+  border-radius: 8px;
+  background-color: rgba(16, 15, 15, 0.05);
+  border: 2px solid #3a8b5a;
+  padding: 12px 20px;
+}
+
+.data-label {
+  font-weight: 600;
+}
+
+.data-wrap {
+    margin-top: 95px;
+    margin-bottom: 40px;
+}
+</style>
 
 <body>
     <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div class="permintaan-template">
-        <b class="pengajuan-permohonan-surat-container">
-            <span class="pengajuan">Profile</span>
+    <div class="page-container">
+        <b class="title-container">
+            <span class="title-gradient">Profile</span>
         </b>
 
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
-        <section class="button-frame">
-            <div class="inner-frame">
-                <div class="ellipse-shape-parent">
-                    <div class="ellipse-shape">
-                        <div class="text-input-frame">
-                            <div class="text-input">
-                                <div class="label">Nama Lengkap</div>
-                                <div class="text-input1">
-                                    <div class="placeholder-text">
-                                        <div class="placeholder" th:text="${nama}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input2">
-                                <div class="label1" th:text="${role == 'Mahasiswa' ? 'NPM' : 'NIP'}"></div>
-                                <div class="text-input3">
-                                    <div class="placeholder-text1">
-                                        <div class="placeholder" th:text="${id}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input4">
-                                <div class="label2">Email</div>
-                                <div class="text-input5">
-                                    <div class="placeholder-text2">
-                                        <div class="placeholder" th:text="${email}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="text-input6">
-                                <div class="label3">Role</div>
-                                <div class="text-input7">
-                                    <div class="placeholder-text3">
-                                        <div class="placeholder" th:text="${role}"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="data-wrap">
+            <div class="data-group">
+                <div class="data-label">Nama Lengkap</div>
+                <div class="data-box" th:text="${nama}"></div>
             </div>
-        </section>
+            <div class="data-group">
+                <div class="data-label" th:text="${role == 'Mahasiswa' ? 'NPM' : 'NIP'}"></div>
+                <div class="data-box" th:text="${id}"></div>
+            </div>
+            <div class="data-group">
+                <div class="data-label">Email</div>
+                <div class="data-box" th:text="${email}"></div>
+            </div>
+            <div class="data-group">
+                <div class="data-label">Role</div>
+                <div class="data-box" th:text="${role}"></div>
+            </div>
+        </div>
     </div>
-
-    <br><br><br>
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
