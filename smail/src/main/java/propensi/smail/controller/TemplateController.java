@@ -203,7 +203,7 @@ public class TemplateController {
                                 @RequestParam("kategori") String kategori,
                                 @RequestParam("namaTemplate") String namaTemplate,
                                 @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                @RequestParam("listField") String[] listField,
+                                @RequestParam("listField[]") String[] listField,
                                 Model model) {
         String message = "";
 
@@ -357,7 +357,7 @@ public class TemplateController {
                                     @RequestParam("kategori") String kategori,
                                     @RequestParam("namaTemplate") String namaTemplate,
                                     @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                    @RequestParam("listField") ArrayList<String> listField,
+                                    @RequestParam("listField[]") ArrayList<String> listField,
                                     Model model, Authentication auth) {
         String message = "";
 

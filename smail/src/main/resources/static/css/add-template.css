@@ -474,3 +474,7 @@ body {
   align-self: flex-end;
   margin-right: 10px;
 }
+
+.row-container {
+  margin-bottom: 10px; /* Adjust the value as needed */
+}

@@ -232,7 +232,7 @@ public class SuratMasukController {
     // route to follow up arsip surat 
     @GetMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
-        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        SuratMasuk suratMasuk = suratMasukService.getFile(id); 
         model.addAttribute("suratMasuk", suratMasuk);
         // panggil listpenandatangan
         List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
@@ -255,9 +255,12 @@ public class SuratMasukController {
     
     // route to follow up arsip surat
     @PostMapping("/follow-up/{id}")
-    public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penerimaEksternal") String penerimaEksternal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
+    public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
         SuratMasuk arsipAwal = suratMasukService.getFile(id);
         Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
+
+        String penerimaEksternal = arsipAwal.getPengirim();
+
         SuratKeluar arsipFollowUp = suratKeluarService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
 
         // set dan save penandatangan ke object surat masuk
