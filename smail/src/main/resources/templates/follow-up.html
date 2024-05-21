@@ -123,9 +123,7 @@
                               </div>
                               <h3 class="upload-file-kamu-container">
                                 <span>Upload</span>
-                                <span class="file-kamu-di">
-                                  file kamu di sini (Max. 2MB)</span
-                                >
+                                <span class="file-kamu-di"> file kamu di sini (dalam PDF, max. 10MB)</span>
                               </h3>
                               <span class="file-name"></span>
                               <br />
@@ -163,9 +161,10 @@
 
                     <input type="hidden" id="penandatangan" name="penandatangan"/>
                     
-                    <div class="text-center action-buttons" onclick="submitForm()">
-                      <div class="primary-long-button">Simpan</div>
+                    <div class="text-center action-buttons">
+                      <button type="submit" onclick="submitForm()" class="primary-long-button">Simpan</button>
                     </div>
+
                   </form>
                 </div>
               </div>
@@ -177,26 +176,42 @@
 
     <footer th:replace="~{fragments/footer :: footer}"></footer>
 
-    <script>
-      document.getElementById("file").addEventListener("change", function () {
-        var fileName = this.files[0].name;
-        document.querySelector(".file-name").textContent = fileName;
-      });
+<script>
+  document.getElementById('file').addEventListener('change', function() {
+      var file = this.files[0];
+      var maxFileSize = 10 * 1024 * 1024;
 
-      function toggleDropdown() {
-        var disclosureContent = document.querySelector(".disclosure-content");
-        disclosureContent.classList.toggle("open");
+      if (file.size > maxFileSize) {
+          document.querySelector('.file-name').textContent = "Ukuran file terlalu besar. Silahkan upload ulang";
+          document.querySelector('.file-name').style.color = "red"; 
+          document.querySelector('.file-name').style.fontWeight = "700"; 
+          document.querySelector('button[type="submit"]').disabled = true;
+      } else {
+          document.querySelector('.file-name').textContent = file.name;
+          document.querySelector('.file-name').style.color = "black";
+          document.querySelector('.file-name').style.fontWeight = "400"; 
+          document.querySelector('button[type="submit"]').disabled = false;
       }
-      // Fungsi untuk mengubah teks pada elemen yang sesuai dengan opsi yang dipilih
-      function changeText(option) {
-        var selectedText = option.textContent;
-        document.getElementById("selected-option").textContent = selectedText;
-        document.getElementById("penandatangan").value = option.getAttribute("value");
+  });
 
-      }
-      function submitForm() {
-        document.getElementById("follow-up-form").submit();
-      }
-    </script>
+  function toggleDropdown() {
+    var disclosureContent = document.querySelector(".disclosure-content");
+    disclosureContent.classList.toggle("open");
+  }
+
+  // Fungsi untuk mengubah teks pada elemen yang sesuai dengan opsi yang dipilih
+  function changeText(option) {
+    var selectedText = option.textContent;
+    document.getElementById("selected-option").textContent = selectedText;
+    document.getElementById("penandatangan").value = option.getAttribute("value");
+
+  }
+
+  function submitForm() {
+    document.getElementById("follow-up-form").submit();
+  }
+
+</script>
+
   </body>
 </html>

@@ -120,7 +120,7 @@
                                         </div>
                                         <h3 class="upload-file-kamu-container">
                                             <span>Perbarui</span>
-                                            <span class="file-kamu-di"> file kamu di sini dalam format .pdf</span>
+                                            <span class="file-kamu-di"> file kamu di sini (dalam PDF, max. 10MB)</span>
                                         </h3>
                                         <span class="file-name" th:text="${template.fileName}"></span>
                                     </div>
@@ -130,7 +130,7 @@
                     </div>
                     
                     <div class="text-center action-buttons">
-                        <button type="submit" onclick="submitForm()" class="primary-long-button" 
+                        <button type="button" onclick="submitForm()" class="primary-long-button" 
                             data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + template.id}"
                             >Update</button>
                     </div>
@@ -153,7 +153,7 @@
                                         <div class="primary-text">Cancel</div>
                                     </button>
                                     <a th:href="@{'/template/update/' + ${template.id}}">
-                                        <button type="button" class="primary-button m-0">
+                                        <button type="submit" class="primary-button m-0">
                                             <div class="primary-text">Ubah</div>
                                         </button>
                                     </a>                            
@@ -176,8 +176,20 @@
 let listFieldValues = []; // Array to store input values
 
 document.getElementById('file').addEventListener('change', function() {
-    var fileName = this.files[0].name;
-    document.querySelector('.file-name').textContent = fileName;
+    var file = this.files[0];
+    var maxFileSize = 10 * 1024 * 1024;
+
+    if (file.size > maxFileSize) {
+        document.querySelector('.file-name').textContent = "Ukuran file terlalu besar. Silahkan upload ulang";
+        document.querySelector('.file-name').style.color = "red"; 
+        document.querySelector('.file-name').style.fontWeight = "700"; 
+        document.querySelector('button[type="submit"]').disabled = true;
+    } else {
+        document.querySelector('.file-name').textContent = file.name;
+        document.querySelector('.file-name').style.color = "black";
+        document.querySelector('.file-name').style.fontWeight = "400"; 
+        document.querySelector('button[type="submit"]').disabled = false;
+    }
 });
 
 function addRow() {

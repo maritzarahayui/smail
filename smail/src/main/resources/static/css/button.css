@@ -245,6 +245,13 @@ a {
     color: #fffffe;
 }
 
+.primary-long-button:disabled {
+    background-color: #6c6c6c;
+    box-shadow: none;
+    text-decoration: none;
+    color: #fffffe;
+}
+
 .action-buttons {
     position: relative;
     align-items: center;
