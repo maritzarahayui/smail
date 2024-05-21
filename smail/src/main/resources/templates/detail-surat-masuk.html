@@ -118,7 +118,8 @@
               <div class="content-wrapper">
                   <div class="content" th:each="tembusanItem, iterStat : ${suratMasuk.tembusan}"
                       th:text="${tembusanItem + (iterStat.last ? '' : ', ')}"
-                      th:if="${!#lists.isEmpty(suratMasuk.tembusan)}">
+                      th:if="${!#lists.isEmpty(suratMasuk.tembusan)}"
+                      style="width: fit-content; padding-right: 5px;">
                   </div>
               </div>
           </div>
@@ -142,10 +143,10 @@
 
           <div class="text-center action-buttons">
                 <a type="submit" class="primary-long-button" 
-                        th:if="${suratMasuk.suratFollowUp == null}"
-                        th:href="@{'/surat-masuk/follow-up/' + ${suratMasuk.nomorArsip}}"
-                        style="color: #fffffe;">
-                        Follow Up
+                    th:if="${suratMasuk.suratFollowUp == null}"
+                    th:href="@{'/surat-masuk/follow-up/' + ${suratMasuk.nomorArsip}}"
+                    style="color: #fffffe;">
+                    Follow Up
                 </a>
 
                 <a type="submit" class="outline-long-button" th:href="@{'/surat-masuk/disposisi/' + ${suratMasuk.nomorArsip}}">Disposisi</a>

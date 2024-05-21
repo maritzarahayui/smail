@@ -66,9 +66,35 @@
     font-family: var(--body-b2);
 }
 
+.faq-input {
+    border: 2px solid var(--green-green-5); 
+    outline: none; 
+    border-radius: var(--br-5xs);
+}
+
+.faq-input:focus {
+    border-color: var(--green-green-5); 
+    box-shadow: 0 0 5px var(--green-green-5); 
+}
+
+.question-submit {
+    color: var(--white-white-1);
+    width: fit-content;
+    border: 0;
+    padding: 10.5px var(--padding-5xl);
+    background-color: var(--green-green-1);
+    border-radius: var(--br-xs);
+    flex-direction: row;
+}
+
+.question-submit:hover {
+    color: var(--white-white-1);
+    background-color: var(--green-green-2);
+}
+
 .question-submit-row {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .form-question {
@@ -156,7 +182,7 @@
 .pertanyaan-box {
     background-color: var(--blue-blue-2);
     border-radius: var(--br-5xs);
-    border: 2px solid var(--green-green-2);
+    border: 2px solid var(--green-green-5);
     color: var(--white-white-1);
     padding: var(--padding-xl);
     width: 80%;
@@ -164,6 +190,7 @@
     box-sizing: border-box;
     justify-content: flex-start;
     font-size: var(--body-b2-size);
+    margin: auto;
 }
 
 .jawaban-box {
@@ -177,6 +204,7 @@
     box-sizing: border-box;
     justify-content: flex-start;
     font-size: var(--body-b2-size);
+    margin: auto;
 }
 
 .faq-input {
@@ -190,25 +218,8 @@
     box-shadow: 0 0 5px var(--green-green-5); 
 }
 
-.question-form {
+.answer-form {
     width: 80%;
     display: flex;
-}
-
-.question-submit {
-    color: var(--white-white-1);
-    display: flex;
-    flex-direction: row;
-    border: 0;
-    padding: 10.5px var(--padding-5xl);
-    background-color: var(--green-green-1);
-    border-radius: var(--br-xs);
-    justify-content: center;
-    height: 50px;
-}
-
-.question-submit:hover {
-    color: var(--white-white-1);
-    background-color: #163c3f;
-    text-decoration: none;
+    margin: auto;
 }

@@ -22,6 +22,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.7/css/dataTables.bootstrap5.css"/>
 </head>
 
+<style>
+    .modal-content {
+        height: fit-content;
+        width: fit-content;
+        min-height: 300px;
+        min-width: 500px;
+        padding: 20px;
+    }
+</style>
+
 <body>
 
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
@@ -79,7 +89,7 @@
                                 </a>
 
                                 <!-- Button trigger modal -->
-                                <button type="button" class="cancel-button" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelModal' + requestSurat.id}">
+                                <button type="button" class="delete-button" data-bs-toggle="modal" th:attr="data-bs-target=${'#cancelModal' + requestSurat.id}">
                                     <div class="primary-text">Batalkan</div>
                                 </button>
 
@@ -87,23 +97,25 @@
                                 <div class="modal fade" th:id="${'cancelModal' + requestSurat.id}" tabindex="-1" th:aria-labelledby="'cancelModalLabel' + ${requestSurat.id}" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
-                                            <div class="modal-header" style="border-bottom: none;">
+                                        <form th:action="@{/request/history/{id}/cancel(id=${requestSurat.id})}" method="post">
+                                            <div class="modal-header" style="border-bottom: none; align-items: center;">
                                                 <h5 class="modal-title" th:id="${'cancelModalLabel' + requestSurat.id}">Batalkan Request Surat</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form th:action="@{/request/history/{id}/cancel(id=${requestSurat.id})}" method="post">
-                                                    <div class="mb-3">
-                                                        <input type="text" class="form-control" th:id="${'inputReason' + requestSurat.id}" name="alasanPembatalan" placeholder="Masukkan alasan...">
-                                                    </div>
-                                                    <button type="submit" class="cancel-button">
-                                                        <div class="primary-text">Batalkan</div>
-                                                    </button>
-                                                </form>                                            
+                                                <textarea type="text" class="form-control" th:id="${'inputReason' + requestSurat.id}" 
+                                                    name="alasanPembatalan" placeholder="Masukkan alasan..." style="min-height: 150px;"></textarea>
                                             </div>
+                                            <div class="modal-footer" style="border-top: none; align-items: end;">                                             
+                                                <button type="submit" class="delete-button">
+                                                    <div class="primary-text">Batalkan</div>
+                                                </button>
+                                            </div>
+                                        </form>                                            
                                         </div>
                                     </div>
                                 </div>
+
                             </td>
                         </tr>
                     </tbody>

@@ -39,7 +39,7 @@
 
         <br><br><br>
 
-        <div th:each="faq : ${faqsTerjawab}" class="accordion-container">
+        <div th:each="faq : ${faqsTerjawab}" class="accordion-container mb-4">
             <div class="accordion">
                 <strong th:text="${faq.pertanyaan}"></strong>
                 <img class="chevron" alt="Expand/collapse" src="/images/chevron-down.svg"/>
@@ -55,28 +55,30 @@
                     <img class="faq-person img-fluid" src="/images/faq-person.svg"/>
                 </div>
                 <div class="row">
-                    <a th:href="@{/faq/user-faq/terjawab}" style="color: #459a7d; margin-block: 10px; text-align: left; font-size: 18px;">Lihat Pertanyaan Saya</a>
+                    <a th:href="@{/faq/user-faq/terjawab}" style="color: #459a7d; margin-block: 10px; text-align: left; font-size: 18px; font-weight: 900;">
+                        Lihat Pertanyaan Saya
+                    </a>
                 </div>
             </div>
             <form class="col-md-9 question-form" th:action="@{/faq/tanya}" th:object="${newFaq}" method="POST">
                 <div class="row" th:unless="${#lists.isEmpty(faqsTerjawab)}">
-                    <p style="padding-left: 0px;">Masih memiliki pertanyaan? Tidak dapat menemukan jawaban yang Anda cari?</p>
+                    <p style="padding-left: 0px; font-weight: 600;">Masih memiliki pertanyaan? Tidak dapat menemukan jawaban yang Anda cari?</p>
                 </div>
                 <div class="row" th:unless="${#lists.isEmpty(faqsTerjawab)}">
-                    <p style="padding-left: 0px;">Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
+                    <p style="padding-left: 0px; font-weight: 600;">Silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
                 </div>
                 <div class="row" th:if="${#lists.isEmpty(faqsTerjawab)}">
-                    <p style="padding-left: 0px;">Belum ada pertanyaan yang sudah terjawab.</p>
+                    <p style="padding-left: 0px; font-weight: 600;">Belum ada pertanyaan yang sudah terjawab.</p>
                 </div>
                 <div class="row" th:if="${#lists.isEmpty(faqsTerjawab)}">
-                    <p style="padding-left: 0px;">Jika ada yang ingin ditanyakan, silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
+                    <p style="padding-left: 0px; font-weight: 600;">Jika ada yang ingin ditanyakan, silahkan kirimkan pertanyaan Anda kepada tim kami.</p>
                 </div>
                 <div class="row">
                     <textarea class="form-control faq-input" rows="4" th:field="*{pertanyaan}" placeholder="Type your question here" required></textarea>
                 </div>
                 <br>
                 <div class="row question-submit-row" style="align-items: end;">
-                   <button type="submit" class="btn btn-primary question-submit">Kirim pertanyaan</button>
+                   <button type="submit" class="btn btn-primary question-submit" style="font-weight: 600;">Kirim pertanyaan</button>
                 </div>
             </form>
         </div>

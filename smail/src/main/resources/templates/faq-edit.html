@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="/css/asset.css"/>
     <link rel="stylesheet" href="/css/faq.css"/>
     <link rel="stylesheet" href="/css/button.css"/>
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+
 </head>
 
 <body>
 	<nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-    <div class="content-container">
+    <div class="permintaan-template">
     
         <nav th:replace="~{fragments/asset :: asset}"></nav>
 
@@ -33,7 +35,7 @@
 
             <br>
 
-            <form th:action="@{/faq/{idFAQ}/edit (idFAQ=${newFaq.id})}" th:object="${newFaq}" method="POST" class="question-form">
+            <form th:action="@{/faq/{idFAQ}/edit (idFAQ=${newFaq.id})}" th:object="${newFaq}" method="POST" class="answer-form">
                 <input class="form-control" type="hidden" th:field="*{id}" />
                 <input class="form-control" type="hidden" th:field="*{status}" />
                 <input class="form-control" type="hidden" th:field="*{pertanyaan}"/>
@@ -41,12 +43,40 @@
                     <div class="row">
                         <textarea class="form-control faq-input" style="min-height: 150px;" th:field="*{jawaban}" placeholder="Jawab pertanyaan di sini" required></textarea>
                     </div>
+
                     <br><br>
-                    <div class="row d-flex justify-content-end">
-                        <button class="primary-large-button" th:href="@{/faq/{idFAQ}/eskalasi (idFAQ=${newFaq.id})}" style="width: 200px;">
+
+                    <!-- Button trigger modal -->
+                    <div class="row" style="justify-content: end;">
+                        <button class="primary-large-button" style="width: 200px;" type="button" data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + newFaq.id}">
                             <div class="tambah-template">Submit</div>
                         </button>
                     </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" th:id="${'confirmationModal' + newFaq.id}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
+                                <div class="modal-header" style="border-bottom: none; justify-content: center;">
+                                    <h5 class="modal-title"><strong>Ubah Jawaban Forum</strong></h5>
+                                </div>
+                                <div class="modal-body m-0">
+                                    <p style="font-size: large; text-align: center;">
+                                        Apakah Anda yakin ingin mengubah jawaban forum ini? Pastikan jawaban baru tersebut sudah sesuai. 
+                                    </p>
+                                </div>
+                                <div class="modal-footer" style="border-top: none; justify-content: center; gap: 5px">   
+                                    <button type="button" class="cancel-button m-0" data-bs-dismiss="modal" aria-label="Close">
+                                        <div class="primary-text">Cancel</div>
+                                    </button>
+                                    <button type="submit" class="primary-button m-0">
+                                        <div class="primary-text">Submit</div>
+                                    </button>                                             
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
 

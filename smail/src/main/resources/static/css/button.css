@@ -46,6 +46,7 @@ a {
     height: 40px;
     width: 105px;
     border-radius: var(--br-xs);
+    text-align: center;
     align-items: center;
     justify-content: center;
     text-decoration: none;
@@ -57,7 +58,7 @@ a {
     background-color: #163c3f;
 }
 
-.cancel-button {
+.delete-button {
     cursor: pointer;
     margin: auto;
     padding: var(--padding-5xs) var(--padding-5xl);
@@ -72,9 +73,29 @@ a {
     border: none;
 }
 
-.cancel-button:hover{
+.delete-button:hover{
     text-decoration: none;
     background-color: #6B000C;
+}
+
+.cancel-button {
+    cursor: pointer;
+    margin: auto;
+    padding: var(--padding-5xs) var(--padding-5xl);
+    background-color: #a6a4a4;
+    height: 40px;
+    width: 118px;
+    border-radius: var(--br-xs);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+}
+
+.cancel-button:hover{
+    text-decoration: none;
+    background-color: #818181;
 }
 
 .warning-button {

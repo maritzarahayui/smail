@@ -33,12 +33,12 @@
                 <form th:action="@{'/template/update/' + ${template.id}}" method="post" enctype="multipart/form-data">
                     <div class="text-input-frame">
                         <div class="label8">Nama Template</div>
-                        <input class="text-input14" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required />
+                        <input class="text-input15" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required />
                     </div>
                     <br>
                     <div class="text-input-frame">
                         <label for="kategori" class="label9">Kategori:</label>
-                        <select class="text-input14" id="kategori" name="kategori" required>
+                        <select class="text-input15" id="kategori" name="kategori" required>
                             <option value="" th:selected="${template.kategori == null}">-- Pilih Kategori --</option>
                             <option value="Legal" th:selected="${template.kategori == 'Legal'}">Legal</option>
                             <option value="SDM" th:selected="${template.kategori == 'SDM'}">SDM</option>
@@ -130,8 +130,38 @@
                     </div>
                     
                     <div class="text-center action-buttons">
-                        <button type="submit" onclick="submitForm()" class="primary-long-button">Update</button>
+                        <button type="submit" onclick="submitForm()" class="primary-long-button" 
+                            data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + template.id}"
+                            >Update</button>
                     </div>
+
+                    <!-- Modal UBAH -->
+                    <div class="modal fade" th:id="${'confirmationModal' + template.id}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
+                                <div class="modal-header" style="border-bottom: none; justify-content: center;">
+                                    <h5 class="modal-title"><strong>Ubah Template</strong></h5>
+                                </div>
+                                <div class="modal-body m-0">
+                                    <p style="font-size: large; text-align: center;">
+                                        Apakah Anda yakin ingin mengubah template ini? 
+                                        Pastikan seluruh perubahan sudah benar.
+                                    </p>
+                                </div>
+                                <div class="modal-footer" style="border-top: none; justify-content: center; gap: 5px">   
+                                    <button type="button" class="cancel-button m-0" data-bs-dismiss="modal" aria-label="Close">
+                                        <div class="primary-text">Cancel</div>
+                                    </button>
+                                    <a th:href="@{'/template/update/' + ${template.id}}">
+                                        <button type="button" class="primary-button m-0">
+                                            <div class="primary-text">Ubah</div>
+                                        </button>
+                                    </a>                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
 
@@ -153,7 +183,7 @@ document.getElementById('file').addEventListener('change', function() {
 function addRow() {
     let newInput = document.createElement('input');
     newInput.type = 'text';
-    newInput.className = 'text-input14 listField';
+    newInput.className = 'text-input15 listField';
     newInput.name = 'listField'; // Set the name as listField
 
     let container = document.getElementById('listFieldContainer');
@@ -168,7 +198,7 @@ function addRow() {
 
 function deleteRow() {
     let container = document.getElementById('listFieldContainer');
-    let inputs = container.querySelectorAll('.text-input14');
+    let inputs = container.querySelectorAll('.text-input15');
 
     // Hapus input field terakhir dan br sebelumnya
     if (inputs.length > 1) {

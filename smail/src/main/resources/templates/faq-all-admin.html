@@ -61,9 +61,35 @@
                                     <div class="warning-text">Jawab</div>
                                 </a>
 
-                                <a th:href="@{'/faq/' + ${faq.id} + '/hapus'}" class="cancel-button">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="delete-button" data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + faq.id}">
                                     <div class="primary-text">Hapus</div>
-                                </a>
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="${'confirmationModal' + faq.id}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
+                                            <div class="modal-header" style="border-bottom: none; justify-content: center;">
+                                                <h5 class="modal-title"><strong>Hapus Forum Pertanyaan</strong></h5>
+                                            </div>
+                                            <div class="modal-body m-0">
+                                                <p style="font-size: large;">
+                                                    Apakah Anda yakin ingin menghapus forum dengan pertanyaan "<strong th:text="${faq.pertanyaan}"></strong>"
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer" style="border-top: none; justify-content: center;">   
+                                                <button type="button" class="cancel-button" data-bs-dismiss="modal" aria-label="Close">
+                                                    <div class="primary-text">Cancel</div>
+                                                </button>                                         
+                                                <a th:href="@{'/faq/' + ${faq.id} + '/hapus'}" class="delete-button">
+                                                    <div class="primary-text">Hapus</div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </td>
                         </tr>
                     </tbody>
@@ -115,7 +141,7 @@
                                     <div class="warning-text">Ubah</div>
                                 </a>
 
-                                <a th:href="@{'/faq/' + ${faq.id} + '/hapus'}" class="cancel-button">
+                                <a th:href="@{'/faq/' + ${faq.id} + '/hapus'}" class="delete-button">
                                     <div class="primary-text">Hapus</div>
                                 </a>
                             </td>

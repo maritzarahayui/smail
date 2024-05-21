@@ -139,7 +139,36 @@
             </div>
 
             <div class="text-center action-buttons" th:if="${requestTemplate.status == 1}">
-                <button type="submit" class="primary-long-button">Simpan perubahan</button>
+                <button type="button" class="primary-long-button" data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + requestTemplate.id}"
+                >Simpan perubahan</button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" th:id="${'confirmationModal' + requestTemplate.id}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
+                        <div class="modal-header" style="border-bottom: none; justify-content: center;">
+                            <h5 class="modal-title"><strong>Ubah Status Request Template</strong></h5>
+                        </div>
+                        <div class="modal-body m-0">
+                            <p style="font-size: large; text-align: center;">
+                                Apakah Anda yakin ingin mengubah status request template ini menjadi <strong class="modal-status-display"></strong>?
+                            </p>
+                            <p style="font-size: large; text-align: center;">
+                                <strong>Pastikan status yang dipilih sudah benar. 
+                                Anda tidak bisa mengubah kembali status tersebut.</strong>
+                            </p>
+                        </div>
+                        <div class="modal-footer" style="border-top: none; justify-content: center; gap: 5px">   
+                            <button type="button" class="cancel-button m-0" data-bs-dismiss="modal" aria-label="Close">
+                                <div class="primary-text">Cancel</div>
+                            </button>
+                            <button type="submit" class="primary-button m-0">
+                                <div class="primary-text">Ubah</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </form>
@@ -149,17 +178,24 @@
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <script th:inline="javascript">
+
+    var modalStatusElement = document.querySelector('.modal-status-display');
+    modalStatusElement.textContent = "Diterima";
+
     function toggleReasonField(select) {
         var selectedValue = select.value;
         var reasonField = document.getElementById("reasonField");
         var alasanPenolakan = document.getElementById("alasanPenolakan");
+        var modalStatusElement = document.querySelector('.modal-status-display');
 
         if (selectedValue === '3') {
             reasonField.style.display = "block";
             alasanPenolakan.required = true; // Set required attribute
+            modalStatusElement.textContent = "Ditolak";
         } else {
             reasonField.style.display = "none";
             alasanPenolakan.required = false; // Remove required attribute
+            modalStatusElement.textContent = "Diterima";
         }
     }
 </script>

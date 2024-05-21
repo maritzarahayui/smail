@@ -65,7 +65,7 @@
                             <td th:text="${requestSurat.kategori}"></td>
                             <td th:if="${requestSurat.isActive}">Active</td>
                             <td th:unless="${requestSurat.isActive}">Inactive</td>
-                            <td th:text="${#dates.format(requestSurat.tanggalDibuat, 'dd-MM-yyyy HH:mm')}"></td>
+                            <td th:text="${#dates.format(requestSurat.tanggalDibuat, 'dd-MM-yyyy')}"></td>
                             <td style="display: flex; justify-content: space-between; border: none;">
                                 <a th:href="@{'/template/detail/' + ${requestSurat.id}}" class="primary-button">
                                     <div class="primary-text">Detail</div>

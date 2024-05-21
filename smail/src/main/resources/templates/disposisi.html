@@ -48,19 +48,17 @@
             <div class="label2">Masukkan alamat email yang dituju</div>
 
             <form class="collaborator-logos">
-              <div class="gmail-logo-parent">
-                <div class="gmail-logo">
-                  <div class="cacaccacacacacagmailcom">
-                    <input
-                      class="cacaccacacacacagmailcom1"
-                      placeholder="Masukkan alamat email"
-                      type="text"
-                    />
-                  </div>
+              <div class="input-email-box-parent">
+                <div class="input-email-box">
+                  <input
+                    class="input-email"
+                    placeholder="Masukkan alamat email"
+                    type="text"
+                  />
                 </div>
 
-                <button class="delete-button-wrapper" type="button" onclick="addRow(event)">
-                  <div class="delete-button">
+                <button class="remove-button-wrapper" type="button" onclick="addRow(event)">
+                  <div class="remove-button">
                     <div class="button23">
                       <img
                         class="lets-iconsadd-round"
@@ -75,13 +73,48 @@
           </div>
 
           <div class="text-center action-buttons" style="width: 1010px; margin: 0 auto;">
-            <a class="primary-long-button" 
+            <!-- <a class="primary-long-button" 
                 onclick="sendData()"
                 th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}"
                 style="color: #fffffe; width: 100%; margin: 0 auto;">
                 Disposisikan surat
+            </a> -->
+            <a class="primary-long-button" style="color: #fffffe; width: 100%; margin: 0 auto;" 
+               type="button" data-bs-toggle="modal" th:attr="data-bs-target=${'#confirmationModal' + suratMasuk.nomorArsip}">
+                Disposisikan surat
             </a>
           </div>
+
+          <!-- Modal -->
+          <div class="modal fade" th:id="${'confirmationModal' + suratMasuk.nomorArsip}" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content" style="width: 450px; height: fit-content; padding: 15px;">
+                    <div class="modal-header" style="border-bottom: none; justify-content: center;">
+                        <h5 class="modal-title"><strong>Disposisi Surat Masuk</strong></h5>
+                    </div>
+                    <div class="modal-body m-0">
+                        <p style="font-size: large; text-align: center;">
+                            Apakah Anda yakin ingin mendisposisikan surat masuk ini?
+                        </p>
+                        <p style="font-size: large; text-align: center;">
+                            <strong>Pastikan daftar alamat email sudah tepat.
+                            Email akan otomatis terkirim dan tidak dapat dibatalkan.</strong>
+                        </p>
+                    </div>
+                    <div class="modal-footer" style="border-top: none; justify-content: center; gap: 5px">   
+                        <button type="button" class="cancel-button m-0" data-bs-dismiss="modal" aria-label="Close">
+                            <div class="primary-text">Cancel</div>
+                        </button>
+                        <a onclick="sendData()" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
+                          <button type="button" class="primary-button m-0" style="width:118px">
+                            <div class="primary-text">Disposisi</div>
+                          </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+          </div>
+
         </div>
       </section>      
     </div>
@@ -93,16 +126,16 @@
 
         // Buat elemen div untuk mengelompokkan input dan tombol
         let group = document.createElement("div");
-        group.className = "gmail-logo-parent";
+        group.className = "input-email-box-parent";
 
         // Buat elemen div untuk mengelompokkan input dan tombol
         let rowDiv = document.createElement("div");
-        rowDiv.className = "gmail-logo";
+        rowDiv.className = "input-email-box";
 
         // Buat input email
         let newInput = document.createElement("input");
         newInput.type = "text";
-        newInput.className = "cacaccacacacacagmailcom1";
+        newInput.className = "input-email";
         newInput.placeholder = "Masukkan alamat email";
 
         // Buat div untuk wrapper tombol
@@ -157,7 +190,7 @@
 
         // Mengumpulkan semua input alamat email
         let emailInputs = document.querySelectorAll(
-          ".cacaccacacacacagmailcom1"
+          ".input-email"
         );
         let to = [];
         emailInputs.forEach(function (input) {
