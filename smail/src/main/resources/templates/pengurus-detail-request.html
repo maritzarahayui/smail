@@ -140,7 +140,7 @@
                     </div>
 
                     <div class="content-wrapper">
-                        <div class="content" th:text="${requestSurat.tanggalSelesai}"></div>
+                        <div class="content" th:text="${#dates.format(requestSurat.tanggalSelesai, 'dd-MM-yyyy HH:mm')}"></div>
                     </div>
                 </div>
 
