@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap");
 
-.permintaan-template {
+.page-container {
   width: 100%;
   position: relative;
   background-color: var(--white-white-1);

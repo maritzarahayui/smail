@@ -83,7 +83,7 @@
                             class="placeholder-text3"
                             placeholder="Date Created"
                             type="text"
-                            th:value="${template.tanggalDibuat}" readonly
+                            th:value="${#dates.format(template.tanggalDibuat, 'dd-MM-yyyy HH:mm')}" readonly
                     />
                 </div>
             </div>

@@ -221,7 +221,33 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+      function updateKategori() {
+      const requestTemplateDropdown = document.getElementById("requestTemplate");
+      const selectedOption = requestTemplateDropdown.options[requestTemplateDropdown.selectedIndex];
+      const kategori = selectedOption.getAttribute("data-kategori");
+
+      const kategoriDropdown = document.getElementById("kategori");
+
+      if (selectedOption.value === "") {
+        // Reset kategori to default if requestTemplate is default
+        kategoriDropdown.selectedIndex = 0;
+      } else {
+        // Set kategori based on selected requestTemplate
+        for (let i = 0; i < kategoriDropdown.options.length; i++) {
+          if (kategoriDropdown.options[i].value === kategori) {
+            kategoriDropdown.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+      function addRow() {
+        const container = document.getElementById("fieldsContainer");
+=======
 <footer th:replace="~{fragments/footer :: footer}"></footer>
+>>>>>>> 71b20e90122cff6eb776530a1a8ab58bf8b31021
 
 <script>
     let listFieldValues = []; // Array to store input values

@@ -19,6 +19,196 @@
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
+<<<<<<< HEAD
+  </head>
+  <body>
+    <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
+    <div class="tambah-template2">
+      <div class="home-frame">
+        <b class="pengajuan-permohonan-surat-container">
+          <span class="pengajuan">Tambah</span>
+          <span> Template</span>
+        </b>
+        <nav th:replace="~{fragments/asset :: asset}"></nav>
+      </div>
+      <div class="attach-button">
+        <div class="label-input-frame">
+          <div class="label-frame">
+            <form
+              action="/template/new-template"
+              method="post"
+              enctype="multipart/form-data"
+            >
+              <div class="text-input-frame">
+                <label for="requestTemplate" class="label9">Request Template:</label>
+                <select class="text-input14" id="requestTemplate" name="requestTemplate" onchange="updateKategori()">
+                  <option value="" class="pilih-request-template">-- Pilih Request Template --</option>
+                  <option th:each="requestTemplate : ${requestTemplates}"
+                          th:value="${requestTemplate.id}"
+                          th:data-kategori="${requestTemplate.kategori}"
+                          th:text="${requestTemplate.id}"></option>
+                </select>
+              </div>
+              <div class="text-input-frame">
+                <div class="label9">Nama Template</div>
+                <input
+                  class="text-input14"
+                  type="text"
+                  id="namaTemplate"
+                  name="namaTemplate"
+                  required
+                />
+              </div>
+              <div class="text-input-frame">
+                <label for="kategori" class="label9">Kategori:</label>
+                <select
+                  class="text-input14"
+                  id="kategori"
+                  name="kategori"
+                  required
+                >
+                  <option value="" class="pilih-kategori">
+                    -- Pilih Kategori --
+                  </option>
+                  <option value="Legal">Legal</option>
+                  <option value="SDM">SDM</option>
+                  <option value="Keuangan">Keuangan</option>
+                  <option value="Sarana">Sarana</option>
+                  <option value="Kemahasiswaan">Kemahasiswaan</option>
+                </select>
+              </div>
+              <div class="text-input-frame">
+                <label for="listPengguna" class="label9">List Pengguna:</label>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna1"
+                    name="listPengguna"
+                    value="Mahasiswa"
+                  />
+                  <label for="pengguna1">
+                    <span class="check"></span>
+                    <span class="label-text">Mahasiswa</span>
+                  </label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna2"
+                    name="listPengguna"
+                    value="Dosen"
+                  />
+                  <label for="pengguna2">
+                    <span class="check"></span>
+                    <span class="label-text">Dosen</span>
+                  </label>
+                </div>
+                <div class="radio-parent">
+                  <input
+                    type="checkbox"
+                    id="pengguna3"
+                    name="listPengguna"
+                    value="Staf"
+                  />
+                  <label for="pengguna3">
+                    <span class="check"></span>
+                    <span class="label-text">Staf</span>
+                  </label>
+                </div>
+              </div>
+              <div id="fieldsContainer">
+                <div class="row-container">
+                  <div class="list-field">
+                    <label for="listField" class="label9">List Field:</label>
+                    <input
+                      type="text"
+                      class="text-input15 listField"
+                      name="listField[]"
+                      required
+                    />
+                  </div>
+                  <div class="button-container">
+                    <button
+                      type="button"
+                      class="button15"
+                      onclick="addRow()"
+                      style="color: #fffffe"
+                    >
+                      <img
+                        class="lets-iconsadd-round2"
+                        loading="lazy"
+                        alt=""
+                        src="/images/plus-icon.svg"
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-top: 50px">
+                <div class="upload-illustration-frame">
+                  <div class="file-input">
+                    <div class="secondary-message">secondary message</div>
+                    <div class="rectangle-frame">
+                      <div class="arsip-surat-frame">
+                        <div class="button-frame1">
+                          <label class="upload-illustration" for="file">
+                            <div class="chevrondown-icon">
+                              <div class="wrapper-group">
+                                <img
+                                  class="group-icon"
+                                  alt=""
+                                  src="/images/imagetengah.png"
+                                />
+                              </div>
+                              <img
+                                class="chevrondown-icon-child"
+                                alt=""
+                                src="/images/upload.svg"
+                              />
+                              <img
+                                class="chevrondown-icon-item"
+                                loading="lazy"
+                                alt=""
+                                src="/images/imagekanan.png"
+                              />
+                            </div>
+                            <img
+                              class="upload-illustration-child"
+                              alt=""
+                              src="/images/imagekiri.png"
+                            />
+                          </label>
+                          <input
+                            type="file"
+                            class="custom-file-input"
+                            id="file"
+                            name="file"
+                            required
+                          />
+                        </div>
+                        <h3 class="upload-file-kamu-container">
+                          <span>Upload</span>
+                          <span class="file-kamu-di">
+                            file kamu di sini dalam format .pdf</span
+                          >
+                        </h3>
+                        <span class="file-name"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center action-buttons">
+                <button
+                  type="submit"
+                  onclick="submitForm()"
+                  class="primary-long-button"
+                >
+                  Buat template
+                </button>
+              </div>
+            </form>
+=======
 </head>
 
 <style>
@@ -149,6 +339,7 @@
               <option value="Sarana">Sarana</option>
               <option value="Kemahasiswaan">Kemahasiswaan</option>
             </select>
+>>>>>>> 71b20e90122cff6eb776530a1a8ab58bf8b31021
           </div>
         </div>
 
@@ -221,7 +412,33 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+      function updateKategori() {
+      const requestTemplateDropdown = document.getElementById("requestTemplate");
+      const selectedOption = requestTemplateDropdown.options[requestTemplateDropdown.selectedIndex];
+      const kategori = selectedOption.getAttribute("data-kategori");
+
+      const kategoriDropdown = document.getElementById("kategori");
+
+      if (selectedOption.value === "") {
+        // Reset kategori to default if requestTemplate is default
+        kategoriDropdown.selectedIndex = 0;
+      } else {
+        // Set kategori based on selected requestTemplate
+        for (let i = 0; i < kategoriDropdown.options.length; i++) {
+          if (kategoriDropdown.options[i].value === kategori) {
+            kategoriDropdown.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
+
+      function addRow() {
+        const container = document.getElementById("fieldsContainer");
+=======
 <footer th:replace="~{fragments/footer :: footer}"></footer>
+>>>>>>> 71b20e90122cff6eb776530a1a8ab58bf8b31021
 
 <script>
     let listFieldValues = []; // Array to store input values
