@@ -69,7 +69,7 @@
                                     <!-- Display SuratKeluar nomorSurat if available, otherwise show 'N/A' -->
                                     <span th:text="${requestSurat.surat != null ? requestSurat.surat.nomorArsip : 'N/A'}"></span>
                                 </td>
-                                <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'dd-MM-yyyy HH:mm')}"></td>
+                                <td th:text="${#dates.format(requestSurat.tanggalPengajuan, 'dd-MM-yyyy')}"></td>
                                 <td th:style="${requestSurat.status == 4} ? 'color: red;' : ''"
                                     th:text="${requestSurat.status == 4 ? 'Perlu tanda tangan' : 'Selesai ditandatangani'}"></td>
                                 <td style="display: flex; justify-content: space-between; border: none;">

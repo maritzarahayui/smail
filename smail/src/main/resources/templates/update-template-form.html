@@ -6,10 +6,13 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
 
-    <link rel="stylesheet" href="/css/add-template.css" />
+    <link rel="stylesheet" href="/css/riwayat-surat.css"/>
+    <link rel="stylesheet" href="/css/add-template.css"/>
+    <link rel="stylesheet" href="/css/upload.css" />
     <link rel="stylesheet" href="/css/global.css" />
-    <link rel="stylesheet" href="/css/request-surat.css" />
-    <link rel="stylesheet" href="/css/button.css" />
+    <link rel="stylesheet" href="/css/asset.css"/>
+    <link rel="stylesheet" href="/css/button.css"/>
+    <link rel="stylesheet" href="/css/checkbox.css"/>
 
     <object th:include="~{fragments/common :: js}" th:remove="tag"></object>
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
@@ -18,80 +21,74 @@
 <body>
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
-<div class="tambah-template2">
-    <div class="home-frame">
-    <b class="pengajuan-permohonan-surat-container">
-        <span class="pengajuan">Ubah</span>
+<div class="page-container">
+    <b class="title-container">
+        <span class="title-gradient">Ubah</span>
         <span> Template</span>
     </b>
 
     <nav th:replace="~{fragments/asset :: asset}"></nav>
-    </div>
-    <section class="attach-button">
-    <div class="label-input-frame">
-        <div class="label-frame">
+
+    <div class="form-wrap">
         <form th:action="@{'/template/update/' + ${template.id}}" method="post" enctype="multipart/form-data">
-            <div class="text-input-frame">
-            <div class="label8">Nama Template</div>
-            <input class="text-input15" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required/>
+
+            <div class="form-input-group">
+                <div class="form-input-label">Nama Template</div>
+                <input class="form-input-box" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required/>
             </div>
-            <br>
-            <div class="text-input-frame">
-            <label for="kategori" class="label9">Kategori:</label>
-            <select class="text-input15" id="kategori" name="kategori" required>
-                <option value="" th:selected="${template.kategori == null}">-- Pilih Kategori --</option>
-                <option value="Legal" th:selected="${template.kategori == 'Legal'}">Legal</option>
-                <option value="SDM" th:selected="${template.kategori == 'SDM'}">SDM</option>
-                <option value="Keuangan" th:selected="${template.kategori == 'Keuangan'}">Keuangan</option>
-                <option value="Sarana" th:selected="${template.kategori == 'Sarana'}">Sarana</option>
-                <option value="Kemahasiswaan" th:selected="${template.kategori == 'Kemahasiswaan'}">Kemahasiswaan</option>
-            </select>
+
+            <div class="form-input-group">
+                <label for="kategori" class="form-input-label m-0">Kategori</label>
+                <div class="form-input-dropdown">
+                    <select class="form-select" id="kategori" name="kategori" required>
+                        <option value="" th:selected="${template.kategori == null}">Pilih Kategori</option>
+                        <option value="Legal" th:selected="${template.kategori == 'Legal'}">Legal</option>
+                        <option value="SDM" th:selected="${template.kategori == 'SDM'}">SDM</option>
+                        <option value="Keuangan" th:selected="${template.kategori == 'Keuangan'}">Keuangan</option>
+                        <option value="Sarana" th:selected="${template.kategori == 'Sarana'}">Sarana</option>
+                        <option value="Kemahasiswaan" th:selected="${template.kategori == 'Kemahasiswaan'}">Kemahasiswaan</option>
+                    </select>
+                </div>
             </div>
-            <br>
-            <div class="text-input-frame">
-            <label for="listPengguna" class="label9">List Pengguna:</label>
-            <br>
-            <div class="radio-parent">
-                <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa" th:checked="${template.listPengguna.contains('Mahasiswa')}"/>
-                <label for="pengguna1">Mahasiswa</label>
-            </div>
-            <div class="radio-parent">
-                <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen" th:checked="${template.listPengguna.contains('Dosen')}"/>
-                <label for="pengguna2">Dosen</label>
-            </div>
-            <div class="radio-parent">
-                <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf" th:checked="${template.listPengguna.contains('Staf')}"/>
-                <label for="pengguna3">Staf</label>
-            </div>
+
+            <div class="form-input-group">
+                <div class="form-input-label">List Pengguna</div>
+                    <div class="row m-0">
+                    <div class="checkbox-wrapper-13" style="width:fit-content; padding-left: 0;">
+                        <input type="checkbox" id="pengguna1" name="listPengguna" value="Mahasiswa" th:checked="${template.listPengguna.contains('Mahasiswa')}">
+                        <label for="pengguna1" style="font-weight:500;">Mahasiswa</label>
+                    </div>
+                    <div class="checkbox-wrapper-13" style="width:fit-content;">
+                        <input type="checkbox" id="pengguna2" name="listPengguna" value="Dosen" th:checked="${template.listPengguna.contains('Dosen')}">
+                        <label for="pengguna2" style="font-weight:500;">Dosen</label>
+                    </div>
+                    <div class="checkbox-wrapper-13" style="width:fit-content;">
+                        <input type="checkbox" id="pengguna3" name="listPengguna" value="Staf" th:checked="${template.listPengguna.contains('Staf')}">
+                        <label for="pengguna3" style="font-weight:500;">Staf</label>
+                    </div>
+                </div>
             </div>
 
             <div id="fieldsContainer">
-            <label for="listField" class="label9">List Field:</label>
-            <!-- Loop through each item in the listField[] -->
-            <div th:each="field, fieldStat : ${template.listField}" class="row-container">
-                <!-- Check if it's the first item, if not, show the "Delete Row" button -->
-                <div class="list-field" th:classappend="${fieldStat.index == 0 ? '' : 'with-button'}">
-                <!-- Populate the value with the current item -->
-                <input type="text" class="text-input15" name="listField[]" th:value="${field}" required/>
-                </div>
-                <div class="button-container">
-                <!-- Show the "Add Row" button only if it's the first item -->
-                <button type="button" class="button15" onclick="addRow()" style="color: #fffffe">
-                    <img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg"/>
-                </button>
-
-                <!-- Show the "Delete Row" button only if it's not the first item -->
-                <button type="button" class="button15-red" onclick="deleteRow(this)" style="color: #fffffe" th:unless="${fieldStat.index == 0}">
-                    <img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg"/>
-                </button>
+                <label for="listField" class="form-input-label form-input-group" style="margin-bottom: -10px;">List Field</label>
+                <div th:each="field, fieldStat : ${template.listField}" class="list-field-group">
+                    <div class="list-field" th:classappend="${fieldStat.index == 0 ? '' : 'with-button'}">
+                    <input type="text" class="list-field-input" name="listField[]" th:value="${field}" required/>
+                    </div>
+                    <div class="button-container">
+                    <button type="button" class="button-add-row" onclick="addRow()" style="color: #fffffe">
+                        <img class="lets-iconsadd-round2" loading="lazy" alt="" src="/images/plus-icon.svg"/>
+                    </button>
+                    <button type="button" class="button-delete-row" onclick="deleteRow(this)" style="color: #fffffe" th:unless="${fieldStat.index == 0}">
+                        <img class="mdidelete-icon1" loading="lazy" alt="" src="/images/delete.svg"/>
+                    </button>
+                    </div>
                 </div>
             </div>
-            </div>
 
-            <div class="form-group" style="margin-top: 50px">
+            <div class="form-input-group" style="margin-top: 50px">
             <div class="upload-illustration-frame">
                 <div class="file-input">
-                <div class="secondary-message">secondary message</div>
                 <div class="rectangle-frame">
                     <div class="arsip-surat-frame">
                     <div class="button-frame1">
@@ -120,7 +117,7 @@
 
             <div class="text-center action-buttons">
             <button type="button" onclick="submitForm()" class="primary-long-button" data-bs-toggle="modal" 
-                th:attr="data-bs-target=${'#confirmationModal' + template.id}">
+                th:attr="data-bs-target=${'#confirmationModal' + template.id}" style="width: 80%;">
                 Update
             </button>
             </div>
@@ -154,9 +151,8 @@
             </div>
             </div>
         </form>
-        </div>
+
     </div>
-    </section>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
@@ -185,14 +181,14 @@
         const container = document.getElementById("fieldsContainer");
 
         const rowContainer = document.createElement("div");
-        rowContainer.className = "row-container";
+        rowContainer.className = "list-field-group";
 
         const listFieldContainer = document.createElement("div");
         listFieldContainer.className = "list-field";
 
         const input = document.createElement("input");
         input.type = "text";
-        input.className = "text-input15 listField";
+        input.className = "list-field-input listField";
         input.name = "listField[]";
         input.required = true;
 
@@ -203,7 +199,7 @@
 
         const addButton = document.createElement("button");
         addButton.type = "button";
-        addButton.className = "button15";
+        addButton.className = "button-add-row";
         addButton.style.color = "#fffffe";
         addButton.onclick = addRow;
 
@@ -217,7 +213,7 @@
 
         const deleteButton = document.createElement("button");
         deleteButton.type = "button";
-        deleteButton.className = "button15-red";
+        deleteButton.className = "button-delete-row";
         deleteButton.style.color = "#fffffe";
         deleteButton.onclick = function () {
             deleteRow(this);
@@ -246,7 +242,7 @@
     }
 
     function deleteRow(button) {
-        const rowContainer = button.closest(".row-container");
+        const rowContainer = button.closest(".list-field-group");
         const input = rowContainer.querySelector(".listField");
 
         if (input) {
