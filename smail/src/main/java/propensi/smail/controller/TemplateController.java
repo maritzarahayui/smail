@@ -181,6 +181,9 @@ public class TemplateController {
     public String showTambahTemplateForm(Model model, Authentication auth) {
         model.addAttribute("templateSurat", new TemplateSurat());
 
+        List<RequestTemplate> requestTemplates = templateSuratService.getAllFilteredAcceptedReq();
+        model.addAttribute("requestTemplates", requestTemplates);
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -204,12 +207,23 @@ public class TemplateController {
                                 @RequestParam("namaTemplate") String namaTemplate,
                                 @RequestParam("listPengguna") ArrayList<String> listPengguna,
                                 @RequestParam("listField[]") String[] listField,
+                                @RequestParam(value = "requestTemplate", required = false) String requestTemplateId,
                                 Model model) {
         String message = "";
 
         try {
             ArrayList<String> newListField = new ArrayList<>(Arrays.asList(listField));
-            templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField);
+
+            RequestTemplate requestTemplate = null;
+            if (requestTemplateId != null && !requestTemplateId.isEmpty()) {
+                requestTemplate = templateSuratService.getRequest(requestTemplateId);
+                System.out.println("masuk sini ga");
+            }
+
+            System.out.println("reqtemplate " + requestTemplateId);
+
+            templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField, requestTemplate);
+
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             model.addAttribute("message", message);
             return "redirect:/template/active-templates";
@@ -244,6 +258,9 @@ public class TemplateController {
                 return "auth-failed";
             }
         }
+
+        TemplateSurat templateSurat = templateSuratService.findById(id);
+        System.out.println("ada gaaa " + templateSurat.getRequestTemplate().getId());
 
         return "detail-template"; // Return the PDF preview Thymeleaf template
     }

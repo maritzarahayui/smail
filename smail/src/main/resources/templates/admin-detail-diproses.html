@@ -125,6 +125,18 @@
                     </div>
                 </div>
 
+                <div class="row" th:if="${template != null}">
+                    <div class="detail-wrapper">
+                        <div class="detail">Template Surat Terkait</div>
+                    </div>
+
+                    <div class="content-wrapper">
+                        <a class="content"
+                           th:href="@{'/template/detail/' + ${template.id}}"
+                           th:text="${template.namaTemplate}"></a>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="detail-wrapper">
                         <div class="detail">Status</div>

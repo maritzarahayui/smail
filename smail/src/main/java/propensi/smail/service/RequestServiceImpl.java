@@ -326,10 +326,14 @@ public class RequestServiceImpl implements RequestService {
                     List<String> jenisList = new ArrayList<>();
                     jenisList.add(jenis);
                     kategoriJenisMap.put(kategori, jenisList);
+
+
                 }
             }
             
         }
+
+        System.out.println("KategoriJenisMap: " + kategoriJenisMap);
 
         return kategoriJenisMap;
     }

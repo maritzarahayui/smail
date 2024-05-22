@@ -39,6 +39,16 @@
               enctype="multipart/form-data"
             >
               <div class="text-input-frame">
+                <label for="requestTemplate" class="label9">Request Template:</label>
+                <select class="text-input14" id="requestTemplate" name="requestTemplate" onchange="updateKategori()">
+                  <option value="" class="pilih-request-template">-- Pilih Request Template --</option>
+                  <option th:each="requestTemplate : ${requestTemplates}"
+                          th:value="${requestTemplate.id}"
+                          th:data-kategori="${requestTemplate.kategori}"
+                          th:text="${requestTemplate.id}"></option>
+                </select>
+              </div>
+              <div class="text-input-frame">
                 <div class="label9">Nama Template</div>
                 <input
                   class="text-input14"
@@ -208,6 +218,27 @@
         var fileName = this.files[0].name;
         document.querySelector(".file-name").textContent = fileName;
       });
+
+      function updateKategori() {
+      const requestTemplateDropdown = document.getElementById("requestTemplate");
+      const selectedOption = requestTemplateDropdown.options[requestTemplateDropdown.selectedIndex];
+      const kategori = selectedOption.getAttribute("data-kategori");
+
+      const kategoriDropdown = document.getElementById("kategori");
+
+      if (selectedOption.value === "") {
+        // Reset kategori to default if requestTemplate is default
+        kategoriDropdown.selectedIndex = 0;
+      } else {
+        // Set kategori based on selected requestTemplate
+        for (let i = 0; i < kategoriDropdown.options.length; i++) {
+          if (kategoriDropdown.options[i].value === kategori) {
+            kategoriDropdown.selectedIndex = i;
+            break;
+          }
+        }
+      }
+    }
 
       function addRow() {
         const container = document.getElementById("fieldsContainer");

@@ -46,6 +46,9 @@ public class SuratKeluarController {
     private RequestSuratDb requestSuratDb;
 
     @Autowired
+    private TemplateSuratDb templateSuratDb;
+
+    @Autowired
     private PenggunaService penggunaService;
 
     @GetMapping("/admin/detail/{id}/selesai")
@@ -109,8 +112,12 @@ public class SuratKeluarController {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
 
+
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate fileExample = requestService.getFile(id);
+            TemplateSurat templateSurat = templateSuratDb.findByRequestTemplateId(requestSurats.getId());
+            model.addAttribute("template", templateSurat);
+
             if (fileExample != null) {
                 byte[] pdf = fileExample.getFile();
                 if (pdf != null) {
@@ -121,7 +128,15 @@ public class SuratKeluarController {
             } else {
                 model.addAttribute("fileNotFoundMessage", "File tidak tersedia.");
             }
+
+            model.addAttribute("template", templateSurat);
+
+        } else {
+            TemplateSurat templateSurat = templateSuratDb.findByNamaTemplate(requestSurats.getJenisSurat());
+            model.addAttribute("template", templateSurat);
         }
+
+
 
         SuratKeluar file = suratKeluarService.getFileTtd(id);
 

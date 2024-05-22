@@ -22,7 +22,7 @@ public interface TemplateService {
 
     List<TemplateSurat> searchTemplatesByNamaTemplate(String namaTemplate);
 
-    TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField);
+    TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, RequestTemplate requestTemplate);
 
     TemplateSurat getFile(String id);
 
@@ -47,6 +47,8 @@ public interface TemplateService {
     List<RequestTemplate> getAllRejectedReq();
 
     List<RequestTemplate> getAllAcceptedReq();
+
+    List<RequestTemplate> getAllFilteredAcceptedReq();
 
     List<RequestTemplate> getAllRequestedReq();
 

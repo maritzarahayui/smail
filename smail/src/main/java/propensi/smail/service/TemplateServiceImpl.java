@@ -23,6 +23,7 @@ import propensi.smail.repository.TemplateSuratDb;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -47,7 +48,7 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     @Transactional
-    public TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField) {
+    public TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, RequestTemplate requestTemplate) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             TemplateSurat templateSurat = new TemplateSurat();
@@ -59,6 +60,15 @@ public class TemplateServiceImpl implements TemplateService {
             templateSurat.setListField(listField);
             templateSurat.setListPengguna(listPengguna);
             templateSurat.setFileName(fileName);
+
+            if (requestTemplate != null) {
+                templateSurat.setRequestTemplate(requestTemplate);
+                System.out.println(templateSurat.getRequestTemplate());
+                System.out.println("reqTemplat enull ga ");
+            }
+
+            System.out.println(templateSurat.getRequestTemplate());
+
             return templateSuratDb.save(templateSurat);
 
         } catch (IOException e) {
@@ -91,6 +101,24 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     public List<RequestTemplate> getAllAcceptedReq() {return requestTemplateDb.findByStatus(2);}
+
+    @Override
+    public List<RequestTemplate> getAllFilteredAcceptedReq() {
+        List<RequestTemplate> allAcceptedRequests = requestTemplateDb.findByStatus(2);
+        List<TemplateSurat> allTemplates = templateSuratDb.findAll();
+
+        Set<String> usedRequestTemplateIds = allTemplates.stream()
+                .map(templateSurat -> {
+                    RequestTemplate requestTemplate = templateSurat.getRequestTemplate();
+                    return requestTemplate != null ? requestTemplate.getId() : null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        return allAcceptedRequests.stream()
+                .filter(requestTemplate -> !usedRequestTemplateIds.contains(requestTemplate.getId()))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<RequestTemplate> getAllRejectedReq() {return requestTemplateDb.findByStatus(3);}
