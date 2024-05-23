@@ -48,7 +48,7 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     @Transactional
-    public TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, RequestTemplate requestTemplate) {
+    public TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, String requestTemplate) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             TemplateSurat templateSurat = new TemplateSurat();
@@ -60,14 +60,7 @@ public class TemplateServiceImpl implements TemplateService {
             templateSurat.setListField(listField);
             templateSurat.setListPengguna(listPengguna);
             templateSurat.setFileName(fileName);
-
-            if (requestTemplate != null) {
-                templateSurat.setRequestTemplate(requestTemplate);
-                System.out.println(templateSurat.getRequestTemplate());
-                System.out.println("reqTemplat enull ga ");
-            }
-
-            System.out.println(templateSurat.getRequestTemplate());
+            templateSurat.setRequestTemplate(requestTemplate);
 
             return templateSuratDb.save(templateSurat);
 
@@ -75,6 +68,12 @@ public class TemplateServiceImpl implements TemplateService {
             throw new RuntimeException("Failed to store file " + fileName, e);
         }
     }
+
+    @Override
+    public boolean existsByNamaTemplate(String namaTemplate) {
+        return false;
+    }
+
 
     @Override
     public RequestTemplate getRequest(String id) {
@@ -109,8 +108,8 @@ public class TemplateServiceImpl implements TemplateService {
 
         Set<String> usedRequestTemplateIds = allTemplates.stream()
                 .map(templateSurat -> {
-                    RequestTemplate requestTemplate = templateSurat.getRequestTemplate();
-                    return requestTemplate != null ? requestTemplate.getId() : null;
+                    String requestTemplate = templateSurat.getRequestTemplate();
+                    return requestTemplate != null ? requestTemplate : null;
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
@@ -249,12 +248,11 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     @Transactional
-    public TemplateSurat updateTemplate(String id, MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField) {
+    public TemplateSurat updateTemplate(String id, MultipartFile file, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField) {
         TemplateSurat existingTemplate = findById(id);
         if (existingTemplate != null) {
             try {
                 // Update properties
-                existingTemplate.setKategori(kategori);
                 existingTemplate.setNamaTemplate(namaTemplate);
                 existingTemplate.setListPengguna(listPengguna);
                 existingTemplate.setListField(listField);

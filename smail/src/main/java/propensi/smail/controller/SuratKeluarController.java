@@ -115,7 +115,7 @@ public class SuratKeluarController {
 
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate fileExample = requestService.getFile(id);
-            TemplateSurat templateSurat = templateSuratDb.findByRequestTemplateId(requestSurats.getId());
+            TemplateSurat templateSurat = templateSuratDb.findByRequestTemplate(requestSurats.getId());
             model.addAttribute("template", templateSurat);
 
             if (fileExample != null) {
@@ -479,35 +479,6 @@ public class SuratKeluarController {
         // return "detail-surat-tes"; 
         return "detail-surat-keluar"; 
 
-    }
-
-    @GetMapping("/surat-keluar/search")
-    public String searchSuratKeluar(@RequestParam Map<String, String> params, Model model, Authentication auth,
-                                @RequestParam(value = "tanggalDibuat", required = false)
-                                @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat,
-                                @RequestParam(value = "sort", defaultValue = "tanggalDibuatAsc") String sort) {
-
-        // Mendapatkan nilai pencarian dari parameter "q"
-        String searchQuery = params.get("q");
-
-        // Melakukan pencarian dan filtering surat keluar berdasarkan nilai pencarian
-        List<SuratKeluar> suratKeluarList = suratKeluarService.searchSuratKeluar(params, tanggalDibuat, sort, searchQuery);
-        model.addAttribute("suratKeluarList", suratKeluarList);
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-        return "daftar-surat-keluar";
     }
 
     // route to pengurus-ttd-follup

@@ -190,60 +190,6 @@ public class RequestController {
         return "redirect:/detail/"+id+"/request";
     }
 
-    @GetMapping("/request/history/search")
-    @Transactional(readOnly = true)
-    public String searchHistory(@RequestParam(name = "keyword", required = false) String keyword,
-                                Model model, Authentication auth) {
-
-        String pengaju = "";
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                pengaju = pengguna.getId();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-
-        List<RequestSurat> allRequests = new ArrayList<>();
-        List<RequestSurat> cancelledRequests = new ArrayList<>();
-        List<RequestSurat> rejectedRequests = new ArrayList<>();
-        List<RequestSurat> onProcessRequests = new ArrayList<>();
-        List<RequestSurat> finishedRequests = new ArrayList<>();
-
-        if (keyword != null && !keyword.isEmpty()) {
-            allRequests = requestSuratDb.findByKeyword(keyword);
-            cancelledRequests = requestService.searchRequests(keyword, 2);
-            rejectedRequests = requestService.searchRequests(keyword, 3);
-            onProcessRequests = requestService.searchRequests(keyword, 4);
-            finishedRequests = requestService.searchRequests(keyword, 5);
-        } else {
-            allRequests = requestService.getAllSubmittedRequestsSuratByPengaju(pengaju);
-            cancelledRequests = requestService.getAllCancelledRequestsSuratByPengaju(pengaju);
-            rejectedRequests = requestService.getAllRejectedRequestsSuratByPengaju(pengaju);
-            onProcessRequests = requestService.getAllOnProcessRequestsSuratByPengaju(pengaju);
-            finishedRequests = requestService.getAllFinishedRequestsSuratByPengaju(pengaju);
-        }
-
-        model.addAttribute("allRequests", allRequests);
-        model.addAttribute("cancelledRequests", cancelledRequests);
-        model.addAttribute("rejectedRequests", rejectedRequests);
-        model.addAttribute("onProcessRequests", onProcessRequests);
-        model.addAttribute("finishedRequests", finishedRequests);
-
-        if (allRequests.size() == 0 || cancelledRequests.size() == 0 || rejectedRequests.size() == 0 ||
-            onProcessRequests.size() == 0 || finishedRequests.size() == 0) {
-            model.addAttribute("message", "Tidak ada data yang cocok dengan pencarian Anda.");
-        }
-
-        return "user-history";
-    }
 
     // Admin
     @GetMapping("/admin/request/{id}")

@@ -1,14 +1,10 @@
 package propensi.smail.controller;
 
 import jakarta.mail.MessagingException;
-import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.ui.Model;
@@ -19,7 +15,6 @@ import propensi.smail.repository.*;
 import propensi.smail.service.*;
 
 import java.io.IOException;
-import java.nio.file.*;
 import java.util.*;
 
 import org.springframework.security.core.Authentication;
@@ -36,6 +31,9 @@ public class TemplateController {
     RequestTemplateDb requestTemplateDb;
 
     @Autowired
+    TemplateSuratDb templateSuratDb;
+
+    @Autowired
     PenggunaDb penggunaDb;
 
     @Autowired
@@ -44,7 +42,7 @@ public class TemplateController {
     @Autowired
     private RequestService requestService;
 
-    @GetMapping("/new-requests")
+    @GetMapping("/requests")
     public String showTemplateRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, 
         Authentication auth, @RequestParam(required = false) String activeTab) {
         List<RequestTemplate> allRequestTemplates = new ArrayList<>();
@@ -128,7 +126,7 @@ public class TemplateController {
         return "detail-request-template"; // Return the PDF preview Thymeleaf template
     }
 
-    @GetMapping("/active-templates")
+    @GetMapping("")
     public String showActiveTemplates(Model model, Authentication auth) {
         List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
         model.addAttribute("activeTemplates", activeTemplates);
@@ -150,34 +148,7 @@ public class TemplateController {
         return "daftar-template";
     }
 
-    @GetMapping("/search")
-    public String searchTemplates(@RequestParam(name = "namaTemplate", required = false) String namaTemplate, 
-        Model model, Authentication auth) {
-        if (namaTemplate != null && !namaTemplate.isEmpty()) {
-            List<TemplateSurat> searchResults = templateSuratService.searchTemplatesByNamaTemplate(namaTemplate);
-            model.addAttribute("activeTemplates", searchResults);
-        } else {
-            List<TemplateSurat> activeTemplates = templateSuratService.getAllActiveTemplates();
-            model.addAttribute("activeTemplates", activeTemplates);
-        }
-
-        if (auth != null) {
-            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
-            String email = oauthUser.getEmail();
-            Optional<Pengguna> user = penggunaDb.findByEmail(email);
-
-            if (user.isPresent()) {
-                Pengguna pengguna = user.get();
-                model.addAttribute("role", penggunaService.getRole(pengguna));
-                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
-            } else {
-                return "auth-failed";
-            }
-        }
-        return "daftar-template";
-    }
-
-    @GetMapping("/new-template")
+    @GetMapping("/create")
     public String showTambahTemplateForm(Model model, Authentication auth) {
         model.addAttribute("templateSurat", new TemplateSurat());
 
@@ -201,38 +172,61 @@ public class TemplateController {
         return "add-template";
     }
 
-    @PostMapping("/new-template")
+    @PostMapping("/create")
     public String uploadFile(@RequestParam("file") MultipartFile file,
-                                @RequestParam("kategori") String kategori,
-                                @RequestParam("namaTemplate") String namaTemplate,
-                                @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                @RequestParam("listField[]") String[] listField,
-                                @RequestParam(value = "requestTemplate", required = false) String requestTemplateId,
-                                Model model) {
+                             @RequestParam("kategori") String kategori,
+                             @RequestParam("namaTemplate") String namaTemplate,
+                             @RequestParam("listPengguna") ArrayList<String> listPengguna,
+                             @RequestParam("listField[]") String[] listField,
+                             @RequestParam(value = "requestTemplate", required = false) String requestTemplateId,
+                             Model model,
+                             Authentication auth) {
         String message = "";
+
+        List<RequestTemplate> requestTemplates = templateSuratService.getAllFilteredAcceptedReq();
+        model.addAttribute("requestTemplates", requestTemplates);
+
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
 
         try {
             ArrayList<String> newListField = new ArrayList<>(Arrays.asList(listField));
 
-            RequestTemplate requestTemplate = null;
+            String requestTemplate = null;
             if (requestTemplateId != null && !requestTemplateId.isEmpty()) {
-                requestTemplate = templateSuratService.getRequest(requestTemplateId);
-                System.out.println("masuk sini ga");
+                requestTemplate = requestTemplateId;
             }
 
-            System.out.println("reqtemplate " + requestTemplateId);
+            if (templateSuratDb.findByNamaTemplate(namaTemplate) != null) {
 
-            templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField, requestTemplate);
+                message = "Template dengan nama " + namaTemplate + " sudah ada.";
+                model.addAttribute("errorMessage", message);
+                return "add-template";
+            } else {
+                templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField, requestTemplate);
 
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            model.addAttribute("message", message);
-            return "redirect:/template/active-templates";
+                message = "Uploaded the file successfully: " + file.getOriginalFilename();
+                model.addAttribute("message", message);
+            }
+            return "redirect:/template";
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             model.addAttribute("errorMessage", message);
-            return "redirect:/template/active-templates";
+            return "template-form";
         }
     }
+
 
     @GetMapping("/detail/{id}")
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
@@ -260,7 +254,6 @@ public class TemplateController {
         }
 
         TemplateSurat templateSurat = templateSuratService.findById(id);
-        System.out.println("ada gaaa " + templateSurat.getRequestTemplate().getId());
 
         return "detail-template"; // Return the PDF preview Thymeleaf template
     }
@@ -277,7 +270,7 @@ public class TemplateController {
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "redirect:/template/active-templates"; // Redirect to the list of active templates
+        return "redirect:/template"; // Redirect to the list of active templates
     }
 
     @PostMapping("/request/detail/{id}/updateStatus")
@@ -336,8 +329,6 @@ public class TemplateController {
         return "redirect:/template/request/detail/{id}";
     }
 
-
-
     @GetMapping("/update/{id}")
     public String showUpdateTemplateForm(@PathVariable("id") String id, Model model, Authentication auth) {
         // Retrieve the template by ID
@@ -370,24 +361,46 @@ public class TemplateController {
 
     @PostMapping("/update/{id}")
     public String updateTemplate(@PathVariable("id") String id,
-                                    @RequestParam("file") MultipartFile file,
-                                    @RequestParam("kategori") String kategori,
-                                    @RequestParam("namaTemplate") String namaTemplate,
-                                    @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                    @RequestParam("listField[]") ArrayList<String> listField,
-                                    Model model, Authentication auth) {
+                                 @RequestParam("file") MultipartFile file,
+                                 @RequestParam("namaTemplate") String namaTemplate,
+                                 @RequestParam("listPengguna") ArrayList<String> listPengguna,
+                                 @RequestParam("listField[]") ArrayList<String> listField,
+                                 Model model, Authentication auth) {
         String message = "";
 
+        if (auth != null) {
+            OidcUser oauthUser = (OidcUser) auth.getPrincipal();
+            String email = oauthUser.getEmail();
+            Optional<Pengguna> user = penggunaDb.findByEmail(email);
+
+            if (user.isPresent()) {
+                Pengguna pengguna = user.get();
+                model.addAttribute("role", penggunaService.getRole(pengguna));
+                model.addAttribute("namaDepan", penggunaService.getFirstName(pengguna));
+            } else {
+                return "auth-failed";
+            }
+        }
+
         try {
-            // Update the template with the provided data
-            templateSuratService.updateTemplate(id, file, kategori, namaTemplate, listPengguna, listField);
-            message = "Template updated successfully";
-            model.addAttribute("message", message);
-            return "redirect:/template/detail/{id}";
+            TemplateSurat template = templateSuratService.findById(id);
+            TemplateSurat existingTemplate = templateSuratDb.findByNamaTemplate(namaTemplate);
+            if (existingTemplate != null && !existingTemplate.getId().equals(id)) {
+                message = "Template dengan nama " + namaTemplate + " sudah ada.";
+                model.addAttribute("errorMessage", message);
+                model.addAttribute("template", template);
+                return "update-template-form";
+            } else {
+                // Update the template with the provided data
+                templateSuratService.updateTemplate(id, file, namaTemplate, listPengguna, listField);
+                message = "Template updated successfully";
+                model.addAttribute("message", message);
+                return "redirect:/template/detail/" + id;
+            }
         } catch (Exception e) {
             message = "Failed to update the template: " + e.getMessage();
             model.addAttribute("errorMessage", message);
-            return "redirect:/template/detail/{id}";
+            return "update-template-form";
         }
     }
 

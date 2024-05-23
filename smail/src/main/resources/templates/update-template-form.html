@@ -18,6 +18,41 @@
     <object th:include="~{fragments/common :: css}" th:remove="tag"></object>
 </head>
 
+<style>
+    .alert-container {
+        display: flex;
+        justify-content: center; /* Center the alert within the container */
+        margin: 0 auto; /* Center the container horizontally */
+    }
+
+    .alert {
+        display: flex; /* Use flexbox for alignment */
+        align-items: center; /* Vertically center the content */
+        max-width: 700px; /* Maximum width to prevent it from getting too wide */
+        padding: 10px; /* Add padding for better appearance */
+        background-color: #f8d7da; /* Background color for the alert */
+        color: #721c24; /* Text color for the alert */
+        border: 1px solid #f5c6cb; /* Border color for the alert */
+        border-radius: 4px; /* Rounded corners */
+        box-sizing: border-box; /* Ensures padding and border are included in the element's width and height */
+    }
+
+    .alert strong {
+        flex-grow: 1; /* Take up remaining space, pushing the close button to the right */
+        margin-right: 28px; /* Add space between the message and the close button */
+    }
+
+    .alert .close {
+        background: none; /* Remove default button styling */
+        border: none; /* Remove border */
+        font-size: 1.2rem; /* Adjust font size for the close icon */
+        cursor: pointer; /* Pointer cursor on hover */
+    }
+</style>
+
+
+
+
 <body>
 <nav th:replace="~{fragments/navbarLoggedIn :: navbarLoggedIn}"></nav>
 
@@ -31,24 +66,20 @@
 
     <div class="form-wrap">
         <form th:action="@{'/template/update/' + ${template.id}}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="${template.id}" />
+
+            <div class="alert-container">
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong th:text="${errorMessage}"></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+            </div>
 
             <div class="form-input-group">
                 <div class="form-input-label">Nama Template</div>
                 <input class="form-input-box" type="text" id="namaTemplate" name="namaTemplate" th:value="${template.namaTemplate}" required/>
-            </div>
-
-            <div class="form-input-group">
-                <label for="kategori" class="form-input-label m-0">Kategori</label>
-                <div class="form-input-dropdown">
-                    <select class="form-select" id="kategori" name="kategori" required>
-                        <option value="" th:selected="${template.kategori == null}">Pilih Kategori</option>
-                        <option value="Legal" th:selected="${template.kategori == 'Legal'}">Legal</option>
-                        <option value="SDM" th:selected="${template.kategori == 'SDM'}">SDM</option>
-                        <option value="Keuangan" th:selected="${template.kategori == 'Keuangan'}">Keuangan</option>
-                        <option value="Sarana" th:selected="${template.kategori == 'Sarana'}">Sarana</option>
-                        <option value="Kemahasiswaan" th:selected="${template.kategori == 'Kemahasiswaan'}">Kemahasiswaan</option>
-                    </select>
-                </div>
             </div>
 
             <div class="form-input-group">
@@ -254,6 +285,24 @@
 
         rowContainer.remove();
     }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const form = event.target;
+    const namaTemplateInput = document.getElementById('namaTemplate');
+    const namaTemplateValue = namaTemplateInput.value;
+
+    // Check if the name already exists in the template options
+    const existingOption = document.querySelector(`#requestTemplate option[value="${namaTemplateValue}"]`);
+
+    if (existingOption) {
+        alert("Template dengan nama yang sama sudah ada. Silakan pilih nama lain.");
+    } else {
+        form.submit(); // Programmatically submit the form if no duplicates
+    }
+});
+
 
     // Function to submit the form
     function submitForm() {

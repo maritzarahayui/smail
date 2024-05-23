@@ -48,8 +48,7 @@ public class TemplateSurat {
     @Column(name = "file_name")
     private String fileName;
 
-    @OneToOne
-    @JoinColumn(name = "request_template_id") // Adjust the column name as needed
-    private RequestTemplate requestTemplate;
-    
+    @Column(name = "request_template_id") // Adjust the column name as needed
+    private String requestTemplate;
+
 }

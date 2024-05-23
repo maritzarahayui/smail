@@ -22,7 +22,9 @@ public interface TemplateService {
 
     List<TemplateSurat> searchTemplatesByNamaTemplate(String namaTemplate);
 
-    TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, RequestTemplate requestTemplate);
+    boolean existsByNamaTemplate(String namaTemplate);
+
+    TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, String requestTemplate);
 
     TemplateSurat getFile(String id);
 
@@ -32,7 +34,7 @@ public interface TemplateService {
 
     TemplateSurat findById(String id);
 
-    TemplateSurat updateTemplate(String id, MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField);
+    TemplateSurat updateTemplate(String id, MultipartFile file, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField);
 
     List<RequestTemplate> getAllReqTemplate();
 

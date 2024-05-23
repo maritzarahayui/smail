@@ -59,9 +59,4 @@ public class RequestTemplate {
 
     @OneToMany(mappedBy = "requestTemplate", cascade = CascadeType.ALL)
     private List<FieldData> listFieldData;
-
-    @OneToOne(mappedBy = "requestTemplate", cascade = CascadeType.ALL)
-    @JoinColumn(name = "request_template_id") // Adjust column name as needed
-    private TemplateSurat template;
-    
 }
