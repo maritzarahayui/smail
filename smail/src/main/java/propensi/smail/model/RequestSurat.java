@@ -40,6 +40,11 @@ public class RequestSurat {
     @Column(name = "keperluan", nullable = false)
     private String keperluan;
 
+    /* STATUS
+    * 1 : Diajukan
+    * 2 : Diproses
+    * 3 : Ditolak
+    * 4 : Selesai */
     @NotNull
     @Column(name = "status", nullable = false)
     private int status;

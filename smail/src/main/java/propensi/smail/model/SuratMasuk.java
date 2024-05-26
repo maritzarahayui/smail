@@ -23,10 +23,6 @@ public class SuratMasuk {
     @Column(name = "nomor_arsip", nullable = false)
     private String nomorArsip;
 
-    // @NotNull
-    // @Column(name = "judul", nullable = false)
-    // private String judul;
-
     @NotNull
     @Column(name = "kategori", nullable = false)
     private String kategori;
@@ -38,10 +34,6 @@ public class SuratMasuk {
     @NotNull
     @Column(name = "tanggal_dibuat", nullable = false)
     private Date tanggalDibuat;
-
-    // @NotNull
-    // @Column(name = "status", nullable = false)
-    // private int status;
 
     @Column(name = "is_disposisi")
     private Boolean isDisposisi = false;

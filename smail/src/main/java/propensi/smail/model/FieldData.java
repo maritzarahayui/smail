@@ -25,7 +25,6 @@ public class FieldData {
     @Column(name = "value", nullable = false)
     private String value;
 
-    
     /* RELATIONSHIPS */
     @ManyToOne
     @JoinColumn(name = "request_surat")

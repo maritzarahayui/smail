@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
+// @AllArgsConstructor
 @SuperBuilder
 @EqualsAndHashCode(callSuper=false)
 @Entity
@@ -15,7 +15,5 @@ import jakarta.persistence.*;
 
 public class Pengurus extends Pengguna {
 
-    @Column(name = "tanda_tangan")
-    private String tandaTangan;
 
 }

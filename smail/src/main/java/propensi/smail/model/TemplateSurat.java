@@ -48,7 +48,7 @@ public class TemplateSurat {
     @Column(name = "file_name")
     private String fileName;
 
-    @Column(name = "request_template_id") // Adjust the column name as needed
+    @Column(name = "request_template_id")
     private String requestTemplate;
 
 }

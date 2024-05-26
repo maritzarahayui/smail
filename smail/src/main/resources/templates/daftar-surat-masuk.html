@@ -104,6 +104,7 @@
                 <th style="width: 40%; text-align: center; vertical-align: middle;">Perihal</th>
                 <th style="width: 15%; text-align: center; vertical-align: middle;">Tanggal Diarsipkan</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Pengirim</th>
+                <th style="width: 10%; text-align: center; vertical-align: middle;">Status</th>
                 <th style="width: 10%; text-align: center; vertical-align: middle;">Action</th>
               </tr>
             </thead>
@@ -114,6 +115,10 @@
                 <td th:text="${suratMasuk.perihal}"></td>
                 <td th:text="${#dates.format(suratMasuk.tanggalDibuat, 'dd-MM-yyyy')}"></td>
                 <td th:text="${suratMasuk.pengirim}"></td>
+                <td th:if="${suratMasuk.isDisposisi and !suratMasuk.isFollowUp}">Didisposisi</td>
+                <td th:if="${suratMasuk.isDisposisi and suratMasuk.isFollowUp}">Didisposisi, Difollow-up</td>
+                <td th:if="${suratMasuk.isFollowUp and !suratMasuk.isDisposisi}">Difollow-up</td>
+                <td th:if="${!suratMasuk.isDisposisi and !suratMasuk.isFollowUp}">Diarsipkan</td>
                 <td style="display: flex; justify-content: space-between; border: none;">
                   <a class="primary-button" th:href="@{'/surat-masuk/detail/' + ${suratMasuk.nomorArsip}}">
                     <div class="primary-text">Detail</div>

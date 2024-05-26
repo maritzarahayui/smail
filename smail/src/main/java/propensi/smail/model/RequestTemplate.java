@@ -31,6 +31,10 @@ public class RequestTemplate {
     @Column(name = "keperluan", nullable = false)
     private String keperluan;
 
+    /* STATUS
+     * 1 : Diajukan
+     * 2 : Terima
+     * 3 : Tolak */
     @NotNull
     @Column(name = "status", nullable = false)
     private int status;

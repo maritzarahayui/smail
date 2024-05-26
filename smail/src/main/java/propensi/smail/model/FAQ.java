@@ -36,9 +36,6 @@ public class FAQ {
     @Column(name = "status", nullable = false)
     private int status;
 
-    @Column(name = "tanggal_post")
-    private Date tanggalPost;
-
     /* RELATIONSHIPS */
     @ManyToOne
     @JoinColumn(name = "pengaju")

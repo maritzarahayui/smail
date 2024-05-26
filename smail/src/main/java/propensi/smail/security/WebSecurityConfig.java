@@ -65,6 +65,7 @@ public class WebSecurityConfig {
                     .requestMatchers("/detail/{id:.+}/request").hasAnyAuthority("STAF", "DOSEN", "MAHASISWA")
                     
                     .requestMatchers(HttpMethod.POST, "/ttd/update/{id:.+}").hasAnyAuthority("PENGURUS", "DOSEN")
+                    .requestMatchers("/ttd/arsip").hasAnyAuthority("PENGURUS")
                     .requestMatchers("/ttd/**").hasAnyAuthority("PENGURUS", "DOSEN")
 
                     .requestMatchers(HttpMethod.POST, "/surat-masuk/upload").hasAnyAuthority("ADMIN")
