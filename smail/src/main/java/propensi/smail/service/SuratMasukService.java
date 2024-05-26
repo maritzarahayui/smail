@@ -25,12 +25,8 @@ public interface SuratMasukService {
     void sendEmail(String[] to, String subject, String body, SuratMasuk suratMasuk) throws MessagingException, IOException;
 
     SuratMasuk store(MultipartFile file, String kategori, String perihal, String pengirim);
-    List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
-    List<SuratMasuk> getSuratBySearch(String search);
     List<Pengguna> getAllPenandatangan();
 
-    List<SuratMasuk> getSuratMasukBySearchIsDisposisi(String search);
-    List<SuratMasuk> getSuratMasukBySearchIsFollowUp(String search);
     List<SuratMasuk> getSuratMasukIsDisposisi();
     List<SuratMasuk> getSuratMasukIsFollowUp();
 

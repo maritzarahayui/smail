@@ -161,31 +161,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     }
 
     @Override
-    public List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
-        List<SuratMasuk> suratMasukList = suratMasukDb.findAll();
-
-        if (searchQuery != null && !searchQuery.isEmpty()) {
-            suratMasukList = suratMasukList.stream()
-                    .filter(surat -> surat.getNomorArsip().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getKategori().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getPerihal().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getPengirim().toLowerCase().contains(searchQuery.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-
-        if (tanggalDibuat != null) {
-            suratMasukList = suratMasukDb.findByTanggalDibuat(tanggalDibuat);
-        }
-        
-        return suratMasukList;
-    }
-
-    @Override
-    public List<SuratMasuk> getSuratBySearch(String search) {
-        return suratMasukDb.findBySearch(search);
-    }
-
-    @Override
     public List<Pengguna> getAllPenandatangan() {
         List<Pengguna> listTembusan = penggunaDb.findAll().stream()
             .filter(user -> {
@@ -194,16 +169,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
             })
             .collect(Collectors.toList());
         return listTembusan;
-    }
-
-    @Override
-    public List<SuratMasuk> getSuratMasukBySearchIsDisposisi(String search) {
-        return suratMasukDb.findBySearchAndIsDisposisi(search);
-    }
-
-    @Override
-    public List<SuratMasuk> getSuratMasukBySearchIsFollowUp(String search) {
-        return suratMasukDb.findBySearchAndIsFollowUp(search);
     }
 
     @Override

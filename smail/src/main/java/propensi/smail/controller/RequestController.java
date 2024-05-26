@@ -102,8 +102,7 @@ public class RequestController {
 
     @PostMapping("/request")
     public String requestSurat(@Valid @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @ModelAttribute RequestAndFieldDataDTO requestDTO,
-                                @RequestParam(value = "file", required = false) MultipartFile file,            
-                                BindingResult bindingResult, Authentication auth) throws IOException {
+        @RequestParam(value = "file", required = false) MultipartFile file, BindingResult bindingResult, Authentication auth) throws IOException {
         if (bindingResult.hasErrors()) {
             return bindingResult.getAllErrors().toString();
         }
@@ -288,16 +287,10 @@ public class RequestController {
 
     @GetMapping("/admin/request/all")
     @Transactional(readOnly = true)
-    public String showAllRequests(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            requestSurats = requestService.getAllRequestsSurat();
-        } else {
-            requestSurats = requestService.getAllRequestsSurat();
-        }
+        requestSurats = requestService.getAllRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
-
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -327,14 +320,9 @@ public class RequestController {
 
     @GetMapping("/admin/request")
     @Transactional(readOnly = true)
-    public String showAllRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllSubmittedRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            requestSurats = requestService.searchRequests(keyword, 1);
-        } else {
-            requestSurats = requestService.getAllSubmitedRequestsSurat();
-        }
+        requestSurats = requestService.getAllSubmitedRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -356,14 +344,9 @@ public class RequestController {
 
     @GetMapping("/admin/request/cancelled")
     @Transactional(readOnly = true)
-    public String showAllCancelledRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllCancelledRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            requestSurats = requestService.searchRequests(keyword, 2);
-        } else {
-            requestSurats = requestService.getAllCanceledRequestsSurat();
-        }
+        requestSurats = requestService.getAllCanceledRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -385,14 +368,9 @@ public class RequestController {
 
     @GetMapping("/admin/request/rejected")
     @Transactional(readOnly = true)
-    public String showAllRejectedRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllRejectedRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            requestSurats = requestService.searchRequests(keyword, 3);
-        } else {
-            requestSurats = requestService.getAllRejectedRequestsSurat();
-        }
+        requestSurats = requestService.getAllRejectedRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -414,14 +392,10 @@ public class RequestController {
 
     @GetMapping("/admin/request/process")
     @Transactional(readOnly = true)
-    public String showAllProcessingRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllProcessingRequestsAdmin(Model model, Authentication auth) {
         try {
             List<RequestSurat> requestSurats;
-            if (keyword != null && !keyword.isEmpty()) {
-                requestSurats = requestService.searchRequests(keyword, 4);
-            } else {
-                requestSurats = requestService.getAllOnProcessRequestsSurat();
-            }
+            requestSurats = requestService.getAllOnProcessRequestsSurat();
             model.addAttribute("requestSurats", requestSurats);
 
             if (auth != null) {
@@ -446,14 +420,9 @@ public class RequestController {
 
     @GetMapping("/admin/request/finished")
     @Transactional(readOnly = true)
-    public String showAllFinishedRequestsAdmin(@RequestParam(name = "keyword", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllFinishedRequestsAdmin(Model model, Authentication auth) {
         List<RequestSurat> requestSurats;
-
-        if (keyword != null && !keyword.isEmpty()) {
-            requestSurats = requestService.searchRequests(keyword, 5);
-        } else {
-            requestSurats = requestService.getAllFinishedRequestsSurat();
-        }
+        requestSurats = requestService.getAllFinishedRequestsSurat();
         model.addAttribute("requestSurats", requestSurats);
 
         if (auth != null) {
@@ -642,9 +611,7 @@ public class RequestController {
         if (status == 3) {
             requestSurat.setAlasanPenolakan(alasanPenolakan);
             requestSurat.setTanggalPenolakan(new Date());
-
             requestSuratDb.save(requestSurat);
-
             requestService.sendEmailRejection(requestSurat.getPengaju().getEmail(), "", "", requestSurat);
         } else {
             requestSurat.setAlasanPenolakan(null);

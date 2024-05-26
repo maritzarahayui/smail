@@ -15,11 +15,11 @@ import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 
 public interface RequestService {
-    // METHOD REQUEST SURAT
+    // REQUEST SURAT 
     void saveOrUpdate(RequestSurat requestSurat);
     RequestSurat createRequestSurat(RequestSurat requestSurat, RequestAndFieldDataDTO requestDTO);
+    
     List<RequestSurat> getAllRequestsSurat();
-    List<RequestSurat> searchRequests(String keyword, int status);
     List<RequestSurat> getAllSubmitedRequestsSurat();
     List<RequestSurat> getAllCanceledRequestsSurat();
     List<RequestSurat> getAllRejectedRequestsSurat();
@@ -31,22 +31,16 @@ public interface RequestService {
     List<RequestSurat> getAllOnProcessRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllFinishedRequestsSuratByPengaju(String penggunaId);
     List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId);
-    List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId);
+
     RequestSurat getRequestSuratById(String requestSuratId);
     RequestSurat findRequestById(String id);
-    List<RequestSurat> getRequestByJenisSurat(String jenisSurat);
-    List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan);
-    List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan);
-    List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan);
-    List<RequestSurat> getRequestByTanggalSelesai(Date tanggalSelesai);
-    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan);
-    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan);
-    List<RequestSurat> getRequestByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai);
     RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan);
+
     int countAllRequests();
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);
     Map<Integer, String> listBentukSurat();
     Map<Integer, String> listBahasa();
+
     void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
     void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
     String generateRequestId(Pengguna pengaju);
@@ -62,9 +56,7 @@ public interface RequestService {
     // PREVIEW TEMPLATE
     List<String> getAllJenisByKategori(String Kategori);
 
-    List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju);
-
-    /* DASHBOARD */
+    // DASHBOARD 
     Integer countDurasi(RequestSurat requestSurat);
     Integer countAveragePerforma(List<RequestSurat> listRequestSurat, String kategori);
     Map<String, Integer> getPerformaRequestSurat();

@@ -4,7 +4,6 @@ import lombok.*;
 import propensi.smail.model.user.Pengguna;
 
 import java.util.*;
-
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.*;

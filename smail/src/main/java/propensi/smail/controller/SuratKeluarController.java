@@ -274,7 +274,7 @@ public class SuratKeluarController {
 
     @GetMapping("/ttd/request")
     @Transactional(readOnly = true)
-    public String showAllRequestsTTD(@RequestParam(value = "search", required = false) String keyword, Model model, Authentication auth) {
+    public String showAllRequestsTTD(Model model, Authentication auth) {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -284,12 +284,7 @@ public class SuratKeluarController {
                 Pengguna pengguna = user.get();
                 String penandatanganId = pengguna.getId();
                 List<RequestSurat> requestSurats;
-
-                if (keyword != null && !keyword.isEmpty()) {
-                    requestSurats = requestService.searchRequestsTTD(keyword, penandatanganId);
-                } else {
-                    requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
-                }
+                requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
 
                 requestSurats.sort(Comparator.comparingInt(RequestSurat::getStatus));
                 model.addAttribute("requestSurats", requestSurats);
@@ -305,7 +300,7 @@ public class SuratKeluarController {
 
     @GetMapping("/ttd/arsip")
     @Transactional(readOnly = true)
-    public String pengurusTtdArsip(@RequestParam(value = "search", required = false) String keyword, Model model, Authentication auth) {
+    public String pengurusTtdArsip(Model model, Authentication auth) {
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -314,12 +309,7 @@ public class SuratKeluarController {
             if (user.isPresent()) {
                 Pengguna pengguna = user.get();
                 List<SuratKeluar> listSuratKeluar;
-
-                if (keyword != null && !keyword.isEmpty()) {
-                    listSuratKeluar = suratKeluarService.searchFollowUpTTD(keyword, pengguna);
-                } else {
-                    listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
-                }
+                listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
 
                 model.addAttribute("listSuratKeluar", listSuratKeluar);
                 model.addAttribute("role", penggunaService.getRole(pengguna));
@@ -332,17 +322,8 @@ public class SuratKeluarController {
     }
 
     @GetMapping("/surat-keluar/all")
-    public String getAllSuratKeluar(Model model, Authentication auth, 
-        @RequestParam(value = "tanggalDibuat", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat) {
-        
+    public String getAllSuratKeluar(Model model, Authentication auth) { 
         List<SuratKeluar> suratKeluarList = suratKeluarService.getSuratKeluarByIsSigned(true);
-        
-        if (tanggalDibuat != null) {
-            suratKeluarList = suratKeluarList.stream()
-                    .filter(surat -> surat.getTanggalDibuat().equals(tanggalDibuat))
-                    .collect(Collectors.toList());
-        }
-
         model.addAttribute("suratKeluarList", suratKeluarList);
 
         if (auth != null) {

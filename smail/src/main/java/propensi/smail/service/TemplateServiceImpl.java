@@ -122,31 +122,6 @@ public class TemplateServiceImpl implements TemplateService {
     public List<RequestTemplate> getAllRejectedReq() {return requestTemplateDb.findByStatus(3);}
 
     @Override
-    public List<RequestTemplate> searchRequests(String keyword, int status) {
-
-        List<RequestTemplate> requestList = requestTemplateDb.findByKeyword(keyword);
-        List<RequestTemplate> resultReq = new ArrayList<>();
-
-        for (RequestTemplate rt : requestList) {
-            if (status == 1) {
-                if (rt.getStatus() == 1) {
-                    resultReq.add(rt);
-                }
-            } if (status == 2) {
-                if (rt.getStatus() == 2) {
-                    resultReq.add(rt);
-                }
-            } if (status == 3) {
-                if (rt.getStatus() == 3) {
-                    resultReq.add(rt);
-                }
-            }
-        }
-
-        return resultReq;
-    }
-
-    @Override
     public String generateIdByKategori(String kategori) {
         Map<String, String> kategoriMap = Map.of(
                 "LEGAL", "LGL",
@@ -167,12 +142,6 @@ public class TemplateServiceImpl implements TemplateService {
             throw new IllegalArgumentException("Invalid kategori: " + kategori);
         }
     }
-
-    @Transactional
-    public List<TemplateSurat> searchTemplatesByNamaTemplate(String namaTemplate) {
-        return templateSuratDb.findByNamaTemplateContainingIgnoreCaseAndIsActiveIsTrue(namaTemplate);
-    }
-
 
     @Override
     @Transactional

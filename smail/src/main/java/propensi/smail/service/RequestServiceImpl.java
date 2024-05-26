@@ -25,8 +25,6 @@ import java.time.temporal.WeekFields;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import propensi.smail.model.user.*;
 import propensi.smail.dto.RequestAndFieldDataDTO;
 
@@ -227,46 +225,6 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestSurat> getRequestByJenisSurat(String jenisSurat) {
-        return requestSuratDb.findByJenisSuratContainingIgnoreCase(jenisSurat);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalPengajuan(Date tanggalPengajuan) {
-        return requestSuratDb.findByTanggalPengajuan(tanggalPengajuan);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalDibatalkan(Date tanggalDibatalkan) {
-        return requestSuratDb.findByTanggalDibatalkan(tanggalDibatalkan);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalDibatalkan(Date tanggalPengajuan, Date tanggalDibatalkan) {
-        return requestSuratDb.findByTanggalPengajuanOrTanggalDibatalkan(tanggalPengajuan, tanggalDibatalkan);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalPenolakan(Date tanggalPenolakan) {
-        return requestSuratDb.findByTanggalPenolakan(tanggalPenolakan);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalPenolakan(Date tanggalPengajuan, Date tanggalPenolakan) {
-        return requestSuratDb.findByTanggalPengajuanOrTanggalPenolakan(tanggalPengajuan, tanggalPenolakan);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalSelesai(Date tanggalSelesai) {
-        return requestSuratDb.findByTanggalSelesai(tanggalSelesai);
-    }
-
-    @Override
-    public List<RequestSurat> getRequestByTanggalPengajuanOrTanggalSelesai(Date tanggalPengajuan, Date tanggalSelesai) {
-        return requestSuratDb.findByTanggalPengajuanOrTanggalSelesai(tanggalPengajuan, tanggalSelesai);
-    }
-
-    @Override
     public RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan) {
         RequestSurat requestSurat = getRequestSuratById(requestSuratId);
         requestSurat.setStatus(2); // Dibatalkan
@@ -345,39 +303,6 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<RequestSurat> searchRequests(String keyword, int status) {
-
-        List<RequestSurat> suratList = requestSuratDb.findByKeyword(keyword);
-        List<RequestSurat> resultSurat = new ArrayList<>();
-
-        for (RequestSurat rs : suratList) {
-            if (status == 1) {
-                if (rs.getStatus() == 1) {
-                    resultSurat.add(rs);
-                }
-            } if (status == 2) {
-                if (rs.getStatus() == 2) {
-                    resultSurat.add(rs);
-                }
-            } if (status == 3) {
-                if (rs.getStatus() == 3) {
-                    resultSurat.add(rs);
-                }
-            } if (status == 4) {
-                if (rs.getStatus() == 4) {
-                    resultSurat.add(rs);
-                }
-            } if (status == 5) {
-                if (rs.getStatus() == 5) {
-                    resultSurat.add(rs);
-                }
-            }
-        }
-
-        return resultSurat;
-    }
-
-    @Override
     public List<RequestSurat> getAllSubmittedRequestsSuratByPengaju(String penggunaId) {
         return requestSuratDb.findByStatusAndPengajuId(1, penggunaId);
     }
@@ -415,17 +340,6 @@ public class RequestServiceImpl implements RequestService {
         }
 
         return requestSuratList;
-    }
-
-    @Override
-    public List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId) {
-        List<RequestSurat> requestSurats = getAllRequestSuratByPenandatanganId(penandatanganId);
-
-        return requestSurats.stream()
-                .filter(requestSurat -> requestSurat.getId().toLowerCase().contains(keyword.toLowerCase()) ||
-                        requestSurat.getJenisSurat().toLowerCase().contains(keyword.toLowerCase()) ||
-                        requestSurat.getPengaju().getNama().toLowerCase().contains(keyword.toLowerCase()))
-                .collect(Collectors.toList());
     }
 
     /* REQUEST TEMPLATE */
@@ -472,12 +386,6 @@ public class RequestServiceImpl implements RequestService {
     public List<String> getAllJenisByKategori(String kategori) {
         return templateSuratDb.findNamaTemplateByKategori(kategori);
     }
-
-    @Override
-    public List<RequestSurat> getBySearchAndStatusAndPengaju(int status, String search, String pengaju) {
-        return requestSuratDb.findBySearchAndStatusAndPengajuId(search, status, pengaju);
-    }
-
 
     /* DASHBOARD */
     @Override
@@ -685,8 +593,6 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratDb.findTopRequester();
     }
     
-
-    // EMI SPRINT 3
     @Override
     public Map<String, Long> getJumlahRequestPerMingguByUser(Pengguna pengguna) {
         List<RequestSurat> allRequestSurat = requestSuratDb.findByPengaju(pengguna);

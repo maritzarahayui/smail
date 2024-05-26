@@ -7,7 +7,6 @@ import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.user.Pengguna;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -26,7 +25,6 @@ public interface SuratKeluarService {
     Stream<SuratKeluar> getAllFiles();
     SuratKeluar getFileInput(String id);
     Map<String, List<String>> generateJenisSuratByKategoriAndRole(String tipePengaju);
-    List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery);
 
     SuratKeluar findSuratKeluarByID(String id);
     SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
@@ -37,7 +35,6 @@ public interface SuratKeluarService {
     SuratKeluar getSuratKeluarByNomorArsip(String nomorArsip);
     void updateFollowUpFile(String id, MultipartFile file);
     
-
     /* DASHBOARD */
     Map<String, Long> getJumlahSuratKeluarPerKategori();
     Map<String, Integer> getJumlahSuratKeluarTahunIni();
@@ -45,7 +42,6 @@ public interface SuratKeluarService {
     Map<String, Integer> getJumlahSuratKeluarMingguIni();
     Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan);
     List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
-    public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan);
     Integer countAverageDurasiTtd(List<SuratKeluar> listSuratKeluar);
     Map<String, Integer> getAverageDurasiTtd();
 

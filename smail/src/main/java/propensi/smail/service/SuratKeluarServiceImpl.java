@@ -48,7 +48,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Autowired
     private TemplateSuratDb templateSuratDb;
 
-    // surat masuk db
     @Autowired
     private SuratMasukDb suratMasukDb;
 
@@ -257,26 +256,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
-    public List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
-        List<SuratKeluar> suratKeluarList = suratKeluarDb.findByIsSigned(true);
-
-        if (searchQuery != null && !searchQuery.isEmpty()) {
-            suratKeluarList = suratKeluarList.stream()
-                    .filter(surat -> surat.getNomorArsip().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getKategori().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getPerihal().toLowerCase().contains(searchQuery.toLowerCase())
-                            || surat.getPenerimaEksternal().toLowerCase().contains(searchQuery.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-
-        if (tanggalDibuat != null) {
-            suratKeluarList = suratKeluarDb.findByTanggalDibuat(tanggalDibuat);
-        }
-        
-        return suratKeluarList;
-    }
-
-    @Override
     public SuratKeluar findSuratKeluarByID(String id) {
         Optional<SuratKeluar> optionalSuratKeluar = suratKeluarDb.findById(id);
         if (optionalSuratKeluar.isPresent()) {
@@ -464,20 +443,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         mapSuratTtd.put("Sudah", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, true).size());
         mapSuratTtd.put("Belum", getSuratKeluarByCurrentPenandatanganAndIsSigned(penandatangan, false).size());
         return mapSuratTtd;
-    }
-
-    @Override
-    public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan) {
-        List<SuratKeluar> suratKeluars = getSuratKeluarByCurrentPenandatangan(penandatangan);
-
-        // Filter the list by keyword
-        return suratKeluars.stream()
-                .filter(suratKeluar -> suratKeluar.getNomorArsip().toLowerCase().contains(keyword.toLowerCase()) ||
-                        suratKeluar.getKategori().toLowerCase().contains(keyword.toLowerCase()) ||
-                        suratKeluar.getPerihal().toLowerCase().contains(keyword.toLowerCase()) ||
-                        suratKeluar.getPenerimaEksternal().toLowerCase().contains(keyword.toLowerCase()))
-                .collect(Collectors.toList());
-        
     }
 
     @Override

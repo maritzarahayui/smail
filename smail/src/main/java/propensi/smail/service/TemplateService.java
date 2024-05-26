@@ -20,8 +20,6 @@ public interface TemplateService {
 
     TemplateSurat softDeleteTemplate(String templateId);
 
-    List<TemplateSurat> searchTemplatesByNamaTemplate(String namaTemplate);
-
     boolean existsByNamaTemplate(String namaTemplate);
 
     TemplateSurat store(MultipartFile file, String kategori, String namaTemplate, ArrayList<String> listPengguna, ArrayList<String> listField, String requestTemplate);
@@ -57,8 +55,6 @@ public interface TemplateService {
     RequestTemplate updateRequest(String requestId);
 
     RequestTemplate findRequest(String id);
-
-    List<RequestTemplate> searchRequests(String keyword, int status);
 
     void sendEmailRejection(String to, String subject, String body, RequestTemplate requestTemplate) throws MessagingException, IOException;
 }

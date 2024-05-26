@@ -74,22 +74,11 @@ public class SuratMasukController {
     }
 
     @GetMapping("/all")
-    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search,
-        @RequestParam(required = false) String activeTab) {
+    public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(required = false) String activeTab) {
 
-        List<SuratMasuk> allSuratMasuk;
-        List<SuratMasuk> suratMasukFollowUp;
-        List<SuratMasuk> suratMasukDisposisi;
-
-        if (search != null && !search.isEmpty()) {
-            allSuratMasuk = suratMasukService.getSuratBySearch(search);
-            suratMasukDisposisi = suratMasukService.getSuratMasukBySearchIsDisposisi(search);
-            suratMasukFollowUp = suratMasukService.getSuratMasukBySearchIsFollowUp(search);
-        } else {
-            allSuratMasuk = suratMasukService.getAllSuratMasuk();
-            suratMasukDisposisi = suratMasukService.getSuratMasukIsDisposisi();
-            suratMasukFollowUp = suratMasukService.getSuratMasukIsFollowUp();
-        }
+        List<SuratMasuk> allSuratMasuk = suratMasukService.getAllSuratMasuk();
+        List<SuratMasuk> suratMasukFollowUp = suratMasukService.getSuratMasukIsDisposisi();
+        List<SuratMasuk> suratMasukDisposisi = suratMasukService.getSuratMasukIsFollowUp();
 
         model.addAttribute("allSuratMasuk", allSuratMasuk);
         model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
@@ -175,7 +164,7 @@ public class SuratMasukController {
 
     @GetMapping("/disposisi/{id}")
     public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
-        SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
+        SuratMasuk suratMasuk = suratMasukService.getFile(id);
         model.addAttribute("suratMasuk", suratMasuk);
 
         if (auth != null) {
@@ -256,8 +245,4 @@ public class SuratMasukController {
         model.addAttribute("noArsipAwal", arsipAwal.getNomorArsip());
         return "redirect:/surat-masuk/all";
     }
-
-    
-
-
 }
