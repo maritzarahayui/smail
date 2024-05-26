@@ -7,12 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import propensi.smail.model.FAQ;
-import propensi.smail.model.RequestSurat;
-import propensi.smail.model.user.Dosen;
-import propensi.smail.model.user.Mahasiswa;
-import propensi.smail.model.user.Pengguna;
-import propensi.smail.model.user.Staf;
+import propensi.smail.model.*;
+import propensi.smail.model.user.*;
 import propensi.smail.repository.FAQDb;
 
 @Service

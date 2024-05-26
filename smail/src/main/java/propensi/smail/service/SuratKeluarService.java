@@ -30,9 +30,7 @@ public interface SuratKeluarService {
 
     SuratKeluar findSuratKeluarByID(String id);
     SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan);
-    //  belum tes
     List<SuratKeluar> getSuratKeluarByCurrentPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
-    // get surat keluar by currentpenandatangan only
     List<SuratKeluar> getSuratKeluarByCurrentPenandatangan(Pengguna penandatangan);
 
     List<SuratKeluar> getSuratKeluarByIsSigned(Boolean isSigned);
@@ -47,9 +45,7 @@ public interface SuratKeluarService {
     Map<String, Integer> getJumlahSuratKeluarMingguIni();
     Map<String, Integer> getJumlahSuratKeluarTandaTangan(Pengguna penandatangan);
     List<SuratKeluar> getSuratKeluarByPenandatanganAndIsSigned(Pengguna penandatangan, Boolean isSigned);
-    //  search follow up ttd    
     public List<SuratKeluar> searchFollowUpTTD(String keyword, Pengguna penandatangan);
-
     Integer countAverageDurasiTtd(List<SuratKeluar> listSuratKeluar);
     Map<String, Integer> getAverageDurasiTtd();
 

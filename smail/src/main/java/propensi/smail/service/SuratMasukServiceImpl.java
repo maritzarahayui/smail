@@ -50,7 +50,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -69,7 +68,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
                 suratMasuk.setKategori(kategori);
                 suratMasuk.setPerihal(perihal);
                 suratMasuk.setTanggalDibuat(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                // suratMasuk.setStatus(1);
                 suratMasuk.setPengirim(pengirim);
                 suratMasuk.setFileName(fileName);
                 return suratMasukDb.save(suratMasuk);
@@ -166,7 +164,6 @@ public class SuratMasukServiceImpl implements SuratMasukService {
     public List<SuratMasuk> searchSuratMasuk(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
         List<SuratMasuk> suratMasukList = suratMasukDb.findAll();
 
-        // Filter berdasarkan query pencarian
         if (searchQuery != null && !searchQuery.isEmpty()) {
             suratMasukList = suratMasukList.stream()
                     .filter(surat -> surat.getNomorArsip().toLowerCase().contains(searchQuery.toLowerCase())

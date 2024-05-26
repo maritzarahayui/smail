@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import propensi.smail.model.RequestSurat;
-import propensi.smail.model.RequestSurat;
 import propensi.smail.model.RequestTemplate;
 import propensi.smail.model.SuratMasuk;
 import propensi.smail.model.TemplateSurat;
@@ -192,7 +191,7 @@ public class TemplateServiceImpl implements TemplateService {
                 throw new IllegalStateException("Template is already deleted.");
             }
         } else {
-            return null; // Or throw an exception indicating the template cannot be found
+            return null;
         }
     }
 
@@ -202,7 +201,7 @@ public class TemplateServiceImpl implements TemplateService {
         if (reqTemplate != null) {
             return requestTemplateDb.save(reqTemplate);
         } else {
-            return null; // Or throw an exception indicating the template cannot be found
+            return null; 
         }
     }
 
@@ -217,7 +216,7 @@ public class TemplateServiceImpl implements TemplateService {
                 throw new IllegalStateException("Template's status is not Diajukan.");
             }
         } else {
-            return null; // Or throw an exception indicating the template cannot be found
+            return null; 
         }
     }
 
@@ -232,7 +231,7 @@ public class TemplateServiceImpl implements TemplateService {
                 throw new IllegalStateException("Template's status is not Diajukan.");
             }
         } else {
-            return null; // Or throw an exception indicating the template cannot be found
+            return null; 
         }
     }
 
@@ -252,22 +251,16 @@ public class TemplateServiceImpl implements TemplateService {
         TemplateSurat existingTemplate = findById(id);
         if (existingTemplate != null) {
             try {
-                // Update properties
                 existingTemplate.setNamaTemplate(namaTemplate);
                 existingTemplate.setListPengguna(listPengguna);
                 existingTemplate.setListField(listField);
 
-                // Check if a new file is uploaded
                 if (file != null && !file.isEmpty()) {
-                    // Convert the file to byte array
                     byte[] fileBytes = file.getBytes();
-
-                    // Set the file and file name
                     existingTemplate.setFile(fileBytes);
                     existingTemplate.setFileName(file.getOriginalFilename());
                 }
 
-                // Save the updated template
                 return templateSuratDb.save(existingTemplate);
             } catch (IOException e) {
                 throw new RuntimeException("Failed to update file for template with ID " + id, e);

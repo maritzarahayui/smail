@@ -138,6 +138,7 @@ public class RequestController {
             List<String> bentukSurat = requestDTO.getBentukSurat();
             requestSurat.setBentukSurat(bentukSurat);
             return "redirect:/request/history";
+
         } catch (Exception e) {
             e.printStackTrace();
             return "Gagal membuat permintaan surat: " + e.getMessage(); 
@@ -191,7 +192,7 @@ public class RequestController {
     }
 
 
-    // Admin
+    /* ADMIN */
     @GetMapping("/admin/request/{id}")
     public String showDetaileRequests(@PathVariable("id") String id, Model model, Authentication auth) {
         RequestSurat req = requestService.getRequestSuratById(id);
@@ -210,20 +211,17 @@ public class RequestController {
             }
         }
 
-        model.addAttribute("requestSurat", req); // Add the template object to the model
+        model.addAttribute("requestSurat", req);
         return "detail-request-admin";
     }
 
     @PostMapping("/admin/request/updateStatus")
     public String updateRequestStatus(@RequestParam("requestId") String requestId, @RequestParam("status") int status) {
-        // Retrieve the request by ID
         RequestSurat req = requestService.getRequestSuratById(requestId);
 
-        // Update the status
         req.setStatus(status);
-        requestService.saveOrUpdate(req); // Assuming there's a method to save/update the request
+        requestService.saveOrUpdate(req); 
 
-        // Redirect to the detail page of the request
         return "redirect:/admin/request/" + requestId;
     }
 
@@ -294,7 +292,6 @@ public class RequestController {
         List<RequestSurat> requestSurats;
 
         if (keyword != null && !keyword.isEmpty()) {
-//            requestSurats = requestService.searchRequests(keyword, 1);
             requestSurats = requestService.getAllRequestsSurat();
         } else {
             requestSurats = requestService.getAllRequestsSurat();
@@ -443,8 +440,7 @@ public class RequestController {
 
             return "admin-history-diproses";
         } catch (Exception e) {
-            // Handle exception
-            return "error-page";
+            return "error";
         }
     }
 

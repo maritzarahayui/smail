@@ -68,7 +68,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         try {
             SuratKeluar suratKeluar = new SuratKeluar();
 
-            suratKeluar.setRequestSurat(requestSurat); // Set the corresponding RequestSurat
+            suratKeluar.setRequestSurat(requestSurat);
             suratKeluar.setNomorArsip(generateId(kategori));
             suratKeluar.setKategori(kategori);
             suratKeluar.setJenisSurat(jenisSurat);
@@ -152,25 +152,17 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
 
     @Override
     public void updateSuratKeluarFile(String id, MultipartFile file) {
-        // Retrieve the SuratKeluar object by ID
         Optional<RequestSurat> requestSurat = requestSuratDb.findById(id);
-
         SuratKeluar suratKeluar = suratKeluarDb.findByRequestSurat(requestSurat);
-
         RequestSurat rs = requestSuratDb.findById(id).get();
 
         try {
-            // Check if a new file is uploaded
             if (file != null && !file.isEmpty()) {
-                // Convert the file to byte array
                 byte[] fileBytes = file.getBytes();
-
-                // Set the file and file name
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
 
                 Pengguna current = findNextSignatory(suratKeluar);
-
                 suratKeluar.setCurrentPenandatangan(current);
 
                 if (current == null) {
@@ -181,7 +173,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                     suratKeluarDb.save(suratKeluar);
 
                     requestService.sendEmailFinished(rs.getPengaju().getEmail(), "", "", rs, suratKeluar);
-
                 }
 
                 suratKeluarDb.save(suratKeluar);
@@ -191,8 +182,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
             throw new RuntimeException("Failed to update SuratKeluar file: " + e.getMessage());
         }
     }
-
-
 
     private Pengguna findNextSignatory(SuratKeluar suratKeluar) {
         List<Pengguna> penandatangans = suratKeluar.getPenandatangan();
@@ -204,7 +193,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         if (nextIndex < penandatangans.size()) {
             return penandatangans.get(nextIndex);
         } else {
-            // All signatories have signed
             return null;
         }
     }
@@ -249,17 +237,14 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         List<TemplateSurat> templateSuratList = templateSuratDb.findAll();
         Map<String, List<String>> kategoriJenisMap = new HashMap<>();
 
-        // Loop through the templateSuratList
         for (TemplateSurat template : templateSuratList) {
 
             if (template.getListPengguna().contains(tipePengaju)) {
                 String kategori = template.getKategori();
                 String jenis = template.getNamaTemplate();
-
-                // If the category already exists in the map, add the type to its list
                 if (kategoriJenisMap.containsKey(kategori)) {
                     kategoriJenisMap.get(kategori).add(jenis);
-                } else { // Otherwise, create a new list for the category and add the type to it
+                } else {
                     List<String> jenisList = new ArrayList<>();
                     jenisList.add(jenis);
                     kategoriJenisMap.put(kategori, jenisList);
@@ -275,7 +260,6 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     public List<SuratKeluar> searchSuratKeluar(Map<String, String> params, Date tanggalDibuat, String sort, String searchQuery) {
         List<SuratKeluar> suratKeluarList = suratKeluarDb.findByIsSigned(true);
 
-        // Filter berdasarkan query pencarian
         if (searchQuery != null && !searchQuery.isEmpty()) {
             suratKeluarList = suratKeluarList.stream()
                     .filter(surat -> surat.getNomorArsip().toLowerCase().contains(searchQuery.toLowerCase())
@@ -303,11 +287,9 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     }
 
     @Override
-    public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal,
-            String penerimaEksternal, Pengguna penandatangan) {
+    public SuratKeluar storeArsipFollowUp(MultipartFile file, SuratMasuk arsipAwal, String perihal, String penerimaEksternal, Pengguna penandatangan) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
-            // bikin objek surat keluar
             SuratKeluar suratKeluar = new SuratKeluar();
                 suratKeluar.setNomorArsip(generateId(arsipAwal.getKategori()));
                 suratKeluar.setFile(file.getBytes());
@@ -323,11 +305,8 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
                 List<Pengguna> penandatangans = new ArrayList<>();
                 penandatangans.add(penandatangan);
                 suratKeluar.setPenandatangan(penandatangans);
-                
                 suratKeluarDb.save(suratKeluar);
 
-                // ubah status arsip awal
-                // arsipAwal.setStatus(3);
                 arsipAwal.setIsFollowUp(true);
                 arsipAwal.setSuratFollowUp(suratKeluar);
                 suratMasukDb.save(arsipAwal);
@@ -358,16 +337,11 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
     @Override
     @Transactional 
     public void updateFollowUpFile(String id, MultipartFile file) {
-        // Retrieve the SuratKeluar object by suratKeluar nomorArsip
         SuratKeluar suratKeluar = suratKeluarDb.findByNomorArsip(id);
 
         try {
-            // Check if a new file is uploaded
             if (file != null && !file.isEmpty()) {
-                // Convert the file to byte array
                 byte[] fileBytes = file.getBytes();
-
-                // Set the file and file name
                 suratKeluar.setFile(fileBytes);
                 suratKeluar.setFileName(file.getOriginalFilename());
                 suratKeluar.setIsSigned(true);
@@ -396,6 +370,7 @@ public class SuratKeluarServiceImpl implements SuratKeluarService {
         mapSuratKeluarKategori.put("Sarana", suratKeluarDb.countByKategori("Sarana"));
         mapSuratKeluarKategori.put("Kemahasiswaan", suratKeluarDb.countByKategori("Kemahasiswaan"));
         mapSuratKeluarKategori.put("Lainnya", suratKeluarDb.countByKategori("Lainnya"));
+        
         return mapSuratKeluarKategori;
     }
 

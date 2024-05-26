@@ -266,13 +266,6 @@ public class RequestServiceImpl implements RequestService {
         return requestSuratDb.findByTanggalPengajuanOrTanggalSelesai(tanggalPengajuan, tanggalSelesai);
     }
 
-    // @Override
-    // public RequestSurat batalkanRequestSurat(String requestSuratId) {
-    //     RequestSurat requestSurat = getRequestSuratById(requestSuratId);
-    //     requestSurat.setStatus(2); // Dibatalkan
-    //     return requestSuratDb.save(requestSurat);
-    // }
-
     @Override
     public RequestSurat batalkanRequestSurat(String requestSuratId, String alasanPembatalan) {
         RequestSurat requestSurat = getRequestSuratById(requestSuratId);
@@ -312,28 +305,21 @@ public class RequestServiceImpl implements RequestService {
         List<TemplateSurat> templateSuratList = templateSuratDb.findAll();
         Map<String, List<String>> kategoriJenisMap = new HashMap<>();
 
-        // Loop through the templateSuratList
         for (TemplateSurat template : templateSuratList) {
 
             if (template.getListPengguna().contains(tipePengaju) && template.isActive()) {
                 String kategori = template.getKategori();
                 String jenis = template.getNamaTemplate();
-
-                // If the category already exists in the map, add the type to its list
                 if (kategoriJenisMap.containsKey(kategori)) {
                     kategoriJenisMap.get(kategori).add(jenis);
-                } else { // Otherwise, create a new list for the category and add the type to it
+                } else { 
                     List<String> jenisList = new ArrayList<>();
                     jenisList.add(jenis);
                     kategoriJenisMap.put(kategori, jenisList);
-
-
                 }
             }
             
         }
-
-        System.out.println("KategoriJenisMap: " + kategoriJenisMap);
 
         return kategoriJenisMap;
     }
@@ -418,24 +404,16 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public List<RequestSurat> getAllRequestSuratByPenandatanganId(String penandatanganId) {
-        // Retrieve all SuratKeluar objects associated with the specified penandatanganId
         List<SuratKeluar> suratKeluarList = suratKeluarDb.findByPenandatanganId(penandatanganId);
-
-        // Create a list to store the associated RequestSurat objects
         List<RequestSurat> requestSuratList = new ArrayList<>();
 
-        // Iterate over the SuratKeluar objects
         for (SuratKeluar suratKeluar : suratKeluarList) {
             if (suratKeluar.getRequestSurat() != null) {
-                // Retrieve the associated RequestSurat object
                 RequestSurat requestSurat = suratKeluar.getRequestSurat();
-
-                // Add the retrieved RequestSurat object to the list
                 requestSuratList.add(requestSurat);
             }
         }
 
-        // Return the list of associated RequestSurat objects
         return requestSuratList;
     }
 
@@ -443,7 +421,6 @@ public class RequestServiceImpl implements RequestService {
     public List<RequestSurat> searchRequestsTTD(String keyword, String penandatanganId) {
         List<RequestSurat> requestSurats = getAllRequestSuratByPenandatanganId(penandatanganId);
 
-        // Filter the list by keyword
         return requestSurats.stream()
                 .filter(requestSurat -> requestSurat.getId().toLowerCase().contains(keyword.toLowerCase()) ||
                         requestSurat.getJenisSurat().toLowerCase().contains(keyword.toLowerCase()) ||
@@ -451,14 +428,14 @@ public class RequestServiceImpl implements RequestService {
                 .collect(Collectors.toList());
     }
 
-    // ------------------REQUEST TEMPLATE----------------
+    /* REQUEST TEMPLATE */
     @Override
     public void createRequestTemplate(RequestTemplate requestTemplate, RequestAndFieldDataDTO requestDTO){
         try {
             requestTemplate.setBahasa(requestDTO.getBahasa());
             requestTemplate.setKategori(requestDTO.getKategori());
-            requestTemplate.setStatus(1); // 1 --> REQUESTED
-            requestTemplate.setKeperluan(requestDTO.getKeperluan()); // 0 --> REQUESTED
+            requestTemplate.setStatus(1); 
+            requestTemplate.setKeperluan(requestDTO.getKeperluan()); 
             requestTemplate.setId(generateRequestId(requestTemplate.getPengaju()));
             requestTemplate.setListFieldData(requestDTO.getListFieldData());
 
@@ -468,10 +445,8 @@ public class RequestServiceImpl implements RequestService {
 
             requestTemplateDb.save(requestTemplate);
 
-            System.out.println("RequestTemplate saved successfully");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error saving RequestTemplate");
         }
     }
 
@@ -492,7 +467,7 @@ public class RequestServiceImpl implements RequestService {
         return kategori;
     }
 
-    // ------PREVIEW-----
+    /* PREVIEW */
     @Override
     public List<String> getAllJenisByKategori(String kategori) {
         return templateSuratDb.findNamaTemplateByKategori(kategori);
@@ -767,7 +742,7 @@ public class RequestServiceImpl implements RequestService {
             "Januari", "Februari", "Maret", "April", "Mei", "Juni",
             "Juli", "Agustus", "September", "Oktober", "November", "Desember"
         };
-        return months[monthNumber - 1]; // Kurangi 1 karena array dimulai dari indeks 0
+        return months[monthNumber - 1];
     }
 
     // Method untuk mendapatkan minggu dalam bulan dari tanggal
@@ -787,11 +762,6 @@ public class RequestServiceImpl implements RequestService {
         jumlahRequestByStatus.put("Selesai", requestSuratDb.countByPengajuAndStatus(pengguna, 5));
         return jumlahRequestByStatus;
     }
-
-    // @Override
-    // public long countRequestsSignedByDosen() {
-    //     return requestSuratDb.countRequestByStatusAndRole(5, Dosen.class);
-    // }
 
     @Override
     public Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna) {

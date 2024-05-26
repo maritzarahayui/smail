@@ -43,9 +43,6 @@ public class SuratKeluarController {
     private PenggunaDb penggunaDb;
 
     @Autowired
-    private RequestSuratDb requestSuratDb;
-
-    @Autowired
     private TemplateSuratDb templateSuratDb;
 
     @Autowired
@@ -54,17 +51,13 @@ public class SuratKeluarController {
     @GetMapping("/admin/detail/{id}/selesai")
     public String detailRequestSuratAdmin(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
-        model.addAttribute("requestSurats", requestSurats);
-
         SuratKeluar suratKeluar = suratKeluarService.getFileTtd(id);
         byte[] pdf = suratKeluar.getFile();
-
         SuratKeluar suratKeluar1 = requestSurats.getSurat();
-        model.addAttribute("outgoing", suratKeluar1);
-
-        // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
+        model.addAttribute("requestSurats", requestSurats);
+        model.addAttribute("outgoing", suratKeluar1);
         model.addAttribute("base64PDF", base64PDF);
         model.addAttribute("suratKeluar", suratKeluar);
 
@@ -112,7 +105,6 @@ public class SuratKeluarController {
         RequestSurat requestSurats = requestService.getRequestSuratById(id);
         model.addAttribute("requestSurats", requestSurats);
 
-
         if (requestSurats.getJenisSurat().equals("Lainnya")) {
             RequestTemplate fileExample = requestService.getFile(id);
             TemplateSurat templateSurat = templateSuratDb.findByRequestTemplate(requestSurats.getId());
@@ -135,8 +127,6 @@ public class SuratKeluarController {
             TemplateSurat templateSurat = templateSuratDb.findByNamaTemplate(requestSurats.getJenisSurat());
             model.addAttribute("template", templateSurat);
         }
-
-
 
         SuratKeluar file = suratKeluarService.getFileTtd(id);
 
@@ -190,12 +180,9 @@ public class SuratKeluarController {
     }
 
     @PostMapping("/admin/detail/{id}/process")
-    public String createSuratKeluar(@PathVariable("id") String requestSuratId,
-                                    @RequestParam("file") MultipartFile file,
-                                    @RequestParam("kategori") String kategori,
-                                    @RequestParam("jenisSurat") String jenisSurat,
-                                    @RequestParam(value = "penandatangan", required = false) ArrayList<String> penandatanganIds,
-                                    Model model) {
+    public String createSuratKeluar(@PathVariable("id") String requestSuratId, @RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori,
+        @RequestParam("jenisSurat") String jenisSurat, @RequestParam(value = "penandatangan", required = false) ArrayList<String> penandatanganIds, Model model) {
+        
         try {
             RequestSurat requestSurat = requestService.getRequestSuratById(requestSuratId);
 
@@ -214,13 +201,13 @@ public class SuratKeluarController {
                     existingSuratKeluar.setFileName(StringUtils.cleanPath(file.getOriginalFilename()));
                 }
                 existingSuratKeluar.setPenandatangan(penandatangans);
-                suratKeluarService.update(existingSuratKeluar); // Update existing SuratKeluar
+                suratKeluarService.update(existingSuratKeluar); 
             } else {
-                // Create and store SuratKeluar
                 suratKeluarService.storeTtd(requestSurat, file, kategori, jenisSurat, penandatangans);
             }
 
             return "redirect:/admin/request/process";
+
         } catch (Exception e) {
             return "redirect:/admin/request/process";
         }
@@ -238,7 +225,6 @@ public class SuratKeluarController {
         SuratKeluar suratKeluar1 = requestSurats.getSurat();
         model.addAttribute("outgoing", suratKeluar1);
 
-        // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
@@ -271,13 +257,10 @@ public class SuratKeluarController {
     }
 
     @PostMapping("/ttd/update/{id}")
-    public String updateTTD(@PathVariable("id") String id,
-                                 @RequestParam("file") MultipartFile file,
-                                 Model model, Authentication auth) {
+    public String updateTTD(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, Model model, Authentication auth) {
         String message = "";
 
         try {
-            // Update the SuratKeluar file
             suratKeluarService.updateSuratKeluarFile(id, file);
             message = "PDF updated successfully";
             model.addAttribute("message", message);
@@ -288,7 +271,6 @@ public class SuratKeluarController {
             return "redirect:/ttd/detail/{id}";
         }
     }
-
 
     @GetMapping("/ttd/request")
     @Transactional(readOnly = true)
@@ -304,10 +286,8 @@ public class SuratKeluarController {
                 List<RequestSurat> requestSurats;
 
                 if (keyword != null && !keyword.isEmpty()) {
-                    // Search requests based on keyword
                     requestSurats = requestService.searchRequestsTTD(keyword, penandatanganId);
                 } else {
-                    // Get all requests for the user
                     requestSurats = requestService.getAllRequestSuratByPenandatanganId(penandatanganId);
                 }
 
@@ -323,11 +303,9 @@ public class SuratKeluarController {
         return "pengurus-ttd-request";
     }
 
-    // route to pengurus-ttd-arsip 
     @GetMapping("/ttd/arsip")
     @Transactional(readOnly = true)
     public String pengurusTtdArsip(@RequestParam(value = "search", required = false) String keyword, Model model, Authentication auth) {
-        // list surat keluar berdasarkan id penandatangan dan status
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -337,10 +315,9 @@ public class SuratKeluarController {
                 Pengguna pengguna = user.get();
                 List<SuratKeluar> listSuratKeluar;
 
-                // implement search
                 if (keyword != null && !keyword.isEmpty()) {
                     listSuratKeluar = suratKeluarService.searchFollowUpTTD(keyword, pengguna);
-                }else {
+                } else {
                     listSuratKeluar = suratKeluarService.getSuratKeluarByCurrentPenandatangan(pengguna);
                 }
 
@@ -354,19 +331,12 @@ public class SuratKeluarController {
         return "pengurus-ttd-arsip";
     }
 
-    /* BRANCH ARSIPPP
-     * BRANCH ARSIPPP
-     * BRANCH ARSIPPP
-     * BRANCH ARSIPPP
-     * BRANCH ARSIPPP
-    */
-    //get all surat keluar (diarsipkan)
     @GetMapping("/surat-keluar/all")
-    public String getAllSuratKeluar(Model model, Authentication auth,
+    public String getAllSuratKeluar(Model model, Authentication auth, 
         @RequestParam(value = "tanggalDibuat", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date tanggalDibuat) {
+        
         List<SuratKeluar> suratKeluarList = suratKeluarService.getSuratKeluarByIsSigned(true);
         
-        // Filter surat masuk berdasarkan tanggal dibuat jika parameter tanggalDibuat diberikan
         if (tanggalDibuat != null) {
             suratKeluarList = suratKeluarList.stream()
                     .filter(surat -> surat.getTanggalDibuat().equals(tanggalDibuat))
@@ -392,11 +362,10 @@ public class SuratKeluarController {
         return "daftar-surat-keluar";
     }
 
-    // route to form-upload-surat
     @GetMapping("/surat-keluar/form")
     public String formUploadSurat(Model model, Authentication auth) {
-
         String role = "";
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -422,12 +391,14 @@ public class SuratKeluarController {
     public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori,  
         @RequestParam("perihal") String perihal, @RequestParam("penerima_eksternal") String penerima_eksternal, 
         Authentication auth, Model model) throws ParseException {
+
         try {
             SuratKeluar suratKeluar= suratKeluarService.storeInput(file, kategori, perihal, penerima_eksternal);
             suratKeluar.setIsSigned(true);
             suratKeluarDb.save(suratKeluar);
             return "redirect:/surat-keluar/detail/" + suratKeluar.getNomorArsip();
-        }catch (Exception e) {
+
+        } catch (Exception e) {
             return "redirect:/surat-keluar/form";
         }
     }
@@ -441,22 +412,17 @@ public class SuratKeluarController {
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("attachment", file.getFileName());
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(file.getFile());
+            return ResponseEntity.ok().headers(headers).body(file.getFile());
         } else {
-            // Handle the case where file is not found
             return ResponseEntity.notFound().build();
         }
     }
 
-    // Metode untuk menampilkan preview PDF
     @GetMapping("/surat-keluar/detail/{id}")
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratKeluar suratKeluar = suratKeluarService.getFileInput(id);
         byte[] pdf = suratKeluar.getFile();
 
-        // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
@@ -476,24 +442,16 @@ public class SuratKeluarController {
             }
         }
 
-        // return "detail-surat-tes"; 
         return "detail-surat-keluar"; 
-
     }
 
-    // route to pengurus-ttd-follup
     @GetMapping("/ttd/followup/{id}")
     public String detailTtdFollowUp(@PathVariable("id") String id, Model model, Authentication auth)  throws IOException {
-        
-        // get surat keluar by nomor arsip
         SuratKeluar suratKeluar = suratKeluarService.getSuratKeluarByNomorArsip(id);
         byte[] pdf = suratKeluar.getFile();
-
-        model.addAttribute("suratKeluar", suratKeluar);
-
-        // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
+        model.addAttribute("suratKeluar", suratKeluar);
         model.addAttribute("base64PDF", base64PDF);
         model.addAttribute("suratKeluar", suratKeluar);
         
@@ -516,13 +474,10 @@ public class SuratKeluarController {
     }
 
     @PostMapping("/ttd/followup/{id}")
-    public String updateTtdFollowUp(@PathVariable("id") String id,
-                                 @RequestParam("file") MultipartFile file,
-                                 Model model, Authentication auth) {
+    public String updateTtdFollowUp(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, Model model, Authentication auth) {
         String message = "";
 
         try {
-            // Update the SuratKeluar file
             suratKeluarService.updateFollowUpFile(id, file);
             message = "PDF updated successfully";
             model.addAttribute("message", message);
@@ -533,7 +488,4 @@ public class SuratKeluarController {
             return "redirect:/ttd/followup/{id}";
         }
     }
-
-
-
 }

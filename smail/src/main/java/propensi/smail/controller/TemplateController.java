@@ -121,9 +121,9 @@ public class TemplateController {
         statusMap.put(3, "Ditolak");
 
         model.addAttribute("statusMap", statusMap);
+        model.addAttribute("requestTemplate", requestTemplate); 
 
-        model.addAttribute("requestTemplate", requestTemplate); // Add the template object to the model
-        return "detail-request-template"; // Return the PDF preview Thymeleaf template
+        return "detail-request-template";
     }
 
     @GetMapping("")
@@ -173,14 +173,9 @@ public class TemplateController {
     }
 
     @PostMapping("/create")
-    public String uploadFile(@RequestParam("file") MultipartFile file,
-                             @RequestParam("kategori") String kategori,
-                             @RequestParam("namaTemplate") String namaTemplate,
-                             @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                             @RequestParam("listField[]") String[] listField,
-                             @RequestParam(value = "requestTemplate", required = false) String requestTemplateId,
-                             Model model,
-                             Authentication auth) {
+    public String uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("kategori") String kategori, @RequestParam("namaTemplate") String namaTemplate, 
+        @RequestParam("listPengguna") ArrayList<String> listPengguna, @RequestParam("listField[]") String[] listField, 
+        @RequestParam(value = "requestTemplate", required = false) String requestTemplateId, Model model, Authentication auth) {
         String message = "";
 
         List<RequestTemplate> requestTemplates = templateSuratService.getAllFilteredAcceptedReq();
@@ -209,20 +204,21 @@ public class TemplateController {
             }
 
             if (templateSuratDb.findByNamaTemplate(namaTemplate) != null) {
-
                 message = "Template dengan nama " + namaTemplate + " sudah ada.";
                 model.addAttribute("errorMessage", message);
                 return "add-template";
             } else {
                 templateSuratService.store(file, kategori, namaTemplate, listPengguna, newListField, requestTemplate);
-
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
                 model.addAttribute("message", message);
             }
+            
             return "redirect:/template";
+
         } catch (Exception e) {
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             model.addAttribute("errorMessage", message);
+
             return "template-form";
         }
     }
@@ -233,11 +229,10 @@ public class TemplateController {
         TemplateSurat file = templateSuratService.getFile(id);
         byte[] pdf = file.getFile();
 
-        // Convert PDF content to Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
-        model.addAttribute("template", file); // Add the template object to the model
+        model.addAttribute("template", file);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -255,7 +250,7 @@ public class TemplateController {
 
         TemplateSurat templateSurat = templateSuratService.findById(id);
 
-        return "detail-template"; // Return the PDF preview Thymeleaf template
+        return "detail-template";
     }
 
     @GetMapping("/soft-delete/{id}")
@@ -270,12 +265,13 @@ public class TemplateController {
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
         }
-        return "redirect:/template"; // Redirect to the list of active templates
+        return "redirect:/template";
     }
 
     @PostMapping("/request/detail/{id}/updateStatus")
-    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan,
-                               Model model, Authentication auth) {
+    public String updateStatus(@PathVariable("id") String id, @RequestParam("status") int status, 
+        @RequestParam(value = "alasanPenolakan", required = false) String alasanPenolakan, Model model, Authentication auth) {
+        
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -298,10 +294,10 @@ public class TemplateController {
 
             RequestSurat requestSurat = requestService.getRequestSuratById(id);
             if (requestSurat != null) {
-                requestSurat.setStatus(3); // Set status to 'rejected'
+                requestSurat.setStatus(3); 
                 requestSurat.setAlasanPenolakan(alasanPenolakan);
                 requestSurat.setTanggalPenolakan(new Date());
-                requestService.saveOrUpdate(requestSurat); // Update the RequestSurat in the database
+                requestService.saveOrUpdate(requestSurat);
             }
 
             try {
@@ -313,14 +309,14 @@ public class TemplateController {
             }
 
         } else if (status == 2) {
-
             RequestSurat requestSurat = requestService.getRequestSuratById(id);
+
             if (requestSurat != null) {
-                requestSurat.setStatus(4); // Set status to 'rejected'
-                requestService.saveOrUpdate(requestSurat); // Update the RequestSurat in the database
+                requestSurat.setStatus(4); 
+                requestService.saveOrUpdate(requestSurat);
             }
 
-        }else {
+        } else {
             requestTemplate.setAlasanPenolakan(null);
         }
 
@@ -331,16 +327,13 @@ public class TemplateController {
 
     @GetMapping("/update/{id}")
     public String showUpdateTemplateForm(@PathVariable("id") String id, Model model, Authentication auth) {
-        // Retrieve the template by ID
         TemplateSurat template = templateSuratService.findById(id);
 
         if (template == null) {
             throw new IllegalArgumentException("Template not found with ID: " + id);
         }
 
-        // Populate the model with the template data
         model.addAttribute("template", template);
-//            model.addAttribute("base64PDF", base64PDF);
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -356,16 +349,12 @@ public class TemplateController {
             }
         }
         
-        return "update-template-form"; // Return the update template view
+        return "update-template-form";
     }
 
     @PostMapping("/update/{id}")
-    public String updateTemplate(@PathVariable("id") String id,
-                                 @RequestParam("file") MultipartFile file,
-                                 @RequestParam("namaTemplate") String namaTemplate,
-                                 @RequestParam("listPengguna") ArrayList<String> listPengguna,
-                                 @RequestParam("listField[]") ArrayList<String> listField,
-                                 Model model, Authentication auth) {
+    public String updateTemplate(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("namaTemplate") String namaTemplate,
+        @RequestParam("listPengguna") ArrayList<String> listPengguna, @RequestParam("listField[]") ArrayList<String> listField, Model model, Authentication auth) {
         String message = "";
 
         if (auth != null) {
@@ -391,7 +380,6 @@ public class TemplateController {
                 model.addAttribute("template", template);
                 return "update-template-form";
             } else {
-                // Update the template with the provided data
                 templateSuratService.updateTemplate(id, file, namaTemplate, listPengguna, listField);
                 message = "Template updated successfully";
                 model.addAttribute("message", message);

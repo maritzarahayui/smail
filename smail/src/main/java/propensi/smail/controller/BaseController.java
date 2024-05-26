@@ -16,7 +16,6 @@ import propensi.smail.model.user.*;
 import propensi.smail.repository.*;
 import propensi.smail.service.*;
 
-
 @Controller
 public class BaseController {
     
@@ -119,7 +118,6 @@ public class BaseController {
                     return "dashboard-admin";
 
                 } else if (role.equals("Pengurus")) {
-                    /* model.addAttribute yg dibutuhin */
                     model.addAttribute("mapSuratMasukTahun", suratMasukService.getJumlahSuratMasukTahunIni());
                     model.addAttribute("mapSuratMasukBulan", suratMasukService.getJumlahSuratMasukBulanIni());
                     model.addAttribute("mapSuratMasukMinggu", suratMasukService.getJumlahSuratMasukMingguIni());
@@ -147,7 +145,6 @@ public class BaseController {
                     return "dashboard-pengurus";
                     
                 } else if (role.equals("Dosen")) {
-                    // Jumlah request surat (bulan, tahun)
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
                     if (bulan.isEmpty()) {
                         model.addAttribute("bulan", "");
@@ -172,7 +169,6 @@ public class BaseController {
                     }
                     model.addAttribute("jumlahRequestPerMinggu", minggu);
 
-                    // Statistik jumlah req tiap status (OK)
                     Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
                     model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
                     model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
@@ -180,11 +176,10 @@ public class BaseController {
                     model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
                     model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
 
-                    // Statistik jumlah pertanyaan terjawab
                     Map<String, Long> statistikTerjawab = faqService.getCountOfAnsweredQuestions(pengguna);
                     model.addAttribute("answeredFAQs", statistikTerjawab.getOrDefault("Terjawab", 0L));
                     model.addAttribute("unansweredFAQs", statistikTerjawab.getOrDefault("BelumTerjawab", 0L));
-                    // Statistik jumlah req by kategori
+
                     Map<String, Long> requestByCategory = requestService.getCountOfRequestByCategory(pengguna);
                     model.addAttribute("requestByCategory", requestByCategory);
 
@@ -194,7 +189,6 @@ public class BaseController {
                     return "dashboard-dosen";
 
                 } else if (role.equals("Staf")) {
-                    // Jumlah request surat (bulan, tahun)
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
                     if (bulan.isEmpty()) {
                         model.addAttribute("bulan", "");
@@ -219,7 +213,6 @@ public class BaseController {
                     }
                     model.addAttribute("jumlahRequestPerMinggu", minggu);
 
-                    // Statistik jumlah req tiap status
                     Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
                     model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
                     model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
@@ -227,18 +220,15 @@ public class BaseController {
                     model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
                     model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
 
-                    // Statistik jumlah pertanyaan terjawab
                     Map<String, Long> statistikTerjawabStaf = faqService.getCountOfAnsweredQuestions(pengguna);
                     model.addAttribute("answeredFAQs", statistikTerjawabStaf.getOrDefault("Terjawab", 0L));
                     model.addAttribute("unansweredFAQs", statistikTerjawabStaf.getOrDefault("BelumTerjawab", 0L));
 
-                    // Statistik jumlah req by kategori
                     Map<String, Long> requestByCategory = requestService.getCountOfRequestByCategory(pengguna);
                     model.addAttribute("requestByCategory", requestByCategory);
 
                     return "dashboard-staf";
                 } else if (role.equals("Mahasiswa")){
-                    // Jumlah request surat (bulan, tahun)
                     Map<String, Long> bulan = requestService.getJumlahRequestPerMonthByUser(pengguna);
                     if (bulan.isEmpty()) {
                         model.addAttribute("bulan", "");
@@ -263,20 +253,17 @@ public class BaseController {
                     }
                     model.addAttribute("jumlahRequestPerMinggu", minggu);
 
-                    // Statistik jumlah req tiap status
-                     Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
+                    Map<String, Long> jumlahRequestByStatus = requestService.getJumlahRequestByStatus(pengguna);
                     model.addAttribute("diajukan", jumlahRequestByStatus.getOrDefault("Diajukan", 0L));
                     model.addAttribute("dibatalkan", jumlahRequestByStatus.getOrDefault("Dibatalkan", 0L));
                     model.addAttribute("ditolak", jumlahRequestByStatus.getOrDefault("Ditolak", 0L));
                     model.addAttribute("diproses", jumlahRequestByStatus.getOrDefault("Diproses", 0L));
                     model.addAttribute("selesai", jumlahRequestByStatus.getOrDefault("Selesai", 0L)); 
 
-                    // Statistik jumlah pertanyaan terjawab
                     Map<String, Long> statistikTerjawabMahasiswa = faqService.getCountOfAnsweredQuestions(pengguna);
                     model.addAttribute("answeredFAQs", statistikTerjawabMahasiswa.getOrDefault("Terjawab", 0L));
                     model.addAttribute("unansweredFAQs", statistikTerjawabMahasiswa.getOrDefault("BelumTerjawab", 0L));
 
-                    // Statistik jumlah req by jenis
                     Map<String, Long> requestByJenis = requestService.getCountOfRequestByJenis(pengguna);
                     model.addAttribute("requestByJenis", requestByJenis);
 
@@ -295,7 +282,6 @@ public class BaseController {
 
     @GetMapping("/profile")
     public String profile(Model model, Authentication auth) {
-
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -316,13 +302,10 @@ public class BaseController {
 
         }
         return "profile";
-        
-
     }
 
     @GetMapping("/login")
     public String login(Authentication auth, Model model) {
-
         List<FAQ> faqsTerjawab = faqService.getFaqsByStatus(2);
         model.addAttribute("faqsTerjawab", faqsTerjawab);
 

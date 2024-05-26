@@ -49,10 +49,9 @@ public interface RequestService {
     Map<Integer, String> listBahasa();
     void sendEmailRejection(String to, String subject, String body, RequestSurat requestSurat) throws MessagingException, IOException;
     void sendEmailFinished(String to, String subject, String body, RequestSurat requestSurat, SuratKeluar suratKeluar) throws MessagingException, IOException;
-    
     String generateRequestId(Pengguna pengaju);
 
-    // METHOD REQUEST TEMPLATE
+    // REQUEST TEMPLATE
     void createRequestTemplate(RequestTemplate requestTemplate, RequestAndFieldDataDTO requestDTO);
     List<RequestTemplate> retrieveAllRequest();
     Map<Integer, String> listKategori();
@@ -78,18 +77,12 @@ public interface RequestService {
     String getCurrentYearMonth();
     Map<String, Map<String, Long>> getJumlahRequestPerYearAndMonth();
     List<RequestSurat> getRequestSuratByKategori(String kategori);
-
-    //  EMIIIIIIIIIII ////
     Map<String, Long> getJumlahRequestPerMonthByUser(Pengguna pengguna);
     Map<String, Long> getJumlahRequestPerMingguByUser(Pengguna pengguna);
     Map<String, Long> getJumlahRequestPerYearByUser(Pengguna pengguna);
-
-    Map<String, Long> getJumlahRequestByStatus(Pengguna pengguna); //ok
-    Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna); // ok //dosen & staf
-    Map<String, Long> getCountOfRequestByJenis(Pengguna pengguna); //ok // mahasiswa
-
-    // long countRequestsSignedByDosen();
-    
+    Map<String, Long> getJumlahRequestByStatus(Pengguna pengguna); 
+    Map<String, Long> getCountOfRequestByCategory(Pengguna pengguna); 
+    Map<String, Long> getCountOfRequestByJenis(Pengguna pengguna); 
     
 }
 

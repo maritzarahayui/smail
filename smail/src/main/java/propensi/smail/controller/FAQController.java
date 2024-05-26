@@ -29,25 +29,12 @@ public class FAQController {
     private PenggunaDb penggunaDb;
 
     @GetMapping
-    public String showFAQ(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search,
-        @RequestParam(required = false) String activeTab) {
+    public String showFAQ(Model model, Authentication auth, @RequestParam(required = false) String activeTab) {
 
-        List<FAQ> faqsBelumDijawab;
-        List<FAQ> faqsDieskalasi;
-        List<FAQ> faqsTerjawab;
-        List<FAQ> faqsDihapus;
-
-        if (search != null && !search.isEmpty()) {
-            faqsBelumDijawab = faqService.getFaqsByStatusAndSearch(search,0);
-            faqsDieskalasi = faqService.getFaqsByStatusAndSearch(search, 1);
-            faqsTerjawab = faqService.getFaqsByStatusAndSearch(search, 2);
-            faqsDihapus = faqService.getFaqsByStatusAndSearch(search, 3);
-        } else {
-            faqsBelumDijawab = faqService.getFaqsByStatus(0);
-            faqsDieskalasi = faqService.getFaqsByStatus(1);
-            faqsTerjawab = faqService.getFaqsByStatus(2);
-            faqsDihapus = faqService.getFaqsByStatus(3);
-        }
+        List<FAQ> faqsBelumDijawab = faqService.getFaqsByStatus(0);
+        List<FAQ> faqsDieskalasi = faqService.getFaqsByStatus(1);
+        List<FAQ> faqsTerjawab = faqService.getFaqsByStatus(2);
+        List<FAQ> faqsDihapus = faqService.getFaqsByStatus(3);
 
         model.addAttribute("faqsBelumDijawab", faqsBelumDijawab);
         model.addAttribute("faqsDieskalasi", faqsDieskalasi);
@@ -194,7 +181,7 @@ public class FAQController {
 
     @PostMapping("/{idFAQ}/edit")
     public String editFAQ(Model model, Authentication auth, @PathVariable("idFAQ") int idFAQ, FAQ newFaq) {
-        
+    
         FAQ faq = faqService.editFAQ(newFaq);
 
         if (auth != null) {

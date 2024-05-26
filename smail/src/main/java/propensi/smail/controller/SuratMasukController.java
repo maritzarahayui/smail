@@ -67,44 +67,31 @@ public class SuratMasukController {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_PDF);
             headers.setContentDispositionFormData("attachment", file.getFileName());
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(file.getFile());
+            return ResponseEntity.ok().headers(headers).body(file.getFile());
         } else {
-            // Handle the case where file is not found
             return ResponseEntity.notFound().build();
         }
     }
 
-    //get all surat masuk
     @GetMapping("/all")
     public String getAllSuratMasuk(Model model, Authentication auth, @RequestParam(name = "search", required = false) String search,
         @RequestParam(required = false) String activeTab) {
 
         List<SuratMasuk> allSuratMasuk;
-        // List<SuratMasuk> suratMasukDiarsipkan;
         List<SuratMasuk> suratMasukFollowUp;
         List<SuratMasuk> suratMasukDisposisi;
 
         if (search != null && !search.isEmpty()) {
             allSuratMasuk = suratMasukService.getSuratBySearch(search);
-            // suratMasukDiarsipkan = suratMasukService.getSuratBySearchAndStatus(search, 1);
-            // suratMasukFollowUp = suratMasukService.getSuratBySearchAndStatus(search, 3);
-            // suratMasukDisposisi = suratMasukService.getSuratBySearchAndStatus(search, 2);
             suratMasukDisposisi = suratMasukService.getSuratMasukBySearchIsDisposisi(search);
             suratMasukFollowUp = suratMasukService.getSuratMasukBySearchIsFollowUp(search);
         } else {
             allSuratMasuk = suratMasukService.getAllSuratMasuk();
-            // suratMasukDiarsipkan = suratMasukService.getSuratMasukByStatus(1);
-            // suratMasukFollowUp = suratMasukService.getSuratMasukByStatus(3);
-            // suratMasukDisposisi = suratMasukService.getSuratMasukByStatus(2);
             suratMasukDisposisi = suratMasukService.getSuratMasukIsDisposisi();
             suratMasukFollowUp = suratMasukService.getSuratMasukIsFollowUp();
         }
 
         model.addAttribute("allSuratMasuk", allSuratMasuk);
-        // model.addAttribute("suratMasukDiarsipkan", suratMasukDiarsipkan);
         model.addAttribute("suratMasukFollowUp", suratMasukFollowUp);
         model.addAttribute("suratMasukDisposisi", suratMasukDisposisi);
         model.addAttribute("activeTab", activeTab != null ? activeTab : "#semua");
@@ -126,18 +113,14 @@ public class SuratMasukController {
         return "daftar-surat-masuk";
     }
 
-    // Metode untuk menampilkan preview PDF
     @GetMapping("/detail/{id}")
     public String previewPDF(@PathVariable("id") String id, Model model, Authentication auth) throws IOException {
         SuratMasuk suratMasuk = suratMasukService.getFile(id);
         byte[] pdf = suratMasuk.getFile();
-        
-        // Mengonversi konten PDF ke Base64
         String base64PDF = Base64.getEncoder().encodeToString(pdf);
 
         model.addAttribute("base64PDF", base64PDF);
         model.addAttribute("suratMasuk", suratMasuk);
-        // model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
 
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
@@ -153,12 +136,10 @@ public class SuratMasukController {
             }
         }
 
-        // return "detail-surat-tes"; 
         return "detail-surat-masuk"; 
 
     }
 
-    // Fungsi untuk mengonversi status menjadi teks
     public String getStatusText(int status) {
         switch (status) {
             case 1:
@@ -172,7 +153,6 @@ public class SuratMasukController {
         }
     }
     
-    // route to form-upload-surat
     @GetMapping("/form")
     public String formUploadSurat(Model model, Authentication auth) {
 
@@ -193,12 +173,11 @@ public class SuratMasukController {
         return "form-surat-masuk";
     }
 
-    // root to disposisi arsip surat dengan id tertentu
     @GetMapping("/disposisi/{id}")
     public String disposisiSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         SuratMasuk suratMasuk = suratMasukService.getFile(id); // You need to implement this method
         model.addAttribute("suratMasuk", suratMasuk);
-        // model.addAttribute("statusText", getStatusText(suratMasuk.getStatus()));
+
         if (auth != null) {
             OidcUser oauthUser = (OidcUser) auth.getPrincipal();
             String email = oauthUser.getEmail();
@@ -215,7 +194,6 @@ public class SuratMasukController {
         return "disposisi";
     }
 
-    // // route to send email 
     @GetMapping("/send/{id}")
     public String sendEmail(@PathVariable("id") String id, @RequestParam("to") String to, Model model, Authentication auth) throws MessagingException, IOException {
         SuratMasuk file = suratMasukService.getFile(id);
@@ -225,16 +203,10 @@ public class SuratMasukController {
         return "redirect:/surat-masuk/detail/" + id;
     }
 
-    /* BRANCH ARSIP
-     * BRANCH ARSIP
-     * BRANCH ARSIP
-     */
-    // route to follow up arsip surat 
     @GetMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, Model model, Authentication auth) {
         SuratMasuk suratMasuk = suratMasukService.getFile(id); 
         model.addAttribute("suratMasuk", suratMasuk);
-        // panggil listpenandatangan
         List<Pengguna> penandatangan = suratMasukService.getAllPenandatangan();
         model.addAttribute("penandatangan", penandatangan);
         if (auth != null) {
@@ -253,19 +225,16 @@ public class SuratMasukController {
         return "follow-up";
     }
     
-    // route to follow up arsip surat
     @PostMapping("/follow-up/{id}")
     public String followUpSurat(@PathVariable("id") String id, @RequestParam("file") MultipartFile file, @RequestParam("perihal") String perihal, @RequestParam("penandatangan") String idPenandatangan, Model model, Authentication auth) throws ParseException {
         SuratMasuk arsipAwal = suratMasukService.getFile(id);
         Pengguna penandatangan = penggunaDb.findById(idPenandatangan).get();
-
         String penerimaEksternal = arsipAwal.getPengirim();
-
         SuratKeluar arsipFollowUp = suratKeluarService.storeArsipFollowUp(file, arsipAwal, perihal, penerimaEksternal, penandatangan);
 
-        // set dan save penandatangan ke object surat masuk
         arsipAwal.setPenandatangan(penandatangan);
         suratMasukDb.save(arsipAwal);
+
         model.addAttribute("suratMasuk", arsipAwal);
         
         if (auth != null) {
@@ -283,6 +252,7 @@ public class SuratMasukController {
                 return "auth-failed";
             }
         }
+
         model.addAttribute("noArsipAwal", arsipAwal.getNomorArsip());
         return "redirect:/surat-masuk/all";
     }
